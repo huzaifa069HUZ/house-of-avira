@@ -53,28 +53,34 @@ export default function CampaignAndGrid() {
 
       {/* 4-Grid Section (Slides over pinned campaign) */}
       <section ref={gridRef} className="w-full relative z-10 bg-white pt-2">
-        {/* Grid Container for the images */}
-        <div className="flex flex-col md:flex-row w-full h-[80vh] md:h-[70vh]">
+        {/* Mobile: 2x2 Grid with Text inside. Desktop: 4x1 Flex with images */}
+        <div className="grid grid-cols-2 md:flex md:flex-row w-full md:h-[70vh]">
           {items.map((item, idx) => (
             <div 
               key={idx} 
-              className={`w-full md:w-1/4 h-full flex flex-col justify-end p-6 ${item.bg}`}
+              className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#1A1A1A]/10`}
             >
-              <div className="w-full h-full flex items-center justify-center overflow-hidden">
+              <div className={`w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden p-4 md:p-6 ${item.bg}`}>
                 <img 
                   src={item.img} 
                   alt={item.title} 
                   className="w-[85%] h-[85%] object-contain hover:scale-105 transition-transform duration-700" 
                 />
               </div>
+              {/* Mobile text (hidden on desktop) */}
+              <div className="md:hidden w-full p-3 bg-white">
+                <h3 className="font-sans font-bold text-[11px] tracking-tight text-center uppercase text-[#1A1A1A]">
+                  {item.title}
+                </h3>
+              </div>
             </div>
           ))}
         </div>
         
-        {/* The White Text Bar at the Bottom */}
-        <div className="w-full flex flex-col md:flex-row bg-white border-b border-[#1A1A1A]/10">
+        {/* The White Text Bar at the Bottom (Desktop Only) */}
+        <div className="hidden md:flex w-full flex-row bg-white border-b border-[#1A1A1A]/10">
           {items.map((item, idx) => (
-            <div key={idx} className="w-full md:w-1/4 p-4 md:p-5">
+            <div key={idx} className="w-1/4 p-5">
               <h3 className="font-sans font-bold text-[13px] tracking-tight w-full text-left uppercase text-[#1A1A1A]">
                 {item.title}
               </h3>

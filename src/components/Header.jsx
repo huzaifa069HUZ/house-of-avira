@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Search, ShoppingBag, User, Menu, ChevronRight, Heart } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, ChevronRight, Heart, X } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useState, useEffect } from 'react';
@@ -119,6 +119,7 @@ export default function Header() {
   const { user } = useAuthStore();
   const { wishlist } = useWishlistStore();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const isHome = pathname === '/';
 
@@ -180,7 +181,10 @@ export default function Header() {
             {/* Left Area (Desktop: Logo, Mobile: Hamburger) */}
             <div className="flex items-center flex-1 lg:flex-none">
               {/* Mobile Hamburger */}
-              <button className={`${textClass} transition-colors lg:hidden mr-4`}>
+              <button 
+                onClick={() => setIsMobileMenuOpen(true)}
+                className={`${textClass} transition-colors lg:hidden mr-4`}
+              >
                 <Menu className="w-6 h-6" />
               </button>
 
@@ -228,7 +232,7 @@ export default function Header() {
                 <User className="w-5 h-5" />
               </button>
               
-              <Link href="/account" className={`${textClass} transition-colors relative`} aria-label="Wishlist">
+              <Link href="/wishlist" className={`${textClass} transition-colors relative`} aria-label="Wishlist">
                 <Heart className="w-5 h-5" />
                 {wishlist.length > 0 && (
                   <span className="absolute -top-1.5 -right-2 bg-[#1A1A1A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
@@ -287,6 +291,85 @@ export default function Header() {
               </div>
             ))}
           </nav>
+        </div>
+      </div>
+
+      {/* Mobile Menu Sidebar */}
+      <div 
+        className={`fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} 
+        onClick={() => setIsMobileMenuOpen(false)}
+      >
+        <div 
+          className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-[#F8F5F1] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-6 flex justify-between items-center border-b border-[#1A1A1A]/10 sticky top-0 bg-[#F8F5F1] z-10">
+            <span className="font-cormorant uppercase text-xl md:text-2xl tracking-widest text-[#1A1A1A]">Menu</span>
+            <button onClick={() => setIsMobileMenuOpen(false)} className="text-[#1A1A1A]/60 hover:text-[#1A1A1A] p-2 bg-[#1A1A1A]/5 rounded-full">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          
+          <div className="py-4 flex flex-col">
+            {/* Auth / Account Links */}
+            <div className="px-6 py-4 flex gap-6 border-b border-[#1A1A1A]/10 mb-2">
+              <button onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} className="flex flex-col items-center gap-2 text-[#1A1A1A]/70 hover:text-[#1A1A1A] flex-1 py-2 bg-white rounded-xl shadow-sm">
+                <User className="w-5 h-5" />
+                <span className="text-[10px] uppercase tracking-widest font-bold">Account</span>
+              </button>
+              <Link href="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="flex flex-col items-center gap-2 text-[#1A1A1A]/70 hover:text-[#1A1A1A] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
+                <Heart className="w-5 h-5" />
+                <span className="text-[10px] uppercase tracking-widest font-bold">Wishlist</span>
+                {wishlist.length > 0 && (
+                  <span className="absolute top-1 right-3 bg-[#1A1A1A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {wishlist.length}
+                  </span>
+                )}
+              </Link>
+            </div>
+
+            {menuData.map((item, idx) => (
+              <div key={idx} className="border-b border-[#1A1A1A]/5">
+                {item.children ? (
+                  <details className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex justify-between items-center px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#1A1A1A] cursor-pointer list-none">
+                      {item.title}
+                      <ChevronRight className="w-4 h-4 transition-transform group-open:rotate-90 text-[#1A1A1A]/40" />
+                    </summary>
+                    <div className="bg-[#1A1A1A]/5 px-6 py-2 flex flex-col gap-1 shadow-inner">
+                      {item.children.map(child => (
+                        <div key={child.title}>
+                          {child.subChildren ? (
+                            <details className="group/sub [&_summary::-webkit-details-marker]:hidden">
+                              <summary className="flex justify-between items-center py-3 text-[11px] uppercase tracking-wider text-[#1A1A1A]/80 cursor-pointer list-none">
+                                {child.title}
+                                <ChevronRight className="w-3 h-3 transition-transform group-open/sub:rotate-90 text-[#1A1A1A]/40" />
+                              </summary>
+                              <div className="pl-4 pb-2 flex flex-col gap-2 border-l border-[#1A1A1A]/10 ml-1">
+                                {child.subChildren.map(subChild => (
+                                  <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[10px] uppercase tracking-wider text-[#1A1A1A]/60 block hover:text-[#1A1A1A]">
+                                    {subChild.title}
+                                  </Link>
+                                ))}
+                              </div>
+                            </details>
+                          ) : (
+                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[11px] uppercase tracking-wider text-[#1A1A1A]/80 block hover:text-[#1A1A1A]">
+                              {child.title}
+                            </Link>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </details>
+                ) : (
+                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#1A1A1A]">
+                    {item.title}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </header>

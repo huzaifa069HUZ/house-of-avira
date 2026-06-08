@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { Heart } from 'lucide-react';
 
 export default function AccountPage() {
   const { user, role, loading, signOut } = useAuthStore();
@@ -42,9 +43,13 @@ export default function AccountPage() {
             <h2 className="text-sm font-bold tracking-widest uppercase mb-4 text-[#1A1A1A]">Profile</h2>
             <p className="text-sm text-[#1A1A1A]/80 mb-1">{user.name || 'No name set'}</p>
             <p className="text-sm text-[#1A1A1A]/60 mb-4">{user.email}</p>
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-3">
+              <Link href="/wishlist" className="flex items-center justify-between text-xs font-bold text-[#1A1A1A] border border-[#1A1A1A]/20 px-4 py-2.5 uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-[#F8F5F1] transition-colors">
+                <span>My Wishlist</span>
+                <Heart className="w-4 h-4" />
+              </Link>
               {role === 'admin_owner' && (
-                <Link href="/admin" className="text-xs font-bold text-[#F8F5F1] bg-[#1A1A1A] px-3 py-1.5 uppercase tracking-widest hover:bg-[#1A1A1A]/90 transition-colors">
+                <Link href="/admin" className="text-xs font-bold text-[#F8F5F1] bg-[#1A1A1A] px-4 py-2.5 uppercase tracking-widest hover:bg-[#1A1A1A]/90 transition-colors text-center border border-[#1A1A1A]">
                   Admin Dashboard
                 </Link>
               )}

@@ -307,7 +307,7 @@ export default function Home() {
       <CampaignAndGrid />
 
       {/* Split Categories Section */}
-      <section className="w-full flex flex-col md:flex-row h-[120vh] md:h-screen">
+      <section className="w-full flex flex-col md:flex-row h-[120vh] md:h-screen relative z-20 bg-white">
         <div className="w-full md:w-1/2 relative group overflow-hidden cursor-pointer h-1/2 md:h-full bg-[#E5E0DA]">
           <img src="/accesories.png" alt="Pinterest Modern Dress" className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
