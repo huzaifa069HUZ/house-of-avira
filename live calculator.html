@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House of Avira — Digital Strategy Proposal by Huzaifa</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #C8476A;
+  --rose-light: #F2D0D9;
+  --rose-deep: #8B1A35;
+  --cream: #FAF7F4;
+  --ink: #1A1410;
+  --ink-soft: #3D2E28;
+  --muted: #8A7B74;
+  --border: rgba(200,71,106,0.15);
+  --gold: #B8986A;
+  --teal: #2A7A6B;
+  --teal-light: #D0EDE9;
+  --amber: #C47B2A;
+  --amber-light: #FAE8D0;
+  --purple: #5C4A8A;
+  --purple-light: #E8E4F4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* TYPOGRAPHY */
+.serif { font-family: 'Cormorant Garamond', serif; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,247,244,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--rose-deep); letter-spacing: .04em; }
+.nav-links { display: flex; gap: 1.5rem; }
+.nav-links a { font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: .04em; text-transform: uppercase; transition: color .2s; }
+.nav-links a:hover { color: var(--rose); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  position: relative;
+  background: linear-gradient(160deg, #FAF7F4 0%, #F5ECF0 50%, #FAF7F4 100%);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,71,106,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--rose); font-weight: 500; margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--rose); opacity: .4;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 300; line-height: 1.05;
+  color: var(--ink); margin-bottom: 1rem; letter-spacing: -.02em;
+}
+.hero h1 em { font-style: italic; color: var(--rose-deep); }
+.hero-sub { font-size: 16px; color: var(--muted); max-width: 560px; margin: 0 auto 2.5rem; font-weight: 300; line-height: 1.7; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 3rem; }
+.hero-tag {
+  border: 1px solid var(--border); padding: 6px 16px; border-radius: 30px;
+  font-size: 12px; color: var(--rose-deep); background: rgba(200,71,106,0.04);
+}
+.hero-scroll { font-size: 11px; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+
+/* SECTIONS */
+section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-full { max-width: 100%; padding-left: 0; padding-right: 0; }
+.section-label {
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--rose); font-weight: 500; margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 300; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -.01em;
+}
+.section-body { font-size: 16px; color: var(--muted); line-height: 1.8; max-width: 680px; font-weight: 300; }
+
+/* DIVIDER */
+.divider { width: 100%; height: 1px; background: var(--border); margin: 0; }
+
+/* PROBLEM STRIP */
+.problem-strip {
+  background: var(--ink);
+  padding: 5rem 2rem;
+}
+.problem-inner { max-width: 1100px; margin: 0 auto; }
+.problem-strip .section-label { color: var(--rose-light); opacity: .7; }
+.problem-strip .section-title { color: #FAF7F4; }
+.problem-strip .section-body { color: rgba(250,247,244,0.6); }
+.problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5px; margin-top: 3rem; background: rgba(200,71,106,0.15); }
+.problem-item {
+  background: var(--ink); padding: 2rem;
+  transition: background .2s;
+}
+.problem-item:hover { background: #221810; }
+.problem-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--rose); line-height: 1; margin-bottom: 1rem; }
+.problem-title { font-size: 15px; color: #FAF7F4; font-weight: 500; margin-bottom: .5rem; }
+.problem-desc { font-size: 13px; color: rgba(250,247,244,0.5); line-height: 1.7; }
+
+/* JOURNEY COMPARISON */
+.journey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); margin-top: 3rem; border-radius: 12px; overflow: hidden; }
+.journey-col { background: var(--cream); padding: 2.5rem; }
+.journey-col.after { background: #FAF0F3; }
+.journey-col-label { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; font-weight: 500; margin-bottom: 1.5rem; }
+.journey-col:first-child .journey-col-label { color: var(--muted); }
+.journey-col.after .journey-col-label { color: var(--rose); }
+.journey-step {
+  display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--border);
+}
+.journey-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.step-icon {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+}
+.step-icon.bad { background: rgba(138,123,116,0.15); color: var(--muted); }
+.step-icon.good { background: var(--rose-light); color: var(--rose); }
+.step-text { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+.journey-verdict {
+  margin-top: 1.5rem; padding: 1rem 1.25rem; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+}
+.journey-verdict.bad { background: rgba(138,123,116,0.1); color: var(--muted); }
+.journey-verdict.good { background: var(--rose-light); color: var(--rose-deep); }
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--rose-deep);
+  padding: 3rem 2rem;
+}
+.stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: rgba(255,255,255,0.1); }
+.stat-item { background: var(--rose-deep); padding: 2rem 1.5rem; text-align: center; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: #FAF7F4; line-height: 1; }
+.stat-unit { font-size: 24px; color: rgba(250,247,244,0.6); }
+.stat-label { font-size: 12px; color: rgba(250,247,244,0.6); margin-top: .5rem; line-height: 1.4; letter-spacing: .02em; }
+
+/* PAGES GRID */
+.pages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5px; background: var(--border); margin-top: 3rem; border-radius: 12px; overflow: hidden; }
+.page-card { background: var(--cream); padding: 2rem; transition: background .2s; }
+.page-card:hover { background: #F7F0F3; }
+.page-card-num { font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: .1em; color: var(--rose); margin-bottom: 1rem; text-transform: uppercase; }
+.page-card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--ink); margin-bottom: .75rem; }
+.page-card-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+.page-card-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.page-card-features li { font-size: 12px; color: var(--ink-soft); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+.page-card-features li::before { content: '→'; color: var(--rose); font-size: 11px; margin-top: 1px; flex-shrink: 0; }
+
+/* CHATBOT DEMO */
+.chatbot-section {
+  background: linear-gradient(135deg, #FAF0F3 0%, #F0EDF8 100%);
+  padding: 5rem 2rem;
+}
+.chatbot-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.chat-window {
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(200,71,106,0.12), 0 4px 16px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.chat-header {
+  background: var(--rose-deep); padding: 1rem 1.25rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.chat-avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.chat-header-text .chat-name { font-size: 13px; font-weight: 500; color: #fff; }
+.chat-header-text .chat-status { font-size: 11px; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 5px; }
+.chat-online-dot { width: 5px; height: 5px; border-radius: 50%; background: #5FE0B0; }
+.chat-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 10px; min-height: 320px; }
+.chat-msg { max-width: 80%; }
+.chat-msg.bot { align-self: flex-start; }
+.chat-msg.user { align-self: flex-end; }
+.chat-bubble {
+  padding: 10px 14px; font-size: 12px; line-height: 1.6; border-radius: 4px;
+}
+.chat-bubble.bot { background: #F4F0FC; color: #3D2A6A; border-radius: 4px 14px 14px 14px; }
+.chat-bubble.user { background: var(--rose); color: #fff; border-radius: 14px 4px 14px 14px; }
+.chat-quick { padding: .75rem 1.25rem 1.25rem; display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid #F0EBF0; }
+.chat-qbtn {
+  background: #FAF0F3; border: 1px solid var(--border); border-radius: 20px;
+  padding: 5px 12px; font-size: 11px; color: var(--rose-deep); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: background .15s;
+}
+.chat-qbtn:hover { background: var(--rose-light); }
+
+/* OPTIONS SECTION */
+.options-section { padding: 6rem 2rem; background: #FAF7F4; }
+.options-inner { max-width: 1100px; margin: 0 auto; }
+.options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 3rem; }
+.option-card {
+  border-radius: 16px; padding: 2.5rem;
+  position: relative; overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.option-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.1); }
+.option-card.recommended { border: 1.5px solid var(--rose); background: linear-gradient(135deg, #FFF5F7 0%, #FAF0F8 100%); }
+.option-card.standard { border: 1.5px solid var(--border); background: #fff; }
+.option-card.premium { border: 1.5px solid var(--gold); background: linear-gradient(135deg, #FDFAF5 0%, #F8F3EB 100%); }
+.option-card.advanced { border: 1.5px solid var(--teal); background: linear-gradient(135deg, #F3FDFB 0%, #EBF8F5 100%); }
+.option-badge {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500;
+  padding: 4px 10px; border-radius: 20px;
+}
+.option-badge.rose { background: var(--rose-light); color: var(--rose-deep); }
+.option-badge.gold { background: var(--amber-light); color: var(--amber); }
+.option-badge.teal { background: var(--teal-light); color: var(--teal); }
+.option-badge.gray { background: rgba(138,123,116,0.1); color: var(--muted); }
+.option-icon { font-size: 28px; margin-bottom: 1.25rem; }
+.option-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: var(--ink); margin-bottom: .5rem; }
+.option-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+.option-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+.option-features li { font-size: 13px; color: var(--ink-soft); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+.option-features li .feat-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.option-best-for {
+  margin-top: auto; padding: .75rem 1rem; border-radius: 8px;
+  font-size: 12px; font-weight: 500;
+}
+.option-best-for.rose { background: var(--rose-light); color: var(--rose-deep); }
+.option-best-for.gold { background: var(--amber-light); color: var(--amber); }
+.option-best-for.teal { background: var(--teal-light); color: var(--teal); }
+.option-best-for.gray { background: rgba(138,123,116,0.08); color: var(--muted); }
+
+/* SHIPPING CALCULATOR DEMO */
+.calc-section { background: var(--ink); padding: 5rem 2rem; }
+.calc-inner { max-width: 1100px; margin: 0 auto; }
+.calc-section .section-label { color: rgba(250,247,244,.5); }
+.calc-section .section-title { color: #FAF7F4; }
+.calc-section .section-body { color: rgba(250,247,244,.5); }
+.calc-demo {
+  margin-top: 3rem; background: #261B16; border-radius: 16px;
+  border: 1px solid rgba(200,71,106,0.2); overflow: hidden;
+}
+.calc-header { padding: 1.5rem 2rem; border-bottom: 1px solid rgba(200,71,106,0.15); }
+.calc-header-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #FAF7F4; font-weight: 400; }
+.calc-header-sub { font-size: 12px; color: rgba(250,247,244,.4); margin-top: 4px; }
+.calc-body { padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.calc-inputs { display: flex; flex-direction: column; gap: 1rem; }
+.calc-group label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,247,244,.5); display: block; margin-bottom: 6px; }
+.calc-group select, .calc-group input {
+  width: 100%; background: rgba(255,255,255,.05); border: 1px solid rgba(200,71,106,.2);
+  border-radius: 8px; padding: 10px 14px; color: #FAF7F4; font-size: 13px;
+  font-family: 'DM Sans', sans-serif; outline: none;
+  transition: border-color .2s;
+}
+.calc-group select:focus, .calc-group input:focus { border-color: var(--rose); }
+.calc-group select option { background: #261B16; }
+.calc-result { background: rgba(200,71,106,.08); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(200,71,106,.15); }
+.calc-result-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--rose); margin-bottom: 1.25rem; }
+.calc-line { display: flex; justify-content: space-between; align-items: center; padding: .5rem 0; border-bottom: 1px solid rgba(200,71,106,.1); }
+.calc-line:last-of-type { border-bottom: none; }
+.calc-line-label { font-size: 12px; color: rgba(250,247,244,.5); }
+.calc-line-val { font-size: 13px; color: #FAF7F4; font-weight: 500; }
+.calc-total { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(200,71,106,.3); display: flex; justify-content: space-between; align-items: center; }
+.calc-total-label { font-size: 13px; color: #FAF7F4; }
+.calc-total-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--rose); font-weight: 400; }
+
+/* INDIA INDUSTRY IDEAS */
+.india-section { padding: 6rem 2rem; background: linear-gradient(160deg, #FAF7F4 0%, #F5F0FA 100%); }
+.india-inner { max-width: 1100px; margin: 0 auto; }
+.india-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5px; background: rgba(92,74,138,0.1); margin-top: 3rem; border-radius: 12px; overflow: hidden; }
+.india-card { background: #FAF7F4; padding: 2rem; transition: background .2s; }
+.india-card:hover { background: #F5F0FA; }
+.india-card-icon { font-size: 24px; margin-bottom: 1rem; }
+.india-card-title { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: .5rem; }
+.india-card-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.india-card-tag { display: inline-block; margin-top: .75rem; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.india-card-tag.purple { background: var(--purple-light); color: var(--purple); }
+.india-card-tag.rose { background: var(--rose-light); color: var(--rose-deep); }
+.india-card-tag.teal { background: var(--teal-light); color: var(--teal); }
+.india-card-tag.gold { background: var(--amber-light); color: var(--amber); }
+
+/* TECH STACK */
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 3rem; }
+.tech-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.5rem; text-align: center; transition: box-shadow .2s;
+}
+.tech-card:hover { box-shadow: 0 8px 24px rgba(200,71,106,0.08); }
+.tech-icon { font-size: 28px; margin-bottom: .75rem; }
+.tech-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: .25rem; }
+.tech-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.tech-tag { display: inline-block; margin-top: .5rem; font-size: 10px; padding: 2px 8px; border-radius: 20px; background: var(--rose-light); color: var(--rose-deep); font-weight: 500; }
+
+/* BEFORE/AFTER TABLE */
+.compare-table { width: 100%; border-collapse: collapse; margin-top: 2rem; border-radius: 12px; overflow: hidden; }
+.compare-table thead { background: var(--ink); }
+.compare-table thead th { padding: 1rem 1.25rem; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,247,244,.7); text-align: left; font-weight: 400; }
+.compare-table thead th:first-child { color: rgba(250,247,244,.4); }
+.compare-table tbody tr { border-bottom: 1px solid var(--border); }
+.compare-table tbody tr:last-child { border-bottom: none; }
+.compare-table tbody td { padding: .875rem 1.25rem; font-size: 13px; vertical-align: top; }
+.compare-table tbody td:first-child { color: var(--muted); font-size: 12px; letter-spacing: .02em; }
+.compare-table tbody td:nth-child(2) { color: var(--muted); background: rgba(138,123,116,.04); }
+.compare-table tbody td:nth-child(3) { color: var(--teal); background: rgba(42,122,107,.04); font-weight: 500; }
+
+/* CTA SECTION */
+.cta-section {
+  background: var(--rose-deep);
+  padding: 6rem 2rem; text-align: center;
+}
+.cta-section .section-title { color: #FAF7F4; max-width: 700px; margin: 0 auto 1.5rem; }
+.cta-section .section-body { color: rgba(250,247,244,.65); margin: 0 auto 3rem; }
+.cta-btn {
+  display: inline-block; background: #FAF7F4; color: var(--rose-deep);
+  padding: 1rem 2.5rem; border-radius: 50px; font-size: 14px; font-weight: 500;
+  text-decoration: none; letter-spacing: .02em; transition: opacity .2s;
+}
+.cta-btn:hover { opacity: .85; }
+.cta-secondary { display: block; margin-top: 1rem; font-size: 13px; color: rgba(250,247,244,.5); }
+
+/* FOOTER */
+footer {
+  background: var(--ink); padding: 3rem 2rem; text-align: center;
+  border-top: 1px solid rgba(200,71,106,.1);
+}
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: rgba(250,247,244,.8); margin-bottom: .5rem; }
+.footer-sub { font-size: 12px; color: rgba(250,247,244,.3); }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 0 1rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.25rem; }
+  .problem-strip, .chatbot-section, .calc-section, .stats-bar { padding: 4rem 1.25rem; }
+  .journey-grid { grid-template-columns: 1fr; }
+  .chatbot-inner { grid-template-columns: 1fr; }
+  .stats-inner { grid-template-columns: repeat(2,1fr); }
+  .calc-body { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.8rem; }
+  .option-card { padding: 1.75rem; }
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-eyebrow { animation: fadeUp .6s ease both; }
+.hero h1 { animation: fadeUp .7s .1s ease both; }
+.hero-sub { animation: fadeUp .7s .2s ease both; }
+.hero-tags { animation: fadeUp .7s .3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">House of Avira × Huzaifa</div>
+  <div class="nav-links">
+    <a href="#problem">The Problem</a>
+    <a href="#website">The Website</a>
+    <a href="#options">Options</a>
+    <a href="#tech">Tech</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Digital Strategy Proposal · 2026</div>
+  <h1 class="serif">A website built around<br><em>how you actually work</em></h1>
+  <p class="hero-sub">Not a store. Not a checkout page. A brand hub with an AI assistant that educates your customers before they DM — so your team spends less time explaining and more time selling.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">No Cart · No Checkout</span>
+    <span class="hero-tag">AI Chatbot Trained on Your Policies</span>
+    <span class="hero-tag">DM System Stays Untouched</span>
+    <span class="hero-tag">Mobile-First · Pinterest-Aesthetic</span>
+    <span class="hero-tag">Wholesale + B2B Ready</span>
+  </div>
+  <div class="hero-scroll">Scroll to explore the full proposal ↓</div>
+</div>
+
+<!-- SECTION: WE HEARD YOU -->
+<section>
+  <div class="section-label">Reading your email carefully</div>
+  <h2 class="section-title serif">We heard every concern.<br>This proposal answers them.</h2>
+  <p class="section-body">You said the website idea felt pushed onto you. You were right to push back on a generic proposal. This is not a generic proposal. Every single concern you raised in your email has a specific solution built into this plan. Read on.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROBLEM STRIP -->
+<div class="problem-strip" id="problem">
+  <div class="problem-inner">
+    <div class="section-label">The real bottleneck we found</div>
+    <h2 class="section-title serif" style="color:#FAF7F4">Your team is a customer<br>education machine. Every day.</h2>
+    <p class="section-body">The questions your team answers in DMs daily are not order questions. They are education questions. And education should happen before the DM — not inside it.</p>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-num">01</div>
+        <div class="problem-title">Is COD available?</div>
+        <div class="problem-desc">Your team answers this multiple times daily. The answer never changes. An AI can handle this — permanently, for free, at 2am.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">02</div>
+        <div class="problem-title">Why isn't shipping fixed?</div>
+        <div class="problem-desc">Your batch-weight distribution model is brilliant. But explaining it from scratch in every DM is expensive in time and energy.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">03</div>
+        <div class="problem-title">How long does delivery take?</div>
+        <div class="problem-desc">Air vs sea, 15 days vs 2–3 months, liquids vs regular items — a policy page + chatbot answers this instantly and correctly every time.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">04</div>
+        <div class="problem-title">Can I cancel? Is it refundable?</div>
+        <div class="problem-desc">These come from customers who never saw your policy highlights. A permanent policy page means they can read it before they order.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">05</div>
+        <div class="problem-title">What payment methods work?</div>
+        <div class="problem-desc">GPay, Paytm, bank transfer — always the same answer. The AI gives it 24/7 so your team doesn't have to.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">06</div>
+        <div class="problem-title">Wholesale / B2B inquiries</div>
+        <div class="problem-desc">Your bulk sourcing offer exists only in Instagram highlights. B2B clients expect a professional web presence before they trust a supplier.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOURNEY COMPARISON -->
+<section>
+  <div class="section-label">Before and after, side by side</div>
+  <h2 class="section-title serif">What the DM conversation<br>looks like today vs tomorrow</h2>
+  <div class="journey-grid">
+    <div class="journey-col">
+      <div class="journey-col-label">Without the website — Today</div>
+      <div class="journey-step">
+        <div class="step-icon bad">1</div>
+        <div class="step-text">Customer finds Avira on Instagram</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon bad">2</div>
+        <div class="step-text">DMs: <em>"Is COD available?"</em> — Team replies</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon bad">3</div>
+        <div class="step-text">DMs: <em>"How long does delivery take?"</em> — Team explains air vs sea</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon bad">4</div>
+        <div class="step-text">DMs: <em>"Why can't you tell me shipping cost?"</em> — Team explains batch model</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon bad">5</div>
+        <div class="step-text">DMs: <em>"What if I need to cancel?"</em> — Team explains no-cancellation policy</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon bad">6</div>
+        <div class="step-text">Customer maybe places order — maybe drops off</div>
+      </div>
+      <div class="journey-verdict bad">6–8 messages. Most of them were education. Not selling.</div>
+    </div>
+    <div class="journey-col after">
+      <div class="journey-col-label">With the website — Tomorrow</div>
+      <div class="journey-step">
+        <div class="step-icon good">1</div>
+        <div class="step-text">Customer finds Avira — visits website from bio link</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon good">2</div>
+        <div class="step-text">AI chatbot answers COD, delivery, shipping cost, cancellation — instantly</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon good">3</div>
+        <div class="step-text">Customer reads "How It Works" — understands the preorder model fully</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon good">4</div>
+        <div class="step-text">Browses catalogue, taps "Enquire on Instagram" — DM pre-fills with product name</div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon good">5</div>
+        <div class="step-text">DM: <em>"Hi, I want the Coach tote bag"</em></div>
+      </div>
+      <div class="journey-step">
+        <div class="step-icon good">6</div>
+        <div class="step-text">Team: <em>"Perfect! Here are payment details."</em> Order confirmed.</div>
+      </div>
+      <div class="journey-verdict good">1–2 messages. All selling. Zero education. Same DM system.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">~70<span class="stat-unit">%</span></div>
+      <div class="stat-label">Fewer repetitive policy DMs to your team</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24<span class="stat-unit">/7</span></div>
+      <div class="stat-label">AI answers policies — even at 2am on a Sunday</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0<span class="stat-unit">₹</span></div>
+      <div class="stat-label">No payment gateway. No Shopify fees. No platform cost.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6<span class="stat-unit">pg</span></div>
+      <div class="stat-label">Targeted pages — each solving one specific pain point</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT WE ARE NOT BUILDING -->
+<section>
+  <div class="section-label">Addressing your exact concern</div>
+  <h2 class="section-title serif">This is <em>not</em> an ecommerce website.<br>Not even close.</h2>
+  <p class="section-body">You said customers who see a website expect a normal checkout. You are absolutely right. So there is no checkout. There is no cart. There are no fixed prices shown anywhere. Every product card has exactly one button: <strong>"Enquire on Instagram →"</strong>. That is it. The website is a brand experience and education platform — nothing more, nothing less.</p>
+
+  <table class="compare-table" style="margin-top: 2.5rem;">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Normal Ecommerce Site</th>
+        <th>What We Are Building for Avira</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Add to Cart</td><td>✓ Always present</td><td>✗ Does not exist</td></tr>
+      <tr><td>Fixed Prices</td><td>✓ Required</td><td>✗ No prices shown anywhere</td></tr>
+      <tr><td>Payment Gateway</td><td>✓ Razorpay, Stripe etc.</td><td>✗ Not needed — payments in DM</td></tr>
+      <tr><td>Checkout Flow</td><td>✓ Cart → Address → Pay</td><td>✗ No checkout, ever</td></tr>
+      <tr><td>Instant Order Confirmation</td><td>✓ Automated</td><td>✗ Manual DM confirmation — as you prefer</td></tr>
+      <tr><td>Product Button</td><td>"Buy Now / Add to Cart"</td><td>"Enquire on Instagram →"</td></tr>
+      <tr><td>Customer After Website</td><td>Buys and leaves</td><td>Educated and arrives in DM ready</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- 6 PAGES -->
+<section id="website">
+  <div class="section-label">The website structure</div>
+  <h2 class="section-title serif">Six pages. Each one solves<br>a specific problem.</h2>
+  <p class="section-body">Every page has one job. None of them overlap. All of them feed customers back to your DM — informed, educated, and ready.</p>
+  <div class="pages-grid">
+    <div class="page-card">
+      <div class="page-card-num">Page 01 · Home</div>
+      <div class="page-card-title">The First Impression</div>
+      <div class="page-card-desc">Converts a curious visitor into a trusting follower within 60 seconds. Establishes Avira as a premium import brand — not a random reseller.</div>
+      <ul class="page-card-features">
+        <li>Pinterest-aesthetic full-screen hero — no prices, no cart anywhere</li>
+        <li>Trust strip: 5000+ orders · Imported directly · 2+ years trusted</li>
+        <li>How It Works: Browse → DM → Receive (3-step visual)</li>
+        <li>CTA: Browse Catalogue + DM on Instagram</li>
+        <li>Floating AI chatbot button: "Ask Avira ✨"</li>
+      </ul>
+    </div>
+    <div class="page-card">
+      <div class="page-card-num">Page 02 · Catalogue</div>
+      <div class="page-card-title">Beautiful Product Discovery</div>
+      <div class="page-card-desc">Replaces endless Instagram scrolling with an organised, filterable gallery. Every item drives customers toward a DM — never a checkout.</div>
+      <ul class="page-card-features">
+        <li>Categories: Bags, Apparel, Accessories, Beauty, Branded, Budget</li>
+        <li>Cards show: image, name, "Preorder Available" badge — no price</li>
+        <li>One button per card: "Enquire on Instagram →" (pre-filled DM)</li>
+        <li>Filters: Branded / Luxury / Budget / New Arrivals</li>
+        <li>Branded item note: customs processing applies</li>
+      </ul>
+    </div>
+    <div class="page-card">
+      <div class="page-card-num">Page 03 · Ask Avira AI</div>
+      <div class="page-card-title">The AI Chatbot</div>
+      <div class="page-card-desc">Your team's 24/7 first responder. Trained on all 9 of your policy highlight slides. Speaks in your brand voice. Answers instantly, never incorrectly.</div>
+      <ul class="page-card-features">
+        <li>Trained on: COD policy, shipping tiers, customs, payments, refunds, unboxing</li>
+        <li>Quick-tap questions for mobile users (no typing needed)</li>
+        <li>Warm, feminine tone — never robotic or corporate</li>
+        <li>Handoff rule: complex questions → "DM us on Instagram →"</li>
+        <li>Floats on every page as a button</li>
+      </ul>
+    </div>
+    <div class="page-card">
+      <div class="page-card-num">Page 04 · How It Works</div>
+      <div class="page-card-title">Eliminating Confusion at Source</div>
+      <div class="page-card-desc">Everything your team explains in DMs — put here permanently, beautifully. Customers who read this page arrive in DMs with zero basic questions.</div>
+      <ul class="page-card-features">
+        <li>Visual timeline: Order → International Shipping → Customs → Domestic → You</li>
+        <li>Two-tier shipping diagram (from your Image 6 policy slide)</li>
+        <li>Air vs Sea comparison card with timelines and costs</li>
+        <li>Batch pricing explanation — warm, not defensive</li>
+        <li>Customs and duties explained simply</li>
+      </ul>
+    </div>
+    <div class="page-card">
+      <div class="page-card-num">Page 05 · Policies</div>
+      <div class="page-card-title">All 9 Highlights, Permanent</div>
+      <div class="page-card-desc">Your 9 Instagram highlight policy slides converted to a clean, searchable webpage. No more expiring Stories. Shareable as a single link in DMs.</div>
+      <ul class="page-card-features">
+        <li>FAQ accordion: Store Policies, Shipping, Customer Responsibilities</li>
+        <li>No longer buried in Instagram Stories that customers miss</li>
+        <li>Team pastes one link instead of typing out policies</li>
+        <li>Builds trust with new customers who research before buying</li>
+        <li>Always up to date — editable anytime</li>
+      </ul>
+    </div>
+    <div class="page-card">
+      <div class="page-card-num">Page 06 · Wholesale</div>
+      <div class="page-card-title">B2B — A New Revenue Door</div>
+      <div class="page-card-desc">Your bulk sourcing offer currently lives only in Instagram highlights. B2B clients expect a professional web presence before trusting a wholesale supplier.</div>
+      <ul class="page-card-features">
+        <li>Headline: "Bulk Sourcing for Online & Offline Stores"</li>
+        <li>What you handle: sourcing, international shipping, import docs</li>
+        <li>No MOQ + 50% advance clearly stated</li>
+        <li>Inquiry form → WhatsApp / DM with pre-filled message</li>
+        <li>This page alone justifies the entire website build</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CHATBOT DEMO SECTION -->
+<div class="chatbot-section">
+  <div class="chatbot-inner">
+    <div>
+      <div class="section-label" style="color:var(--purple)">The AI Assistant</div>
+      <h2 class="section-title serif">Ask Avira — your team's<br>24/7 policy assistant</h2>
+      <p class="section-body">Powered by Claude AI by Anthropic — the same AI trusted by global enterprises. Trained entirely on your 9 policy slides. Speaks in your warm brand tone. Available all day, every day, even when your team is offline.</p>
+      <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="width:20px;height:20px;border-radius:50%;background:var(--purple-light);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0">✓</span>Knows all 9 policy slide contents by heart</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="width:20px;height:20px;border-radius:50%;background:var(--purple-light);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0">✓</span>Explains the batch shipping model warmly, not defensively</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="width:20px;height:20px;border-radius:50%;background:var(--purple-light);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0">✓</span>Never invents information — redirects to DM if unsure</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="width:20px;height:20px;border-radius:50%;background:var(--purple-light);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0">✓</span>Speaks English and Hinglish naturally</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="width:20px;height:20px;border-radius:50%;background:var(--purple-light);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0">✓</span>Floats on every single page of the website</div>
+      </div>
+    </div>
+    <div class="chat-window">
+      <div class="chat-header">
+        <div class="chat-avatar">✨</div>
+        <div class="chat-header-text">
+          <div class="chat-name">Ask Avira</div>
+          <div class="chat-status"><span class="chat-online-dot"></span>Online — answers instantly</div>
+        </div>
+      </div>
+      <div class="chat-body">
+        <div class="chat-msg bot"><div class="chat-bubble bot">Hi! I'm Avira's AI assistant. I know everything about our shipping, policies, and ordering process. What would you like to know? 💛</div></div>
+        <div class="chat-msg user"><div class="chat-bubble user">Is COD available?</div></div>
+        <div class="chat-msg bot"><div class="chat-bubble bot">COD isn't available at House of Avira since we deal with imported products from abroad! We accept GPay, Paytm, and bank transfers. Once your order is confirmed, our team will share payment details in DMs 💛</div></div>
+        <div class="chat-msg user"><div class="chat-bubble user">Why can't you tell me the shipping cost upfront?</div></div>
+        <div class="chat-msg bot"><div class="chat-bubble bot">Great question! We ship in batches — the international cost is split equally among all customers based on total package weight. Since we collect all orders first, the exact cost is only known when your package is ready. This means you're charged accurately — never on a rough estimate ✨</div></div>
+      </div>
+      <div class="chat-quick">
+        <button class="chat-qbtn">How long for delivery?</button>
+        <button class="chat-qbtn">Can I cancel?</button>
+        <button class="chat-qbtn">Customs & duties?</button>
+        <button class="chat-qbtn">Payment methods?</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTIONS SECTION -->
+<div class="options-section" id="options">
+  <div class="options-inner">
+    <div class="section-label">Multiple options — you choose</div>
+    <h2 class="section-title serif">Four approaches. Ranging from<br>simple to fully automated.</h2>
+    <p class="section-body">We've designed four options for Avira — from the cleanest DM-first approach to a fully automated shipping calculator with payment integration. All built for India. All built for your business type.</p>
+
+    <div class="options-grid">
+
+      <!-- OPTION 1 -->
+      <div class="option-card recommended">
+        <span class="option-badge rose">★ Recommended</span>
+        <div class="option-icon">🌸</div>
+        <div class="option-title">Brand Hub + AI Chatbot</div>
+        <div class="option-subtitle">The cleanest, most aligned option. A beautiful brand website with an AI assistant — zero changes to your DM workflow.</div>
+        <ul class="option-features">
+          <li><span class="feat-icon">✓</span>6-page website: Home, Catalogue, AI Chat, How It Works, Policies, Wholesale</li>
+          <li><span class="feat-icon">✓</span>AI chatbot trained on all 9 policy slides</li>
+          <li><span class="feat-icon">✓</span>No cart, no checkout, no prices shown</li>
+          <li><span class="feat-icon">✓</span>Every product → "Enquire on Instagram"</li>
+          <li><span class="feat-icon">✓</span>Floating chatbot on every page</li>
+          <li><span class="feat-icon">✓</span>DM system completely untouched</li>
+          <li><span class="feat-icon">✓</span>Mobile-first, Pinterest-aesthetic design</li>
+        </ul>
+        <div class="option-best-for rose">Best for: Avira's current model. Zero disruption. Maximum efficiency.</div>
+      </div>
+
+      <!-- OPTION 2 -->
+      <div class="option-card standard">
+        <span class="option-badge gray">Option 2</span>
+        <div class="option-icon">💳</div>
+        <div class="option-title">Fixed Deposit Model</div>
+        <div class="option-subtitle">Customer pays a fixed product price on the website. Shipping is charged separately later in DM — just as you do today.</div>
+        <ul class="option-features">
+          <li><span class="feat-icon">✓</span>Razorpay / Cashfree integration (India-first)</li>
+          <li><span class="feat-icon">✓</span>Customer pays product price at checkout</li>
+          <li><span class="feat-icon">✓</span>Shipping cost still communicated via DM</li>
+          <li><span class="feat-icon">✓</span>Order confirmation automated by webhook</li>
+          <li><span class="feat-icon">✓</span>Team DMs only for shipping payment</li>
+          <li><span class="feat-icon">✓</span>Reduces partial-payment confusion</li>
+          <li><span class="feat-icon">⚠</span>Requires fixed product pricing upfront</li>
+        </ul>
+        <div class="option-best-for gray">Best for: When you're ready to add fixed pricing to select products.</div>
+      </div>
+
+      <!-- OPTION 3 -->
+      <div class="option-card premium">
+        <span class="option-badge gold">Premium</span>
+        <div class="option-icon">🧮</div>
+        <div class="option-title">Smart Shipping Calculator</div>
+        <div class="option-subtitle">The website auto-estimates shipping based on product type, brand tier, weight, and India customs rates — giving customers a transparent estimate before they DM.</div>
+        <ul class="option-features">
+          <li><span class="feat-icon">✓</span>Product type selection: bag / apparel / beauty / branded</li>
+          <li><span class="feat-icon">✓</span>Brand tier: luxury / mid-range / budget</li>
+          <li><span class="feat-icon">✓</span>Shipping mode: air / sea (auto-suggests)</li>
+          <li><span class="feat-icon">✓</span>Customs duty estimate using India's HSN code rates</li>
+          <li><span class="feat-icon">✓</span>Output: "Your estimated shipping is ₹X–₹Y"</li>
+          <li><span class="feat-icon">✓</span>Disclaimer: "Final cost confirmed by team in DM"</li>
+          <li><span class="feat-icon">✓</span>Reduces "why can't you give me a cost?" DMs by ~80%</li>
+        </ul>
+        <div class="option-best-for gold">Best for: Reducing shipping cost confusion before customers reach your team.</div>
+      </div>
+
+      <!-- OPTION 4 -->
+      <div class="option-card advanced">
+        <span class="option-badge teal">Full Automation</span>
+        <div class="option-icon">⚡</div>
+        <div class="option-title">Full Preorder + Auto Tax Platform</div>
+        <div class="option-subtitle">A complete preorder management system. Customers pay product + estimated shipping at checkout. GST auto-calculated. Team gets a dashboard — no manual DM tracking needed.</div>
+        <ul class="option-features">
+          <li><span class="feat-icon">✓</span>Preorder form: product → quantity → shipping mode</li>
+          <li><span class="feat-icon">✓</span>Auto GST calculation (18% on import goods, India)</li>
+          <li><span class="feat-icon">✓</span>Customs duty estimate using live HSN code logic</li>
+          <li><span class="feat-icon">✓</span>Razorpay full checkout: product + shipping deposit</li>
+          <li><span class="feat-icon">✓</span>Admin dashboard: orders, batch status, shipping updates</li>
+          <li><span class="feat-icon">✓</span>WhatsApp Business API for automated order confirmations</li>
+          <li><span class="feat-icon">✓</span>Batch management: group orders, split shipping cost automatically</li>
+        </ul>
+        <div class="option-best-for teal">Best for: Scaling to 100+ orders/month. When manual DM tracking becomes impossible.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SHIPPING CALCULATOR DEMO -->
+<div class="calc-section">
+  <div class="calc-inner">
+    <div class="section-label">Option 3 in action</div>
+    <h2 class="section-title serif">The shipping calculator — live demo</h2>
+    <p class="section-body">See how the auto-estimator works. Enter a product type and brand tier — the calculator uses India's customs rates and your shipping model to give a transparent estimate. Customer arrives in DM already knowing roughly what to expect.</p>
+    <div class="calc-demo">
+      <div class="calc-header">
+        <div class="calc-header-title">Avira Shipping Estimator</div>
+        <div class="calc-header-sub">Estimates only — final cost confirmed by our team · Powered by India customs rates</div>
+      </div>
+      <div class="calc-body">
+        <div class="calc-inputs">
+          <div class="calc-group">
+            <label>Product Category</label>
+            <select id="cat" onchange="calcShipping()">
+              <option value="bag">Bag / Purse</option>
+              <option value="apparel">Apparel / Clothing</option>
+              <option value="beauty">Beauty / Skincare</option>
+              <option value="acc">Accessories / Jewellery</option>
+              <option value="shoe">Shoes / Footwear</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>Brand Tier</label>
+            <select id="tier" onchange="calcShipping()">
+              <option value="budget">Budget / Indie Brand</option>
+              <option value="mid">Mid-range (Coach, Stussy, Hello Kitty)</option>
+              <option value="luxury">Luxury (LV, Dior, Chanel, Nike)</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>Shipping Mode</label>
+            <select id="mode" onchange="calcShipping()">
+              <option value="sea">Sea Shipping (2–3 months, budget)</option>
+              <option value="air">Air Shipping (~15 days, faster)</option>
+            </select>
+          </div>
+          <div class="calc-group">
+            <label>Approx. Product Weight (grams)</label>
+            <input type="number" id="weight" value="500" min="100" max="5000" onchange="calcShipping()" />
+          </div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-label">Estimated Cost Breakdown</div>
+          <div class="calc-line"><span class="calc-line-label">International Shipping</span><span class="calc-line-val" id="r-intl">₹480 – ₹720</span></div>
+          <div class="calc-line"><span class="calc-line-label">Customs Duty (India)</span><span class="calc-line-val" id="r-customs">₹200 – ₹350</span></div>
+          <div class="calc-line"><span class="calc-line-label">GST on Import</span><span class="calc-line-val" id="r-gst">₹90 – ₹145</span></div>
+          <div class="calc-line"><span class="calc-line-label">Domestic Delivery</span><span class="calc-line-val" id="r-dom">₹60 – ₹120</span></div>
+          <div class="calc-total">
+            <span class="calc-total-label">Total Shipping Estimate</span>
+            <span class="calc-total-val" id="r-total">₹830 – ₹1,335</span>
+          </div>
+          <div style="margin-top:1rem;font-size:11px;color:rgba(250,247,244,.35);line-height:1.6">Estimates based on India's customs rates and average freight costs. Final cost confirmed by Avira team after batch collection.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INDIA INDUSTRY IDEAS -->
+<div class="india-section">
+  <div class="india-inner">
+    <div class="section-label">Built for India</div>
+    <h2 class="section-title serif">Industry-level ideas specific<br>to the Indian market</h2>
+    <p class="section-body">These are not generic suggestions. These are strategies used by India's most successful Instagram-native brands as they scaled — and they all apply directly to Avira's model.</p>
+    <div class="india-grid">
+      <div class="india-card">
+        <div class="india-card-icon">📦</div>
+        <div class="india-card-title">WhatsApp Business API Integration</div>
+        <div class="india-card-desc">Automate order confirmations, shipping fee reminders, and tracking updates via WhatsApp. 90%+ open rate vs 20% for email. India's #1 customer communication channel for fashion D2C.</div>
+        <span class="india-card-tag rose">High Impact</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">💰</div>
+        <div class="india-card-title">UPI-First Checkout (Razorpay)</div>
+        <div class="india-card-desc">India has 350M+ UPI users. Razorpay supports GPay, PhonePe, Paytm, UPI, net banking — all in one gateway. Zero international transaction fees for domestic orders.</div>
+        <span class="india-card-tag gold">India-Specific</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">🛃</div>
+        <div class="india-card-title">Auto Customs Duty Calculator</div>
+        <div class="india-card-desc">India's Basic Customs Duty varies: 10% for bags, 20% for apparel, 18% GST on most imports. A calculator using HSN code logic gives customers accurate estimates — removing the biggest confusion point.</div>
+        <span class="india-card-tag purple">Smart Feature</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">📱</div>
+        <div class="india-card-title">Instagram Shopping Tags</div>
+        <div class="india-card-desc">Link Instagram Shopping tags directly to your website catalogue pages. Customers tap a product in Stories or Reels and land on the product's enquiry page — not a generic homepage.</div>
+        <span class="india-card-tag teal">Growth</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">🤝</div>
+        <div class="india-card-title">Reseller / Affiliate Portal</div>
+        <div class="india-card-desc">Many Indian import brands have scaled 10x by creating a reseller network. A simple portal lets trusted resellers place bulk orders through the website — expanding your reach without adding team headcount.</div>
+        <span class="india-card-tag gold">Scale</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">📊</div>
+        <div class="india-card-title">Batch Dashboard (Internal Tool)</div>
+        <div class="india-card-desc">A private admin page where your team manages batch orders, tracks shipping status, and communicates cost splits to customers. Replaces manual spreadsheet tracking as your order volume grows.</div>
+        <span class="india-card-tag purple">Operations</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">⭐</div>
+        <div class="india-card-title">Trust Wall — Verified Reviews</div>
+        <div class="india-card-desc">India's fashion buyers are highly social-proof driven. A curated "wall" of verified customer unboxing photos and reviews builds credibility beyond Instagram — especially for new customers who find you via Google.</div>
+        <span class="india-card-tag rose">Trust</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">🌐</div>
+        <div class="india-card-title">SEO for "Import Fashion India"</div>
+        <div class="india-card-desc">10,000+ monthly searches for terms like "imported bags India", "foreign brand reseller India", "luxury dupe India". A website ranks on Google — Instagram does not. This is an entire untapped acquisition channel.</div>
+        <span class="india-card-tag teal">Acquisition</span>
+      </div>
+      <div class="india-card">
+        <div class="india-card-icon">🎁</div>
+        <div class="india-card-title">Waitlist / Notify Me Feature</div>
+        <div class="india-card-desc">When a product is sold out or not yet available, customers join a waitlist. When it becomes available, they get an automated WhatsApp/email. Captures demand before you even source the product.</div>
+        <span class="india-card-tag gold">Demand Capture</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<section id="tech">
+  <div class="section-label">Technology</div>
+  <h2 class="section-title serif">Simple, powerful, and<br>fully owned by you.</h2>
+  <p class="section-body">No monthly platform fees. No Shopify lock-in. No complex backends. One-time build. You own the code, the data, and the design — forever.</p>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon">⚡</div>
+      <div class="tech-name">Next.js</div>
+      <div class="tech-desc">Fast, modern frontend. Loads in under 1 second. Perfect for mobile users on 4G in India.</div>
+      <span class="tech-tag">Frontend</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🤖</div>
+      <div class="tech-name">Claude API (Anthropic)</div>
+      <div class="tech-desc">Powers the AI chatbot. Trained on your policies. Used by Fortune 500 companies globally.</div>
+      <span class="tech-tag">AI Chatbot</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">💸</div>
+      <div class="tech-name">Razorpay</div>
+      <div class="tech-desc">India's #1 payment gateway. Supports UPI, GPay, Paytm, net banking, credit cards.</div>
+      <span class="tech-tag">Payments (if needed)</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🚀</div>
+      <div class="tech-name">Vercel</div>
+      <div class="tech-desc">Free hosting with global CDN. 99.99% uptime. Auto-deploys on every update.</div>
+      <span class="tech-tag">Hosting</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">💬</div>
+      <div class="tech-name">WhatsApp Business API</div>
+      <div class="tech-desc">Automated order confirmations and shipping reminders. India's primary communication channel.</div>
+      <span class="tech-tag">Notifications</span>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📦</div>
+      <div class="tech-name">No Backend Needed</div>
+      <div class="tech-desc">For Option 1, zero backend complexity. Static site + API call. Low cost, zero maintenance.</div>
+      <span class="tech-tag">Architecture</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <h2 class="section-title serif">This proposal was built<br>around how Avira actually works.</h2>
+  <p class="section-body">Not a template. Not a generic pitch. I read every policy slide, every line of your email, and every highlight on your profile. This is a custom solution for a custom business model. I am ready to start when you are.</p>
+  <a href="mailto:" class="cta-btn">Reply to Start the Conversation</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Proposal by Huzaifa · Web Developer</div>
+  <div class="footer-sub" style="margin-top:.5rem">Built specifically for House of Avira · 2026</div>
+</footer>
+
+<script>
+function calcShipping() {
+  const cat = document.getElementById('cat').value;
+  const tier = document.getElementById('tier').value;
+  const mode = document.getElementById('mode').value;
+  const weight = parseInt(document.getElementById('weight').value) || 500;
+
+  // Base shipping rates per gram
+  const seaBase = 0.8, airBase = 2.2;
+  const tierMult = { budget: 1, mid: 1.4, luxury: 2.1 };
+  const catCustoms = { bag: 0.10, apparel: 0.20, beauty: 0.18, acc: 0.15, shoe: 0.25 };
+  const modeMult = mode === 'air' ? airBase : seaBase;
+
+  const intlLow = Math.round(weight * modeMult * tierMult[tier] * 0.85);
+  const intlHigh = Math.round(weight * modeMult * tierMult[tier] * 1.25);
+  const productVal = weight * (tier === 'luxury' ? 12 : tier === 'mid' ? 5 : 2.5);
+  const customsLow = Math.round(productVal * catCustoms[cat] * 0.8);
+  const customsHigh = Math.round(productVal * catCustoms[cat] * 1.2);
+  const gstLow = Math.round((intlLow + customsLow) * 0.18);
+  const gstHigh = Math.round((intlHigh + customsHigh) * 0.18);
+  const domLow = 60, domHigh = 130;
+
+  const totalLow = intlLow + customsLow + gstLow + domLow;
+  const totalHigh = intlHigh + customsHigh + gstHigh + domHigh;
+
+  const fmt = n => '₹' + n.toLocaleString('en-IN');
+  document.getElementById('r-intl').textContent = fmt(intlLow) + ' – ' + fmt(intlHigh);
+  document.getElementById('r-customs').textContent = fmt(customsLow) + ' – ' + fmt(customsHigh);
+  document.getElementById('r-gst').textContent = fmt(gstLow) + ' – ' + fmt(gstHigh);
+  document.getElementById('r-dom').textContent = fmt(domLow) + ' – ' + fmt(domHigh);
+  document.getElementById('r-total').textContent = fmt(totalLow) + ' – ' + fmt(totalHigh);
+}
+calcShipping();
+</script>
+
+</body>
+</html>

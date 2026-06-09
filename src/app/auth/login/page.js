@@ -71,10 +71,10 @@ export default function Login() {
   return (
     <>
       <div className="text-center">
-        <h2 className="text-2xl font-serif tracking-tight text-[#1A1A1A]">Sign in</h2>
-        <p className="mt-2 text-sm text-[#1A1A1A]/70">
+        <h2 className="text-2xl font-serif tracking-tight text-[#000000]">Sign in</h2>
+        <p className="mt-2 text-sm text-[#000000]/70">
           Or{' '}
-          <Link href="/auth/register" className="font-medium text-[#1A1A1A] underline hover:text-[#1A1A1A]/80">
+          <Link href="/auth/register" className="font-medium text-[#000000] underline hover:text-[#000000]/80">
             create a new account
           </Link>
         </p>
@@ -89,21 +89,21 @@ export default function Login() {
         
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-[#1A1A1A]/80 uppercase tracking-widest mb-1">Email address</label>
+            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Email address</label>
             <input
               type="email"
               required
-              className="appearance-none block w-full px-3 py-2 border border-[#1A1A1A]/20 bg-transparent rounded-sm shadow-sm placeholder-[#1A1A1A]/40 focus:outline-none focus:ring-[#1A1A1A] focus:border-[#1A1A1A] sm:text-sm"
+              className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1A1A1A]/80 uppercase tracking-widest mb-1">Password</label>
+            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Password</label>
             <input
               type="password"
               required
-              className="appearance-none block w-full px-3 py-2 border border-[#1A1A1A]/20 bg-transparent rounded-sm shadow-sm placeholder-[#1A1A1A]/40 focus:outline-none focus:ring-[#1A1A1A] focus:border-[#1A1A1A] sm:text-sm"
+              className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -114,7 +114,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-[#F8F5F1] bg-[#1A1A1A] hover:bg-[#1A1A1A]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1A1A1A] disabled:opacity-70 uppercase tracking-widest transition-colors"
+            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-[#FFFFFF] bg-[#000000] hover:bg-[#8A001A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000000] disabled:opacity-70 uppercase tracking-widest transition-colors"
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
@@ -124,10 +124,10 @@ export default function Login() {
       <div className="mt-6">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#1A1A1A]/10" />
+            <div className="w-full border-t border-[#000000]/10" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-[#F8F5F1] text-[#1A1A1A]/60 uppercase tracking-widest text-[10px]">Or continue with</span>
+            <span className="px-2 bg-[#FFFFFF] text-[#000000]/60 uppercase tracking-widest text-[10px]">Or continue with</span>
           </div>
         </div>
 
@@ -135,7 +135,7 @@ export default function Login() {
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex justify-center py-2.5 px-4 border border-[#1A1A1A]/20 rounded-sm shadow-sm bg-transparent text-sm font-medium text-[#1A1A1A] hover:bg-[#1A1A1A]/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1A1A1A] transition-colors"
+            className="w-full flex justify-center py-2.5 px-4 border border-[#000000]/20 rounded-sm shadow-sm bg-transparent text-sm font-medium text-[#000000] hover:bg-[#000000]/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000000] transition-colors"
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>

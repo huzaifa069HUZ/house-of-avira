@@ -53,10 +53,10 @@ export default function Register() {
   return (
     <>
       <div className="text-center">
-        <h2 className="text-2xl font-serif tracking-tight text-[#1A1A1A]">Create Account</h2>
-        <p className="mt-2 text-sm text-[#1A1A1A]/70">
+        <h2 className="text-2xl font-serif tracking-tight text-[#000000]">Create Account</h2>
+        <p className="mt-2 text-sm text-[#000000]/70">
           Already have an account?{' '}
-          <Link href="/auth/login" className="font-medium text-[#1A1A1A] underline hover:text-[#1A1A1A]/80">
+          <Link href="/auth/login" className="font-medium text-[#000000] underline hover:text-[#000000]/80">
             Sign in
           </Link>
         </p>
@@ -71,32 +71,32 @@ export default function Register() {
         
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-[#1A1A1A]/80 uppercase tracking-widest mb-1">Full Name</label>
+            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Full Name</label>
             <input
               type="text"
               required
-              className="appearance-none block w-full px-3 py-2 border border-[#1A1A1A]/20 bg-transparent rounded-sm shadow-sm placeholder-[#1A1A1A]/40 focus:outline-none focus:ring-[#1A1A1A] focus:border-[#1A1A1A] sm:text-sm"
+              className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1A1A1A]/80 uppercase tracking-widest mb-1">Email address</label>
+            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Email address</label>
             <input
               type="email"
               required
-              className="appearance-none block w-full px-3 py-2 border border-[#1A1A1A]/20 bg-transparent rounded-sm shadow-sm placeholder-[#1A1A1A]/40 focus:outline-none focus:ring-[#1A1A1A] focus:border-[#1A1A1A] sm:text-sm"
+              className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1A1A1A]/80 uppercase tracking-widest mb-1">Password</label>
+            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Password</label>
             <input
               type="password"
               required
               minLength={6}
-              className="appearance-none block w-full px-3 py-2 border border-[#1A1A1A]/20 bg-transparent rounded-sm shadow-sm placeholder-[#1A1A1A]/40 focus:outline-none focus:ring-[#1A1A1A] focus:border-[#1A1A1A] sm:text-sm"
+              className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -107,7 +107,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-[#F8F5F1] bg-[#1A1A1A] hover:bg-[#1A1A1A]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1A1A1A] disabled:opacity-70 uppercase tracking-widest transition-colors"
+            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-[#FFFFFF] bg-[#000000] hover:bg-[#8A001A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000000] disabled:opacity-70 uppercase tracking-widest transition-colors"
           >
             {loading ? 'Creating account...' : 'Create account'}
           </button>

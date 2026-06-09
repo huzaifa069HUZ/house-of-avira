@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#F8F5F1] text-[#1A1A1A] selection:bg-[#1A1A1A] selection:text-[#F8F5F1]">
+      <body className="min-h-full flex flex-col bg-[#FFFFFF] text-[#000000] selection:bg-[#8A001A] selection:text-[#FFFFFF]">
         <AuthProvider>
           <Header />
           <main className="flex-1 flex flex-col">{children}</main>

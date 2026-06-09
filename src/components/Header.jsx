@@ -149,10 +149,10 @@ export default function Header() {
 
   // Determine styles based on scroll state and page
   // Determine styles based on scroll state and page
-  const headerBgClass = isHome && !isScrolled ? 'bg-transparent border-transparent' : 'bg-[#F8F5F1] border-[#1A1A1A]/10 shadow-sm';
-  const textClass = isHome && !isScrolled ? 'text-white hover:text-white/80' : 'text-neutral-500 hover:text-[#1A1A1A]';
-  const logoClass = isHome && !isScrolled ? 'text-white' : 'text-[#1A1A1A]';
-  const topBannerClass = 'bg-[#1A1A1A] text-white';
+  const headerBgClass = isHome && !isScrolled ? 'bg-transparent border-transparent' : 'bg-[#FFFFFF] border-[#000000]/10 shadow-sm';
+  const textClass = isHome && !isScrolled ? 'text-white hover:text-white/80' : 'text-neutral-500 hover:text-[#000000]';
+  const logoClass = isHome && !isScrolled ? 'text-white' : 'text-[#000000]';
+  const topBannerClass = 'bg-[#8A001A] text-white';
 
   return (
     <header className="sticky top-0 z-50 w-full flex flex-col">
@@ -211,7 +211,7 @@ export default function Header() {
               {/* Search */}
               <div className="flex items-center">
                 {/* Search Pill - Hidden on smallest mobile, icon only on small screens */}
-                <div className={`hidden sm:flex items-center border rounded-full px-3 py-1.5 transition-colors ${isHome && !isScrolled ? 'border-white/50 text-white focus-within:border-white' : 'border-[#1A1A1A]/30 text-[#1A1A1A] focus-within:border-[#1A1A1A]'}`}>
+                <div className={`hidden sm:flex items-center border rounded-full px-3 py-1.5 transition-colors ${isHome && !isScrolled ? 'border-white/50 text-white focus-within:border-white' : 'border-[#000000]/30 text-[#000000] focus-within:border-[#000000]'}`}>
                   <Search className="w-4 h-4 mr-2" />
                   <input 
                     type="text" 
@@ -235,7 +235,7 @@ export default function Header() {
               <Link href="/wishlist" className={`${textClass} transition-colors relative`} aria-label="Wishlist">
                 <Heart className="w-5 h-5" />
                 {wishlist.length > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-[#1A1A1A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-2 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                     {wishlist.length}
                   </span>
                 )}
@@ -259,12 +259,12 @@ export default function Header() {
                 
                 {/* Dropdown 1 */}
                 {item.children && (
-                  <div className="absolute top-full left-0 hidden group-hover:block w-48 bg-[#F8F5F1] shadow-lg border border-[#1A1A1A]/10 pt-2 pb-2">
+                  <div className="absolute top-full left-0 hidden group-hover:block w-48 bg-[#FFFFFF] shadow-lg border border-[#000000]/10 pt-2 pb-2">
                     {item.children.map(child => (
                       <div key={child.title} className="relative group/sub">
                         <Link 
                           href={child.href}
-                          className="flex justify-between items-center px-4 py-2 text-xs text-[#1A1A1A]/80 hover:bg-[#1A1A1A]/5 hover:text-[#1A1A1A] uppercase tracking-wider"
+                          className="flex justify-between items-center px-4 py-2 text-xs text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-wider"
                         >
                           {child.title}
                           {child.subChildren && <ChevronRight className="w-3 h-3" />}
@@ -272,12 +272,12 @@ export default function Header() {
                         
                         {/* Dropdown 2 (Sub-children) */}
                         {child.subChildren && (
-                          <div className="absolute top-0 left-full hidden group-hover/sub:block w-40 bg-[#F8F5F1] shadow-lg border border-[#1A1A1A]/10 py-2 -ml-1">
+                          <div className="absolute top-0 left-full hidden group-hover/sub:block w-40 bg-[#FFFFFF] shadow-lg border border-[#000000]/10 py-2 -ml-1">
                             {child.subChildren.map(subChild => (
                               <Link 
                                 key={subChild.title}
                                 href={subChild.href}
-                                className="block px-4 py-2 text-[10px] text-[#1A1A1A]/80 hover:bg-[#1A1A1A]/5 hover:text-[#1A1A1A] uppercase tracking-wider"
+                                className="block px-4 py-2 text-[10px] text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-wider"
                               >
                                 {subChild.title}
                               </Link>
@@ -300,28 +300,28 @@ export default function Header() {
         onClick={() => setIsMobileMenuOpen(false)}
       >
         <div 
-          className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-[#F8F5F1] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+          className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-[#FFFFFF] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-6 flex justify-between items-center border-b border-[#1A1A1A]/10 sticky top-0 bg-[#F8F5F1] z-10">
-            <span className="font-cormorant uppercase text-xl md:text-2xl tracking-widest text-[#1A1A1A]">Menu</span>
-            <button onClick={() => setIsMobileMenuOpen(false)} className="text-[#1A1A1A]/60 hover:text-[#1A1A1A] p-2 bg-[#1A1A1A]/5 rounded-full">
+          <div className="p-6 flex justify-between items-center border-b border-[#000000]/10 sticky top-0 bg-[#FFFFFF] z-10">
+            <span className="font-cormorant uppercase text-xl md:text-2xl tracking-widest text-[#000000]">Menu</span>
+            <button onClick={() => setIsMobileMenuOpen(false)} className="text-[#000000]/60 hover:text-[#000000] p-2 bg-[#000000]/5 rounded-full">
               <X className="w-5 h-5" />
             </button>
           </div>
           
           <div className="py-4 flex flex-col">
             {/* Auth / Account Links */}
-            <div className="px-6 py-4 flex gap-6 border-b border-[#1A1A1A]/10 mb-2">
-              <button onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} className="flex flex-col items-center gap-2 text-[#1A1A1A]/70 hover:text-[#1A1A1A] flex-1 py-2 bg-white rounded-xl shadow-sm">
+            <div className="px-6 py-4 flex gap-6 border-b border-[#000000]/10 mb-2">
+              <button onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm">
                 <User className="w-5 h-5" />
                 <span className="text-[10px] uppercase tracking-widest font-bold">Account</span>
               </button>
-              <Link href="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="flex flex-col items-center gap-2 text-[#1A1A1A]/70 hover:text-[#1A1A1A] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
+              <Link href="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
                 <Heart className="w-5 h-5" />
                 <span className="text-[10px] uppercase tracking-widest font-bold">Wishlist</span>
                 {wishlist.length > 0 && (
-                  <span className="absolute top-1 right-3 bg-[#1A1A1A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute top-1 right-3 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                     {wishlist.length}
                   </span>
                 )}
@@ -329,32 +329,32 @@ export default function Header() {
             </div>
 
             {menuData.map((item, idx) => (
-              <div key={idx} className="border-b border-[#1A1A1A]/5">
+              <div key={idx} className="border-b border-[#000000]/5">
                 {item.children ? (
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex justify-between items-center px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#1A1A1A] cursor-pointer list-none">
+                    <summary className="flex justify-between items-center px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#000000] cursor-pointer list-none">
                       {item.title}
-                      <ChevronRight className="w-4 h-4 transition-transform group-open:rotate-90 text-[#1A1A1A]/40" />
+                      <ChevronRight className="w-4 h-4 transition-transform group-open:rotate-90 text-[#000000]/40" />
                     </summary>
-                    <div className="bg-[#1A1A1A]/5 px-6 py-2 flex flex-col gap-1 shadow-inner">
+                    <div className="bg-[#000000]/5 px-6 py-2 flex flex-col gap-1 shadow-inner">
                       {item.children.map(child => (
                         <div key={child.title}>
                           {child.subChildren ? (
                             <details className="group/sub [&_summary::-webkit-details-marker]:hidden">
-                              <summary className="flex justify-between items-center py-3 text-[11px] uppercase tracking-wider text-[#1A1A1A]/80 cursor-pointer list-none">
+                              <summary className="flex justify-between items-center py-3 text-[11px] uppercase tracking-wider text-[#000000]/80 cursor-pointer list-none">
                                 {child.title}
-                                <ChevronRight className="w-3 h-3 transition-transform group-open/sub:rotate-90 text-[#1A1A1A]/40" />
+                                <ChevronRight className="w-3 h-3 transition-transform group-open/sub:rotate-90 text-[#000000]/40" />
                               </summary>
-                              <div className="pl-4 pb-2 flex flex-col gap-2 border-l border-[#1A1A1A]/10 ml-1">
+                              <div className="pl-4 pb-2 flex flex-col gap-2 border-l border-[#000000]/10 ml-1">
                                 {child.subChildren.map(subChild => (
-                                  <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[10px] uppercase tracking-wider text-[#1A1A1A]/60 block hover:text-[#1A1A1A]">
+                                  <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[10px] uppercase tracking-wider text-[#000000]/60 block hover:text-[#000000]">
                                     {subChild.title}
                                   </Link>
                                 ))}
                               </div>
                             </details>
                           ) : (
-                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[11px] uppercase tracking-wider text-[#1A1A1A]/80 block hover:text-[#1A1A1A]">
+                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[11px] uppercase tracking-wider text-[#000000]/80 block hover:text-[#000000]">
                               {child.title}
                             </Link>
                           )}
@@ -363,7 +363,7 @@ export default function Header() {
                     </div>
                   </details>
                 ) : (
-                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#1A1A1A]">
+                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#000000]">
                     {item.title}
                   </Link>
                 )}

@@ -1,8 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Syne:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Symphony';
+  src: url('/fonts/Symphony.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Perandory';
+  src: url('/fonts/Perandory.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --background: #F8F5F1;
-  --foreground: #1A1A1A;
+  --background: #FFFFFF;
+  --foreground: #000000;
 }
 
 @theme inline {
@@ -15,6 +32,12 @@
 }
 
 @layer utilities {
+  .font-symphony {
+    font-family: 'Symphony', cursive !important;
+  }
+  .font-perandory {
+    font-family: 'Perandory', sans-serif !important;
+  }
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -22,7 +45,12 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+  .animate-marquee-reverse {
+    animation: marquee-reverse 30s linear infinite;
+  }
   .animate-marquee {
     animation: marquee 15s linear infinite;
   }
@@ -31,15 +59,33 @@
   }
 }
 
+/* Bypass Tailwind and declare the animations as standard global CSS classes */
+.animate-marquee-full {
+  animation: marquee-full 120s linear infinite;
+}
+.animate-marquee-full-reverse {
+  animation: marquee-full-reverse 150s linear infinite;
+}
+
 @keyframes marquee {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-33.33%); } /* Adjusted because we duplicated text 3 times instead of 2 */
 }
 
+@keyframes marquee-full {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes marquee-full-reverse {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #F8F5F1;
-    --foreground: #1A1A1A;
+    --background: #FFFFFF;
+    --foreground: #000000;
   }
 }
 

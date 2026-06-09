@@ -58,7 +58,7 @@ export default function CampaignAndGrid() {
           {items.map((item, idx) => (
             <div 
               key={idx} 
-              className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#1A1A1A]/10`}
+              className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#000000]/10`}
             >
               <div className={`w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden p-4 md:p-6 ${item.bg}`}>
                 <img 
@@ -69,7 +69,7 @@ export default function CampaignAndGrid() {
               </div>
               {/* Mobile text (hidden on desktop) */}
               <div className="md:hidden w-full p-3 bg-white">
-                <h3 className="font-sans font-bold text-[11px] tracking-tight text-center uppercase text-[#1A1A1A]">
+                <h3 className="font-sans font-bold text-[11px] tracking-tight text-center uppercase text-[#000000]">
                   {item.title}
                 </h3>
               </div>
@@ -78,10 +78,10 @@ export default function CampaignAndGrid() {
         </div>
         
         {/* The White Text Bar at the Bottom (Desktop Only) */}
-        <div className="hidden md:flex w-full flex-row bg-white border-b border-[#1A1A1A]/10">
+        <div className="hidden md:flex w-full flex-row bg-white border-b border-[#000000]/10">
           {items.map((item, idx) => (
             <div key={idx} className="w-1/4 p-5">
-              <h3 className="font-sans font-bold text-[13px] tracking-tight w-full text-left uppercase text-[#1A1A1A]">
+              <h3 className="font-sans font-bold text-[13px] tracking-tight w-full text-left uppercase text-[#000000]">
                 {item.title}
               </h3>
             </div>

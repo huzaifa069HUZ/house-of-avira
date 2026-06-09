@@ -1,0 +1,209 @@
+.avira-catalogue-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  background: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding-bottom: 60px;
+}
+
+/* Header Area */
+.avira-catalogue-header {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+.avira-catalogue-title {
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  color: #000;
+}
+
+.avira-catalogue-subtitle {
+  font-size: 14px;
+  color: #000;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Category Scroller */
+.avira-cat-scroller-container {
+  border-bottom: 1px solid #000;
+  margin-bottom: 2px;
+}
+
+.avira-cat-scroller {
+  display: flex;
+  overflow-x: auto;
+  gap: 24px;
+  padding: 15px 20px 15px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  white-space: nowrap;
+  max-width: max-content;
+  margin: 0 auto;
+}
+
+.avira-cat-scroller::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.avira-cat-btn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.avira-cat-btn:hover {
+  color: #333;
+}
+
+.avira-cat-btn.active {
+  color: #000;
+  font-weight: 800;
+}
+
+/* Masonry Grid */
+.avira-masonry-grid {
+  column-count: 2;
+  column-gap: 2px;
+  padding: 0 2px;
+}
+
+@media (min-width: 640px) {
+  .avira-masonry-grid { column-count: 3; }
+}
+
+@media (min-width: 1024px) {
+  .avira-masonry-grid { column-count: 4; }
+}
+
+@media (min-width: 1440px) {
+  .avira-masonry-grid { column-count: 5; }
+}
+
+/* Grid Item */
+.avira-masonry-item {
+  break-inside: avoid;
+  margin-bottom: 2px;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  cursor: pointer;
+  background: #f5f5f5;
+}
+
+.avira-item-img-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.avira-item-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Overlays */
+.avira-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* Dark gradient at the bottom for text readability */
+.avira-item-overlay::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
+  z-index: 1;
+}
+
+.avira-icon-top-right {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.avira-icon-bottom-right {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.avira-tag-bottom-left {
+  position: absolute;
+  bottom: 16px;
+  left: 12px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  z-index: 2;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Loading State */
+.avira-loading {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.avira-loading svg {
+  animation: aviraSpin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes aviraSpin {
+  100% { transform: rotate(360deg); }
+}
+
+/* No Results */
+.avira-empty {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.avira-empty h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.avira-empty p {
+  color: #666;
+  font-size: 14px;
+}

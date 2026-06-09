@@ -59,8 +59,8 @@ export default function ProductPage({ params: paramsPromise }) {
     return (
       <div className="min-h-screen bg-white flex flex-col">
         <div className="flex-1 flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-serif text-[#1A1A1A] mb-4">Product Not Found</h1>
-          <button onClick={() => router.push('/')} className="text-xs border-b border-[#1A1A1A] uppercase tracking-widest pb-1">Return Home</button>
+          <h1 className="text-2xl font-serif text-[#000000] mb-4">Product Not Found</h1>
+          <button onClick={() => router.push('/')} className="text-xs border-b border-[#000000] uppercase tracking-widest pb-1">Return Home</button>
         </div>
       </div>
     );

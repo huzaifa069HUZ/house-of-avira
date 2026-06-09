@@ -18,7 +18,7 @@ export default function WishlistPage() {
         <p className="text-neutral-500 mb-8 text-center text-sm">Please log in to view your saved items.</p>
         <Link 
           href="/auth/login" 
-          className="bg-[#1A1A1A] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-black/80 transition-colors"
+          className="bg-[#000000] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-black/80 transition-colors"
         >
           Sign In
         </Link>
@@ -37,7 +37,7 @@ export default function WishlistPage() {
   return (
     <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 min-h-screen">
       <div className="flex flex-col items-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-cormorant uppercase tracking-widest text-[#1A1A1A] mb-4">
+        <h1 className="text-3xl md:text-4xl font-cormorant uppercase tracking-widest text-[#000000] mb-4">
           Personal Wishlist
         </h1>
         <p className="text-sm text-neutral-500 uppercase tracking-widest">
@@ -51,7 +51,7 @@ export default function WishlistPage() {
           <p className="text-neutral-500 mb-6 text-sm">You haven't saved any items yet.</p>
           <Link 
             href="/" 
-            className="bg-[#1A1A1A] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-black/80 transition-colors"
+            className="bg-[#000000] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-black/80 transition-colors"
           >
             Discover New Arrivals
           </Link>

@@ -69,7 +69,7 @@ export default function HeroCarousel() {
                 {/* Mobile CTA Button - Hidden on Desktop (since desktop uses text as link) */}
                 <Link 
                   href={slide.link}
-                  className="md:hidden inline-block bg-white text-[#1A1A1A] font-bold tracking-widest uppercase text-xs px-8 py-3 w-full text-center"
+                  className="md:hidden inline-block bg-white text-[#000000] font-bold tracking-widest uppercase text-xs px-8 py-3 w-full text-center"
                 >
                   Shop Now
                 </Link>
