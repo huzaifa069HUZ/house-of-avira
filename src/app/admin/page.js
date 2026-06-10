@@ -54,7 +54,7 @@ export default function AdminDashboard() {
         </div>
         
         {/* Apple-style Segmented Control for Tabs */}
-        <div className="flex bg-[#e5e5ea] p-1 rounded-lg w-fit">
+        <div className="flex flex-wrap sm:flex-nowrap gap-1 sm:gap-0 bg-[#e5e5ea] p-1 rounded-lg w-full sm:w-fit justify-start">
           <button 
             onClick={handleList}
             className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'list' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}

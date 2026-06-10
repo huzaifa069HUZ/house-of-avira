@@ -3,12 +3,16 @@
 import { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { uploadImagesToCloudinary } from '@/app/actions/uploadActions';
 import { Plus, Trash2, Image as ImageIcon, Link as LinkIcon, X, Loader2 } from 'lucide-react';
 
 export default function BannerManager() {
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  
   const [newBanner, setNewBanner] = useState({
     mobileImage: '',
     link: '/catalogue'
@@ -37,18 +41,39 @@ export default function BannerManager() {
 
   const handleAddBanner = async (e) => {
     e.preventDefault();
-    if (!newBanner.mobileImage) return;
+    if (!newBanner.mobileImage && !selectedFile) return;
+
+    setUploadingImage(true);
+    let imageUrl = newBanner.mobileImage;
 
     try {
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append('images', selectedFile);
+        const uploadResult = await uploadImagesToCloudinary(formData);
+        
+        if (uploadResult.success && uploadResult.urls.length > 0) {
+          imageUrl = uploadResult.urls[0];
+        } else {
+          throw new Error(uploadResult.error || 'Image upload failed');
+        }
+      }
+
       await addDoc(collection(db, 'mobile_banners'), {
-        ...newBanner,
+        mobileImage: imageUrl,
+        link: newBanner.link,
         createdAt: new Date().toISOString()
       });
+      
       setIsAdding(false);
       setNewBanner({ mobileImage: '', link: '/catalogue' });
+      setSelectedFile(null);
       fetchBanners();
     } catch (error) {
       console.error('Error adding mobile banner:', error);
+      alert('Failed to add banner: ' + error.message);
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -68,7 +93,11 @@ export default function BannerManager() {
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-black">Manage Mobile Banners</h2>
         <button 
-          onClick={() => setIsAdding(!isAdding)}
+          onClick={() => {
+            setIsAdding(!isAdding);
+            setNewBanner({ mobileImage: '', link: '/catalogue' });
+            setSelectedFile(null);
+          }}
           className="flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
         >
           {isAdding ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -80,22 +109,53 @@ export default function BannerManager() {
         <form onSubmit={handleAddBanner} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-              <div className="relative">
-                <ImageIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                <input 
-                  type="text" 
-                  required
-                  value={newBanner.mobileImage}
-                  onChange={(e) => setNewBanner({...newBanner, mobileImage: e.target.value})}
-                  className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black outline-none"
-                  placeholder="https://example.com/image.png or /banner.png"
-                />
+              <label className="block text-sm font-medium text-gray-700 mb-2">Banner Image</label>
+              
+              <div className="space-y-4">
+                {/* File Upload */}
+                <div>
+                  <input 
+                    type="file" 
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setSelectedFile(e.target.files[0]);
+                        setNewBanner({...newBanner, mobileImage: ''});
+                      }
+                    }}
+                    className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-800 file:cursor-pointer cursor-pointer"
+                  />
+                  {selectedFile && (
+                    <p className="text-xs text-green-600 mt-2 font-medium">Selected: {selectedFile.name}</p>
+                  )}
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="h-px bg-gray-200 flex-1"></div>
+                  <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">OR PASTE URL</span>
+                  <div className="h-px bg-gray-200 flex-1"></div>
+                </div>
+
+                {/* URL Input */}
+                <div className="relative">
+                  <ImageIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input 
+                    type="text" 
+                    value={newBanner.mobileImage}
+                    onChange={(e) => {
+                      setNewBanner({...newBanner, mobileImage: e.target.value});
+                      setSelectedFile(null);
+                    }}
+                    disabled={!!selectedFile}
+                    className={`w-full pl-9 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-black outline-none transition-colors ${selectedFile ? 'bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed' : 'border-gray-300 bg-white'}`}
+                    placeholder="https://example.com/image.png"
+                  />
+                </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Link (Optional)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Link Destination</label>
               <div className="relative">
                 <LinkIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input 
@@ -106,11 +166,24 @@ export default function BannerManager() {
                   placeholder="/category/women"
                 />
               </div>
+              <p className="text-xs text-gray-500 mt-2">Where users go when they tap the "Shop Now" button.</p>
             </div>
           </div>
-          <div className="mt-6 flex justify-end">
-            <button type="submit" className="px-6 py-2 bg-[#0071e3] text-white text-sm font-medium rounded-lg hover:bg-[#005bb5] transition-colors">
-              Save Banner
+          
+          <div className="mt-8 flex justify-end">
+            <button 
+              type="submit" 
+              disabled={uploadingImage || (!selectedFile && !newBanner.mobileImage)}
+              className="flex items-center gap-2 px-6 py-2.5 bg-[#0071e3] text-white text-sm font-medium rounded-lg hover:bg-[#005bb5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {uploadingImage ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Uploading & Saving...
+                </>
+              ) : (
+                'Save Banner'
+              )}
             </button>
           </div>
         </form>
@@ -138,13 +211,14 @@ export default function BannerManager() {
               {banners.map(banner => (
                 <tr key={banner.id} className="hover:bg-gray-50/50 transition-colors">
                   <td className="px-6 py-4">
-                    <img src={banner.mobileImage} alt="Banner Preview" className="h-20 w-12 object-cover rounded border border-gray-200" />
+                    <img src={banner.mobileImage} alt="Banner Preview" className="h-24 w-16 object-cover rounded-md border border-gray-200 shadow-sm" />
                   </td>
-                  <td className="px-6 py-4 text-gray-600">{banner.link || 'N/A'}</td>
+                  <td className="px-6 py-4 text-gray-600 font-mono text-xs">{banner.link || 'N/A'}</td>
                   <td className="px-6 py-4 text-right">
                     <button 
                       onClick={() => handleDelete(banner.id)}
-                      className="text-gray-400 hover:text-red-500 transition-colors p-2"
+                      className="text-gray-400 hover:text-red-500 transition-colors p-2 bg-white rounded-md border border-transparent hover:border-red-100 hover:bg-red-50"
+                      title="Delete banner"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
