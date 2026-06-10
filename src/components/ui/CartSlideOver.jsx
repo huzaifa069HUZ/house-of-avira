@@ -43,7 +43,7 @@ export default function CartSlideOver() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col overflow-hidden"
+            className="fixed md:right-0 right-2 md:top-0 top-2 h-[calc(100%-16px)] md:h-full w-[calc(100%-16px)] md:w-full max-w-md bg-white shadow-2xl z-50 flex flex-col overflow-hidden md:border-none border border-[#8A001A] rounded-2xl md:rounded-none"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-white/80 backdrop-blur-md">
@@ -197,10 +197,7 @@ export default function CartSlideOver() {
             {cart.length > 0 && (
               <div className="border-t border-gray-100 px-6 py-6 bg-white">
                 <div className="space-y-3 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-500 font-medium text-sm">Subtotal</span>
-                    <span className="text-base font-semibold text-gray-900">₹{subtotal.toFixed(2)}</span>
-                  </div>
+                  {/* Subtotal removed as requested */}
 
                   {appliedCoupon && (
                     <div className="flex justify-between items-center text-[#00a86b]">
@@ -214,7 +211,7 @@ export default function CartSlideOver() {
                     </div>
                   )}
 
-                  <div className="pt-4 border-t border-gray-100">
+                  <div className="pt-2">
                     <div className="w-full mb-3">
                       <p className="font-sans text-[10px] font-bold text-red-500 uppercase tracking-tight text-right leading-tight">
                         * INTERNATIONAL SHIPPING WILL BE CHARGED LATER, IT'S ONLY THE FIXED PRICE.

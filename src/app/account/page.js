@@ -41,8 +41,9 @@ export default function AccountPage() {
         <div className="col-span-1 space-y-6">
           <div className="bg-[#E5E0DA]/30 p-6 rounded-md border border-[#000000]/10">
             <h2 className="text-sm font-bold tracking-widest uppercase mb-4 text-[#000000]">Profile</h2>
-            <p className="text-sm text-[#000000]/80 mb-1">{user.name || 'No name set'}</p>
-            <p className="text-sm text-[#000000]/60 mb-4">{user.email}</p>
+            <p className="text-sm text-[#000000]/80 mb-1">{user.name || user.displayName || 'No name set'}</p>
+            <p className="text-sm text-[#000000]/60 mb-1">{user.email}</p>
+            <p className="text-sm text-[#000000]/60 mb-4">{user.phoneNumber || 'No mobile number added'}</p>
             <div className="flex flex-col gap-3">
               <Link href="/wishlist" className="flex items-center justify-between text-xs font-bold text-[#000000] border border-[#000000]/20 px-4 py-2.5 uppercase tracking-widest hover:bg-[#000000] hover:text-[#FFFFFF] transition-colors">
                 <span>My Wishlist</span>

@@ -5,7 +5,8 @@ import ProductManager from '@/components/admin/ProductManager';
 import ProductList from '@/components/admin/ProductList';
 import CartAnalytics from '@/components/admin/CartAnalytics';
 import CouponManager from '@/components/admin/CouponManager';
-import { LayoutDashboard, Plus, Package, BarChart3, Ticket } from 'lucide-react';
+import BannerManager from '@/components/admin/BannerManager';
+import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit'
@@ -34,6 +35,11 @@ export default function AdminDashboard() {
   const handleCoupons = () => {
     setEditingProduct(null);
     setCurrentView('coupons');
+  };
+
+  const handleBanners = () => {
+    setEditingProduct(null);
+    setCurrentView('banners');
   };
 
   return (
@@ -77,6 +83,13 @@ export default function AdminDashboard() {
             <Ticket className="w-4 h-4" />
             Coupons
           </button>
+          <button 
+            onClick={handleBanners}
+            className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'banners' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}
+          >
+            <ImageIcon className="w-4 h-4" />
+            Banners
+          </button>
         </div>
       </div>
 
@@ -105,6 +118,7 @@ export default function AdminDashboard() {
         )}
         {currentView === 'analytics' && <CartAnalytics />}
         {currentView === 'coupons' && <CouponManager />}
+        {currentView === 'banners' && <BannerManager />}
       </div>
     </div>
   );
