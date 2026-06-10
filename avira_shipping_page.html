@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shipping Information — House of Avira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #FAF7F2;
+  color: #2D2420;
+  overflow-x: hidden;
+}
+
+/* ── EDUCATION BANNER ── */
+.edu-banner {
+  background: #8B5E52;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 10px 24px;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 22s linear infinite;
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 247, 242, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 0.5px solid #E8C4B8;
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #2D2420;
+}
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+.nav-link {
+  font-size: 13px;
+  color: #8B5E52;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px 0;
+  border-bottom: 1.5px solid transparent;
+}
+.nav-link:hover { color: #C97B6E; }
+.nav-link.active {
+  border-bottom-color: #C97B6E;
+  color: #C97B6E;
+}
+
+/* ── HERO ── */
+.page-hero {
+  padding: 72px 32px 60px;
+  text-align: center;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #B8A99A;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: #2D2420;
+  margin-bottom: 20px;
+}
+.hero-title em { font-style: italic; }
+.hero-sub {
+  font-size: 15px;
+  color: #8B5E52;
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+.toc-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.toc-pill {
+  background: #fff;
+  border: 1px solid #E8C4B8;
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 13px;
+  color: #8B5E52;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.toc-pill:hover { background: #E8C4B8; color: #2D2420; }
+
+/* ── DIVIDER ── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E8C4B8, transparent);
+  margin: 0 32px;
+}
+
+/* ── SECTIONS ── */
+.section {
+  padding: 64px 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #C97B6E;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 500;
+  color: #2D2420;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.section-intro {
+  font-size: 15px;
+  color: #6B5248;
+  line-height: 1.75;
+  margin-bottom: 36px;
+}
+
+/* ── DIAGRAM ── */
+.diagram-container {
+  background: #fff;
+  border: 1px solid #E8C4B8;
+  border-radius: 20px;
+  padding: 36px 32px;
+  margin-bottom: 36px;
+}
+.diagram-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 32px;
+  color: #2D2420;
+}
+.tier-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+}
+.tier-node {
+  flex: 0 0 140px;
+  background: #FAF7F2;
+  border: 1px solid #E8C4B8;
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+}
+.tier-node .node-icon { font-size: 28px; margin-bottom: 8px; }
+.tier-node .node-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2D2420;
+  line-height: 1.4;
+}
+.tier-node .node-sub {
+  font-size: 11px;
+  color: #B8A99A;
+  margin-top: 4px;
+}
+.tier-arrow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 8px;
+}
+.arrow-label-box {
+  background: #FDF0EB;
+  border: 1px solid #E8C4B8;
+  border-radius: 10px;
+  padding: 10px 16px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+.arrow-label-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #C97B6E;
+  margin-bottom: 4px;
+}
+.arrow-label-desc {
+  font-size: 11px;
+  color: #8B5E52;
+  line-height: 1.5;
+}
+.arrow-line {
+  width: 100%;
+  height: 2px;
+  background: #E8C4B8;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.arrow-line::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #C97B6E;
+  position: absolute;
+  right: 0;
+}
+.tier-separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 28px;
+}
+.tier-sep-line { flex: 1; height: 1px; background: #EDE0D8; }
+.tier-sep-badge {
+  background: #8B5E52;
+  color: #fff;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 5px 14px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.batch-note {
+  background: #FDF6F0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #6B5248;
+  line-height: 1.65;
+  border: 1px solid #F0D4C4;
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, #E8C4B8, #C97B6E, #E8C4B8);
+}
+.tl-step { position: relative; margin-bottom: 28px; }
+.tl-dot {
+  position: absolute;
+  left: -28px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #C97B6E;
+  background: #FAF7F2;
+}
+.tl-dot.done { background: #C97B6E; }
+.tl-dot.active {
+  background: #C97B6E;
+  box-shadow: 0 0 0 4px #F0C4B8;
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(201,123,110,0.35); }
+  50%       { box-shadow: 0 0 0 7px rgba(201,123,110,0.10); }
+}
+.tl-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2D2420;
+  margin-bottom: 4px;
+}
+.tl-desc {
+  font-size: 13px;
+  color: #6B5248;
+  line-height: 1.6;
+}
+.tl-badge {
+  display: inline-block;
+  background: #FDE8DC;
+  color: #8B3A1E;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-left: 8px;
+  letter-spacing: 0.05em;
+}
+
+/* ── SHIPPING MODES ── */
+.modes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.mode-card {
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #E8C4B8;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.mode-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(45, 36, 32, 0.10);
+}
+.mode-card.air { background: #FDF6F0; }
+.mode-card.sea { background: #F0F4FB; border-color: #B8C9D8; }
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 14px;
+}
+.mode-badge.air { background: #FDE8DC; color: #8B3A1E; }
+.mode-badge.sea { background: #DCE8F5; color: #1E4A72; }
+.mode-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.mode-card.air .mode-title { color: #8B3A1E; }
+.mode-card.sea .mode-title { color: #1E4A72; }
+.mode-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+.mode-card.air .mode-time { color: #C97B6E; }
+.mode-card.sea .mode-time { color: #4A7AAD; }
+.mode-feature {
+  font-size: 13px;
+  color: #6B5248;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.mode-feature .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C97B6E;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.mode-card.sea .mode-feature .dot { background: #4A7AAD; }
+.mode-note {
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #8B5E52;
+  line-height: 1.5;
+}
+
+/* ── COST FACTORS ── */
+.factors-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.factor-card {
+  background: #fff;
+  border: 1px solid #E8C4B8;
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.factor-card:hover { transform: translateY(-2px); }
+.factor-icon { font-size: 28px; margin-bottom: 10px; }
+.factor-title { font-size: 13px; font-weight: 500; color: #2D2420; margin-bottom: 6px; }
+.factor-desc { font-size: 12px; color: #8B5E52; line-height: 1.5; }
+
+/* ── SPECIAL CATEGORIES ── */
+.special-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.special-card {
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.special-card.branded { background: #FDF6EC; border: 1px solid #E8D4B0; }
+.special-card.liquids  { background: #EDF6FB; border: 1px solid #B0D4E8; }
+.special-card.oversized{ background: #F4ECFD; border: 1px solid #C8B0E8; }
+.special-card.footwear { background: #ECFBF4; border: 1px solid #B0E8CC; }
+.special-icon { font-size: 28px; flex-shrink: 0; }
+.special-title { font-size: 14px; font-weight: 500; color: #2D2420; margin-bottom: 6px; }
+.special-text  { font-size: 12px; color: #6B5248; line-height: 1.6; }
+
+/* ── POLICIES ── */
+.policy-stack { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+.policy-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  border-left: 4px solid #C97B6E;
+  border-top: 0.5px solid #E8C4B8;
+  border-right: 0.5px solid #E8C4B8;
+  border-bottom: 0.5px solid #E8C4B8;
+}
+.policy-item.info { border-left-color: #4A7AAD; }
+.policy-item.warn { border-left-color: #C9A96E; }
+.policy-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #C97B6E;
+  flex-shrink: 0;
+  margin-top: 2px;
+  letter-spacing: 0.06em;
+}
+.policy-item.info .policy-num { color: #4A7AAD; }
+.policy-item.warn .policy-num { color: #C9A96E; }
+.policy-title { font-size: 14px; font-weight: 500; color: #2D2420; margin-bottom: 5px; }
+.policy-text  { font-size: 13px; color: #6B5248; line-height: 1.65; }
+
+/* ── FAQ ── */
+.faq-item { border-bottom: 0.5px solid #E8C4B8; }
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2D2420;
+  transition: color 0.2s;
+  user-select: none;
+}
+.faq-q:hover { color: #C97B6E; }
+.faq-chevron {
+  font-size: 16px;
+  color: #B8A99A;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.faq-chevron.open { transform: rotate(180deg); }
+.faq-a {
+  font-size: 13px;
+  color: #6B5248;
+  line-height: 1.75;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.25s;
+}
+.faq-a.open { max-height: 300px; padding-bottom: 18px; }
+
+/* ── BOTTOM NOTICE ── */
+.bottom-notice {
+  background: #2D2420;
+  color: #FAF7F2;
+  padding: 48px 32px;
+  text-align: center;
+}
+.bn-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 14px;
+}
+.bn-sub {
+  font-size: 14px;
+  color: rgba(250,247,242,0.65);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 28px;
+}
+.bn-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.bn-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.bn-btn.primary { background: #C97B6E; color: #fff; }
+.bn-btn.primary:hover { background: #B86B5E; }
+.bn-btn.outline {
+  background: transparent;
+  color: #FAF7F2;
+  border: 1px solid rgba(250,247,242,0.3);
+}
+.bn-btn.outline:hover { border-color: rgba(250,247,242,0.6); }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .hero-title { font-size: 36px; }
+  .modes-grid { grid-template-columns: 1fr; }
+  .factors-grid { grid-template-columns: 1fr 1fr; }
+  .special-grid { grid-template-columns: 1fr; }
+  .tier-row { flex-direction: column; gap: 12px; }
+  .tier-arrow { width: 100%; }
+  .nav-links { gap: 14px; }
+  .section { padding: 48px 20px; }
+  .page-hero { padding: 48px 20px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- EDUCATION BANNER -->
+<div class="edu-banner">
+  <span class="marquee-inner">
+    &nbsp;&nbsp;&nbsp;&nbsp;House of Avira is a preorder &amp; import business &middot; Products are sourced internationally &middot; Shipping is charged separately &middot; No cancellations or refunds after ordering &middot; Delivery timelines are estimates only &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; House of Avira is a preorder &amp; import business &middot; Products are sourced internationally &middot; Shipping is charged separately &middot; No cancellations or refunds after ordering &middot; Delivery timelines are estimates only &nbsp;&nbsp;&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="nav-logo">House of Avira</div>
+  <div class="nav-links">
+    <a class="nav-link active" onclick="scrollToSection('how-it-works')">How It Works</a>
+    <a class="nav-link" onclick="scrollToSection('shipping-modes')">Shipping Modes</a>
+    <a class="nav-link" onclick="scrollToSection('policies')">Policies</a>
+    <a class="nav-link" onclick="scrollToSection('faq')">FAQ</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero" id="top">
+  <div class="hero-eyebrow">Shipping &amp; Import Information</div>
+  <h1 class="hero-title">Everything about<br><em>how your order travels</em></h1>
+  <p class="hero-sub">From our suppliers abroad to your doorstep in India — here's exactly how our two-tier shipping model works, and what to expect every step of the way.</p>
+  <div class="toc-pills">
+    <div class="toc-pill" onclick="scrollToSection('how-it-works')">
+      <i class="ti ti-route" aria-hidden="true"></i> The Journey
+    </div>
+    <div class="toc-pill" onclick="scrollToSection('shipping-modes')">
+      <i class="ti ti-plane" aria-hidden="true"></i> Air vs Sea
+    </div>
+    <div class="toc-pill" onclick="scrollToSection('special-cats')">
+      <i class="ti ti-tag" aria-hidden="true"></i> Special Categories
+    </div>
+    <div class="toc-pill" onclick="scrollToSection('policies')">
+      <i class="ti ti-shield" aria-hidden="true"></i> Policies
+    </div>
+    <div class="toc-pill" onclick="scrollToSection('faq')">
+      <i class="ti ti-help-circle" aria-hidden="true"></i> FAQ
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 1 — HOW IT WORKS -->
+<div class="section fade-in" id="how-it-works">
+  <div class="section-label">Section 01</div>
+  <h2 class="section-title">Your order's two-tier journey</h2>
+  <p class="section-intro">There are two separate shipping charges on every order. Understanding this is key to placing your preorder with confidence.</p>
+
+  <div class="diagram-container">
+    <div class="diagram-title">International + Domestic — How Your Product Moves</div>
+
+    <!-- TIER 1 -->
+    <div class="tier-row">
+      <div class="tier-node">
+        <div class="node-icon"><i class="ti ti-building-store" style="font-size:28px;color:#C97B6E" aria-hidden="true"></i></div>
+        <div class="node-label">Suppliers &amp;<br>Manufacturers</div>
+        <div class="node-sub">Abroad</div>
+      </div>
+      <div class="tier-arrow">
+        <div class="arrow-label-box">
+          <div class="arrow-label-title">&#9992; International Shipping</div>
+          <div class="arrow-label-desc">Cost split equally among all customers in the batch based on package weight. Charged separately after ordering.</div>
+        </div>
+        <div class="arrow-line"></div>
+      </div>
+      <div class="tier-node">
+        <div class="node-icon"><i class="ti ti-home" style="font-size:28px;color:#C97B6E" aria-hidden="true"></i></div>
+        <div class="node-label">House of Avira</div>
+        <div class="node-sub">India</div>
+      </div>
+    </div>
+
+    <div class="tier-separator">
+      <div class="tier-sep-line"></div>
+      <div class="tier-sep-badge">ARRIVES IN INDIA &middot; CUSTOMS CLEARED</div>
+      <div class="tier-sep-line"></div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="tier-row">
+      <div class="tier-node">
+        <div class="node-icon"><i class="ti ti-home" style="font-size:28px;color:#4A7AAD" aria-hidden="true"></i></div>
+        <div class="node-label">House of Avira</div>
+        <div class="node-sub">India</div>
+      </div>
+      <div class="tier-arrow">
+        <div class="arrow-label-box" style="background:#EDF6FB;border-color:#B0D4E8;">
+          <div class="arrow-label-title" style="color:#1E4A72;">&#128666; Domestic Shipping</div>
+          <div class="arrow-label-desc">Cost based on your pincode and package weight. Calculated via Shiprocket. Charged separately before dispatch.</div>
+        </div>
+        <div class="arrow-line" style="background:#B0D4E8;"></div>
+      </div>
+      <div class="tier-node" style="border-color:#B0D4E8;">
+        <div class="node-icon"><i class="ti ti-user-heart" style="font-size:28px;color:#4A7AAD" aria-hidden="true"></i></div>
+        <div class="node-label">You</div>
+        <div class="node-sub">Your doorstep</div>
+      </div>
+    </div>
+
+    <div class="batch-note">
+      <strong style="color:#8B3A1E;font-weight:500;">Why can't we give you the exact shipping cost upfront?</strong><br>
+      International shipping is calculated based on the <em>total batch weight</em> — the combined weight of all orders in your batch. Since we collect orders first and ship together, the exact per-customer cost is only known when the batch is packed and ready to ship. This method ensures you're charged accurately — never overcharged on a rough estimate.
+    </div>
+  </div>
+
+  <!-- ORDER TIMELINE -->
+  <div class="section-label" style="margin-top:40px;">Your Order Timeline</div>
+  <h3 class="section-title" style="font-size:28px;">13 stages from order to delivery</h3>
+  <div style="margin-top:24px;">
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-dot done"></div>
+        <div class="tl-title">Order Placed &amp; Product Payment Received</div>
+        <div class="tl-desc">You pay the product price only. Order confirmed. Your batch assignment begins.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot done"></div>
+        <div class="tl-title">Batch Being Collected</div>
+        <div class="tl-desc">Your order is grouped with other orders into a batch for cost-efficient international shipping.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot done"></div>
+        <div class="tl-title">Supplier Order Placed</div>
+        <div class="tl-desc">We place the order with our international suppliers on your behalf.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot done"></div>
+        <div class="tl-title">Products at International Warehouse</div>
+        <div class="tl-desc">Your product has arrived at our international warehouse. Batch packing begins.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot active"></div>
+        <div class="tl-title">International Shipping Invoice Sent <span class="tl-badge">ACTION REQUIRED</span></div>
+        <div class="tl-desc">We send you the calculated international shipping amount. Must be paid by the deadline to proceed.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-title">International Shipping Paid</div>
+        <div class="tl-desc">Payment confirmed. Batch dispatched from our international warehouse towards India.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-title">Dispatched to India &middot; Customs &amp; Clearance</div>
+        <div class="tl-desc">Shipment is in transit. Customs clearance happens at this stage. Customs fees are already included in your international shipping invoice.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-title">Arrived in India</div>
+        <div class="tl-desc">Your order has cleared customs and arrived with us in India.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-title">Domestic Shipping Invoice Sent <span class="tl-badge">ACTION REQUIRED</span></div>
+        <div class="tl-desc">We calculate your courier cost based on your pincode and package weight and send you the invoice.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-title">Domestic Shipping Paid</div>
+        <div class="tl-desc">Payment confirmed. Your order is being packed for final domestic dispatch.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-title">Dispatched Domestically</div>
+        <div class="tl-desc">Your order is with the courier. Tracking ID has been shared with you.</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-title">Delivered <i class="ti ti-heart" aria-hidden="true" style="color:#C97B6E;font-size:14px;vertical-align:-1px;"></i></div>
+        <div class="tl-desc">Your order is at your door. Please record your unboxing — we love seeing it!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 2 — SHIPPING MODES -->
+<div class="section fade-in" id="shipping-modes">
+  <div class="section-label">Section 02</div>
+  <h2 class="section-title">Air vs Sea shipping</h2>
+  <p class="section-intro">Most packages travel by sea — it's the default and most affordable option. Air shipping is faster but costs more, and requires a minimum batch weight to proceed.</p>
+
+  <div class="modes-grid">
+    <div class="mode-card air">
+      <div class="mode-badge air"><i class="ti ti-plane" aria-hidden="true"></i> Air Shipping</div>
+      <div class="mode-title">Fast Delivery</div>
+      <div class="mode-time">~ 15 days</div>
+      <div class="mode-feature"><div class="dot"></div><div>Higher cost due to air freight</div></div>
+      <div class="mode-feature"><div class="dot"></div><div>Requires a minimum batch weight to proceed</div></div>
+      <div class="mode-feature"><div class="dot"></div><div>If minimum weight not met, automatically shifts to sea shipping</div></div>
+      <div class="mode-note"><strong style="color:#8B3A1E;font-weight:500;">Liquids only by air.</strong> Products like lip gloss and liquid beauty items are only eligible for air shipping — not sea.</div>
+    </div>
+    <div class="mode-card sea">
+      <div class="mode-badge sea"><i class="ti ti-ship" aria-hidden="true"></i> Sea Shipping</div>
+      <div class="mode-title">Budget Friendly</div>
+      <div class="mode-time">2 – 3 months</div>
+      <div class="mode-feature"><div class="dot"></div><div>Much more affordable than air freight</div></div>
+      <div class="mode-feature"><div class="dot"></div><div>Default option for most packages</div></div>
+      <div class="mode-feature"><div class="dot"></div><div>Best for bags, apparel, and accessories</div></div>
+      <div class="mode-note" style="background:rgba(255,255,255,0.7);color:#1E4A72;"><strong style="font-weight:500;">Most orders ship sea.</strong> This is the standard method for non-liquid products unless air is available for your batch.</div>
+    </div>
+  </div>
+
+  <div class="section-label">What affects your cost</div>
+  <h3 class="section-title" style="font-size:28px;margin-bottom:24px;">Factors that determine shipping price</h3>
+  <div class="factors-grid">
+    <div class="factor-card">
+      <div class="factor-icon"><i class="ti ti-weight" aria-hidden="true" style="color:#C97B6E;font-size:28px;"></i></div>
+      <div class="factor-title">Product Weight</div>
+      <div class="factor-desc">Heavier products take a larger share of the total batch shipping cost.</div>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon"><i class="ti ti-certificate" aria-hidden="true" style="color:#C9A96E;font-size:28px;"></i></div>
+      <div class="factor-title">Brand Tier</div>
+      <div class="factor-desc">Branded items (Coach, LV, Nike, Dior) attract higher duty and customs fees.</div>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon"><i class="ti ti-tag" aria-hidden="true" style="color:#8B7DB8;font-size:28px;"></i></div>
+      <div class="factor-title">Product Type</div>
+      <div class="factor-desc">Bags, apparel, beauty, shoes, and accessories each have different duty rates.</div>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon"><i class="ti ti-building-bank" aria-hidden="true" style="color:#4A7AAD;font-size:28px;"></i></div>
+      <div class="factor-title">Customs &amp; Duties</div>
+      <div class="factor-desc">India's import duty varies by category. Included in your international shipping invoice.</div>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon"><i class="ti ti-map-pin" aria-hidden="true" style="color:#6B9E7A;font-size:28px;"></i></div>
+      <div class="factor-title">Your Pincode</div>
+      <div class="factor-desc">Domestic shipping cost depends on your location and courier service availability.</div>
+    </div>
+    <div class="factor-card">
+      <div class="factor-icon"><i class="ti ti-package" aria-hidden="true" style="color:#C97B6E;font-size:28px;"></i></div>
+      <div class="factor-title">Packaging Type</div>
+      <div class="factor-desc">Oversized or special packaging may attract higher logistics charges.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 3 — SPECIAL CATEGORIES -->
+<div class="section fade-in" id="special-cats">
+  <div class="section-label">Section 03</div>
+  <h2 class="section-title">Special category notices</h2>
+  <p class="section-intro">Some product types require extra attention. Please read the relevant notice before placing your order.</p>
+  <div class="special-grid">
+    <div class="special-card branded">
+      <div class="special-icon"><i class="ti ti-diamond" aria-hidden="true" style="color:#8B6914;font-size:28px;"></i></div>
+      <div>
+        <div class="special-title">Branded Items</div>
+        <div class="special-text">Products from brands like Coach, Hello Kitty, Ferrari, LV, Dior, Chanel, Nike, and Stussy carry higher customs duties and a longer customs processing period. Expect higher international shipping costs and a slightly longer timeline.</div>
+      </div>
+    </div>
+    <div class="special-card liquids">
+      <div class="special-icon"><i class="ti ti-droplet" aria-hidden="true" style="color:#1E5A72;font-size:28px;"></i></div>
+      <div>
+        <div class="special-title">Liquids &amp; Beauty Products</div>
+        <div class="special-text">Liquid products such as lip glosses, serums, and skincare can only be shipped by air. Sea shipping is not permitted for liquids. This means a higher shipping cost and a faster delivery window (~15 days).</div>
+      </div>
+    </div>
+    <div class="special-card oversized">
+      <div class="special-icon"><i class="ti ti-box" aria-hidden="true" style="color:#5A3A8B;font-size:28px;"></i></div>
+      <div>
+        <div class="special-title">Oversized &amp; Bulky Items</div>
+        <div class="special-text">Large or bulky items take a bigger share of the batch weight, which means a higher shipping cost. This also applies domestically — oversized packages may attract higher courier charges based on volumetric weight.</div>
+      </div>
+    </div>
+    <div class="special-card footwear">
+      <div class="special-icon"><i class="ti ti-shoe" aria-hidden="true" style="color:#1A6B42;font-size:28px;"></i></div>
+      <div>
+        <div class="special-title">Footwear</div>
+        <div class="special-text">Shoes and footwear ship in their original boxes, which are larger and heavier than standard packaging. This typically results in higher shipping costs compared to smaller items.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 4 — POLICIES -->
+<div class="section fade-in" id="policies">
+  <div class="section-label">Section 04</div>
+  <h2 class="section-title">Important shipping policies</h2>
+  <p class="section-intro">Please read and understand these policies before placing your order. By ordering from House of Avira, you agree to all of the following.</p>
+
+  <div class="policy-stack">
+    <div class="policy-item">
+      <div class="policy-num">P-01</div>
+      <div>
+        <div class="policy-title">Payment deadline is mandatory</div>
+        <div class="policy-text">Once your shipping invoice is sent, it must be paid by the specified deadline. If the international shipping fee remains unpaid, your parcel will not be shipped and no refund will be issued. Your order is placed with suppliers immediately after you submit it — it cannot be reversed.</div>
+      </div>
+    </div>
+    <div class="policy-item">
+      <div class="policy-num">P-02</div>
+      <div>
+        <div class="policy-title">No cancellations or refunds after ordering</div>
+        <div class="policy-text">Once an order is submitted, we forward it to our suppliers immediately. Cancellations, refunds, and exchanges cannot be accommodated under any circumstances after this point — including if shipping costs are higher than expected or if there are delivery delays.</div>
+      </div>
+    </div>
+    <div class="policy-item warn">
+      <div class="policy-num" style="color:#C9A96E;">P-03</div>
+      <div>
+        <div class="policy-title">Shipping prices may change</div>
+        <div class="policy-text">International shipping prices may fluctuate due to carrier rates, customs regulations, and the nature of the product. The exact cost is calculated only when your parcel is packed and ready to ship. We recommend placing an order only if you're comfortable with this variable.</div>
+      </div>
+    </div>
+    <div class="policy-item info">
+      <div class="policy-num">P-04</div>
+      <div>
+        <div class="policy-title">Our responsibility ends at the courier</div>
+        <div class="policy-text">Once your domestic package is handed over to the courier and a tracking ID is provided, delivery delays, transit issues, or rare mishaps are beyond our control. We will always support you with tracking information, but we cannot take responsibility for courier-side delays or losses.</div>
+      </div>
+    </div>
+    <div class="policy-item info">
+      <div class="policy-num">P-05</div>
+      <div>
+        <div class="policy-title">Delays are not grounds for cancellation</div>
+        <div class="policy-text">We do not accept cancellations or offer refunds for delayed deliveries, particularly for imported goods. Delivery times may vary due to customs, logistics, and factors completely beyond our control. Please only order if you are patient and comfortable waiting.</div>
+      </div>
+    </div>
+    <div class="policy-item">
+      <div class="policy-num">P-06</div>
+      <div>
+        <div class="policy-title">Customs fees are included in your invoice</div>
+        <div class="policy-text">India's basic customs duty on imported goods varies by product type (bags ~10%, apparel ~20%, beauty ~18%, footwear ~25%). These charges are calculated and included in your international shipping invoice — you will receive a full cost breakdown before payment is required.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 5 — FAQ -->
+<div class="section fade-in" id="faq">
+  <div class="section-label">Section 05</div>
+  <h2 class="section-title">Frequently asked questions</h2>
+  <p class="section-intro" style="margin-bottom:24px;">The questions our team answers most often — answered here, permanently.</p>
+
+  <div id="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(0)">
+        Why can't you tell me the shipping cost upfront?
+        <i class="ti ti-chevron-down faq-chevron" id="chev-0" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a" id="faq-0">We ship in batches. The international cost is split equally among all customers based on the total package weight. Since we collect all orders first and then ship together, the exact per-customer cost is only known when the full batch is packed. This ensures you're charged accurately — never based on a rough estimate.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(1)">
+        Is COD (Cash on Delivery) available?
+        <i class="ti ti-chevron-down faq-chevron" id="chev-1" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a" id="faq-1">No, COD is not available at House of Avira. We deal with imported products sourced internationally on your behalf — payment must be received before the order can be placed with our suppliers. We accept GPay, Paytm, UPI, bank transfers, and card payments.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(2)">
+        How long will my order take?
+        <i class="ti ti-chevron-down faq-chevron" id="chev-2" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a" id="faq-2">It depends on the shipping mode. Air shipping takes approximately 15 days from dispatch. Sea shipping takes 2–3 months. The total timeline includes batch collection time, international transit, customs clearance, and domestic delivery. All timelines are estimates — delays can occur due to customs and logistics.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(3)">
+        Can I cancel my order if I change my mind?
+        <i class="ti ti-chevron-down faq-chevron" id="chev-3" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a" id="faq-3">No. Once an order is placed, it is submitted to our suppliers immediately and cannot be cancelled, refunded, or exchanged. This applies even if there are delays, even if the shipping cost is higher than expected, and even if the shipping invoice has not yet been paid. Please only order if you are fully committed to the purchase.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(4)">
+        What if I don't pay the shipping invoice on time?
+        <i class="ti ti-chevron-down faq-chevron" id="chev-4" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a" id="faq-4">If the shipping invoice is not paid by the specified deadline, your parcel will not be shipped. No refund will be issued for your product payment, as the order has already been placed with our suppliers on your behalf. Please pay shipping invoices promptly when they are sent.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(5)">
+        Are customs and duty charges included in the shipping invoice?
+        <i class="ti ti-chevron-down faq-chevron" id="chev-5" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a" id="faq-5">Yes. India's customs duties and GST on imports are calculated and included in your international shipping invoice. You will receive a full itemised breakdown showing the shipping cost, customs duty, and GST before you are required to pay anything.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(6)">
+        My order is delayed — can I get a refund?
+        <i class="ti ti-chevron-down faq-chevron" id="chev-6" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a" id="faq-6">No. Delivery delays are not grounds for a refund or cancellation. International shipping and customs timelines can vary significantly due to factors completely outside our control. We ask that you only place an order if you are patient and comfortable with variable timelines. We will always keep you updated on your order's progress.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-notice">
+  <div class="bn-title">Still have questions?</div>
+  <div class="bn-sub">Our team is always happy to help. DM us on Instagram or use our AI assistant — we'll make sure you have everything you need before placing your order.</div>
+  <div class="bn-buttons">
+    <a href="#" class="bn-btn primary">
+      <i class="ti ti-sparkles" aria-hidden="true"></i> Ask Avira AI
+    </a>
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="bn-btn outline">
+      <i class="ti ti-brand-instagram" aria-hidden="true"></i> DM on Instagram
+    </a>
+  </div>
+  <div style="margin-top:24px;font-size:11px;color:rgba(250,247,242,0.35);letter-spacing:0.06em;">
+    HOUSE OF AVIRA &middot; PREORDER &amp; IMPORT BUSINESS &middot; EST. 2022
+  </div>
+</div>
+
+<script>
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function toggleFaq(i) {
+    const ans  = document.getElementById('faq-'  + i);
+    const chev = document.getElementById('chev-' + i);
+    const isOpen = ans.classList.contains('open');
+    document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('open'));
+    if (!isOpen) {
+      ans.classList.add('open');
+      chev.classList.add('open');
+    }
+  }
+
+  /* Scroll-triggered fade-in */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  /* Active nav link on scroll */
+  const sections = ['how-it-works', 'shipping-modes', 'special-cats', 'policies', 'faq'];
+  const navLinks  = document.querySelectorAll('.nav-link');
+  const secObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const match = Array.from(navLinks).find(
+          l => l.getAttribute('onclick') && l.getAttribute('onclick').includes(e.target.id)
+        );
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) secObserver.observe(el);
+  });
+</script>
+</body>
+</html>

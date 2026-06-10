@@ -102,7 +102,7 @@ export default function ProductList({ onEdit }) {
                 <td className="px-6 py-4 whitespace-nowrap text-right">
                   <button 
                     onClick={() => onEdit(product)}
-                    className="p-2 text-[#0071e3] hover:bg-[#0071e3]/10 rounded-full transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                    className="p-2 text-[#0071e3] hover:bg-[#0071e3]/10 rounded-full transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100"
                     aria-label="Edit product"
                   >
                     <Edit2 className="w-4 h-4" />

@@ -46,7 +46,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
-  const [section, setSection] = useState('New Arrivals');
+  const [sections, setSections] = useState(['New Arrivals']);
   const [badge, setBadge] = useState('');
   
   // Categories state
@@ -76,7 +76,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       setName(initialProduct.name || '');
       setPrice(initialProduct.price?.toString() || '');
       setDescription(initialProduct.description || '');
-      setSection(initialProduct.section || 'New Arrivals');
+      setSections(initialProduct.sections || [initialProduct.section || 'New Arrivals']);
       setBadge(initialProduct.badge || '');
       setCategory(initialProduct.category || CATEGORY_DATA[0].title);
       setSubcategory(initialProduct.subcategory || '');
@@ -88,30 +88,77 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   }, [initialProduct]);
 
   // --- Handlers for Tags ---
-  const handleAddSize = (e) => {
+  const removeSize = (sizeToRemove) => setSizes(prev => prev.filter(s => s !== sizeToRemove));
+  
+  const processSizeInput = (value) => {
+    const val = value.trim().toUpperCase();
+    if (val && !sizes.includes(val)) {
+      setSizes(prev => [...prev, val]);
+    }
+  };
+
+  const handleSizeKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
-      const val = sizeInput.trim().toUpperCase();
-      if (val && !sizes.includes(val)) {
-        setSizes([...sizes, val]);
-      }
+      processSizeInput(sizeInput);
       setSizeInput('');
     }
   };
-  const removeSize = (sizeToRemove) => setSizes(sizes.filter(s => s !== sizeToRemove));
 
-  const handleAddColor = (e) => {
+  const handleSizeBlur = () => {
+    if (sizeInput.trim()) {
+      processSizeInput(sizeInput);
+      setSizeInput('');
+    }
+  };
+  
+  const handleSizeChange = (e) => {
+    const val = e.target.value;
+    if (val.includes(',')) {
+      val.split(',').forEach(v => {
+        if(v.trim()) processSizeInput(v);
+      });
+      setSizeInput('');
+    } else {
+      setSizeInput(val);
+    }
+  };
+
+  const removeColor = (colorToRemove) => setColors(prev => prev.filter(c => c !== colorToRemove));
+
+  const processColorInput = (value) => {
+    const val = value.trim();
+    if (val && !colors.includes(val)) {
+      setColors(prev => [...prev, val]);
+    }
+  };
+
+  const handleColorKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
-      const val = colorInput.trim();
-      if (val && !colors.includes(val)) {
-        setColors([...colors, val]);
-      }
+      processColorInput(colorInput);
       setColorInput('');
     }
   };
-  const removeColor = (colorToRemove) => setColors(colors.filter(c => c !== colorToRemove));
 
+  const handleColorBlur = () => {
+    if (colorInput.trim()) {
+      processColorInput(colorInput);
+      setColorInput('');
+    }
+  };
+  
+  const handleColorChange = (e) => {
+    const val = e.target.value;
+    if (val.includes(',')) {
+      val.split(',').forEach(v => {
+        if(v.trim()) processColorInput(v);
+      });
+      setColorInput('');
+    } else {
+      setColorInput(val);
+    }
+  };
 
   // --- Handlers for Drag & Drop Files ---
   const handleFilesAdded = (newFiles) => {
@@ -189,7 +236,8 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         name,
         price: parseFloat(price),
         description,
-        section,
+        section: sections[0], // backward compatibility
+        sections,
         category,
         subcategory,
         badge,
@@ -213,7 +261,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         setSuccess('Product successfully added!');
         
         // Reset form only on add
-        setName(''); setPrice(''); setDescription(''); setSection('New Arrivals'); setBadge('');
+        setName(''); setPrice(''); setDescription(''); setSections(['New Arrivals']); setBadge('');
         setCategory(CATEGORY_DATA[0].title); setSubcategory(CATEGORY_DATA[0].children[0] || '');
         setSizes([]); setColors([]); setFiles([]); setPreviews([]); setExistingImages([]);
       }
@@ -325,7 +373,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                       </button>
                     </span>
                   ))}
-                  <input type="text" value={sizeInput} onChange={e => setSizeInput(e.target.value)} onKeyDown={handleAddSize} className="flex-1 min-w-[80px] outline-none text-[13px] px-1 bg-transparent" placeholder={sizes.length === 0 ? "e.g. S, M, L..." : ""} />
+                  <input type="text" value={sizeInput} onChange={handleSizeChange} onKeyDown={handleSizeKeyDown} onBlur={handleSizeBlur} className="flex-1 min-w-[80px] outline-none text-[13px] px-1 bg-transparent" placeholder={sizes.length === 0 ? "e.g. S, M, L..." : ""} />
                 </div>
               </div>
 
@@ -343,7 +391,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                       </button>
                     </span>
                   ))}
-                  <input type="text" value={colorInput} onChange={e => setColorInput(e.target.value)} onKeyDown={handleAddColor} className="flex-1 min-w-[80px] outline-none text-[13px] px-1 bg-transparent" placeholder={colors.length === 0 ? "e.g. #ff0000, white..." : ""} />
+                  <input type="text" value={colorInput} onChange={handleColorChange} onKeyDown={handleColorKeyDown} onBlur={handleColorBlur} className="flex-1 min-w-[80px] outline-none text-[13px] px-1 bg-transparent" placeholder={colors.length === 0 ? "e.g. #ff0000, white..." : ""} />
                 </div>
               </div>
             </div>
@@ -417,10 +465,20 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-black mb-1">Website Section</label>
-                <select value={section} onChange={e => setSection(e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none">
-                  <option value="New Arrivals">New Arrivals</option>
-                  <option value="Curated Aesthetics">Curated Aesthetics</option>
-                </select>
+                <div className="flex gap-4 mt-2">
+                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" checked={sections.includes('New Arrivals')} onChange={(e) => {
+                      if (e.target.checked) setSections([...sections, 'New Arrivals']);
+                      else setSections(sections.filter(s => s !== 'New Arrivals'));
+                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> New Arrivals
+                  </label>
+                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" checked={sections.includes('Curated Aesthetics')} onChange={(e) => {
+                      if (e.target.checked) setSections([...sections, 'Curated Aesthetics']);
+                      else setSections(sections.filter(s => s !== 'Curated Aesthetics'));
+                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Curated Aesthetics
+                  </label>
+                </div>
               </div>
 
               <div>

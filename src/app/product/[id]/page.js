@@ -5,6 +5,7 @@ import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
+import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
 import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown } from 'lucide-react';
 
@@ -20,6 +21,23 @@ export default function ProductPage({ params: paramsPromise }) {
   const router = useRouter();
   const { user } = useAuthStore();
   const { wishlist, toggleWishlist } = useWishlistStore();
+  const { addToCart } = useCartStore();
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      router.push('/auth/login');
+      return;
+    }
+    
+    await addToCart({
+      id: product.id,
+      title: product.name,
+      price: product.price,
+      image: images[0],
+      size: selectedSize,
+      color: selectedColor
+    });
+  };
 
   useEffect(() => {
     async function fetchProduct() {
@@ -350,11 +368,13 @@ export default function ProductPage({ params: paramsPromise }) {
               <div className="flex flex-col gap-3 mb-10">
                 {product.inStock !== false ? (
                   <>
-                    <button className="w-full bg-black text-white uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center min-h-[56px] shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                    <button onClick={handleAddToCart} className="w-full bg-black text-white uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center min-h-[56px] shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                       Buy Now
                     </button>
                     <div className="flex gap-3">
-                      <button className="flex-1 bg-white border border-neutral-200 text-black uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all min-h-[56px] shadow-sm">
+                      <button 
+                        onClick={handleAddToCart}
+                        className="flex-1 bg-white border border-neutral-200 text-black uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all min-h-[56px] shadow-sm">
                         Add to Bag
                       </button>
                       <button 

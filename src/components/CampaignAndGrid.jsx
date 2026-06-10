@@ -11,7 +11,7 @@ export default function CampaignAndGrid() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // Pin the campaign section while the grid slides up over it
     ScrollTrigger.create({
       trigger: containerRef.current,
@@ -19,6 +19,7 @@ export default function CampaignAndGrid() {
       end: "bottom bottom",
       pin: campaignRef.current,
       pinSpacing: false,
+      anticipatePin: 1,
     });
 
     return () => {
@@ -36,7 +37,7 @@ export default function CampaignAndGrid() {
   return (
     <div ref={containerRef} className="relative w-full">
       {/* Soft Silhouettes Campaign Section (Pinned) */}
-      <section ref={campaignRef} className="h-[80vh] md:h-[100vh] w-full overflow-hidden relative z-0">
+      <section ref={campaignRef} className="h-[80vh] md:h-[100vh] w-full overflow-hidden relative z-0 transform-gpu will-change-transform">
         <div className="w-full h-full origin-bottom">
           <img src="/section.png" alt="Campaign" className="w-full h-full object-cover" />
         </div>
@@ -52,19 +53,19 @@ export default function CampaignAndGrid() {
       </section>
 
       {/* 4-Grid Section (Slides over pinned campaign) */}
-      <section ref={gridRef} className="w-full relative z-10 bg-white pt-2">
+      <section ref={gridRef} className="w-full relative z-10 bg-white pt-2 transform-gpu will-change-transform">
         {/* Mobile: 2x2 Grid with Text inside. Desktop: 4x1 Flex with images */}
         <div className="grid grid-cols-2 md:flex md:flex-row w-full md:h-[70vh]">
           {items.map((item, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#000000]/10`}
             >
               <div className={`w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden p-4 md:p-6 ${item.bg}`}>
-                <img 
-                  src={item.img} 
-                  alt={item.title} 
-                  className="w-[85%] h-[85%] object-contain hover:scale-105 transition-transform duration-700" 
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-[85%] h-[85%] object-contain hover:scale-105 transition-transform duration-700"
                 />
               </div>
               {/* Mobile text (hidden on desktop) */}
@@ -76,7 +77,7 @@ export default function CampaignAndGrid() {
             </div>
           ))}
         </div>
-        
+
         {/* The White Text Bar at the Bottom (Desktop Only) */}
         <div className="hidden md:flex w-full flex-row bg-white border-b border-[#000000]/10">
           {items.map((item, idx) => (

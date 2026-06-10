@@ -5,6 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Search, ShoppingBag, User, Menu, ChevronRight, Heart, X } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
+import { useCartStore } from '@/store/cartStore';
+import CartSlideOver from '@/components/ui/CartSlideOver';
 import { useState, useEffect } from 'react';
 
 const menuData = [
@@ -118,6 +120,7 @@ export default function Header() {
   const pathname = usePathname();
   const { user } = useAuthStore();
   const { wishlist } = useWishlistStore();
+  const { cart, openCart } = useCartStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
@@ -240,9 +243,14 @@ export default function Header() {
                   </span>
                 )}
               </Link>
-              <Link href="/cart" className={`${textClass} transition-colors relative`}>
+              <button onClick={openCart} className={`${textClass} transition-colors relative`} aria-label="Cart">
                 <ShoppingBag className="w-5 h-5" />
-              </Link>
+                {cart.length > 0 && (
+                  <span className="absolute -top-1.5 -right-2 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {cart.reduce((total, item) => total + item.quantity, 0)}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
 
@@ -326,6 +334,15 @@ export default function Header() {
                   </span>
                 )}
               </Link>
+              <button onClick={() => { setIsMobileMenuOpen(false); openCart(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
+                <ShoppingBag className="w-5 h-5" />
+                <span className="text-[10px] uppercase tracking-widest font-bold">Cart</span>
+                {cart.length > 0 && (
+                  <span className="absolute top-1 right-3 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {cart.reduce((total, item) => total + item.quantity, 0)}
+                  </span>
+                )}
+              </button>
             </div>
 
             {menuData.map((item, idx) => (
@@ -372,6 +389,7 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <CartSlideOver />
     </header>
   );
 }

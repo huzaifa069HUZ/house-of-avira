@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
+import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
-import { Heart } from 'lucide-react';
+import { Heart, ShoppingBag } from 'lucide-react';
 
 export default function ProductCard({ product }) {
   const { id, name, price, imageUrl, badge, swatches, sizes = [] } = product;
@@ -10,6 +11,7 @@ export default function ProductCard({ product }) {
   const { user } = useAuthStore();
   const router = useRouter();
   const { wishlist, toggleWishlist } = useWishlistStore();
+  const { addToCart } = useCartStore();
   
   const isWishlisted = wishlist.some(item => item.id === id);
 
@@ -22,18 +24,51 @@ export default function ProductCard({ product }) {
     await toggleWishlist(product);
   };
 
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      router.push('/auth/login');
+      return;
+    }
+    await addToCart({ id, title: name, price, image: imageUrl || (product.images && product.images[0]) });
+  };
+
   return (
     <div className="group flex flex-col gap-2 relative cursor-pointer w-full">
       {/* Image Container */}
       <div className={`relative aspect-[3/4] w-full overflow-hidden rounded-md bg-[#E5E0DA] ${product.inStock === false ? 'opacity-70' : ''}`}>
-        <Link href={`/product/${id}`} className="absolute inset-0 z-10">
-          <span className="sr-only">View {name}</span>
-        </Link>
-        <img
-          src={imageUrl}
-          alt={name}
-          className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-        />
+        {product.images && product.images.length > 1 ? (
+          <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory hide-scrollbar style-hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <style jsx>{`
+              .style-hide-scrollbar::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+            {product.images.map((img, idx) => (
+              <div key={idx} className="w-full h-full flex-shrink-0 snap-center relative">
+                <Link href={`/product/${id}`} className="absolute inset-0 z-10">
+                  <span className="sr-only">View {name} {idx + 1}</span>
+                </Link>
+                <img
+                  src={img}
+                  alt={`${name} - Image ${idx + 1}`}
+                  className="h-full w-full object-cover object-center transition-transform duration-500"
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <>
+            <Link href={`/product/${id}`} className="absolute inset-0 z-10">
+              <span className="sr-only">View {name}</span>
+            </Link>
+            <img
+              src={imageUrl || (product.images && product.images[0])}
+              alt={name}
+              className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+          </>
+        )}
         
         {/* Out of Stock Overlay */}
         {product.inStock === false && (
@@ -68,13 +103,23 @@ export default function ProductCard({ product }) {
 
         {/* Hover Sizes Panel */}
         {sizes && sizes.length > 0 && (
-          <div className="absolute bottom-2 left-2 right-2 z-20 bg-white/95 backdrop-blur-sm py-2 px-2 flex justify-center items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[2px] shadow-sm">
+          <div className="absolute bottom-2 left-2 right-12 z-20 bg-white/95 backdrop-blur-sm py-2 px-2 flex justify-center items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[2px] shadow-sm">
             {sizes.slice(0, 5).map(size => (
               <span key={size} className="text-[10px] font-medium text-neutral-600 hover:text-black transition-colors">{size}</span>
             ))}
             {sizes.length > 5 && <span className="text-[10px] font-medium text-neutral-600">...</span>}
           </div>
         )}
+
+        {/* Add to Cart Button */}
+        <button 
+          onClick={handleAddToCart}
+          disabled={product.inStock === false}
+          className={`absolute bottom-2 right-2 z-20 w-8 h-8 bg-black/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black transition-all duration-300 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 ${product.inStock === false ? 'cursor-not-allowed hidden' : ''}`}
+          aria-label="Add to cart"
+        >
+          <ShoppingBag className="w-4 h-4 text-white" />
+        </button>
       </div>
 
       {/* Details Section */}

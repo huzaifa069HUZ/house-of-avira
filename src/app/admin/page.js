@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import ProductManager from '@/components/admin/ProductManager';
 import ProductList from '@/components/admin/ProductList';
-import { LayoutDashboard, Plus, Package } from 'lucide-react';
+import CartAnalytics from '@/components/admin/CartAnalytics';
+import CouponManager from '@/components/admin/CouponManager';
+import { LayoutDashboard, Plus, Package, BarChart3, Ticket } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit'
@@ -22,6 +24,16 @@ export default function AdminDashboard() {
   const handleList = () => {
     setEditingProduct(null);
     setCurrentView('list');
+  };
+
+  const handleAnalytics = () => {
+    setEditingProduct(null);
+    setCurrentView('analytics');
+  };
+
+  const handleCoupons = () => {
+    setEditingProduct(null);
+    setCurrentView('coupons');
   };
 
   return (
@@ -51,13 +63,31 @@ export default function AdminDashboard() {
             <Plus className="w-4 h-4" />
             {currentView === 'edit' ? 'Edit Product' : 'Add Product'}
           </button>
+          <button 
+            onClick={handleAnalytics}
+            className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'analytics' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}
+          >
+            <BarChart3 className="w-4 h-4" />
+            Analytics
+          </button>
+          <button 
+            onClick={handleCoupons}
+            className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'coupons' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}
+          >
+            <Ticket className="w-4 h-4" />
+            Coupons
+          </button>
         </div>
       </div>
 
       {currentView === 'list' && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {['Orders', 'Customers', 'Analytics'].map((item) => (
-            <div key={item} className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 hover:border-[#0071e3] transition-colors cursor-pointer group">
+            <div 
+              key={item} 
+              onClick={() => item === 'Analytics' ? handleAnalytics() : null}
+              className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 hover:border-[#0071e3] transition-colors cursor-pointer group"
+            >
               <h3 className="text-sm font-bold tracking-widest uppercase mb-2 text-black group-hover:text-[#0071e3] transition-colors">{item}</h3>
               <p className="text-xs text-[#86868b]">Manage your {item.toLowerCase()} here.</p>
             </div>
@@ -73,6 +103,8 @@ export default function AdminDashboard() {
             onSuccess={handleList}
           />
         )}
+        {currentView === 'analytics' && <CartAnalytics />}
+        {currentView === 'coupons' && <CouponManager />}
       </div>
     </div>
   );
