@@ -49,3 +49,22 @@ export async function uploadImagesToCloudinary(formData) {
     return { success: false, error: error.message };
   }
 }
+
+export async function deleteImageFromCloudinary(imageUrl) {
+  try {
+    const match = imageUrl.match(/\/upload\/(?:v\d+\/)?(.+?)\.[a-zA-Z0-9]+$/);
+    if (!match) throw new Error("Invalid Cloudinary URL");
+    const publicId = match[1];
+    
+    await new Promise((resolve, reject) => {
+      cloudinary.uploader.destroy(publicId, (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      });
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Cloudinary delete error:", error);
+    return { success: false, error: error.message };
+  }
+}

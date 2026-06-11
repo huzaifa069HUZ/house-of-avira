@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { uploadImagesToCloudinary } from '@/app/actions/uploadActions';
+import { uploadImagesToCloudinary, deleteImageFromCloudinary } from '@/app/actions/uploadActions';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { UploadCloud, X, Image as ImageIcon, Tag, Loader2, CheckCircle2 } from 'lucide-react';
@@ -231,6 +231,15 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         active: index === 0 // Make the first color active by default
       }));
 
+      // Delete removed images from Cloudinary
+      if (initialProduct) {
+        const originalImages = initialProduct.images || [initialProduct.imageUrl].filter(Boolean);
+        const imagesToDelete = originalImages.filter(img => !existingImages.includes(img));
+        for (const imgUrl of imagesToDelete) {
+          await deleteImageFromCloudinary(imgUrl).catch(console.error);
+        }
+      }
+
       // 3. Save or Update Product in Firestore
       const productData = {
         name,
@@ -241,7 +250,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         category,
         subcategory,
         badge,
-        imageUrl: finalImageUrls[0], // Primary image
+        imageUrl: finalImageUrls[0] || '', // Primary image
         images: finalImageUrls, // All images
         sizes,
         swatches: swatchesArray,

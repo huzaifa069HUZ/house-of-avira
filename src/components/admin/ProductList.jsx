@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { Edit2, PackageX, Loader2 } from 'lucide-react';
+import { collection, getDocs, orderBy, query, deleteDoc, doc } from 'firebase/firestore';
+import { Edit2, PackageX, Loader2, Trash2 } from 'lucide-react';
+import { deleteImageFromCloudinary } from '@/app/actions/uploadActions';
 
 export default function ProductList({ onEdit }) {
   const [products, setProducts] = useState([]);
@@ -28,6 +29,26 @@ export default function ProductList({ onEdit }) {
 
     fetchProducts();
   }, []);
+
+  const handleDelete = async (product) => {
+    if (window.confirm(`Are you sure you want to delete "${product.name}"? This cannot be undone.`)) {
+      try {
+        setProducts(prev => prev.filter(p => p.id !== product.id));
+        await deleteDoc(doc(db, 'products', product.id));
+        if (product.images && product.images.length > 0) {
+          for (const imgUrl of product.images) {
+            await deleteImageFromCloudinary(imgUrl).catch(console.error);
+          }
+        } else if (product.imageUrl) {
+          await deleteImageFromCloudinary(product.imageUrl).catch(console.error);
+        }
+      } catch (error) {
+        console.error("Error deleting product:", error);
+        alert("Failed to delete product.");
+        // optionally refetch products here to restore state on failure
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -99,13 +120,20 @@ export default function ProductList({ onEdit }) {
                     </span>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">
+                <td className="px-6 py-4 whitespace-nowrap text-right flex justify-end gap-2">
                   <button 
                     onClick={() => onEdit(product)}
                     className="p-2 text-[#0071e3] hover:bg-[#0071e3]/10 rounded-full transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100"
                     aria-label="Edit product"
                   >
                     <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(product)}
+                    className="p-2 text-[#ff3b30] hover:bg-[#ff3b30]/10 rounded-full transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100"
+                    aria-label="Delete product"
+                  >
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </td>
               </tr>
