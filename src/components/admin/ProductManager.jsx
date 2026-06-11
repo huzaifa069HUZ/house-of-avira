@@ -465,7 +465,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-black mb-1">Website Section</label>
-                <div className="flex gap-4 mt-2">
+                <div className="flex flex-col gap-3 mt-2">
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
                     <input type="checkbox" checked={sections.includes('New Arrivals')} onChange={(e) => {
                       if (e.target.checked) setSections([...sections, 'New Arrivals']);
@@ -477,6 +477,12 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                       if (e.target.checked) setSections([...sections, 'Curated Aesthetics']);
                       else setSections(sections.filter(s => s !== 'Curated Aesthetics'));
                     }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Curated Aesthetics
+                  </label>
+                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" checked={sections.includes('Top Picks Grid')} onChange={(e) => {
+                      if (e.target.checked) setSections([...sections, 'Top Picks Grid']);
+                      else setSections(sections.filter(s => s !== 'Top Picks Grid'));
+                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Top Picks Grid
                   </label>
                 </div>
               </div>

@@ -112,14 +112,46 @@ export default function Home() {
   const newArrivals = products.filter(p => p.section === 'New Arrivals' || !p.section);
   const curatedAesthetics = products.filter(p => p.section === 'Curated Aesthetics');
   const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts;
+  const topPicksGridItemsRaw = products.filter(p => p.sections?.includes('Top Picks Grid') || p.section === 'Top Picks Grid');
+  const topPicksGridItems = topPicksGridItemsRaw.slice(0, 12);
 
   return (
     <div className="flex flex-col w-full">
       {/* Fullscreen Hero Image Carousel */}
       <HeroCarousel />
 
-      {/* How It Works Educational Section */}
-      <HowItWorks />
+      {/* Modern Trust Strip */}
+      <div className="w-full bg-[#FAFAFA] border-b border-[#000000]/5 py-3 overflow-hidden flex flex-col md:flex-row justify-center items-center gap-3 md:gap-10">
+        
+        {/* First Row (Mobile) / Left Side (Desktop) */}
+        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
+          <div className="flex items-center gap-2 shrink-0">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            <span>5000+ Orders</span>
+          </div>
+          <span className="text-[#000000]/20 shrink-0">•</span>
+          <div className="flex items-center gap-2 shrink-0">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l6 5-3 3-3-1-1.5 1.5L9 21l3-3 5 6c.4.2.8.1 1.1-.3l1.2-1.2c.3-.4.2-.8-.1-1.1l-1.4-1.2z"/>
+            </svg>
+            <span>Imported Directly</span>
+          </div>
+        </div>
+
+        {/* Separator for Desktop only */}
+        <span className="text-[#000000]/20 hidden md:block shrink-0">•</span>
+
+        {/* Second Row (Mobile) / Right Side (Desktop) */}
+        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
+          <div className="flex items-center gap-2 shrink-0">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>2+ Years Trusted</span>
+          </div>
+          <a href="#how-it-works" className="ml-1 bg-[#8A001A] text-white px-4 py-1 md:py-1.5 rounded-full text-lg md:text-xl font-symphony tracking-normal capitalize hover:bg-black transition-colors shrink-0 shadow-sm cursor-pointer border border-[#8A001A] hover:border-black whitespace-nowrap leading-none flex items-center pt-2 md:pt-2.5">
+            Learn how it works
+          </a>
+        </div>
+      </div>
 
       {/* New Arrivals Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
@@ -180,30 +212,37 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Shop By Category Section (from legacy Vite app) */}
-      <section className="py-24 bg-[#000000] text-[#FFFFFF] overflow-hidden w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs tracking-widest uppercase mb-16 opacity-60">Shop by Category</p>
-          <div className="flex flex-col w-full">
-            {['Co-Ords', 'Dresses', 'Knitwear', 'Accessories'].map((category, idx) => (
-              <div 
-                key={idx}
-                className="border-b border-[#FFFFFF]/20 py-8 md:py-12 group cursor-pointer flex justify-between items-center"
-              >
-                <h2 className="font-serif text-5xl md:text-8xl tracking-tight transition-transform duration-700 ease-out group-hover:translate-x-4 md:group-hover:translate-x-8">
-                  {category}
-                </h2>
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:block">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14"/>
-                    <path d="m12 5 7 7-7 7"/>
-                  </svg>
-                </span>
-              </div>
-            ))}
-          </div>
+      {/* Top Picks Grid Section */}
+      {topPicksGridItems.length > 0 && (
+        <section className="w-full bg-[#FFFFFF] py-16 md:py-24">
+        <div className="w-full text-center mb-10">
+          <h2 className="text-3xl md:text-5xl font-perandory font-bold tracking-widest text-[#8A001A] uppercase mb-1">
+            OUR TOP PICKS
+          </h2>
+          <p className="text-3xl md:text-5xl text-[#000000] font-symphony lowercase">
+            straight from your pinterest board
+          </p>
+        </div>
+        
+        {/* Seamless Image Grid (4 cols mobile, 6 cols desktop) */}
+        <div className="w-full grid grid-cols-4 md:grid-cols-6 gap-0">
+          {topPicksGridItems.map((item, idx) => (
+            <Link 
+              key={item.id || idx} 
+              href={`/product/${item.id}`} 
+              className="relative aspect-[3/4] block overflow-hidden bg-white group cursor-pointer"
+            >
+              <img 
+                src={item.images?.[0] || item.imageUrl || item.img} 
+                alt={item.name || item.title || "Top Pick"} 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+            </Link>
+          ))}
         </div>
       </section>
+      )}
 
       {/* Featured Categories (Edgy 3-Grid) */}
       <section className="w-full bg-white p-2 md:p-4">
@@ -368,6 +407,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* How It Works Educational Section */}
+      <div id="how-it-works">
+        <HowItWorks />
+      </div>
 
       {/* Join the Archive Section */}
       <section className="py-32 md:py-48 px-6 bg-[#FFFFFF] flex flex-col items-center justify-center text-center w-full">

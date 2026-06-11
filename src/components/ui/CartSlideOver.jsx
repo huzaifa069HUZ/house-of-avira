@@ -43,7 +43,7 @@ export default function CartSlideOver() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed md:right-0 right-2 md:top-0 top-2 h-[calc(100%-16px)] md:h-full w-[calc(100%-16px)] md:w-full max-w-md bg-white shadow-2xl z-50 flex flex-col overflow-hidden md:border-none border border-[#8A001A] rounded-2xl md:rounded-none"
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col overflow-hidden border-none rounded-none"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-white/80 backdrop-blur-md">

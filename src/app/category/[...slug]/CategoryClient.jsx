@@ -1,33 +1,18 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { Loader2, Layers, Heart, X, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
-import { useAuthStore } from '@/store/authStore';
-import { useWishlistStore } from '@/store/wishlistStore';
-import './catalogue.css';
+import { Loader2, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
+import ProductCard from '@/components/ProductCard';
+import Link from 'next/link';
 
-const CATEGORIES = [
-  'ALL',
-  'JACKETS',
-  'TOPS',
-  'TROUSERS',
-  'DRESSES',
-  'JEWELLERY',
-  'BAGS',
-  'FOOTWEAR',
-  'ACCESSORIES',
-  'COLLECTIBLES',
-  'PETS'
-];
-
-export default function CatalogueClient() {
+export default function CategoryClient({ slug = [] }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState('ALL');
-  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const mainCategory = slug[0]?.toLowerCase() || '';
+  const subCategory = slug[1]?.toLowerCase() || '';
 
   // Filter & Sort States
   const [activeSort, setActiveSort] = useState('newest'); // newest, price_asc, price_desc
@@ -37,9 +22,6 @@ export default function CatalogueClient() {
   // Mobile UI States
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null); // 'sort', 'size', 'color'
-
-  const { user } = useAuthStore();
-  const { wishlist, toggleWishlist } = useWishlistStore();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -57,47 +39,38 @@ export default function CatalogueClient() {
         setLoading(false);
       }
     }
-
     fetchProducts();
   }, []);
 
-  // Filter strictly by the category pill selected
-  const categoryFilteredProducts = useMemo(() => {
-    return activeCategory === 'ALL' 
-      ? products 
-      : products.filter(p => {
-          const term = activeCategory.toLowerCase();
-          return (
-            p.category?.toLowerCase().includes(term) ||
-            p.subcategory?.toLowerCase().includes(term) ||
-            p.badge?.toLowerCase().includes(term) ||
-            p.section?.toLowerCase().includes(term) ||
-            p.name?.toLowerCase().includes(term) ||
-            p.description?.toLowerCase().includes(term)
-          );
-        });
-  }, [products, activeCategory]);
+  // Filter strictly by the route URL first
+  const routeFilteredProducts = useMemo(() => {
+    return products.filter(p => {
+      const matchMain = !mainCategory || (p.category?.toLowerCase() === mainCategory);
+      const matchSub = !subCategory || (p.subcategory?.toLowerCase() === subCategory);
+      return matchMain && matchSub;
+    });
+  }, [products, mainCategory, subCategory]);
 
-  // Extract available unique sizes and colors dynamically from the category-filtered items
+  // Extract available unique sizes and colors dynamically from the route-filtered items
   const availableSizes = useMemo(() => {
     const sizes = new Set();
-    categoryFilteredProducts.forEach(p => {
+    routeFilteredProducts.forEach(p => {
       if (p.sizes) p.sizes.forEach(s => sizes.add(s));
     });
     return Array.from(sizes).sort();
-  }, [categoryFilteredProducts]);
+  }, [routeFilteredProducts]);
 
   const availableColors = useMemo(() => {
     const colors = new Set();
-    categoryFilteredProducts.forEach(p => {
+    routeFilteredProducts.forEach(p => {
       if (p.swatches) p.swatches.forEach(s => colors.add(s.name || s.color));
     });
     return Array.from(colors);
-  }, [categoryFilteredProducts]);
+  }, [routeFilteredProducts]);
 
   // Apply user filters and sort
-  const displayProducts = useMemo(() => {
-    let result = [...categoryFilteredProducts];
+  const finalProducts = useMemo(() => {
+    let result = [...routeFilteredProducts];
 
     // Filter Size
     if (selectedSizes.length > 0) {
@@ -115,7 +88,8 @@ export default function CatalogueClient() {
     } else if (activeSort === 'price_desc') {
       result.sort((a, b) => (b.price || 0) - (a.price || 0));
     } else {
-      // Newest
+      // Newest (already sorted by query initially, but we might have messed up index so we just trust the original order from Firestore since it was orderBy('createdAt', 'desc'))
+      // To strictly ensure newest is first if we mutated:
       result.sort((a, b) => {
         const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
         const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
@@ -124,7 +98,7 @@ export default function CatalogueClient() {
     }
 
     return result;
-  }, [categoryFilteredProducts, selectedSizes, selectedColors, activeSort]);
+  }, [routeFilteredProducts, selectedSizes, selectedColors, activeSort]);
 
   const toggleSize = (size) => {
     setSelectedSizes(prev => prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]);
@@ -139,55 +113,41 @@ export default function CatalogueClient() {
     else setActiveDropdown(dropdown);
   };
 
-  const handleHeartClick = (e, product) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!user) {
-      setShowLoginModal(true);
-    } else {
-      toggleWishlist(product);
-    }
-  };
+  // Title formatting
+  const displayTitle = subCategory ? `${mainCategory} - ${subCategory}` : (mainCategory || 'All Categories');
+
+  if (loading) {
+    return (
+      <div className="w-full min-h-[60vh] flex flex-col items-center justify-center gap-4">
+        <Loader2 className="w-6 h-6 animate-spin text-black" />
+        <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-black/60">Curating Collection</span>
+      </div>
+    );
+  }
 
   return (
-    <div className="avira-catalogue-container relative pb-32 md:pb-0">
-      {/* Header */}
-      <header className="avira-catalogue-header">
-        <h1 className="avira-catalogue-title">GET THE LOOK</h1>
-        <p className="avira-catalogue-subtitle">
-          Share your looks on socials by mentioning @houseofavira and #AviraStyle.
+    <div className="w-full min-h-screen bg-[#FAFAFA] relative pb-32 md:pb-0">
+      
+      {/* Page Header */}
+      <div className="w-full pt-32 pb-8 px-4 md:px-8 text-center max-w-[1600px] mx-auto">
+        <h1 className="text-3xl md:text-5xl font-perandory tracking-widest uppercase text-black mb-2">
+          {displayTitle}
+        </h1>
+        <p className="text-sm md:text-base text-neutral-500 font-medium">
+          {finalProducts.length} {finalProducts.length === 1 ? 'Product' : 'Products'} Found
         </p>
-      </header>
+      </div>
 
-      {/* Categories Scroll */}
-      <nav className="avira-cat-scroller-container">
-        <div className="avira-cat-scroller">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              className={`avira-cat-btn ${activeCategory === cat ? 'active' : ''}`}
-              onClick={() => {
-                setActiveCategory(cat);
-                setSelectedSizes([]); // reset filters when category changes
-                setSelectedColors([]);
-              }}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </nav>
-
-      {/* DESKTOP FILTER BAR */}
-      <div className="hidden md:block sticky top-[72px] z-40 w-full backdrop-blur-2xl bg-white/70 border-y border-black/5 shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300 mb-8">
-        <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      {/* DESKTOP FILTER BAR (Sticky below header) */}
+      <div className="hidden md:block sticky top-[72px] z-40 w-full backdrop-blur-2xl bg-white/70 border-y border-black/5 shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           
           <div className="flex items-center gap-6">
             {/* Sort Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => toggleDropdown('desktop_sort')}
-                className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
+                className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
               >
                 Sort By <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_sort' ? 'rotate-180' : ''}`} />
               </button>
@@ -211,7 +171,7 @@ export default function CatalogueClient() {
               <div className="relative">
                 <button 
                   onClick={() => toggleDropdown('desktop_size')}
-                  className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
+                  className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
                 >
                   Size {selectedSizes.length > 0 && <span className="bg-black text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]">{selectedSizes.length}</span>} <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_size' ? 'rotate-180' : ''}`} />
                 </button>
@@ -238,7 +198,7 @@ export default function CatalogueClient() {
               <div className="relative">
                 <button 
                   onClick={() => toggleDropdown('desktop_color')}
-                  className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
+                  className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
                 >
                   Color {selectedColors.length > 0 && <span className="bg-black text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]">{selectedColors.length}</span>} <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_color' ? 'rotate-180' : ''}`} />
                 </button>
@@ -251,6 +211,7 @@ export default function CatalogueClient() {
                           onClick={() => toggleColor(color)}
                           className={`px-3 py-2 text-[11px] font-bold rounded-lg border transition-colors flex items-center gap-2 ${selectedColors.includes(color) ? 'bg-black text-white border-black' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
                         >
+                          {/* If color is a hex code, show color circle, otherwise just text */}
                           {color.startsWith('#') && (
                             <span className="w-3 h-3 rounded-full border border-black/20" style={{ backgroundColor: color }} />
                           )}
@@ -381,114 +342,34 @@ export default function CatalogueClient() {
               onClick={() => setShowMobileFilters(false)}
               className="w-full py-4 text-xs font-bold tracking-widest uppercase text-white bg-black rounded-2xl"
             >
-              View {displayProducts.length} Results
+              View {finalProducts.length} Results
             </button>
           </div>
         </div>
       )}
 
-      {/* Masonry Grid */}
-      {loading ? (
-        <div className="avira-loading">
-          <Loader2 className="w-5 h-5 animate-spin" />
-          Loading collection...
-        </div>
-      ) : displayProducts.length === 0 ? (
-        <div className="avira-empty">
-          <h3>No looks available yet</h3>
-          <p>Check back soon for curated styles.</p>
-          {(selectedSizes.length > 0 || selectedColors.length > 0) && (
+      {/* PRODUCT GRID */}
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+        {finalProducts.length === 0 ? (
+          <div className="w-full py-32 flex flex-col items-center text-center">
+            <h3 className="text-2xl md:text-3xl font-perandory tracking-widest uppercase mb-4">No results found</h3>
+            <p className="text-neutral-500 text-sm md:text-base max-w-md">Try adjusting your filters or search for something else to find what you're looking for.</p>
             <button 
               onClick={() => { setSelectedSizes([]); setSelectedColors([]); }}
-              className="mt-6 px-8 py-3 bg-black text-white text-xs font-bold tracking-widest uppercase hover:bg-[#8A001A] transition-colors rounded-full"
+              className="mt-8 px-8 py-3 bg-black text-white text-xs font-bold tracking-widest uppercase hover:bg-[#8A001A] transition-colors rounded-full"
             >
               Clear Filters
             </button>
-          )}
-        </div>
-      ) : (
-        <div className="avira-masonry-grid">
-          {displayProducts.map((product) => {
-            const isWishlisted = wishlist.some(item => item.id === product.id);
-            return (
-              <Link 
-                key={product.id} 
-                href={`/product/${product.id}`}
-                className="avira-masonry-item group"
-              >
-                <div className="avira-item-img-wrapper">
-                  <img 
-                    src={product.imageUrl} 
-                    alt={product.name} 
-                    className="avira-item-img"
-                    loading="lazy"
-                  />
-                  
-                  <div className="avira-item-overlay">
-                    {/* Top Right Layers Icon */}
-                    <div className="avira-icon-top-right">
-                      <Layers className="w-4 h-4" />
-                    </div>
-                    
-                    {/* Bottom Left Username Tag */}
-                    <div className="avira-tag-bottom-left">
-                      @HOUSEOFAVIRA
-                    </div>
-
-                    {/* Bottom Right Heart Icon */}
-                    <div 
-                      className="avira-icon-bottom-right cursor-pointer hover:scale-105 transition-transform"
-                      onClick={(e) => handleHeartClick(e, product)}
-                    >
-                      <Heart className={`w-4 h-4 transition-colors ${isWishlisted ? 'fill-[#8A001A] text-[#8A001A]' : 'text-black hover:text-[#8A001A]'}`} />
-                    </div>
-                  </div>
-                </div>
-                {/* Product Info below image */}
-                <div className="mt-2 flex flex-col items-start w-full">
-                  <span className="text-[10px] font-bold tracking-widest uppercase truncate w-full">{product.name}</span>
-                  <span className="text-xs text-neutral-500 font-medium">${product.price?.toFixed(2) || '0.00'}</span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Login Modal */}
-      {showLoginModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-          <div className="bg-white p-8 max-w-[400px] w-full flex flex-col items-center text-center relative shadow-2xl">
-            <button 
-              onClick={() => setShowLoginModal(false)}
-              className="absolute top-4 right-4 text-black hover:opacity-70 transition-opacity p-1"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            
-            <h2 className="text-[15px] font-bold tracking-widest uppercase text-black mb-3 mt-4">
-              Log in to save this look
-            </h2>
-            <p className="text-[13px] text-black/80 mb-8 leading-relaxed px-2">
-              Log in or create an account to save your favourite looks and view them at any time.
-            </p>
-            
-            <Link 
-              href="/auth/login"
-              className="w-full bg-black text-white text-xs font-bold uppercase tracking-[0.15em] py-4 mb-4 hover:bg-[#8A001A] transition-colors"
-            >
-              Log in or create account
-            </Link>
-            
-            <button 
-              onClick={() => setShowLoginModal(false)}
-              className="w-full bg-transparent text-black text-[11px] font-bold uppercase tracking-widest py-2 hover:opacity-70 transition-opacity"
-            >
-              Go back without saving
-            </button>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-6 md:gap-y-16">
+            {finalProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+      </div>
+
     </div>
   );
 }

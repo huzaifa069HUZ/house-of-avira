@@ -113,6 +113,11 @@ const menuData = [
         ]
       },
     ]
+  },
+  {
+    title: "Shipping",
+    href: "/shipping",
+    customClass: "text-[#8A001A] font-symphony text-[22px] md:text-2xl capitalize tracking-normal leading-none pt-1"
   }
 ];
 
@@ -181,8 +186,8 @@ export default function Header() {
       {/* Main Header */}
       <div className={`border-b transition-all duration-300 ${headerBgClass}`}>
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20 relative">
-            {/* Left Area (Desktop: Logo, Mobile: Hamburger) */}
+          <div className="flex justify-between items-center h-24 relative">
+            {/* Left Area (Desktop: Logo, Mobile: Hamburger & Wishlist) */}
             <div className="flex items-center flex-1 lg:flex-none">
               {/* Mobile Hamburger */}
               <button 
@@ -192,9 +197,19 @@ export default function Header() {
                 <Menu className="w-6 h-6" />
               </button>
 
-              {/* Desktop Logo Image - Increased by ~42% (h-10 to h-[56px]) */}
+              {/* Mobile Wishlist */}
+              <Link href="/wishlist" className={`${textClass} transition-colors relative lg:hidden mr-4`} aria-label="Wishlist">
+                <Heart className="w-5 h-5" />
+                {wishlist.length > 0 && (
+                  <span className="absolute -top-1.5 -right-2 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {wishlist.length}
+                  </span>
+                )}
+              </Link>
+
+              {/* Desktop Logo Image - Increased */}
               <Link href="/" className="hidden lg:block">
-                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[56px] w-auto object-contain" />
+                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[80px] w-auto object-contain" />
               </Link>
             </div>
 
@@ -204,9 +219,9 @@ export default function Header() {
               <Link href="/" className={`hidden lg:block font-cormorant uppercase text-2xl md:text-4xl tracking-widest transition-colors ${logoClass}`}>
                 House of Avira
               </Link>
-              {/* Mobile Logo Image - Increased by ~42% (h-12 to h-[68px]) */}
+              {/* Mobile Logo Image - Increased */}
               <Link href="/" className="lg:hidden block mt-1">
-                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[68px] w-auto object-contain" />
+                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[90px] w-auto object-contain" />
               </Link>
             </div>
 
@@ -236,7 +251,7 @@ export default function Header() {
                 <User className="w-5 h-5" />
               </button>
               
-              <Link href="/wishlist" className={`${textClass} transition-colors relative`} aria-label="Wishlist">
+              <Link href="/wishlist" className={`${textClass} transition-colors relative hidden lg:block`} aria-label="Wishlist">
                 <Heart className="w-5 h-5" />
                 {wishlist.length > 0 && (
                   <span className="absolute -top-1.5 -right-2 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
@@ -261,7 +276,7 @@ export default function Header() {
               <div key={item.title} className="relative group flex items-center h-full">
                 <Link 
                   href={item.href} 
-                  className={`text-xs font-bold uppercase tracking-widest transition-colors ${textClass}`}
+                  className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-xs font-bold uppercase tracking-widest transition-colors ${textClass}`}
                 >
                   {item.title}
                 </Link>
@@ -381,7 +396,7 @@ export default function Header() {
                     </div>
                   </details>
                 ) : (
-                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#000000]">
+                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={item.customClass ? `block px-6 py-4 ${item.customClass}` : `block px-6 py-4 text-xs font-bold uppercase tracking-widest text-[#000000]`}>
                     {item.title}
                   </Link>
                 )}
