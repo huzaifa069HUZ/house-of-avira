@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import breakdownImg from '../../../15f12b5c-ac29-439c-81bc-14b46ef75005.png';
@@ -9,7 +9,7 @@ import {
   Route, Plane, Tag, Shield, HelpCircle, 
   Store, Home, UserRound, Ship, Weight, Award, 
   Landmark, MapPin, Package, Gem, Droplet, Box, 
-  Footprints, ChevronDown, Sparkles, Heart, Calculator
+  Footprints, ChevronDown, Sparkles, Heart, Calculator, Truck
 } from 'lucide-react';
 
 const FadeIn = ({ children, delay = 0, className = "" }) => (
@@ -24,9 +24,43 @@ const FadeIn = ({ children, delay = 0, className = "" }) => (
   </motion.div>
 );
 
+const TimelineItem = ({ step, idx }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 85%", "start 40%"]
+  });
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.2, 1]);
+  const x = useTransform(scrollYProgress, [0, 1], [-20, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
+  const isActionRequired = step.badge === 'ACTION REQUIRED';
+
+  return (
+    <motion.div ref={ref} style={{ opacity, x, scale }} className={`relative group ${isActionRequired ? 'bg-gradient-to-r from-[#FFF5F2] to-white -mx-4 md:-mx-6 px-4 md:px-6 py-5 rounded-2xl border-l-4 border-l-[#D92D20] border-y border-r border-[#F0D4C4] shadow-md my-6 z-20' : 'py-4'}`}>
+      <div className={`absolute ${isActionRequired ? '-left-[18px] md:-left-[28px] top-6 w-5 h-5' : '-left-[30px] md:-left-[38px] top-5 w-4 h-4'} rounded-full border-2 ${isActionRequired ? 'border-[#D92D20] bg-white shadow-[0_0_0_4px_#FEE4E2] animate-pulse' : 'border-[#C97B6E] bg-[#FAF7F2]'} z-10 transition-all duration-300 ${step.state === 'done' ? 'bg-[#C97B6E]' : ''}`}></div>
+      <div>
+        <div className={`flex items-center flex-wrap gap-3 mb-2 transition-colors ${isActionRequired ? 'text-[#D92D20] text-[18px] font-bold' : 'text-[#2D2420] text-[16px] font-medium group-hover:text-[#C97B6E]'}`}>
+          {step.title}
+          {step.badge && (
+            <span className={`${isActionRequired ? 'bg-[#D92D20] text-white text-[12px] px-3 py-1 shadow-sm' : 'bg-[#FDE8DC] text-[#8B3A1E] text-[10px] px-2 py-0.5'} font-bold rounded-full tracking-widest uppercase flex items-center gap-1`}>
+              {isActionRequired && <Sparkles className="w-3 h-3 animate-pulse" />} {step.badge}
+            </span>
+          )}
+          {step.icon && <step.icon className={`w-4 h-4 ${isActionRequired ? 'text-[#D92D20]' : 'text-[#C97B6E]'} ml-1`} />}
+        </div>
+        <div className={`leading-relaxed ${isActionRequired ? 'text-[#8B3A1E] text-[14px] font-medium' : 'text-[#6B5248] text-[14px]'}`}>{step.desc}</div>
+      </div>
+    </motion.div>
+  );
+};
+
 export default function ShippingPage() {
   const [activeSection, setActiveSection] = useState('how-it-works');
   const [openFaq, setOpenFaq] = useState(null);
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(heroScroll, [0, 1], ["0%", "50%"]);
+  const heroOpacity = useTransform(heroScroll, [0, 1], [1, 0]);
 
   const sections = ['how-it-works', 'shipping-modes', 'special-cats', 'policies', 'faq'];
 
@@ -97,7 +131,7 @@ export default function ShippingPage() {
   ];
 
   return (
-    <div className="bg-[#FAF7F2] text-[#2D2420] min-h-screen font-sans selection:bg-[#C97B6E] selection:text-white">
+    <div className="bg-[#FAF7F2] text-[#2D2420] min-h-screen font-sans selection:bg-[#C97B6E] selection:text-white overflow-x-hidden">
       
       {/* Education Marquee */}
       <div className="bg-[#8B5E52] text-white text-[11px] font-medium tracking-widest py-2.5 overflow-hidden whitespace-nowrap flex">
@@ -141,8 +175,13 @@ export default function ShippingPage() {
       </nav>
 
       {/* Hero */}
-      <header className="pt-20 pb-16 px-6 text-center max-w-4xl mx-auto">
-        <FadeIn>
+      <header ref={heroRef} className="relative pt-24 pb-20 px-6 text-center max-w-5xl mx-auto overflow-hidden rounded-b-[40px] mb-8">
+        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="absolute inset-0 z-0">
+          <Image src="/shipping/hero.png" alt="Shipping Box" fill className="object-cover opacity-50 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/60 to-[#FAF7F2]/90" />
+        </motion.div>
+        
+        <FadeIn className="relative z-10">
           <div className="text-[11px] tracking-[0.12em] uppercase text-[#B8A99A] font-medium mb-4">Shipping &amp; Import Information</div>
           <h1 className="font-perandory text-5xl md:text-6xl font-light text-[#2D2420] mb-5 leading-tight">
             Everything about<br />
@@ -191,31 +230,52 @@ export default function ShippingPage() {
 
           {/* Diagram */}
           <FadeIn delay={0.1}>
-            <div className="bg-white border border-[#E8C4B8] rounded-[20px] p-6 md:p-10 mb-12 shadow-sm">
-              <h3 className="font-perandory text-xl md:text-2xl text-center text-[#2D2420] mb-8">International + Domestic — How Your Product Moves</h3>
+            <style dangerouslySetInnerHTML={{__html: `
+              @keyframes flow {
+                to { stroke-dashoffset: -12; }
+              }
+              .animate-flow { animation: flow 1s linear infinite; }
+            `}} />
+            <div className="bg-white border border-[#E8C4B8]/50 rounded-[32px] p-6 md:p-12 mb-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#FDF0EB] rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+              
+              <h3 className="font-sans font-black tracking-tight text-2xl md:text-3xl text-center text-[#2D2420] mb-12 relative z-10">
+                International + Domestic Flow
+              </h3>
               
               {/* Tier 1 */}
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-0 mb-8">
-                <div className="w-full md:w-[160px] shrink-0 bg-[#FAF7F2] border border-[#E8C4B8] rounded-2xl p-5 text-center">
-                  <Store className="w-8 h-8 text-[#C97B6E] mx-auto mb-2" />
-                  <div className="text-[13px] font-medium text-[#2D2420] leading-snug">Suppliers &amp;<br/>Manufacturers</div>
-                  <div className="text-[11px] text-[#B8A99A] mt-1">Abroad</div>
+              <div className="flex flex-col md:flex-row items-center gap-6 md:gap-0 mb-12 relative z-10">
+                <div className="w-full md:w-[240px] shrink-0 bg-white border border-[#E8C4B8] rounded-[24px] p-5 text-center overflow-hidden relative group shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(201,123,110,0.15)] hover:-translate-y-1 transition-all duration-300 z-10">
+                  <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#C97B6E] animate-pulse"></div>
+                  <div className="w-full h-[120px] rounded-xl overflow-hidden mb-5 relative ring-1 ring-black/5">
+                    <Image src="/shipping/international.png" alt="International Shipping" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                  </div>
+                  <div className="text-[15px] font-extrabold tracking-tight text-[#2D2420] leading-snug">Suppliers &amp; Manufacturers</div>
+                  <div className="text-[11px] text-[#B8A99A] mt-1.5 font-bold tracking-[0.2em] uppercase">Abroad</div>
                 </div>
                 
-                <div className="flex-1 flex flex-col items-center px-4 w-full">
-                  <div className="bg-[#FDF0EB] border border-[#E8C4B8] rounded-xl p-3 w-full text-center relative z-10 mb-2 md:-mb-2 shadow-sm">
-                    <div className="text-[12px] font-semibold text-[#C97B6E] mb-1">✈ International Shipping</div>
-                    <div className="text-[11px] text-[#8B5E52] leading-relaxed">Cost split equally among all customers in the batch based on package weight. Charged separately after ordering.</div>
+                <div className="flex-1 flex flex-col items-center px-4 w-full relative min-h-[80px] md:min-h-0 justify-center">
+                  <svg className="hidden md:block absolute top-1/2 left-0 w-full h-[2px] -translate-y-1/2 z-0" preserveAspectRatio="none">
+                    <line x1="0" y1="1" x2="100%" y2="1" stroke="#E8C4B8" strokeWidth="2" strokeDasharray="6 6" className="animate-flow" />
+                  </svg>
+                  <div className="md:hidden absolute left-1/2 top-0 w-[2px] h-full -translate-x-1/2 z-0">
+                    <line x1="1" y1="0" x2="1" y2="100%" stroke="#E8C4B8" strokeWidth="2" strokeDasharray="6 6" className="animate-flow" />
                   </div>
-                  <div className="hidden md:flex w-full h-[2px] bg-[#E8C4B8] relative items-center justify-end">
-                    <div className="w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[8px] border-l-[#C97B6E] absolute -right-1"></div>
+                  
+                  <div className="bg-white border-2 border-[#8A001A] rounded-xl p-4 w-full md:w-[85%] text-center relative z-10 shadow-[0_8px_30px_rgba(138,0,26,0.12)] group hover:-translate-y-1 transition-all duration-300">
+                    <div className="text-[13px] font-extrabold tracking-tight text-[#8A001A] mb-1.5 flex items-center justify-center gap-2">
+                      <Plane className="w-4 h-4" /> International Shipping
+                    </div>
+                    <div className="text-[12px] text-[#6B5248] font-medium leading-relaxed">Cost split equally among all customers. Charged separately.</div>
                   </div>
                 </div>
 
-                <div className="w-full md:w-[160px] shrink-0 bg-[#FAF7F2] border border-[#E8C4B8] rounded-2xl p-5 text-center">
-                  <Home className="w-8 h-8 text-[#C97B6E] mx-auto mb-2" />
-                  <div className="text-[13px] font-medium text-[#2D2420] leading-snug">House of Avira</div>
-                  <div className="text-[11px] text-[#B8A99A] mt-1">India</div>
+                <div className="w-full md:w-[180px] shrink-0 bg-white border border-[#E8C4B8] rounded-[24px] p-6 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(201,123,110,0.15)] hover:-translate-y-1 transition-all duration-300 z-10 relative group">
+                  <div className="w-14 h-14 mx-auto bg-gradient-to-br from-[#FDF0EB] to-[#FAF7F2] rounded-full flex items-center justify-center mb-4 ring-1 ring-[#E8C4B8]/50 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                    <Home className="w-6 h-6 text-[#C97B6E]" />
+                  </div>
+                  <div className="text-[15px] font-extrabold tracking-tight text-[#2D2420] leading-snug">House of Avira</div>
+                  <div className="text-[11px] text-[#B8A99A] mt-1.5 font-bold tracking-[0.2em] uppercase">India</div>
                 </div>
               </div>
 
@@ -227,27 +287,38 @@ export default function ShippingPage() {
               </div>
 
               {/* Tier 2 */}
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-0">
-                <div className="w-full md:w-[160px] shrink-0 bg-[#FAF7F2] border border-[#B0D4E8] rounded-2xl p-5 text-center">
-                  <Home className="w-8 h-8 text-[#4A7AAD] mx-auto mb-2" />
-                  <div className="text-[13px] font-medium text-[#2D2420] leading-snug">House of Avira</div>
-                  <div className="text-[11px] text-[#B8A99A] mt-1">India</div>
+              <div className="flex flex-col md:flex-row items-center gap-6 md:gap-0 relative z-10">
+                <div className="w-full md:w-[180px] shrink-0 bg-white border border-[#B0D4E8] rounded-[24px] p-6 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(74,122,173,0.15)] hover:-translate-y-1 transition-all duration-300 z-10 relative group">
+                  <div className="w-14 h-14 mx-auto bg-gradient-to-br from-[#EDF6FB] to-white rounded-full flex items-center justify-center mb-4 ring-1 ring-[#B0D4E8]/50 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                    <Home className="w-6 h-6 text-[#4A7AAD]" />
+                  </div>
+                  <div className="text-[15px] font-extrabold tracking-tight text-[#2D2420] leading-snug">House of Avira</div>
+                  <div className="text-[11px] text-[#B8A99A] mt-1.5 font-bold tracking-[0.2em] uppercase">India</div>
                 </div>
                 
-                <div className="flex-1 flex flex-col items-center px-4 w-full">
-                  <div className="bg-[#EDF6FB] border border-[#B0D4E8] rounded-xl p-3 w-full text-center relative z-10 mb-2 md:-mb-2 shadow-sm">
-                    <div className="text-[12px] font-semibold text-[#1E4A72] mb-1">🚚 Domestic Shipping</div>
-                    <div className="text-[11px] text-[#1E4A72]/80 leading-relaxed">Cost based on your pincode and package weight. Calculated via Shiprocket. Charged separately before dispatch.</div>
+                <div className="flex-1 flex flex-col items-center px-4 w-full relative min-h-[80px] md:min-h-0 justify-center">
+                  <svg className="hidden md:block absolute top-1/2 left-0 w-full h-[2px] -translate-y-1/2 z-0" preserveAspectRatio="none">
+                    <line x1="0" y1="1" x2="100%" y2="1" stroke="#B0D4E8" strokeWidth="2" strokeDasharray="6 6" className="animate-flow" />
+                  </svg>
+                  <div className="md:hidden absolute left-1/2 top-0 w-[2px] h-full -translate-x-1/2 z-0">
+                    <line x1="1" y1="0" x2="1" y2="100%" stroke="#B0D4E8" strokeWidth="2" strokeDasharray="6 6" className="animate-flow" />
                   </div>
-                  <div className="hidden md:flex w-full h-[2px] bg-[#B0D4E8] relative items-center justify-end">
-                    <div className="w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[8px] border-l-[#4A7AAD] absolute -right-1"></div>
+                  
+                  <div className="bg-white border-2 border-[#8A001A] rounded-xl p-4 w-full md:w-[85%] text-center relative z-10 shadow-[0_8px_30px_rgba(138,0,26,0.12)] group hover:-translate-y-1 transition-all duration-300">
+                    <div className="text-[13px] font-extrabold tracking-tight text-[#8A001A] mb-1.5 flex items-center justify-center gap-2">
+                      <Truck className="w-4 h-4" /> Domestic Shipping
+                    </div>
+                    <div className="text-[12px] text-[#6B5248] font-medium leading-relaxed">Cost based on pincode & weight. Charged before dispatch.</div>
                   </div>
                 </div>
 
-                <div className="w-full md:w-[160px] shrink-0 bg-[#FAF7F2] border border-[#B0D4E8] rounded-2xl p-5 text-center">
-                  <UserRound className="w-8 h-8 text-[#4A7AAD] mx-auto mb-2" />
-                  <div className="text-[13px] font-medium text-[#2D2420] leading-snug">You</div>
-                  <div className="text-[11px] text-[#B8A99A] mt-1">Your doorstep</div>
+                <div className="w-full md:w-[240px] shrink-0 bg-white border border-[#B0D4E8] rounded-[24px] p-5 text-center overflow-hidden relative group shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(74,122,173,0.15)] hover:-translate-y-1 transition-all duration-300 z-10">
+                  <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#4A7AAD] animate-pulse"></div>
+                  <div className="w-full h-[120px] rounded-xl overflow-hidden mb-5 relative ring-1 ring-black/5">
+                    <Image src="/shipping/domestic.png" alt="Domestic Shipping" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                  </div>
+                  <div className="text-[15px] font-extrabold tracking-tight text-[#2D2420] leading-snug">You</div>
+                  <div className="text-[11px] text-[#B8A99A] mt-1.5 font-bold tracking-[0.2em] uppercase">Your doorstep</div>
                 </div>
               </div>
 
@@ -289,7 +360,7 @@ export default function ShippingPage() {
               {/* Timeline Line */}
               <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#E8C4B8] via-[#C97B6E] to-[#E8C4B8]"></div>
               
-              <div className="space-y-8">
+              <div className="space-y-4">
                 {[
                   { state: 'done', title: 'Order Placed & Product Payment Received', desc: 'You pay the product price only. Order confirmed. Your batch assignment begins.' },
                   { state: 'done', title: 'Batch Being Collected', desc: 'Your order is grouped with other orders into a batch for cost-efficient international shipping.' },
@@ -303,27 +374,9 @@ export default function ShippingPage() {
                   { state: 'pending', title: 'Domestic Shipping Paid', desc: 'Payment confirmed. Your order is being packed for final domestic dispatch.' },
                   { state: 'pending', title: 'Dispatched Domestically', desc: 'Your order is with the courier. Tracking ID has been shared with you.' },
                   { state: 'pending', title: 'Delivered', icon: Heart, desc: 'Your order is at your door. Please record your unboxing — we love seeing it!' }
-                ].map((step, idx) => {
-                  const isActionRequired = step.badge === 'ACTION REQUIRED';
-                  return (
-                  <div key={idx} className={`relative group ${isActionRequired ? 'bg-gradient-to-r from-[#FFF5F2] to-white -mx-4 md:-mx-6 px-4 md:px-6 py-5 rounded-2xl border-l-4 border-l-[#D92D20] border-y border-r border-[#F0D4C4] shadow-md my-6 transform md:scale-105 z-20' : 'py-3'}`}>
-                    <div className={`absolute ${isActionRequired ? '-left-[18px] md:-left-[28px] top-6 w-5 h-5' : '-left-[30px] md:-left-[38px] top-4 w-4 h-4'} rounded-full border-2 ${isActionRequired ? 'border-[#D92D20] bg-white shadow-[0_0_0_4px_#FEE4E2] animate-pulse' : 'border-[#C97B6E] bg-[#FAF7F2]'} z-10 transition-all duration-300
-                      ${step.state === 'done' ? 'bg-[#C97B6E]' : ''} 
-                    `}></div>
-                    <div>
-                      <div className={`flex items-center flex-wrap gap-3 mb-2 transition-colors ${isActionRequired ? 'text-[#D92D20] text-[18px] font-bold' : 'text-[#2D2420] text-[15px] font-medium group-hover:text-[#C97B6E]'}`}>
-                        {step.title}
-                        {step.badge && (
-                          <span className={`${isActionRequired ? 'bg-[#D92D20] text-white text-[12px] px-3 py-1 animate-bounce shadow-sm' : 'bg-[#FDE8DC] text-[#8B3A1E] text-[10px] px-2 py-0.5'} font-bold rounded-full tracking-widest uppercase flex items-center gap-1`}>
-                            {isActionRequired && <Sparkles className="w-3 h-3" />} {step.badge}
-                          </span>
-                        )}
-                        {step.icon && <step.icon className={`w-4 h-4 ${isActionRequired ? 'text-[#D92D20]' : 'text-[#C97B6E]'} ml-1`} />}
-                      </div>
-                      <div className={`leading-relaxed ${isActionRequired ? 'text-[#8B3A1E] text-[14px] font-medium' : 'text-[#6B5248] text-[14px]'}`}>{step.desc}</div>
-                    </div>
-                  </div>
-                )})}
+                ].map((step, idx) => (
+                  <TimelineItem key={idx} step={step} idx={idx} />
+                ))}
               </div>
             </div>
           </FadeIn>
@@ -334,74 +387,76 @@ export default function ShippingPage() {
         {/* SECTION 2: SHIPPING MODES */}
         <section id="shipping-modes" className="scroll-mt-24">
           <FadeIn>
-            <div className="text-[11px] tracking-[0.12em] uppercase text-[#C97B6E] font-medium mb-3">Section 02</div>
-            <h2 className="font-perandory text-4xl text-[#2D2420] mb-4">Air vs Sea shipping</h2>
-            <p className="text-[15px] text-[#6B5248] leading-relaxed mb-10">Most packages travel by sea — it's the default and most affordable option. Air shipping is faster but costs more, and requires a minimum batch weight to proceed.</p>
+            <div className="text-[11px] tracking-[0.12em] uppercase text-[#8A001A] font-bold mb-3">Section 02</div>
+            <h2 className="font-sans font-black tracking-tight text-4xl text-[#2D2420] mb-4">Air vs Sea shipping</h2>
+            <p className="text-[16px] font-medium text-[#6B5248] leading-relaxed mb-12 max-w-2xl">Most packages travel by sea — it's the default and most affordable option. Air shipping is faster but costs more, and requires a minimum batch weight to proceed.</p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
             <FadeIn delay={0.1}>
-              <div className="bg-[#FDF6F0] border border-[#E8C4B8] rounded-2xl p-6 h-full hover:-translate-y-1 transition-transform duration-300 shadow-sm hover:shadow-md">
-                <div className="inline-flex items-center gap-1.5 bg-[#FDE8DC] text-[#8B3A1E] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
-                  <Plane className="w-3.5 h-3.5" /> Air Shipping
+              <div className="bg-white border border-gray-100 rounded-[32px] p-8 h-full hover:-translate-y-2 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(138,0,26,0.08)] group relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-[#FDE8DC] to-transparent opacity-40 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                <div className="inline-flex items-center gap-1.5 bg-white border border-[#8A001A]/20 text-[#8A001A] text-[11px] font-extrabold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6 shadow-sm relative z-10">
+                  <Plane className="w-4 h-4" /> Air Shipping
                 </div>
-                <h3 className="font-perandory text-2xl text-[#8B3A1E] mb-1">Fast Delivery</h3>
-                <div className="font-mono text-[13px] font-medium text-[#C97B6E] mb-5">~ 15 days</div>
+                <h3 className="font-sans font-black tracking-tight text-3xl md:text-4xl text-[#2D2420] mb-2 relative z-10">Fast Delivery</h3>
+                <div className="font-mono text-[16px] font-bold text-[#8A001A] mb-8 relative z-10">~ 15 days</div>
                 
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-4 mb-8 relative z-10">
                   {['Higher cost due to air freight', 'Requires a minimum batch weight to proceed', 'If minimum weight not met, automatically shifts to sea shipping'].map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[13px] text-[#6B5248] leading-relaxed">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#C97B6E] mt-1.5 shrink-0"></div> {item}
+                    <li key={i} className="flex items-start gap-3 text-[14px] font-medium text-[#6B5248] leading-relaxed">
+                      <div className="w-2 h-2 rounded-full bg-[#8A001A] mt-2 shrink-0"></div> {item}
                     </li>
                   ))}
                 </ul>
                 
-                <div className="bg-white/60 rounded-xl p-3 text-[12px] text-[#8B5E52] leading-relaxed">
-                  <strong className="text-[#8B3A1E] font-medium">Liquids only by air.</strong> Products like lip gloss and liquid beauty items are only eligible for air shipping — not sea.
+                <div className="bg-gradient-to-r from-[#FFF5F2] to-white border border-[#FDE8DC] rounded-xl p-4 text-[13px] text-[#8B5E52] leading-relaxed relative z-10">
+                  <strong className="text-[#8A001A] font-extrabold">Liquids only by air.</strong> Products like lip gloss and liquid beauty items are only eligible for air shipping — not sea.
                 </div>
               </div>
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="bg-[#F0F4FB] border border-[#B8C9D8] rounded-2xl p-6 h-full hover:-translate-y-1 transition-transform duration-300 shadow-sm hover:shadow-md">
-                <div className="inline-flex items-center gap-1.5 bg-[#DCE8F5] text-[#1E4A72] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
-                  <Ship className="w-3.5 h-3.5" /> Sea Shipping
+              <div className="bg-white border border-gray-100 rounded-[32px] p-8 h-full hover:-translate-y-2 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(30,74,114,0.08)] group relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-[#DCE8F5] to-transparent opacity-50 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                <div className="inline-flex items-center gap-1.5 bg-white border border-[#1E4A72]/20 text-[#1E4A72] text-[11px] font-extrabold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6 shadow-sm relative z-10">
+                  <Ship className="w-4 h-4" /> Sea Shipping
                 </div>
-                <h3 className="font-perandory text-2xl text-[#1E4A72] mb-1">Budget Friendly</h3>
-                <div className="font-mono text-[13px] font-medium text-[#4A7AAD] mb-5">2 – 3 months</div>
+                <h3 className="font-sans font-black tracking-tight text-3xl md:text-4xl text-[#2D2420] mb-2 relative z-10">Budget Friendly</h3>
+                <div className="font-mono text-[16px] font-bold text-[#1E4A72] mb-8 relative z-10">2 – 3 months</div>
                 
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-4 mb-8 relative z-10">
                   {['Much more affordable than air freight', 'Default option for most packages', 'Best for bags, apparel, and accessories'].map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[13px] text-[#6B5248] leading-relaxed">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#4A7AAD] mt-1.5 shrink-0"></div> {item}
+                    <li key={i} className="flex items-start gap-3 text-[14px] font-medium text-[#6B5248] leading-relaxed">
+                      <div className="w-2 h-2 rounded-full bg-[#1E4A72] mt-2 shrink-0"></div> {item}
                     </li>
                   ))}
                 </ul>
                 
-                <div className="bg-white/70 rounded-xl p-3 text-[12px] text-[#1E4A72] leading-relaxed">
-                  <strong className="font-medium">Most orders ship sea.</strong> This is the standard method for non-liquid products unless air is available for your batch.
+                <div className="bg-gradient-to-r from-[#F0F4FB] to-white border border-[#DCE8F5] rounded-xl p-4 text-[13px] text-[#1E4A72] leading-relaxed relative z-10">
+                  <strong className="font-extrabold">Most orders ship sea.</strong> This is the standard method for non-liquid products unless air is available for your batch.
                 </div>
               </div>
             </FadeIn>
           </div>
 
           <FadeIn>
-            <div className="text-[11px] tracking-[0.12em] uppercase text-[#C97B6E] font-medium mb-2">What affects your cost</div>
-            <h3 className="font-perandory text-3xl text-[#2D2420] mb-8">Factors that determine shipping price</h3>
+            <div className="text-[11px] tracking-[0.12em] uppercase text-[#8A001A] font-bold mb-3">What affects your cost</div>
+            <h3 className="font-sans font-black tracking-tight text-3xl md:text-4xl text-[#2D2420] mb-10">Factors that determine shipping price</h3>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { icon: Weight, color: '#C97B6E', title: 'Product Weight', desc: 'Heavier products take a larger share of the total batch shipping cost.' },
+                { icon: Weight, color: '#8A001A', title: 'Product Weight', desc: 'Heavier products take a larger share of the total batch shipping cost.' },
                 { icon: Award, color: '#C9A96E', title: 'Brand Tier', desc: 'Branded items (Coach, LV, Nike, Dior) attract higher duty and customs fees.' },
-                { icon: Tag, color: '#8B7DB8', title: 'Product Type', desc: 'Bags, apparel, beauty, shoes, and accessories each have different duty rates.' },
+                { icon: Tag, color: '#1E4A72', title: 'Product Type', desc: 'Bags, apparel, beauty, shoes, and accessories each have different duty rates.' },
                 { icon: Landmark, color: '#4A7AAD', title: 'Customs & Duties', desc: "India's import duty varies by category. Included in your international shipping invoice." },
-                { icon: MapPin, color: '#6B9E7A', title: 'Your Pincode', desc: 'Domestic shipping cost depends on your location and courier service availability.' },
-                { icon: Package, color: '#C97B6E', title: 'Packaging Type', desc: 'Oversized or special packaging may attract higher logistics charges.' }
-              ].map((factor, idx) => (
-                <div key={idx} className="bg-white border border-[#E8C4B8] rounded-2xl p-5 text-center hover:-translate-y-1 transition-transform shadow-sm">
-                  <factor.icon className="w-7 h-7 mx-auto mb-3" style={{ color: factor.color }} strokeWidth={1.5} />
-                  <div className="text-[13px] font-medium text-[#2D2420] mb-1.5">{factor.title}</div>
-                  <div className="text-[11px] text-[#8B5E52] leading-relaxed">{factor.desc}</div>
+              ].map((factor, i) => (
+                <div key={i} className="bg-white border border-gray-100 rounded-[24px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(138,0,26,0.08)] hover:-translate-y-1 transition-all duration-300 group">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-[#FAF7F2] ring-1 ring-black/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300" style={{ color: factor.color }}>
+                    <factor.icon className="w-7 h-7" />
+                  </div>
+                  <h4 className="font-sans font-black text-xl text-[#2D2420] tracking-tight mb-2">{factor.title}</h4>
+                  <p className="text-[14px] text-[#6B5248] font-medium leading-relaxed">{factor.desc}</p>
                 </div>
               ))}
             </div>

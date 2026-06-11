@@ -12,19 +12,18 @@ export default function CampaignAndGrid() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Pin the campaign section while the grid slides up over it
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      pin: campaignRef.current,
-      pinSpacing: false,
-      anticipatePin: 1,
-    });
+    const ctx = gsap.context(() => {
+      // Pin the campaign section while the grid slides up over it
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        pin: campaignRef.current,
+        pinSpacing: false,
+      });
+    }, containerRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   const items = [
@@ -37,7 +36,7 @@ export default function CampaignAndGrid() {
   return (
     <div ref={containerRef} className="relative w-full">
       {/* Soft Silhouettes Campaign Section (Pinned) */}
-      <section ref={campaignRef} className="h-[80vh] md:h-[100vh] w-full overflow-hidden relative z-0 transform-gpu will-change-transform">
+      <section ref={campaignRef} className="h-[80vh] md:h-[100vh] w-full overflow-hidden relative z-0">
         <div className="w-full h-full origin-bottom">
           <img src="/section.png" alt="Campaign" className="w-full h-full object-cover" />
         </div>
@@ -53,7 +52,7 @@ export default function CampaignAndGrid() {
       </section>
 
       {/* 4-Grid Section (Slides over pinned campaign) */}
-      <section ref={gridRef} className="w-full relative z-10 bg-white pt-2 transform-gpu will-change-transform">
+      <section ref={gridRef} className="w-full relative z-10 bg-white pt-2">
         {/* Mobile: 2x2 Grid with Text inside. Desktop: 4x1 Flex with images */}
         <div className="grid grid-cols-2 md:flex md:flex-row w-full md:h-[70vh]">
           {items.map((item, idx) => (
