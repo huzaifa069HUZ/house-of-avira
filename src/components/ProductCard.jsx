@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
+import { useQuickAddStore } from '@/store/quickAddStore';
 import { useRouter } from 'next/navigation';
 import { Heart, ShoppingBag } from 'lucide-react';
 import PriceDisplay from '@/components/PriceDisplay';
@@ -13,6 +14,7 @@ export default function ProductCard({ product }) {
   const router = useRouter();
   const { wishlist, toggleWishlist } = useWishlistStore();
   const { addToCart } = useCartStore();
+  const { openQuickAdd } = useQuickAddStore();
   
   const isWishlisted = wishlist.some(item => item.id === id);
 
@@ -31,7 +33,20 @@ export default function ProductCard({ product }) {
       router.push('/auth/login');
       return;
     }
-    await addToCart({ id, title: name, price, image: imageUrl || (product.images && product.images[0]) });
+    
+    const hasColors = product.swatches && product.swatches.length > 0;
+    const hasSizes = product.sizes && product.sizes.length > 0;
+    
+    if (hasColors || hasSizes) {
+      openQuickAdd(product);
+    } else {
+      await addToCart({ 
+        id: product.id, 
+        title: product.name || product.title, 
+        price: product.price, 
+        image: product.imageUrl || (product.images && product.images[0]) 
+      });
+    }
   };
 
   return (

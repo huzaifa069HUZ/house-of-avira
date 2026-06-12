@@ -7,6 +7,7 @@ import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { Loader2, Layers, Heart, X, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
+import PriceDisplay from '@/components/PriceDisplay';
 import './catalogue.css';
 
 const CATEGORIES = [
@@ -447,7 +448,7 @@ export default function CatalogueClient() {
                 {/* Product Info below image */}
                 <div className="mt-2 flex flex-col items-start w-full">
                   <span className="text-[10px] font-bold tracking-widest uppercase truncate w-full">{product.name}</span>
-                  <span className="text-xs text-neutral-500 font-medium">${product.price?.toFixed(2) || '0.00'}</span>
+                  <span className="text-xs text-neutral-500 font-medium"><PriceDisplay basePrice={product.price || 0} /></span>
                 </div>
               </Link>
             );

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { uploadImagesToCloudinary, deleteImageFromCloudinary } from '@/app/actions/uploadActions';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { UploadCloud, X, Image as ImageIcon, Tag, Loader2, CheckCircle2 } from 'lucide-react';
+import { UploadCloud, X, Image as ImageIcon, Tag, Loader2, CheckCircle2, Plus, Trash2 } from 'lucide-react';
 
 const CATEGORY_DATA = [
   { 
@@ -58,7 +58,6 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   const [sizeInput, setSizeInput] = useState('');
   
   const [colors, setColors] = useState([]);
-  const [colorInput, setColorInput] = useState('');
 
   // State for Inventory
   const [inStock, setInStock] = useState(true);
@@ -81,7 +80,13 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       setCategory(initialProduct.category || CATEGORY_DATA[0].title);
       setSubcategory(initialProduct.subcategory || '');
       setSizes(initialProduct.sizes || []);
-      setColors(initialProduct.swatches?.map(s => s.color) || []);
+      setColors(initialProduct.swatches?.map((s, idx) => ({
+        id: Date.now() + idx,
+        colorName: s.colorName || s.color,
+        colorHex: s.color,
+        imageUrl: s.imageUrl || '',
+        imageFile: null
+      })) || []);
       setInStock(initialProduct.inStock !== false);
       setExistingImages(initialProduct.images || [initialProduct.imageUrl].filter(Boolean));
     }
@@ -123,42 +128,18 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       setSizeInput(val);
     }
   };
-
-  const removeColor = (colorToRemove) => setColors(prev => prev.filter(c => c !== colorToRemove));
-
-  const processColorInput = (value) => {
-    const val = value.trim();
-    if (val && !colors.includes(val)) {
-      setColors(prev => [...prev, val]);
-    }
+  const addColorVariant = () => {
+    setColors(prev => [...prev, { id: Date.now(), colorName: '', colorHex: '', imageUrl: '', imageFile: null }]);
   };
 
-  const handleColorKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      processColorInput(colorInput);
-      setColorInput('');
-    }
+  const removeColorVariant = (id) => {
+    setColors(prev => prev.filter(c => c.id !== id));
   };
 
-  const handleColorBlur = () => {
-    if (colorInput.trim()) {
-      processColorInput(colorInput);
-      setColorInput('');
-    }
+  const updateColorVariant = (id, field, value) => {
+    setColors(prev => prev.map(c => c.id === id ? { ...c, [field]: value } : c));
   };
-  
-  const handleColorChange = (e) => {
-    const val = e.target.value;
-    if (val.includes(',')) {
-      val.split(',').forEach(v => {
-        if(v.trim()) processColorInput(v);
-      });
-      setColorInput('');
-    } else {
-      setColorInput(val);
-    }
-  };
+
 
   // --- Handlers for Drag & Drop Files ---
   const handleFilesAdded = (newFiles) => {
@@ -225,11 +206,24 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         finalImageUrls = [...finalImageUrls, ...uploadResult.urls];
       }
 
-      // 2. Format Colors
-      const swatchesArray = colors.map((color, index) => ({
-        color: color.trim(),
-        active: index === 0 // Make the first color active by default
-      }));
+      // 2. Format Colors and upload variant images
+      const swatchesArray = [];
+      for (let i = 0; i < colors.length; i++) {
+        const variant = colors[i];
+        let vUrl = variant.imageUrl || '';
+        if (variant.imageFile) {
+           const vForm = new FormData();
+           vForm.append('images', variant.imageFile);
+           const vRes = await uploadImagesToCloudinary(vForm);
+           if(vRes.success) vUrl = vRes.urls[0];
+        }
+        swatchesArray.push({
+          color: (variant.colorHex || variant.colorName).trim(),
+          colorName: (variant.colorName || variant.colorHex).trim(),
+          imageUrl: vUrl,
+          active: i === 0
+        });
+      }
 
       // Delete removed images from Cloudinary
       if (initialProduct) {
@@ -388,19 +382,87 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
 
               {/* Colors */}
               <div>
-                <label className="block text-sm font-medium text-black mb-1">Colors (Hex Codes or Names)</label>
-                <p className="text-[13px] text-[#86868b] mb-2">Type a color hex code (e.g. #000000) or name (e.g. Black) and press Enter.</p>
-                <div className="p-2 bg-white border border-[#d2d2d7] rounded-xl flex flex-wrap gap-2 focus-within:ring-4 focus-within:ring-[#0071e3]/20 focus-within:border-[#0071e3] transition-all min-h-[46px] items-center">
-                  {colors.map(color => (
-                    <span key={color} className="bg-[#F5F5F7] text-black text-[13px] font-medium px-3 py-1 rounded-full flex items-center gap-2 border border-[#d2d2d7]">
-                      <span className="w-3.5 h-3.5 rounded-full border border-[#d2d2d7]" style={{ backgroundColor: color }}></span>
-                      {color}
-                      <button type="button" onClick={() => removeColor(color)} className="text-[#86868b] hover:text-[#ff3b30] focus:outline-none ml-1 transition-colors">
-                        <X className="w-3.5 h-3.5" />
+                <div className="flex justify-between items-end mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">Colors & Variations</label>
+                    <p className="text-[13px] text-[#86868b]">Add a color variation and optionally attach a specific image.</p>
+                  </div>
+                  <button type="button" onClick={addColorVariant} className="text-[#0071e3] text-[13px] font-medium flex items-center gap-1 hover:underline"><Plus className="w-4 h-4"/> Add Variant</button>
+                </div>
+                
+                <div className="space-y-3">
+                  {colors.length === 0 && (
+                     <div className="text-center py-6 border border-dashed border-[#d2d2d7] rounded-xl bg-[#F5F5F7]">
+                       <p className="text-[13px] text-[#86868b]">No variants added yet.</p>
+                     </div>
+                  )}
+                  {colors.map((variant, index) => (
+                    <div key={variant.id} className="flex items-start sm:items-center gap-4 bg-white border border-[#d2d2d7] p-3 rounded-xl shadow-sm relative group">
+                      
+                      {/* Image Upload Box */}
+                      <div className="shrink-0 relative">
+                        <label className="cursor-pointer flex items-center justify-center w-16 h-20 rounded-lg border border-[#d2d2d7] bg-[#F5F5F7] overflow-hidden hover:border-[#0071e3] transition-colors">
+                          {variant.imageFile ? (
+                            <img src={URL.createObjectURL(variant.imageFile)} className="w-full h-full object-cover" />
+                          ) : variant.imageUrl ? (
+                            <img src={variant.imageUrl} className="w-full h-full object-cover" />
+                          ) : (
+                            <ImageIcon className="w-6 h-6 text-[#86868b]" />
+                          )}
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            className="hidden" 
+                            onChange={e => {
+                               if (e.target.files && e.target.files[0]) {
+                                  updateColorVariant(variant.id, 'imageFile', e.target.files[0]);
+                               }
+                            }} 
+                          />
+                        </label>
+                        {variant.imageFile && <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-bold text-white bg-[#0071e3] px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap">NEW</span>}
+                      </div>
+
+                      {/* Inputs */}
+                      <div className="flex-1 flex flex-col sm:flex-row gap-3">
+                         <div className="flex-1">
+                            <input 
+                               required
+                               type="text" 
+                               placeholder="Color Name (e.g. Black)" 
+                               value={variant.colorName}
+                               onChange={e => updateColorVariant(variant.id, 'colorName', e.target.value)}
+                               className="w-full px-3 py-2 bg-white border border-[#d2d2d7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-[13px]" 
+                            />
+                         </div>
+                         <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                               <input 
+                                  required
+                                  type="text" 
+                                  placeholder="Hex (e.g. #000000)" 
+                                  value={variant.colorHex}
+                                  onChange={e => updateColorVariant(variant.id, 'colorHex', e.target.value)}
+                                  className="w-full px-3 py-2 bg-white border border-[#d2d2d7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-[13px]" 
+                               />
+                               {variant.colorHex && (
+                                  <div className="w-6 h-6 rounded-full border border-[#d2d2d7] shrink-0" style={{backgroundColor: variant.colorHex}}></div>
+                               )}
+                            </div>
+                         </div>
+                      </div>
+
+                      {/* Remove */}
+                      <button 
+                         type="button" 
+                         onClick={() => removeColorVariant(variant.id)}
+                         className="p-2 text-[#86868b] hover:text-[#ff3b30] hover:bg-[#fff2f2] rounded-lg transition-colors"
+                      >
+                         <Trash2 className="w-4 h-4" />
                       </button>
-                    </span>
+
+                    </div>
                   ))}
-                  <input type="text" value={colorInput} onChange={handleColorChange} onKeyDown={handleColorKeyDown} onBlur={handleColorBlur} className="flex-1 min-w-[80px] outline-none text-[13px] px-1 bg-transparent" placeholder={colors.length === 0 ? "e.g. #ff0000, white..." : ""} />
                 </div>
               </div>
             </div>

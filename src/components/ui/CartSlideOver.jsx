@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, ShoppingBag, Trash2, Globe, ChevronDown, Tag, Calculator, Plane, Ship } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import PriceDisplay from '@/components/PriceDisplay';
 
 const getCategoryMetrics = (item) => {
   const catStr = (item.subcategory || item.category || item.title || '').toLowerCase();
@@ -261,8 +262,8 @@ export default function CartSlideOver() {
                             </div>
 
                             <div className="flex flex-col items-end text-right shrink-0">
-                              <p className="text-[12px] text-gray-400 line-through font-semibold tracking-tight">₹{(item.price / 0.81).toFixed(2)}</p>
-                              <p className="text-[16px] font-black text-gray-900 leading-none mt-1 tracking-tight">₹{item.price?.toFixed(2)}</p>
+                              <p className="text-[12px] text-gray-400 line-through font-semibold tracking-tight"><PriceDisplay basePrice={item.price / 0.81} /></p>
+                              <p className="text-[16px] font-black text-gray-900 leading-none mt-1 tracking-tight"><PriceDisplay basePrice={item.price || 0} /></p>
                               <p className="text-[10px] font-black text-[#00a86b] mt-1.5 tracking-widest">(19% OFF)</p>
                             </div>
                           </div>
@@ -376,23 +377,23 @@ export default function CartSlideOver() {
                             <div className="space-y-1.5 text-[11px] mb-3 border-t border-gray-100 pt-3">
                               <div className="flex justify-between text-gray-500">
                                 <span>Intl. Shipping</span>
-                                <span>₹{shippingCosts.intlLow} - ₹{shippingCosts.intlHigh}</span>
+                                <span><PriceDisplay basePrice={shippingCosts.intlLow} /> - <PriceDisplay basePrice={shippingCosts.intlHigh} /></span>
                               </div>
                               <div className="flex justify-between text-gray-500">
                                 <span>Customs & Duty</span>
-                                <span>₹{shippingCosts.customsLow} - ₹{shippingCosts.customsHigh}</span>
+                                <span><PriceDisplay basePrice={shippingCosts.customsLow} /> - <PriceDisplay basePrice={shippingCosts.customsHigh} /></span>
                               </div>
                               <div className="flex justify-between text-gray-500">
                                 <span>Import GST</span>
-                                <span>₹{shippingCosts.gstLow} - ₹{shippingCosts.gstHigh}</span>
+                                <span><PriceDisplay basePrice={shippingCosts.gstLow} /> - <PriceDisplay basePrice={shippingCosts.gstHigh} /></span>
                               </div>
                               <div className="flex justify-between text-gray-500">
                                 <span>Domestic</span>
-                                <span>₹{shippingCosts.domLow} - ₹{shippingCosts.domHigh}</span>
+                                <span><PriceDisplay basePrice={shippingCosts.domLow} /> - <PriceDisplay basePrice={shippingCosts.domHigh} /></span>
                               </div>
                               <div className="flex justify-between font-bold text-black border-t border-gray-100 pt-1.5 mt-1.5">
                                 <span>Est. Total Shipping</span>
-                                <span>₹{shippingCosts.totalLow} - ₹{shippingCosts.totalHigh}</span>
+                                <span><PriceDisplay basePrice={shippingCosts.totalLow} /> - <PriceDisplay basePrice={shippingCosts.totalHigh} /></span>
                               </div>
                             </div>
                           )}
@@ -410,7 +411,7 @@ export default function CartSlideOver() {
                           <X className="w-3 h-3" />
                         </button>
                       </div>
-                      <span className="text-base font-semibold">-₹{discountAmount.toFixed(2)}</span>
+                      <span className="text-base font-semibold">-<PriceDisplay basePrice={discountAmount} /></span>
                     </div>
                   )}
 
@@ -418,7 +419,7 @@ export default function CartSlideOver() {
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-gray-700 font-bold text-sm">Estimated Shipping</span>
                       <span className="text-sm font-semibold text-gray-900">
-                        {shippingCosts ? `₹${shippingCosts.totalLow} - ₹${shippingCosts.totalHigh}` : '₹0'}
+                        {shippingCosts ? <><PriceDisplay basePrice={shippingCosts.totalLow} /> - <PriceDisplay basePrice={shippingCosts.totalHigh} /></> : <PriceDisplay basePrice={0} />}
                       </span>
                     </div>
                     <div className="w-full mb-3 space-y-1.5 flex flex-col items-end">
@@ -431,7 +432,7 @@ export default function CartSlideOver() {
                     </div>
                     <div className="flex justify-between items-end">
                       <span className="text-gray-900 font-bold text-base mb-0.5">Total</span>
-                      <span className="text-[22px] font-black text-black leading-none tracking-tight">₹{Math.max(0, subtotal - discountAmount).toFixed(2)}</span>
+                      <span className="text-[22px] font-black text-black leading-none tracking-tight"><PriceDisplay basePrice={Math.max(0, subtotal - discountAmount)} /></span>
                     </div>
                   </div>
                 </div>

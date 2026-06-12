@@ -29,13 +29,16 @@ export default function ProductPage({ params: paramsPromise }) {
       return;
     }
     
+    const selectedSwatch = product.swatches?.find(s => s.color === selectedColor);
+    const productImage = selectedSwatch?.imageUrl || images[0];
+    
     await addToCart({
       id: product.id,
       title: product.name,
       price: product.price,
-      image: images[0],
+      image: productImage,
       size: selectedSize,
-      color: selectedColor
+      color: selectedSwatch?.colorName || selectedColor
     });
   };
 

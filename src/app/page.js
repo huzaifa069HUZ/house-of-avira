@@ -143,7 +143,7 @@ export default function Home() {
       <div className="w-full bg-[#FAFAFA] border-b border-[#000000]/5 py-3 overflow-hidden flex flex-col md:flex-row justify-center items-center gap-3 md:gap-10">
 
         {/* First Row (Mobile) / Left Side (Desktop) */}
-        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
+        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-perandory font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
           <div className="flex items-center gap-2 shrink-0">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4L12 14.01l-3-3" /></svg>
             <span>5000+ Orders</span>
@@ -161,7 +161,7 @@ export default function Home() {
         <span className="text-[#000000]/20 hidden md:block shrink-0">•</span>
 
         {/* Second Row (Mobile) / Right Side (Desktop) */}
-        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
+        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-perandory font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
           <div className="flex items-center gap-2 shrink-0">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
             <span>2+ Years Trusted</span>

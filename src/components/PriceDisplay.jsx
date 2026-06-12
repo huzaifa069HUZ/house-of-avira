@@ -9,13 +9,8 @@ export default function PriceDisplay({ basePrice, className }) {
 
   useEffect(() => {
     setMounted(true);
-    // If rates haven't been fetched dynamically yet, do it.
-    // The default fallback rates object has 4 keys (INR, USD, GBP, PHP).
-    // Let's just always fetch on mount once per session if not loading.
-    if (rates.INR === 1 && rates.USD === 0.012) {
-      fetchRates();
-    }
-  }, [fetchRates, rates.USD]);
+    fetchRates();
+  }, [fetchRates]);
 
   // To prevent hydration errors, we can return the base INR price 
   // before the component mounts, or just return nothing.

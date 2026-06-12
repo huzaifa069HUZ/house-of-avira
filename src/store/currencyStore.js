@@ -23,6 +23,9 @@ export const useCurrencyStore = create((set, get) => ({
   },
 
   fetchRates: async () => {
+    const state = get();
+    if (state.loading) return;
+    
     set({ loading: true });
     try {
       const res = await fetch('/api/rates');

@@ -31,6 +31,7 @@ export const metadata = {
 };
 
 import RegionSelector from "@/components/RegionSelector";
+import ProductOptionsModal from "@/components/ProductOptionsModal";
 
 export default function RootLayout({ children }) {
   return (
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
           <RegionSelector />
+          <ProductOptionsModal />
         </AuthProvider>
       </body>
     </html>

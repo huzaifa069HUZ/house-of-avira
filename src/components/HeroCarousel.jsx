@@ -117,8 +117,8 @@ export default function HeroCarousel() {
               
               <div className="absolute inset-0 flex flex-col justify-end items-center p-8 pb-16">
                 <div className="text-center flex flex-col items-center w-full mt-auto">
-                  <h1 className="text-[2.75rem] leading-[1.1] sm:text-5xl tracking-tight text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-                    <span className="font-sans font-black uppercase tracking-tight">HOUSE OF</span> <span className="font-serif">AVIRA</span>
+                  <h1 className="text-[2.75rem] leading-[1.1] sm:text-5xl tracking-tight text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] flex items-center justify-center gap-3">
+                    <span className="font-perandory uppercase">HOUSE OF</span> <span className="font-symphony pt-2">Avira</span>
                   </h1>
                   <p className="text-[11px] text-white/95 font-medium tracking-[0.2em] uppercase mb-8 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-center leading-relaxed">
                     ✨ IMPORTED PINTEREST FINDS ✨
