@@ -37,7 +37,13 @@ export default function HeroCarousel() {
           ...doc.data()
         }));
         
-        setMobileSlides(fetchedBanners);
+        const fixedBanner = {
+          id: 'fixed_banner_1',
+          mobileImage: '/banner-mob.png',
+          link: '/catalogue'
+        };
+        
+        setMobileSlides([fixedBanner, ...fetchedBanners]);
       } catch (error) {
         console.error("Error fetching mobile banners:", error);
       }
@@ -62,7 +68,7 @@ export default function HeroCarousel() {
   }, [mobileSlides]);
 
   return (
-    <section className="relative w-full aspect-[9/16] md:aspect-auto md:h-[calc(100vh-32px)] -mt-[128px] overflow-hidden bg-black">
+    <section className="relative w-full h-[100dvh] md:h-[calc(100vh-32px)] -mt-[128px] overflow-hidden bg-black">
       {/* DESKTOP CAROUSEL */}
       <div className="hidden md:block w-full h-full">
         {defaultDesktopSlides.map((slide, index) => {
@@ -111,8 +117,8 @@ export default function HeroCarousel() {
               
               <div className="absolute inset-0 flex flex-col justify-end items-center p-8 pb-16">
                 <div className="text-center flex flex-col items-center w-full mt-auto">
-                  <h1 className="text-4xl font-serif tracking-tight text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-                    HOUSE OF AVIRA
+                  <h1 className="text-[2.75rem] leading-[1.1] sm:text-5xl tracking-tight text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                    <span className="font-sans font-black uppercase tracking-tight">HOUSE OF</span> <span className="font-serif">AVIRA</span>
                   </h1>
                   <p className="text-[11px] text-white/95 font-medium tracking-[0.2em] uppercase mb-8 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-center leading-relaxed">
                     ✨ IMPORTED PINTEREST FINDS ✨
