@@ -62,7 +62,7 @@ export default function HeroCarousel() {
   }, [mobileSlides]);
 
   return (
-    <section className="relative w-full h-[calc(100vh-32px)] -mt-[128px] overflow-hidden">
+    <section className="relative w-full aspect-[9/16] md:aspect-auto md:h-[calc(100vh-32px)] -mt-[128px] overflow-hidden bg-black">
       {/* DESKTOP CAROUSEL */}
       <div className="hidden md:block w-full h-full">
         {defaultDesktopSlides.map((slide, index) => {
@@ -104,7 +104,7 @@ export default function HeroCarousel() {
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             >
               <div 
-                className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url('${slide.mobileImage || slide.imageUrl}')` }}
               />
               <div className="absolute inset-0 bg-black/20"></div>
