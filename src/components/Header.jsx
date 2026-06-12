@@ -219,15 +219,15 @@ export default function Header() {
         
         {/* Desktop: Static Text */}
         <div className="hidden md:block text-center uppercase">
-          This is a preorder business. Products are imported. Shipping is charged separately. No cancellations or refunds after ordering.
+          • ✈️ Pre - orders only &nbsp;&nbsp; • imported Pinterest Finds
         </div>
 
         {/* Mobile: Marquee */}
         <div className="md:hidden overflow-hidden flex whitespace-nowrap w-full">
           <div className="animate-marquee-slow inline-block uppercase">
-            <span className="mx-8">This is a preorder business. Products are imported. Shipping is charged separately. No cancellations or refunds after ordering.</span>
-            <span className="mx-8">This is a preorder business. Products are imported. Shipping is charged separately. No cancellations or refunds after ordering.</span>
-            <span className="mx-8">This is a preorder business. Products are imported. Shipping is charged separately. No cancellations or refunds after ordering.</span>
+            <span className="mx-8">• ✈️ Pre - orders only &nbsp;&nbsp; • imported Pinterest Finds</span>
+            <span className="mx-8">• ✈️ Pre - orders only &nbsp;&nbsp; • imported Pinterest Finds</span>
+            <span className="mx-8">• ✈️ Pre - orders only &nbsp;&nbsp; • imported Pinterest Finds</span>
           </div>
         </div>
       </div>

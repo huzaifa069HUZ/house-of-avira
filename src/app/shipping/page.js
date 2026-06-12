@@ -462,9 +462,9 @@ export default function ShippingPage() {
             </div>
 
             <div className="mt-12 text-center">
-              <Link href="/shipping-calculator" className="inline-flex items-center justify-center gap-2 bg-[#C97B6E] text-white px-8 py-4 rounded-xl text-[15px] font-medium hover:bg-[#B86B5E] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-                <Calculator className="w-5 h-5" /> Estimate International Shipping Cost
-              </Link>
+              <div className="inline-flex items-center justify-center gap-2 bg-[#FAF7F2] border border-[#E8C4B8] text-[#8B5E52] px-8 py-4 rounded-xl text-[15px] font-medium shadow-sm">
+                <Calculator className="w-5 h-5" /> Add items to your cart to estimate shipping!
+              </div>
             </div>
           </FadeIn>
         </section>

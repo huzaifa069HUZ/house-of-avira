@@ -1,15 +1,142 @@
 'use client';
 
 import { useCartStore } from '@/store/cartStore';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, Trash2, Globe, ChevronDown, Tag } from 'lucide-react';
+import { X, Minus, Plus, ShoppingBag, Trash2, Globe, ChevronDown, Tag, Calculator, Plane, Ship } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
+
+const getCategoryMetrics = (item) => {
+  const catStr = (item.subcategory || item.category || item.title || '').toLowerCase();
+  
+  if (catStr.includes('shoe') || catStr.includes('sneaker') || catStr.includes('footwear') || catStr.includes('boot')) {
+    return { weight: 1200, duty: 0.35, igst: 0.18 };
+  } else if (catStr.includes('bag') || catStr.includes('purse') || catStr.includes('wallet')) {
+    return { weight: 800, duty: 0.20, igst: 0.18 };
+  } else if (catStr.includes('jacket') || catStr.includes('coat') || catStr.includes('blazer')) {
+    return { weight: 1000, duty: 0.25, igst: 0.18 };
+  } else if (catStr.includes('sweater') || catStr.includes('hoodie') || catStr.includes('sweatshirt')) {
+    return { weight: 700, duty: 0.20, igst: 0.18 };
+  } else if (catStr.includes('jeans') || catStr.includes('denim')) {
+    return { weight: 600, duty: 0.20, igst: 0.18 };
+  } else if (catStr.includes('trouser') || catStr.includes('pant')) {
+    return { weight: 500, duty: 0.20, igst: 0.18 };
+  } else if (catStr.includes('dress')) {
+    return { weight: 450, duty: 0.20, igst: 0.18 };
+  } else if (catStr.includes('shirt') || catStr.includes('top') || catStr.includes('t-shirt') || catStr.includes('tshirt')) {
+    return { weight: 250, duty: 0.20, igst: 0.18 };
+  } else if (catStr.includes('beauty') || catStr.includes('makeup') || catStr.includes('cosmetic')) {
+    return { weight: 150, duty: 0.20, igst: 0.18 };
+  } else if (catStr.includes('accessory') || catStr.includes('jewelry') || catStr.includes('watch') || catStr.includes('sunglass')) {
+    return { weight: 150, duty: 0.10, igst: 0.18 };
+  }
+  return { weight: 500, duty: 0.20, igst: 0.18 }; // Default
+};
 
 export default function CartSlideOver() {
   const { cart, isOpen, closeCart, updateQuantity, updateItemSize, removeFromCart, appliedCoupon, discountAmount, applyCoupon, removeCoupon } = useCartStore();
   const [couponCode, setCouponCode] = useState('');
   const [couponMsg, setCouponMsg] = useState({ text: '', type: '' });
+  
+  // Shipping Estimator State
+  const [showEstimator, setShowEstimator] = useState(false);
+  const [shippingMode, setShippingMode] = useState('sea');
+  const [customWeight, setCustomWeight] = useState(0);
+
+  const baseCartWeight = useMemo(() => {
+    return cart.reduce((total, item) => {
+      const { weight } = getCategoryMetrics(item);
+      return total + (weight * item.quantity);
+    }, 0);
+  }, [cart]);
+
+  // Sync customWeight only when cart content changes in a way that alters the base weight
+  useEffect(() => {
+    setCustomWeight(baseCartWeight);
+  }, [baseCartWeight]);
+
+  const shippingCosts = useMemo(() => {
+    if (cart.length === 0) return null;
+
+    // Rates (per kg)
+    const seaRatePerKg = 450; // ₹450 per kg
+    const airRatePerKg = 1200; // ₹1200 per kg
+    const modeRate = shippingMode === 'air' ? airRatePerKg : seaRatePerKg;
+
+    // Total physical weight vs volumetric weight
+    // We use the user-modified `customWeight` (in grams) for calculations
+    let intlShippingBase = (customWeight / 1000) * modeRate;
+
+    // We add a base fixed cost for handling/packaging per package
+    const handlingFee = 500; 
+    intlShippingBase += handlingFee;
+
+    // We still give a range (e.g. +/- 15%) since rates fluctuate based on dimensional weight and fuel surcharges
+    const intlLow = intlShippingBase * 0.85;
+    const intlHigh = intlShippingBase * 1.15;
+
+    let customsLow = 0;
+    let customsHigh = 0;
+    let gstLow = 0;
+    let gstHigh = 0;
+
+    cart.forEach(item => {
+      const productVal = item.price ? Number(item.price) : 2000;
+      const metrics = getCategoryMetrics(item);
+      
+      const bcdRate = metrics.duty; // Basic Custom Duty
+      const swsRate = 0.10; // Social Welfare Surcharge (10% of BCD)
+      const igstRate = metrics.igst;
+      
+      // Proportion of international shipping for this item based on base weights
+      const itemWeightProp = baseCartWeight > 0 ? (metrics.weight * item.quantity) / baseCartWeight : (1 / cart.length);
+      const itemIntlLow = intlLow * itemWeightProp;
+      const itemIntlHigh = intlHigh * itemWeightProp;
+
+      // Assessable Value = Product Value + Intl Shipping
+      const assessableLow = (productVal * item.quantity) + itemIntlLow;
+      const assessableHigh = (productVal * item.quantity) + itemIntlHigh;
+
+      const bcdLow = assessableLow * bcdRate;
+      const bcdHigh = assessableHigh * bcdRate;
+
+      const swsLow = bcdLow * swsRate;
+      const swsHigh = bcdHigh * swsRate;
+
+      const totalDutyLow = bcdLow + swsLow;
+      const totalDutyHigh = bcdHigh + swsHigh;
+
+      customsLow += totalDutyLow;
+      customsHigh += totalDutyHigh;
+
+      // IGST applied on (Assessable Value + Total Duty)
+      const valueForIgstLow = assessableLow + totalDutyLow;
+      const valueForIgstHigh = assessableHigh + totalDutyHigh;
+
+      gstLow += valueForIgstLow * igstRate;
+      gstHigh += valueForIgstHigh * igstRate;
+    });
+
+    // Domestic shipping (e.g., Delhivery / BlueDart)
+    // ~₹80 base for first 500g + ₹50 for every additional 500g
+    const domesticBase = 80 + Math.max(0, Math.ceil((customWeight - 500) / 500)) * 50;
+    const domLow = domesticBase * 0.9;
+    const domHigh = domesticBase * 1.2;
+
+    return {
+      intlLow: Math.round(intlLow),
+      intlHigh: Math.round(intlHigh),
+      customsLow: Math.round(customsLow),
+      customsHigh: Math.round(customsHigh),
+      gstLow: Math.round(gstLow),
+      gstHigh: Math.round(gstHigh),
+      domLow: Math.round(domLow),
+      domHigh: Math.round(domHigh),
+      totalLow: Math.round(intlLow + customsLow + gstLow + domLow),
+      totalHigh: Math.round(intlHigh + customsHigh + gstHigh + domHigh)
+    };
+  }, [cart, shippingMode, customWeight, baseCartWeight]);
 
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
@@ -197,7 +324,83 @@ export default function CartSlideOver() {
             {cart.length > 0 && (
               <div className="border-t border-gray-100 px-6 py-6 bg-white">
                 <div className="space-y-3 mb-6">
-                  {/* Subtotal removed as requested */}
+                  {/* Shipping Estimator */}
+                  <div className="bg-[#FAFAFA] border border-gray-200 rounded-xl overflow-hidden mb-4">
+                    <button 
+                      onClick={() => setShowEstimator(!showEstimator)} 
+                      className="w-full px-4 py-3 flex items-center justify-between text-sm font-bold bg-white hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Calculator className="w-4 h-4 text-[#8A001A]" />
+                        <span>Estimate Shipping</span>
+                      </div>
+                      <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showEstimator ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    <AnimatePresence>
+                      {showEstimator && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="px-4 py-4 border-t border-gray-100"
+                        >
+                          <div className="space-y-3 mb-4">
+                            <div className="flex gap-2">
+                              <button 
+                                onClick={() => setShippingMode('sea')}
+                                className={`flex-1 py-1.5 text-xs font-semibold rounded-md border flex justify-center items-center gap-1.5 transition-colors ${shippingMode === 'sea' ? 'bg-[#1E4A72]/10 border-[#1E4A72] text-[#1E4A72]' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'}`}
+                              >
+                                <Ship className="w-3.5 h-3.5" /> Sea
+                              </button>
+                              <button 
+                                onClick={() => setShippingMode('air')}
+                                className={`flex-1 py-1.5 text-xs font-semibold rounded-md border flex justify-center items-center gap-1.5 transition-colors ${shippingMode === 'air' ? 'bg-[#8A001A]/10 border-[#8A001A] text-[#8A001A]' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'}`}
+                              >
+                                <Plane className="w-3.5 h-3.5" /> Air
+                              </button>
+                            </div>
+                            
+                            <div className="flex items-center justify-between gap-3 text-xs">
+                              <span className="text-gray-600 font-medium whitespace-nowrap">Est. Weight (g)</span>
+                              <input 
+                                type="number" 
+                                value={customWeight} 
+                                onChange={(e) => setCustomWeight(parseInt(e.target.value) || 0)}
+                                className="w-20 text-right border border-gray-200 rounded px-2 py-1 outline-none focus:border-[#8A001A]"
+                              />
+                            </div>
+                          </div>
+
+                          {shippingCosts && (
+                            <div className="space-y-1.5 text-[11px] mb-3 border-t border-gray-100 pt-3">
+                              <div className="flex justify-between text-gray-500">
+                                <span>Intl. Shipping</span>
+                                <span>₹{shippingCosts.intlLow} - ₹{shippingCosts.intlHigh}</span>
+                              </div>
+                              <div className="flex justify-between text-gray-500">
+                                <span>Customs & Duty</span>
+                                <span>₹{shippingCosts.customsLow} - ₹{shippingCosts.customsHigh}</span>
+                              </div>
+                              <div className="flex justify-between text-gray-500">
+                                <span>Import GST</span>
+                                <span>₹{shippingCosts.gstLow} - ₹{shippingCosts.gstHigh}</span>
+                              </div>
+                              <div className="flex justify-between text-gray-500">
+                                <span>Domestic</span>
+                                <span>₹{shippingCosts.domLow} - ₹{shippingCosts.domHigh}</span>
+                              </div>
+                              <div className="flex justify-between font-bold text-black border-t border-gray-100 pt-1.5 mt-1.5">
+                                <span>Est. Total Shipping</span>
+                                <span>₹{shippingCosts.totalLow} - ₹{shippingCosts.totalHigh}</span>
+                              </div>
+                            </div>
+                          )}
+                          <p className="text-[9px] text-[#8A001A] uppercase font-bold leading-tight text-center">This is an estimate. Actual shipping will be billed separately upon arrival.</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
 
                   {appliedCoupon && (
                     <div className="flex justify-between items-center text-[#00a86b]">
@@ -212,10 +415,19 @@ export default function CartSlideOver() {
                   )}
 
                   <div className="pt-2">
-                    <div className="w-full mb-3">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-gray-700 font-bold text-sm">Estimated Shipping</span>
+                      <span className="text-sm font-semibold text-gray-900">
+                        {shippingCosts ? `₹${shippingCosts.totalLow} - ₹${shippingCosts.totalHigh}` : '₹0'}
+                      </span>
+                    </div>
+                    <div className="w-full mb-3 space-y-1.5 flex flex-col items-end">
                       <p className="font-sans text-[10px] font-bold text-red-500 uppercase tracking-tight text-right leading-tight">
-                        * INTERNATIONAL SHIPPING WILL BE CHARGED LATER, IT'S ONLY THE FIXED PRICE.
+                        * THIS PRICE IS AN ESTIMATE AND MIGHT GO HIGHER AS PER CUSTOM DUTY AND TAXES.
                       </p>
+                      <Link href="/shipping" onClick={closeCart} className="font-sans text-[10px] font-bold text-blue-600 hover:text-blue-800 underline uppercase tracking-tight">
+                        KNOW MORE ABOUT SHIPPING
+                      </Link>
                     </div>
                     <div className="flex justify-between items-end">
                       <span className="text-gray-900 font-bold text-base mb-0.5">Total</span>

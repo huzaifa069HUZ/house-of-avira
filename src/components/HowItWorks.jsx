@@ -88,10 +88,9 @@ export default function HowItWorks() {
             </p>
             
             <div className="mt-10 flex flex-col md:flex-row justify-center md:justify-start gap-4">
-              <Link href="/shipping-calculator" className="group flex justify-center items-center gap-3 bg-white text-[#8A001A] font-medium tracking-wide text-sm px-8 py-3.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-300">
-                Estimate International Shipping Calculator
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <div className="group flex justify-center items-center gap-3 bg-white text-[#8A001A] font-medium tracking-wide text-sm px-8 py-3.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+                Check your cart to estimate shipping! 🛒
+              </div>
               <Link href="/shipping" className="group flex justify-center items-center gap-3 bg-transparent border-2 border-white text-white font-medium tracking-wide text-sm px-8 py-3.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
                 Learn more about shipping
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
