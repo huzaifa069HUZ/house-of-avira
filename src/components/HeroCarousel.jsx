@@ -22,23 +22,10 @@ const defaultDesktopSlides = [
   }
 ];
 
-const defaultMobileSlides = [
-  {
-    id: 'default_mob_1',
-    mobileImage: 'https://res.cloudinary.com/dhmberzlg/image/upload/v1781132052/house-of-avira/banners/w85xcfwbnacwndq6hgss.png',
-    link: '/category/women'
-  },
-  {
-    id: 'default_mob_2',
-    mobileImage: 'https://res.cloudinary.com/dhmberzlg/image/upload/v1781132054/house-of-avira/banners/f7ijvwyhymyxnhu09bh0.png',
-    link: '/catalogue'
-  }
-];
-
 export default function HeroCarousel() {
   const [currentDesktopSlide, setCurrentDesktopSlide] = useState(0);
   const [currentMobileSlide, setCurrentMobileSlide] = useState(0);
-  const [mobileSlides, setMobileSlides] = useState(defaultMobileSlides);
+  const [mobileSlides, setMobileSlides] = useState([]);
 
   useEffect(() => {
     async function fetchMobileBanners() {
@@ -50,9 +37,7 @@ export default function HeroCarousel() {
           ...doc.data()
         }));
         
-        if (fetchedBanners.length > 0) {
-          setMobileSlides(fetchedBanners);
-        }
+        setMobileSlides(fetchedBanners);
       } catch (error) {
         console.error("Error fetching mobile banners:", error);
       }
@@ -107,21 +92,10 @@ export default function HeroCarousel() {
           );
         })}
         
-        {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-          {defaultDesktopSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentDesktopSlide(index)}
-              className={`w-12 h-0.5 transition-colors duration-500 ${currentDesktopSlide === index ? 'bg-white' : 'bg-white/40'}`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* MOBILE CAROUSEL */}
-      <div className="block md:hidden w-full h-full">
+      <div className="block md:hidden w-full h-full bg-black">
         {mobileSlides.map((slide, index) => {
           const isActive = index === currentMobileSlide;
           return (
@@ -130,16 +104,22 @@ export default function HeroCarousel() {
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             >
               <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                className="absolute inset-0 bg-contain bg-center bg-no-repeat"
                 style={{ backgroundImage: `url('${slide.mobileImage || slide.imageUrl}')` }}
               />
               <div className="absolute inset-0 bg-black/20"></div>
               
-              <div className="absolute inset-0 flex flex-col justify-end p-8 pb-24">
-                <div className="text-left flex flex-col items-start w-full max-w-2xl mt-auto">
+              <div className="absolute inset-0 flex flex-col justify-end items-center p-8 pb-16">
+                <div className="text-center flex flex-col items-center w-full mt-auto">
+                  <h1 className="text-4xl font-serif tracking-tight text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                    HOUSE OF AVIRA
+                  </h1>
+                  <p className="text-[11px] text-white/95 font-medium tracking-[0.2em] uppercase mb-8 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-center leading-relaxed">
+                    ✨ IMPORTED PINTEREST FINDS ✨
+                  </p>
                   <Link 
                     href={slide.link || '/catalogue'}
-                    className="inline-block bg-white text-[#000000] font-bold tracking-widest uppercase text-xs px-8 py-3 w-full text-center mt-4"
+                    className="inline-block bg-white text-black font-bold tracking-widest uppercase text-xs px-8 py-3.5 w-full text-center shadow-lg transition-transform active:scale-95"
                   >
                     Shop Now
                   </Link>
@@ -149,17 +129,6 @@ export default function HeroCarousel() {
           );
         })}
         
-        {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-          {mobileSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentMobileSlide(index)}
-              className={`w-12 h-0.5 transition-colors duration-500 ${currentMobileSlide === index ? 'bg-white' : 'bg-white/40'}`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
     </section>
   );
