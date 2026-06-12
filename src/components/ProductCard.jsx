@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
 import { Heart, ShoppingBag } from 'lucide-react';
+import PriceDisplay from '@/components/PriceDisplay';
 
 export default function ProductCard({ product }) {
   const { id, name, price, imageUrl, badge, swatches, sizes = [] } = product;
@@ -130,7 +131,7 @@ export default function ProductCard({ product }) {
           <h3 className="text-[11px] font-medium tracking-wide text-black uppercase leading-tight truncate">
             {name}
           </h3>
-          <p className="text-[11px] text-neutral-600 font-normal">${price.toFixed(2)}</p>
+          <p className="text-[11px] text-neutral-600 font-normal"><PriceDisplay basePrice={price} /></p>
         </div>
         
         {/* Right Side: Swatches */}

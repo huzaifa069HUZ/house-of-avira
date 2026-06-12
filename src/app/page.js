@@ -12,11 +12,29 @@ import { useRouter } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useCurrencyStore } from '@/store/currencyStore';
+import PriceDisplay from '@/components/PriceDisplay';
 
 export default function Home() {
   const router = useRouter();
   const { user } = useAuthStore();
   const { wishlist, toggleWishlist } = useWishlistStore();
+  const { t } = useTranslation();
+  const { initSettings } = useCurrencyStore();
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const cookies = document.cookie.split('; ').reduce((prev, current) => {
+        const [name, ...value] = current.split('=');
+        if (name) prev[name.trim()] = value.join('=');
+        return prev;
+      }, {});
+      if (cookies.USER_CURRENCY || cookies.NEXT_LOCALE) {
+        initSettings(cookies.USER_CURRENCY, cookies.NEXT_LOCALE);
+      }
+    }
+  }, [initSettings]);
 
   const handleWishlistToggle = async (e, product) => {
     e.preventDefault();
@@ -156,9 +174,9 @@ export default function Home() {
         {/* Section Header */}
         <div className="flex justify-between items-end mb-8 border-b border-[#000000]/10 pb-4">
           <div className="flex items-baseline gap-6">
-            <h2 className="text-3xl font-serif tracking-tight text-[#000000] italic">NEW ARRIVALS</h2>
+            <h2 className="text-3xl font-serif tracking-tight text-[#000000] italic">{t.hero.newArrivals}</h2>
             <a href="/catalogue" className="text-xs font-semibold tracking-widest uppercase text-[#000000]/70 hover:text-[#000000]">
-              Shop All
+              {t.hero.shopAll}
             </a>
           </div>
           <div className="flex gap-2 text-[#000000]/40">
@@ -188,10 +206,10 @@ export default function Home() {
         <section className="w-full bg-[#FFFFFF] py-16 md:py-24">
           <div className="w-full text-center mb-10">
             <h2 className="text-3xl md:text-5xl font-perandory font-bold tracking-widest text-[#8A001A] uppercase mb-1">
-              OUR TOP PICKS
+              {t.topPicks.title}
             </h2>
             <p className="text-3xl md:text-5xl text-[#000000] font-symphony lowercase">
-              straight from your pinterest board
+              {t.topPicks.subtitle}
             </p>
           </div>
 
@@ -219,9 +237,9 @@ export default function Home() {
       <section className="w-full bg-white p-2 md:p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 w-full h-[150vh] md:h-[90vh]">
           {[
-            { img: '/dress.png', title: 'DRESS', link: '/category/women/dresses' },
-            { img: '/swim.png', title: 'SWIM', link: '/category/women/beach-wear' },
-            { img: '/sets.png', title: 'SETS', link: '/category/women/tops' }
+            { img: '/dress.png', title: t.categories.dress, link: '/category/women/dresses' },
+            { img: '/swim.png', title: t.categories.swim, link: '/category/women/beach-wear' },
+            { img: '/sets.png', title: t.categories.sets, link: '/category/women/tops' }
           ].map((item, idx) => (
             <Link
               key={idx}
@@ -250,18 +268,18 @@ export default function Home() {
       {/* Curated Aesthetics Section */}
       <section className="py-20 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-sans font-bold tracking-tight text-[#000000] mb-2">Curated Aesthetics</h2>
-          <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-8">OUR CUTEST PICKS,JUST FOR YOU 💕</p>
+          <h2 className="text-2xl md:text-3xl font-sans font-bold tracking-tight text-[#000000] mb-2">{t.curated.title}</h2>
+          <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-8">{t.curated.subtitle}</p>
 
           {/* Pills / Filters */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
             <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar w-full md:w-auto pb-2 md:pb-0">
-              <button className="bg-[#000000] text-white px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap">Best Sellers</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">New Arrivals</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">Sets</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">Dresses</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">Tops</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">Outerwear</button>
+              <button className="bg-[#000000] text-white px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap">{t.curated.bestSellers}</button>
+              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.newArrivals}</button>
+              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.categories.sets}</button>
+              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.dresses}</button>
+              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.tops}</button>
+              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.outerwear}</button>
             </div>
             <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors hidden md:block">Shop Best Sellers</button>
           </div>
@@ -278,13 +296,13 @@ export default function Home() {
 
                   {idx < 2 && (
                     <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-semibold text-[#000000]">
-                      Selling Fast
+                      {t.curated.sellingFast}
                     </div>
                   )}
 
                   {/* Hover Size Selector */}
                   <div className="absolute bottom-0 left-0 w-full bg-white/80 backdrop-blur-md p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center">
-                    <p className="text-[10px] font-bold tracking-widest mb-2 uppercase text-[#000000]">Select a Size</p>
+                    <p className="text-[10px] font-bold tracking-widest mb-2 uppercase text-[#000000]">{t.curated.selectSize}</p>
                     <div className="flex gap-1.5 justify-center flex-wrap">
                       {(item.sizes || [4, 6, 8, 10, 12, 14, 16]).map(s => (
                         <button key={s} className="w-6 h-6 border border-[#000000]/20 bg-white text-[10px] font-medium flex items-center justify-center hover:border-[#000000] transition-colors text-[#000000]">
@@ -299,7 +317,9 @@ export default function Home() {
                 <div className="p-4 flex justify-between items-start bg-white h-24">
                   <div className="flex flex-col pr-2">
                     <h3 className="text-xs font-medium text-[#000000] line-clamp-2 leading-tight">{item.name || item.title}</h3>
-                    <p className="text-xs text-[#000000]/60 mt-1.5">{typeof item.price === 'number' ? `₹${item.price.toFixed(2)}` : item.price}</p>
+                    <p className="text-xs text-[#000000]/60 mt-1.5">
+                      {typeof item.price === 'number' ? <PriceDisplay basePrice={item.price} /> : item.price}
+                    </p>
                   </div>
                   <button
                     onClick={(e) => handleWishlistToggle(e, item)}
@@ -325,14 +345,14 @@ export default function Home() {
             <div className="flex animate-marquee-full shrink-0">
               {[...Array(4)].map((_, i) => (
                 <span key={`mqa1-${i}`} className="text-6xl md:text-8xl lg:text-[7rem] font-sans font-black tracking-tighter uppercase mx-10 whitespace-nowrap scale-y-[1.25] inline-block origin-center pb-2">
-                  EVERYTHING IS INTERNATIONALLY SHIPPED AND EVERYTHING IS PREMIUM <span className="mx-16 opacity-30">✦</span>
+                  {t.marquee.line1}
                 </span>
               ))}
             </div>
             <div className="flex animate-marquee-full shrink-0" aria-hidden="true">
               {[...Array(4)].map((_, i) => (
                 <span key={`mqb1-${i}`} className="text-6xl md:text-8xl lg:text-[7rem] font-sans font-black tracking-tighter uppercase mx-10 whitespace-nowrap scale-y-[1.25] inline-block origin-center pb-2">
-                  EVERYTHING IS INTERNATIONALLY SHIPPED AND EVERYTHING IS PREMIUM <span className="mx-16 opacity-30">✦</span>
+                  {t.marquee.line1}
                 </span>
               ))}
             </div>
@@ -343,14 +363,14 @@ export default function Home() {
             <div className="flex animate-marquee-full-reverse shrink-0">
               {[...Array(6)].map((_, i) => (
                 <span key={`mqa2-${i}`} className="text-xl md:text-3xl font-sans font-black tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
-                  IMPORTED PREMIUM GOODS <span className="mx-16 text-[#8A001A]">/</span> INTERNATIONAL SHIPPING CHARGES SEPERATE <span className="mx-16 text-[#8A001A]">/</span>
+                  {t.marquee.line2}
                 </span>
               ))}
             </div>
             <div className="flex animate-marquee-full-reverse shrink-0" aria-hidden="true">
               {[...Array(6)].map((_, i) => (
                 <span key={`mqb2-${i}`} className="text-xl md:text-3xl font-sans font-black tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
-                  IMPORTED PREMIUM GOODS <span className="mx-16 text-[#8A001A]">/</span> INTERNATIONAL SHIPPING CHARGES SEPERATE <span className="mx-16 text-[#8A001A]">/</span>
+                  {t.marquee.line2}
                 </span>
               ))}
             </div>
@@ -367,14 +387,14 @@ export default function Home() {
           <img src="/accesories.png" alt="Pinterest Modern Dress" className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
           <div className="absolute bottom-12 left-0 w-full text-center z-10 flex justify-center">
-            <span className="text-white text-sm md:text-base tracking-widest uppercase font-medium hover:opacity-70 transition-opacity">Go To Accesories</span>
+            <span className="text-white text-sm md:text-base tracking-widest uppercase font-medium hover:opacity-70 transition-opacity">{t.categories.accessories}</span>
           </div>
         </div>
         <div className="w-full md:w-1/2 relative group overflow-hidden cursor-pointer h-1/2 md:h-full bg-[#D8D0C8]">
           <img src="/fashion.png" alt="Trendy Pinterest Accessories" className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
           <div className="absolute bottom-12 left-0 w-full text-center z-10 flex justify-center">
-            <span className="text-white text-sm md:text-base tracking-widest uppercase font-medium hover:opacity-70 transition-opacity">women</span>
+            <span className="text-white text-sm md:text-base tracking-widest uppercase font-medium hover:opacity-70 transition-opacity">{t.categories.women}</span>
           </div>
         </div>
       </section>
@@ -390,11 +410,11 @@ export default function Home() {
       {/* Join the Archive Section */}
       <section className="py-32 md:py-48 px-6 bg-[#FFFFFF] flex flex-col items-center justify-center text-center w-full">
         <div className="w-full max-w-xl">
-          <h3 className="font-serif text-3xl md:text-5xl mb-6 text-[#000000]">Join the Archive</h3>
-          <p className="text-sm text-gray-500 mb-12">Sign up to receive early access to new collections, exclusive events, and editorial features.</p>
+          <h3 className="font-serif text-3xl md:text-5xl mb-6 text-[#000000]">{t.archive.title}</h3>
+          <p className="text-sm text-gray-500 mb-12">{t.archive.subtitle}</p>
           <form className="flex flex-col md:flex-row w-full gap-4 border-b border-[#000000]/30 pb-4">
-            <input type="email" placeholder="Email Address" className="bg-transparent w-full outline-none text-[#000000] placeholder:text-gray-400 text-sm" />
-            <button type="button" className="text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">Subscribe</button>
+            <input type="email" placeholder={t.archive.placeholder} className="bg-transparent w-full outline-none text-[#000000] placeholder:text-gray-400 text-sm" />
+            <button type="button" className="text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">{t.archive.subscribe}</button>
           </form>
         </div>
       </section>

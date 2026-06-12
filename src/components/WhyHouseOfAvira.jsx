@@ -38,67 +38,6 @@ export default function WhyHouseOfAvira() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        {/* Header Section */}
-        <motion.div className="text-center mb-20 md:mb-28" variants={itemVariants}>
-          <h2 className="text-4xl md:text-6xl font-perandory font-bold tracking-widest text-[#8A001A] uppercase mb-4">
-            Why House of Avira
-          </h2>
-          <p className="text-3xl md:text-5xl text-[#000000] font-symphony lowercase">
-            premium pinterest aesthetics, delivered directly.
-          </p>
-        </motion.div>
-
-        {/* Business Model Explanation */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-32">
-          <motion.div className="order-2 md:order-1 relative h-[500px] w-full rounded-2xl overflow-hidden group shadow-2xl" variants={itemVariants}>
-             <img src="/fashion.png" alt="Pinterest Ready Styles" className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-105" />
-             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
-             <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-xl border border-white/50 shadow-xl">
-               <h3 className="text-lg font-serif font-bold text-[#000000] mb-2 uppercase tracking-wide">Direct from Global Makers</h3>
-               <p className="text-sm text-[#000000]/70 leading-relaxed font-sans">
-                 We skip the middlemen, massive warehouse fees, and local markups. By connecting you directly with premium international suppliers, you get identical high-quality aesthetic pieces at a fraction of the cost.
-               </p>
-             </div>
-          </motion.div>
-
-          <motion.div className="order-1 md:order-2 space-y-10" variants={containerVariants}>
-            <motion.div variants={itemVariants} className="flex gap-5">
-              <div className="w-12 h-12 rounded-full bg-[#8A001A]/10 flex items-center justify-center shrink-0 mt-1">
-                <Globe className="w-6 h-6 text-[#8A001A]" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold font-sans tracking-tight text-[#000000] mb-2">Curated Global Aesthetics</h4>
-                <p className="text-[#000000]/60 font-sans leading-relaxed">
-                  Our team constantly scours international markets to find the most viral, Pinterest-worthy, and high-quality items before they even hit local stores.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="flex gap-5">
-              <div className="w-12 h-12 rounded-full bg-[#000000]/5 flex items-center justify-center shrink-0 mt-1">
-                <ShieldCheck className="w-6 h-6 text-[#000000]" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold font-sans tracking-tight text-[#000000] mb-2">Uncompromised Quality</h4>
-                <p className="text-[#000000]/60 font-sans leading-relaxed">
-                  We don't do cheap knockoffs. We partner with the same manufacturers that supply high-end boutiques globally to ensure premium fabrics and flawless stitching.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="flex gap-5">
-              <div className="w-12 h-12 rounded-full bg-[#8A001A]/10 flex items-center justify-center shrink-0 mt-1">
-                <Package className="w-6 h-6 text-[#8A001A]" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold font-sans tracking-tight text-[#000000] mb-2">Delivered to Your Doorstep</h4>
-                <p className="text-[#000000]/60 font-sans leading-relaxed">
-                  We handle the complex international logistics, customs clearance, and domestic routing. You just sit back and wait for your package.
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
 
         {/* Three Stage Pricing Header */}
         <motion.div className="text-center mb-16" variants={itemVariants}>
