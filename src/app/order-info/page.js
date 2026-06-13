@@ -1,159 +1,311 @@
 'use client';
 
 import Link from 'next/link';
-import { ChevronRight, ShoppingBag, Truck, FileText, Heart } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 const sections = [
   {
     title: 'Order Process',
-    description: 'Understand how our pre-order system works, payment structure, slot fees, and what happens after you place an order.',
+    description: 'How our pre-order system works, payment structure, slot fees & what happens after you place an order.',
     href: '/order-info/order-process',
-    icon: ShoppingBag,
-    number: '01'
+    number: '01',
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="4" width="24" height="24" rx="3" />
+        <path d="M4 12h24" />
+        <circle cx="10" cy="8" r="1" fill="currentColor" stroke="none" />
+        <circle cx="14" cy="8" r="1" fill="currentColor" stroke="none" />
+        <circle cx="18" cy="8" r="1" fill="currentColor" stroke="none" />
+        <path d="M10 18h6" />
+        <path d="M10 22h12" />
+      </svg>
+    ),
   },
   {
     title: 'Shipping & Delivery',
-    description: 'International shipping, domestic delivery, customs, shipping calculations, delivery timelines, and shipping estimates.',
+    description: 'International shipping, customs, delivery timelines, shipping estimates & domestic delivery.',
     href: '/order-info/shipping',
-    icon: Truck,
-    number: '02'
+    number: '02',
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 6l12-2 12 2v14l-12 8-12-8V6z" />
+        <path d="M16 4v22" />
+        <path d="M4 6l12 8 12-8" />
+        <circle cx="16" cy="18" r="2" fill="currentColor" stroke="none" />
+      </svg>
+    ),
   },
   {
     title: 'Policies & Guidelines',
-    description: 'Refunds, exchanges, cancellations, product expectations, customer responsibilities, and all store policies.',
+    description: 'Refunds, exchanges, cancellations, product expectations & customer responsibilities.',
     href: '/order-info/policies',
-    icon: FileText,
-    number: '03'
+    number: '03',
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6l2-6z" />
+        <rect x="6" y="20" width="20" height="8" rx="2" />
+        <path d="M12 24h8" />
+      </svg>
+    ),
   }
 ];
 
-export default function OrderInfoPage() {
-  return (
-    <div className="min-h-screen bg-[#FAFAF8] pt-24">
+const checklist = [
+  'Variable shipping costs',
+  'Customs procedures & clearance requirements',
+  'Estimated delivery timelines',
+  'Possible delays from external factors',
+  'Our payment structure & store policies'
+];
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,#0a0a0a_0%,#1a1a1a_50%,#0a0a0a_100%)]" />
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
-        
-        <div className="relative max-w-4xl mx-auto px-6 md:px-12 py-20 md:py-32 text-center">
+export default function OrderInfoPage() {
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#FAFAF8]">
+      <style jsx>{`
+        .fade-up {
+          opacity: 0;
+          transform: translateY(40px);
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.animate-in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .fade-up:nth-child(2) { transition-delay: 0.1s; }
+        .fade-up:nth-child(3) { transition-delay: 0.2s; }
+        .fade-up:nth-child(4) { transition-delay: 0.3s; }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        @keyframes pulse-ring {
+          0% { transform: scale(1); opacity: 0.4; }
+          100% { transform: scale(1.8); opacity: 0; }
+        }
+        .float-icon { animation: float 4s ease-in-out infinite; }
+        .pulse-ring::after {
+          content: '';
+          position: absolute;
+          inset: -8px;
+          border: 1px solid currentColor;
+          border-radius: inherit;
+          animation: pulse-ring 2s ease-out infinite;
+        }
+        @keyframes gradient-x {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient-x 8s ease infinite;
+        }
+        @keyframes line-grow {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+        .line-grow { animation: line-grow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; transform-origin: left; }
+      `}</style>
+
+      {/* ═══════════════════════════ HERO ═══════════════════════════ */}
+      <section ref={heroRef} className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-[#0A0A0A]">
+          <div className="absolute inset-0 animate-gradient" style={{ background: 'linear-gradient(135deg, #0A0A0A 0%, #1a0a0e 25%, #0A0A0A 50%, #0e0a1a 75%, #0A0A0A 100%)' }} />
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.1) 60px, rgba(255,255,255,0.1) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.1) 60px, rgba(255,255,255,0.1) 61px)' }} />
+          {/* Radial Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(138,0,26,0.08) 0%, transparent 70%)' }} />
+        </div>
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 text-center">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 mb-8">
-            <div className="h-px w-8 bg-[#8A001A]" />
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8A001A]">Important Information</span>
-            <div className="h-px w-8 bg-[#8A001A]" />
+          <div className="fade-up flex items-center justify-center gap-4 mb-10">
+            <div className="h-px w-12 bg-[#8A001A] line-grow" />
+            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A]">Important Information</span>
+            <div className="h-px w-12 bg-[#8A001A] line-grow" />
           </div>
-          
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1] mb-8">
-            Read Before Placing<br />
-            <span className="italic text-[#8A001A]">Your Order</span>
+
+          {/* Main Title */}
+          <h1 className="fade-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[0.95] mb-8">
+            Read Before<br />
+            Placing <em className="text-[#8A001A] not-italic font-light">Your Order</em>
           </h1>
 
-          <div className="w-12 h-px bg-white/20 mx-auto mb-8" />
+          {/* Decorative Line */}
+          <div className="fade-up w-20 h-[2px] bg-gradient-to-r from-transparent via-[#8A001A] to-transparent mx-auto mb-10" />
 
-          <p className="text-white/60 text-sm md:text-base leading-relaxed max-w-2xl mx-auto font-light">
-            Thank you for choosing House of Avira <span className="text-[#8A001A]">💗</span>
+          {/* Subtitle */}
+          <p className="fade-up text-white/50 text-base md:text-lg leading-relaxed max-w-xl mx-auto font-light">
+            Thank you for choosing House of Avira <span className="text-[#8A001A]">♥</span>
           </p>
-          <p className="text-white/40 text-xs md:text-sm leading-relaxed max-w-2xl mx-auto mt-4 font-light">
-            We kindly request that you read this page carefully before placing an order.
+          <p className="fade-up text-white/30 text-sm md:text-base mt-3 font-light">
+            Please read this page carefully before placing an order.
           </p>
+
+          {/* Scroll Indicator */}
+          <div className="fade-up mt-16 flex flex-col items-center gap-2">
+            <span className="text-[9px] tracking-[0.3em] uppercase text-white/20 font-bold">Scroll to explore</span>
+            <div className="w-px h-12 bg-gradient-to-b from-white/20 to-transparent relative overflow-hidden">
+              <div className="w-full h-4 bg-[#8A001A] animate-bounce" style={{ animationDuration: '2s' }} />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Introduction */}
-      <section className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24">
-        <div className="space-y-6 text-[#1a1a1a]/70 text-sm md:text-[15px] leading-[1.85] font-light">
-          <p>
-            House of Avira curates international trends and worldwide aesthetics, bringing global styles and creative finds straight to your doorstep through a <strong className="font-semibold text-[#1a1a1a]">pre-order experience</strong>.
-          </p>
-          <p>
-            Since products are sourced internationally, shipping costs, customs charges, delivery timelines, and logistics fees may vary depending on the product, shipping conditions, customs requirements, and economic factors at the time of shipment.
-          </p>
-          <p>
-            We believe in <strong className="font-semibold text-[#1a1a1a]">complete transparency</strong> and want every customer to fully understand our ordering process before making a purchase.
-          </p>
-
-          <div className="bg-[#0a0a0a] text-white/80 p-6 md:p-8 mt-8 text-xs md:text-sm leading-[1.9] space-y-3">
-            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A001A] mb-4">By placing an order, you acknowledge</p>
-            <p className="text-white/50 font-light">
-              That you have read, understood, and agreed to all information and policies listed below.
+      {/* ═══════════════════════════ INTRO ═══════════════════════════ */}
+      <section className="relative py-24 md:py-32 bg-[#FAFAF8]">
+        <div className="max-w-4xl mx-auto px-6 md:px-12">
+          <div className="fade-up">
+            <p className="text-lg md:text-xl lg:text-2xl text-[#1a1a1a]/80 leading-[1.8] font-light">
+              House of Avira curates <strong className="font-semibold text-[#1a1a1a]">international trends</strong> and worldwide aesthetics, bringing global styles and creative finds straight to your doorstep through a <strong className="font-semibold text-[#1a1a1a]">pre-order experience</strong>.
             </p>
           </div>
 
-          <div className="mt-8">
-            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#1a1a1a] mb-5">Please place an order only if you are comfortable with:</p>
-            <ul className="space-y-3">
-              {[
-                'Variable shipping costs',
-                'Customs procedures and clearance requirements',
-                'Estimated delivery timelines',
-                'Possible delays caused by factors outside our control',
-                'Our payment structure and store policies'
-              ].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <div className="w-1 h-1 rounded-full bg-[#8A001A] mt-2 shrink-0" />
-                  <span>{item}</span>
-                </li>
+          <div className="fade-up mt-10">
+            <p className="text-base md:text-lg text-[#1a1a1a]/50 leading-[1.9] font-light">
+              Since products are sourced internationally, shipping costs, customs charges, delivery timelines, and logistics fees may vary depending on the product, shipping conditions, customs requirements, and economic factors at the time of shipment.
+            </p>
+          </div>
+
+          <div className="fade-up mt-10">
+            <p className="text-base md:text-lg text-[#1a1a1a]/50 leading-[1.9] font-light">
+              We believe in <strong className="font-semibold text-[#1a1a1a]">complete transparency</strong> and want every customer to fully understand our ordering process before making a purchase.
+            </p>
+          </div>
+
+          {/* Acknowledgment Box */}
+          <div className="fade-up mt-16 relative">
+            <div className="absolute -inset-px bg-gradient-to-r from-[#8A001A]/20 via-[#8A001A]/5 to-[#8A001A]/20 rounded-2xl" />
+            <div className="relative bg-[#0A0A0A] rounded-2xl p-8 md:p-12">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2 h-2 rounded-full bg-[#8A001A] relative pulse-ring" />
+                <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#8A001A]">Acknowledgment</span>
+              </div>
+              <p className="text-white/60 text-base md:text-lg leading-[1.9] font-light">
+                By placing an order with House of Avira, you acknowledge that you have <span className="text-white font-medium">read, understood, and agreed</span> to all information and policies listed below.
+              </p>
+            </div>
+          </div>
+
+          {/* Checklist */}
+          <div className="fade-up mt-16">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a] mb-8">
+              Place an order only if you are comfortable with
+            </h3>
+            <div className="space-y-4">
+              {checklist.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-4 group">
+                  <div className="w-10 h-10 rounded-full border border-[#8A001A]/20 flex items-center justify-center shrink-0 group-hover:bg-[#8A001A]/5 group-hover:border-[#8A001A]/40 transition-all duration-500">
+                    <svg className="w-4 h-4 text-[#8A001A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-[#1a1a1a]/60 text-sm md:text-base font-light group-hover:text-[#1a1a1a] transition-colors duration-300">{item}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Section Cards */}
-      <section className="max-w-5xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {sections.map((section) => {
-            const Icon = section.icon;
-            return (
+      {/* ═══════════════════════════ SECTION CARDS ═══════════════════════════ */}
+      <section className="py-24 md:py-32 bg-[#0A0A0A] relative overflow-hidden">
+        {/* Subtle BG Pattern */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(255,255,255,0.1) 100px, rgba(255,255,255,0.1) 101px)' }} />
+
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
+          <div className="fade-up text-center mb-20">
+            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A] block mb-4">Explore Sections</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white tracking-tight">
+              Everything You<br />Need to Know
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {sections.map((section, idx) => (
               <Link
                 key={section.number}
                 href={section.href}
-                className="group relative bg-white border border-[#000000]/[0.06] p-8 md:p-10 flex flex-col transition-all duration-500 hover:border-[#000000]/10 hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
+                className="fade-up group relative block"
               >
-                {/* Number */}
-                <span className="text-[80px] md:text-[100px] font-serif font-light text-[#000000]/[0.03] leading-none absolute top-4 right-6 select-none">
-                  {section.number}
-                </span>
+                {/* Card */}
+                <div className="relative bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:bg-white/[0.06] hover:border-white/[0.12] hover:shadow-[0_0_80px_rgba(138,0,26,0.06)] overflow-hidden">
+                  {/* Background Number */}
+                  <span className="absolute -top-6 -right-4 text-[140px] font-serif font-light text-white/[0.02] leading-none select-none group-hover:text-white/[0.04] transition-colors duration-700">
+                    {section.number}
+                  </span>
 
-                <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}
-                  <div className="w-10 h-10 border border-[#000000]/10 flex items-center justify-center mb-8 group-hover:border-[#8A001A]/30 group-hover:bg-[#8A001A]/[0.03] transition-all duration-500">
-                    <Icon className="w-4 h-4 text-[#000000]/40 group-hover:text-[#8A001A] transition-colors duration-500" />
+                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#8A001A]/[0.08] border border-[#8A001A]/[0.15] flex items-center justify-center mb-8 text-[#8A001A] group-hover:bg-[#8A001A]/[0.12] group-hover:border-[#8A001A]/[0.3] transition-all duration-500 float-icon">
+                    {section.icon}
                   </div>
 
+                  {/* Number Tag */}
+                  <span className="relative z-10 text-[10px] font-bold tracking-[0.3em] uppercase text-white/20 mb-3 block">Section {section.number}</span>
+
                   {/* Title */}
-                  <h3 className="text-sm font-bold tracking-[0.1em] uppercase text-[#1a1a1a] mb-4">
+                  <h3 className="relative z-10 text-xl md:text-2xl font-serif text-white mb-4 group-hover:text-[#8A001A] transition-colors duration-500">
                     {section.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs text-[#1a1a1a]/50 leading-[1.8] font-light flex-1 mb-8">
+                  <p className="relative z-10 text-sm text-white/30 leading-[1.8] font-light flex-1 mb-8">
                     {section.description}
                   </p>
 
                   {/* CTA */}
-                  <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#8A001A]">
-                    <span>Read More</span>
-                    <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" />
+                  <div className="relative z-10 flex items-center gap-3 text-[#8A001A]">
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Read Section</span>
+                    <svg className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
                   </div>
+
+                  {/* Bottom Accent Line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#8A001A] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
                 </div>
               </Link>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Bottom Note */}
-      <section className="border-t border-[#000000]/[0.06]">
-        <div className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-20 text-center">
-          <Heart className="w-4 h-4 text-[#8A001A] mx-auto mb-6" />
-          <p className="text-xs md:text-sm text-[#1a1a1a]/50 leading-[1.9] font-light max-w-xl mx-auto">
-            We value transparency and customer trust above everything else. By placing an order, you confirm that you have read and agreed to all policies.
-          </p>
-          <p className="text-xs text-[#1a1a1a]/30 mt-6 font-light">
-            Thank you for trusting House of Avira <span className="text-[#8A001A]">💗</span>
-          </p>
+      {/* ═══════════════════════════ BOTTOM ═══════════════════════════ */}
+      <section className="py-24 md:py-32 bg-[#FAFAF8]">
+        <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
+          <div className="fade-up">
+            {/* Heart Icon */}
+            <div className="w-14 h-14 rounded-full bg-[#8A001A]/[0.06] border border-[#8A001A]/[0.12] flex items-center justify-center mx-auto mb-8">
+              <svg className="w-5 h-5 text-[#8A001A]" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </div>
+
+            <p className="text-base md:text-lg text-[#1a1a1a]/50 leading-[1.9] font-light max-w-lg mx-auto">
+              We value transparency and customer trust above everything else. By placing an order, you confirm that you have read and agreed to all policies.
+            </p>
+            <p className="text-sm text-[#1a1a1a]/30 mt-6 font-light">
+              Thank you for trusting House of Avira <span className="text-[#8A001A]">♥</span>
+            </p>
+          </div>
         </div>
       </section>
     </div>

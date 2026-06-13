@@ -1,307 +1,278 @@
 'use client';
 
 import Link from 'next/link';
-import { ChevronLeft, ArrowRight } from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function ShippingPage() {
-  return (
-    <div className="min-h-screen bg-[#FAFAF8] pt-24">
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('animate-in');
+        });
+      },
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,#0a0a0a_0%,#1a1a1a_50%,#0a0a0a_100%)]" />
-        <div className="relative max-w-4xl mx-auto px-6 md:px-12 py-16 md:py-24">
-          <Link href="/order-info" className="inline-flex items-center gap-2 text-white/40 hover:text-white/70 transition-colors text-[10px] tracking-[0.2em] uppercase font-bold mb-10">
-            <ChevronLeft className="w-3 h-3" />
+  return (
+    <div className="min-h-screen bg-[#FAFAF8]">
+      <style jsx>{`
+        .fade-up {
+          opacity: 0; transform: translateY(40px);
+          transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .fade-up.animate-in { opacity: 1; transform: translateY(0); }
+        @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+        .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+      `}</style>
+
+      {/* ═══════ HERO ═══════ */}
+      <section className="relative min-h-[50vh] flex items-end overflow-hidden pt-24">
+        <div className="absolute inset-0 bg-[#0A0A0A]">
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.08) 80px, rgba(255,255,255,0.08) 81px), repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.08) 80px, rgba(255,255,255,0.08) 81px)' }} />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(138,0,26,0.1) 0%, transparent 70%)' }} />
+        </div>
+        <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 pb-16 md:pb-20 w-full">
+          <Link href="/order-info" className="inline-flex items-center gap-3 text-white/30 hover:text-white/60 transition-colors text-[10px] tracking-[0.25em] uppercase font-bold mb-12 group">
+            <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7" /></svg>
             Back to Overview
           </Link>
-          <div className="inline-flex items-center gap-2 mb-6 block">
-            <div className="h-px w-8 bg-[#8A001A]" />
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8A001A]">Section 02</span>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-2 h-2 rounded-full bg-[#8A001A] pulse-dot" />
+            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A]">Section 02</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-serif text-white tracking-tight leading-[1.1]">
-            Shipping <span className="italic text-[#8A001A]">& Delivery</span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[0.95]">
+            Shipping <em className="text-[#8A001A] not-italic font-light">& Delivery</em>
           </h1>
         </div>
       </section>
 
-      {/* Content */}
-      <article className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24">
-        <div className="space-y-20">
-
-          {/* ─── International Shipping ─── */}
-          <section className="space-y-8">
+      {/* ═══════ INTERNATIONAL SHIPPING ═══════ */}
+      <section className="py-24 md:py-32 bg-[#FAFAF8]">
+        <div className="max-w-4xl mx-auto px-6 md:px-12">
+          <div className="fade-up flex items-start gap-6 md:gap-8 mb-16">
+            <div className="shrink-0">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-[#8A001A]/[0.06] border border-[#8A001A]/[0.12] flex items-center justify-center">
+                <span className="text-2xl md:text-3xl font-serif text-[#8A001A]">01</span>
+              </div>
+            </div>
             <div>
-              <span className="text-[80px] font-serif font-light text-[#000000]/[0.04] leading-none block -mb-8 select-none">01</span>
-              <h2 className="text-xl md:text-2xl font-serif text-[#1a1a1a] tracking-tight relative">International Shipping</h2>
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8A001A] block mb-2">Worldwide</span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#1a1a1a] tracking-tight">International Shipping</h2>
             </div>
-
-            <div className="space-y-4 text-[#1a1a1a]/70 text-sm md:text-[15px] leading-[1.85] font-light">
-              <p>International shipping charges are completely separate from the product price.</p>
-              
-              <div className="bg-[#0a0a0a] p-6 md:p-8 space-y-3">
-                <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A001A] mb-3">Key Points</p>
-                <p className="text-white/70 text-sm leading-[1.85] font-light">
-                  These charges are <strong className="font-semibold text-white">NOT</strong> collected during checkout.
-                </p>
-                <p className="text-white/50 text-xs leading-[1.8]">
-                  International shipping charges are calculated later in the process once your products arrive at our shipping warehouse. This allows us to calculate the most accurate shipping amount possible based on actual shipment conditions.
-                </p>
-              </div>
-            </div>
-
-            {/* What it includes */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold tracking-[0.1em] uppercase text-[#1a1a1a]">International shipping charges may include</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[
-                  'International freight charges',
-                  'Customs duties',
-                  'Customs clearance fees',
-                  'Import-related taxes',
-                  'Logistics costs',
-                  'Handling charges',
-                  'Product-specific shipping requirements'
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 border border-[#000000]/[0.06] p-4">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#8A001A] shrink-0" />
-                    <span className="text-xs text-[#1a1a1a]/60 font-light">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Factors */}
-            <div className="border-l-2 border-[#8A001A]/20 pl-6 md:pl-8 space-y-4">
-              <h3 className="text-sm font-bold tracking-[0.1em] uppercase text-[#1a1a1a]">The final amount depends on</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {[
-                  'Product weight', 'Volumetric weight', 'Parcel dimensions',
-                  'Product category', 'Current logistics rates', 'Customs requirements',
-                  'Carrier rates', 'Economic conditions', 'International shipping market conditions'
-                ].map((item, idx) => (
-                  <div key={idx} className="text-xs text-[#1a1a1a]/50 font-light border border-[#000000]/[0.04] p-3 text-center">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4">
-            <div className="h-px flex-1 bg-[#000000]/[0.06]" />
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/30">Special Categories</span>
-            <div className="h-px flex-1 bg-[#000000]/[0.06]" />
           </div>
 
-          {/* Branded Products */}
-          <section className="space-y-6">
-            <h2 className="text-xl md:text-2xl font-serif text-[#1a1a1a] tracking-tight">Branded Products & Special Categories</h2>
-            <p className="text-[#1a1a1a]/70 text-sm md:text-[15px] leading-[1.85] font-light">
-              Certain products may attract higher customs and shipping costs due to additional inspections, clearance requirements, restrictions, or documentation.
-            </p>
-
-            <div className="bg-[#FFF8F0] border border-[#8A001A]/10 p-6 md:p-8 space-y-4">
-              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8A001A] mb-3">These may include</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {[
-                  'Branded products (Ferrari, Adidas, Nike, Hello Kitty, Pop Mart, etc.)',
-                  'Cosmetics & beauty products',
-                  'Lighters',
-                  'Restricted product categories',
-                  'Fragile items',
-                  'Oversized items',
-                  'Products requiring special handling'
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-xs text-[#1a1a1a]/60 font-light leading-[1.6]">
-                    <div className="w-1 h-1 rounded-full bg-[#8A001A] mt-1.5 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-[#1a1a1a]/40 font-light italic mt-4">
-                These additional costs are generally included within your final shipping calculation.
+          {/* Key Point */}
+          <div className="fade-up relative mb-16">
+            <div className="absolute -inset-px bg-gradient-to-r from-[#8A001A]/20 via-[#8A001A]/5 to-[#8A001A]/20 rounded-2xl" />
+            <div className="relative bg-[#0A0A0A] rounded-2xl p-10 md:p-14">
+              <p className="text-2xl md:text-3xl font-serif text-white leading-[1.4] mb-4">
+                Shipping charges are <span className="text-[#8A001A]">completely separate</span> from the product price.
+              </p>
+              <p className="text-white/40 text-sm md:text-base font-light leading-[1.9]">
+                These charges are NOT collected during checkout. They are calculated later once your products arrive at our shipping warehouse, allowing us to determine the most accurate amount possible.
               </p>
             </div>
-          </section>
+          </div>
 
-          {/* Shipping Calculator Note */}
-          <section className="space-y-4">
-            <div className="border border-[#000000]/[0.06] p-6 md:p-8 space-y-4">
-              <h3 className="text-sm font-bold tracking-[0.1em] uppercase text-[#1a1a1a]">Shipping Calculator</h3>
-              <p className="text-[#1a1a1a]/60 text-xs leading-[1.9] font-light">
-                A shipping calculator will be available below your cart to provide an estimated shipping cost before ordering.
-              </p>
-              <div className="space-y-2 mt-4">
-                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1a1a1a]/40 mb-3">Please Note</p>
-                {[
-                  'This is only an estimate',
-                  'It is not a guaranteed shipping amount',
-                  'Actual shipping costs may be lower or higher',
-                  'Estimates are provided only to help customers understand potential shipping costs before ordering'
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-xs text-[#1a1a1a]/50 font-light">
-                    <div className="w-1 h-1 rounded-full bg-[#000000]/20 mt-1.5 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-[#1a1a1a]/50 text-xs font-light mt-4 border-t border-[#000000]/[0.04] pt-4">
-                The final shipping amount can only be confirmed once products arrive at our shipping warehouse and all charges have been finalized.
-              </p>
-            </div>
-          </section>
-
-          {/* Shipping Updates */}
-          <section className="space-y-6">
-            <h3 className="text-sm font-bold tracking-[0.1em] uppercase text-[#1a1a1a]">Shipping Updates</h3>
-            <p className="text-[#1a1a1a]/70 text-sm leading-[1.85] font-light">
-              Customers will receive updates regarding their order through:
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {['WhatsApp', 'SMS', 'Email', 'Official Channels'].map((channel, idx) => (
-                <div key={idx} className="border border-[#000000]/[0.06] p-4 text-center">
-                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#1a1a1a]/60">{channel}</span>
+          {/* What it includes */}
+          <div className="fade-up mb-16">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a] mb-8">May include</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: '✈️', label: 'International freight charges' },
+                { icon: '🛃', label: 'Customs duties' },
+                { icon: '📝', label: 'Customs clearance fees' },
+                { icon: '💰', label: 'Import-related taxes' },
+                { icon: '🏭', label: 'Logistics costs' },
+                { icon: '🤲', label: 'Handling charges' },
+                { icon: '📦', label: 'Product-specific shipping requirements' }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-4 bg-white border border-[#000]/[0.04] rounded-xl p-5 hover:border-[#8A001A]/20 hover:shadow-lg hover:shadow-[#8A001A]/[0.03] transition-all duration-500 group">
+                  <span className="text-xl group-hover:scale-125 transition-transform duration-300">{item.icon}</span>
+                  <span className="text-sm text-[#1a1a1a]/60 font-light group-hover:text-[#1a1a1a] transition-colors">{item.label}</span>
                 </div>
               ))}
             </div>
-            <p className="text-[#1a1a1a]/50 text-xs font-light">
-              We may also provide updates through group chats, announcements, or designated update channels where applicable.
-            </p>
-          </section>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4">
-            <div className="h-px flex-1 bg-[#000000]/[0.06]" />
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/30">Domestic</span>
-            <div className="h-px flex-1 bg-[#000000]/[0.06]" />
           </div>
 
-          {/* ─── Domestic Shipping ─── */}
-          <section className="space-y-8">
-            <div>
-              <span className="text-[80px] font-serif font-light text-[#000000]/[0.04] leading-none block -mb-8 select-none">02</span>
-              <h2 className="text-xl md:text-2xl font-serif text-[#1a1a1a] tracking-tight relative">Domestic Shipping</h2>
+          {/* Factors */}
+          <div className="fade-up mb-16">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a] mb-8">Final amount depends on</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {['Product weight', 'Volumetric weight', 'Parcel dimensions', 'Product category', 'Logistics rates', 'Customs requirements', 'Carrier rates', 'Economic conditions', 'Market conditions'].map((item, idx) => (
+                <div key={idx} className="bg-[#0A0A0A] rounded-xl p-4 text-center text-xs text-white/40 font-light hover:text-white/70 hover:bg-[#0A0A0A]/90 transition-all duration-300 cursor-default">
+                  {item}
+                </div>
+              ))}
             </div>
-
-            <div className="space-y-4 text-[#1a1a1a]/70 text-sm md:text-[15px] leading-[1.85] font-light">
-              <p>Domestic shipping refers to the delivery of your parcel from our warehouse to your final delivery address within India.</p>
-            </div>
-
-            <div className="border-l-2 border-[#000000]/[0.06] pl-6 space-y-3">
-              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1a1a1a]/40">Calculated based on</p>
-              <div className="grid grid-cols-2 gap-2">
-                {['Parcel weight', 'Parcel dimensions', 'Delivery location', 'Courier partner rates'].map((item, idx) => (
-                  <div key={idx} className="text-xs text-[#1a1a1a]/50 font-light border border-[#000000]/[0.04] p-3 text-center">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-[#0a0a0a] p-6 md:p-8 space-y-3">
-              <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A001A] mb-3">How it works</p>
-              <p className="text-white/60 text-xs leading-[1.9] font-light">
-                Domestic shipping charges are not collected during checkout. They are included in the final shipping invoice together with your international shipping charges.
-              </p>
-              <p className="text-white/50 text-xs leading-[1.8] mt-2">
-                Customers receive one shipping payment containing both international and domestic shipping charges. A complete breakdown will always be provided before payment is requested.
-              </p>
-              <p className="text-white/50 text-xs leading-[1.8] mt-2">
-                Tracking information will be shared once the parcel has been dispatched.
-              </p>
-            </div>
-
-            <p className="text-[#1a1a1a]/50 text-xs font-light italic">We currently ship across India.</p>
-          </section>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4">
-            <div className="h-px flex-1 bg-[#000000]/[0.06]" />
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/30">Timelines</span>
-            <div className="h-px flex-1 bg-[#000000]/[0.06]" />
           </div>
-
-          {/* ─── Delivery Timelines ─── */}
-          <section className="space-y-8">
-            <div>
-              <span className="text-[80px] font-serif font-light text-[#000000]/[0.04] leading-none block -mb-8 select-none">03</span>
-              <h2 className="text-xl md:text-2xl font-serif text-[#1a1a1a] tracking-tight relative">Delivery Timelines</h2>
-            </div>
-
-            <div className="space-y-4 text-[#1a1a1a]/70 text-sm md:text-[15px] leading-[1.85] font-light">
-              <p>Since all products are sourced internationally, delivery timelines are estimates only and cannot be guaranteed.</p>
-              
-              <div className="bg-[#0a0a0a] p-6 md:p-8 text-center">
-                <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#8A001A] mb-4">Typical Delivery</p>
-                <p className="text-white text-2xl md:text-3xl font-serif tracking-tight">2–4 Weeks</p>
-                <p className="text-white/40 text-xs mt-3 font-light">after shipment · estimates only</p>
-              </div>
-
-              <p className="text-[#1a1a1a]/50 text-xs font-light">
-                Please note that this estimate refers only to shipping and transit time and does not include the initial sourcing and processing period.
-              </p>
-              
-              <div className="bg-[#FFF8F0] border border-[#8A001A]/10 p-4 text-xs text-[#8A001A]/80 leading-[1.8]">
-                In some cases, orders may take up to <strong className="font-semibold">8 weeks or longer</strong> depending on circumstances beyond our control.
-              </div>
-            </div>
-
-            {/* Delays */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold tracking-[0.1em] uppercase text-[#1a1a1a]">Delays may occur due to</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {[
-                  'Customs inspections', 'Customs clearance', 'Logistics disruptions',
-                  'Weather conditions', 'Public holidays', 'Transportation delays',
-                  'Political situations', 'War-related disruptions', 'Economic conditions',
-                  'Carrier delays', 'Supplier delays', 'Government regulations',
-                  'Port congestion', 'Route disruptions'
-                ].map((item, idx) => (
-                  <div key={idx} className="text-xs text-[#1a1a1a]/50 font-light border border-[#000000]/[0.04] p-3 text-center">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Fluctuations */}
-            <div className="border-l-2 border-[#8A001A]/20 pl-6 space-y-3">
-              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1a1a1a]/40">Shipping prices may also fluctuate due to</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {[
-                  'Fuel costs', 'Logistics rates', 'Customs requirements',
-                  'Carrier pricing', 'Economic conditions', 'Market fluctuations'
-                ].map((item, idx) => (
-                  <div key={idx} className="text-xs text-[#1a1a1a]/50 font-light border border-[#000000]/[0.04] p-3 text-center">
-                    {item}
-                  </div>
-                ))}
-              </div>
-              <p className="text-[#1a1a1a]/40 text-xs font-light italic">These factors are completely outside of our control.</p>
-            </div>
-
-            <div className="bg-[#0a0a0a] p-6 md:p-8">
-              <p className="text-white/60 text-xs leading-[1.9] font-light">
-                We kindly ask customers to place orders only if they are comfortable with possible delays, changing shipping costs, customs procedures, and international sourcing timelines. Our goal is to be transparent from the beginning so there are no surprises later.
-              </p>
-            </div>
-          </section>
         </div>
+      </section>
 
-        {/* Navigation */}
-        <div className="mt-20 pt-12 border-t border-[#000000]/[0.06] flex justify-between items-center">
-          <Link href="/order-info/order-process" className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1a1a1a]/40 hover:text-[#1a1a1a] transition-colors">
-            <ChevronLeft className="w-3 h-3" />
+      {/* ═══════ BRANDED PRODUCTS ═══════ */}
+      <section className="py-24 md:py-32 bg-[#0A0A0A] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 120px, rgba(255,255,255,0.1) 120px, rgba(255,255,255,0.1) 121px)' }} />
+        <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
+          <div className="fade-up mb-12">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8A001A] block mb-4">Special Categories</span>
+            <h2 className="text-3xl md:text-4xl font-serif text-white tracking-tight">Branded Products & Special Items</h2>
+            <p className="text-white/40 text-sm md:text-base mt-4 font-light max-w-2xl leading-[1.9]">
+              Certain products may attract higher customs and shipping costs due to additional inspections, clearance requirements, restrictions, or documentation.
+            </p>
+          </div>
+          <div className="fade-up grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {['Ferrari, Adidas, Nike etc.', 'Cosmetics & Beauty', 'Lighters', 'Restricted categories', 'Fragile items', 'Oversized items', 'Special handling'].map((item, idx) => (
+              <div key={idx} className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 text-center text-xs text-white/40 font-light hover:border-[#8A001A]/20 hover:text-white/60 transition-all duration-500">
+                {item}
+              </div>
+            ))}
+          </div>
+          <p className="fade-up text-white/20 text-xs mt-8 font-light italic">These additional costs are generally included within your final shipping calculation.</p>
+        </div>
+      </section>
+
+      {/* ═══════ SHIPPING UPDATES ═══════ */}
+      <section className="py-24 md:py-32 bg-[#FAFAF8]">
+        <div className="max-w-4xl mx-auto px-6 md:px-12">
+          <div className="fade-up mb-12">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a] mb-8">Shipping Updates via</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { icon: '💬', label: 'WhatsApp' },
+                { icon: '📱', label: 'SMS' },
+                { icon: '📧', label: 'Email' },
+                { icon: '📢', label: 'Official Channels' }
+              ].map((item, idx) => (
+                <div key={idx} className="bg-white border border-[#000]/[0.04] rounded-2xl p-6 text-center hover:border-[#8A001A]/20 hover:shadow-lg transition-all duration-500 group">
+                  <span className="text-3xl block mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1a1a1a]/50 group-hover:text-[#1a1a1a] transition-colors">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ DOMESTIC SHIPPING ═══════ */}
+      <section className="py-24 md:py-32 bg-[#0A0A0A] relative">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
+          <div className="fade-up flex items-start gap-6 md:gap-8 mb-16">
+            <div className="shrink-0">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-[#8A001A]/[0.08] border border-[#8A001A]/[0.2] flex items-center justify-center">
+                <span className="text-2xl md:text-3xl font-serif text-[#8A001A]">02</span>
+              </div>
+            </div>
+            <div>
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8A001A] block mb-2">Within India</span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-white tracking-tight">Domestic Shipping</h2>
+            </div>
+          </div>
+
+          <p className="fade-up text-white/50 text-base md:text-lg font-light leading-[1.9] mb-12">
+            Delivery of your parcel from our warehouse to your final delivery address within India.
+          </p>
+
+          <div className="fade-up grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            {['Parcel weight', 'Parcel dimensions', 'Delivery location', 'Courier rates'].map((item, idx) => (
+              <div key={idx} className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 text-center text-xs text-white/40 font-light">
+                {item}
+              </div>
+            ))}
+          </div>
+
+          <div className="fade-up bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 md:p-10 space-y-4">
+            <p className="text-white/50 text-sm leading-[1.9] font-light">
+              Domestic shipping charges are not collected during checkout. They are included in the final shipping invoice together with your international shipping charges. A complete breakdown will always be provided before payment is requested.
+            </p>
+            <p className="text-white/30 text-xs font-light">Tracking information will be shared once the parcel has been dispatched. We currently ship across India.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ DELIVERY TIMELINES ═══════ */}
+      <section className="py-24 md:py-32 bg-[#FAFAF8]">
+        <div className="max-w-4xl mx-auto px-6 md:px-12">
+          <div className="fade-up flex items-start gap-6 md:gap-8 mb-16">
+            <div className="shrink-0">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-[#8A001A]/[0.06] border border-[#8A001A]/[0.12] flex items-center justify-center">
+                <span className="text-2xl md:text-3xl font-serif text-[#8A001A]">03</span>
+              </div>
+            </div>
+            <div>
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8A001A] block mb-2">Timelines</span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#1a1a1a] tracking-tight">Delivery Timelines</h2>
+            </div>
+          </div>
+
+          {/* Typical Delivery */}
+          <div className="fade-up relative mb-16">
+            <div className="absolute -inset-px bg-gradient-to-r from-[#8A001A]/20 via-[#8A001A]/5 to-[#8A001A]/20 rounded-2xl" />
+            <div className="relative bg-[#0A0A0A] rounded-2xl p-12 md:p-16 text-center">
+              <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A] block mb-6">Typical Delivery</span>
+              <p className="text-6xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight">2–4</p>
+              <p className="text-xl md:text-2xl font-serif text-white/60 mt-2">Weeks</p>
+              <p className="text-white/25 text-xs mt-6 font-light">after shipment · estimates only · does not include sourcing period</p>
+            </div>
+          </div>
+
+          <div className="fade-up bg-gradient-to-br from-[#FFF8F0] to-[#FFF5EB] border border-[#8A001A]/[0.08] rounded-2xl p-6 text-center mb-16">
+            <p className="text-sm text-[#8A001A]/80">In some cases, orders may take up to <strong className="font-semibold text-[#8A001A]">8 weeks or longer</strong> depending on circumstances beyond our control.</p>
+          </div>
+
+          {/* Delay Factors */}
+          <div className="fade-up mb-16">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a] mb-8">Delays may occur due to</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {['Customs inspections', 'Customs clearance', 'Logistics disruptions', 'Weather conditions', 'Public holidays', 'Transportation delays', 'Political situations', 'War-related disruptions', 'Economic conditions', 'Carrier delays', 'Supplier delays', 'Government regulations', 'Port congestion', 'Route disruptions'].map((item, idx) => (
+                <div key={idx} className="bg-[#0A0A0A] rounded-xl p-4 text-center text-xs text-white/40 font-light hover:text-white/70 transition-colors duration-300 cursor-default">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Price Fluctuation */}
+          <div className="fade-up mb-16">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a] mb-8">Shipping prices may also fluctuate due to</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {['Fuel costs', 'Logistics rates', 'Customs requirements', 'Carrier pricing', 'Economic conditions', 'Market fluctuations'].map((item, idx) => (
+                <div key={idx} className="bg-white border border-[#000]/[0.04] rounded-xl p-4 text-center text-xs text-[#1a1a1a]/40 font-light hover:border-[#8A001A]/20 transition-all duration-300">
+                  {item}
+                </div>
+              ))}
+            </div>
+            <p className="text-[#1a1a1a]/30 text-xs mt-6 font-light italic">These factors are completely outside of our control.</p>
+          </div>
+
+          {/* Transparency Notice */}
+          <div className="fade-up relative">
+            <div className="absolute -inset-px bg-gradient-to-r from-[#8A001A]/20 via-[#8A001A]/5 to-[#8A001A]/20 rounded-2xl" />
+            <div className="relative bg-[#0A0A0A] rounded-2xl p-10 md:p-12">
+              <p className="text-white/50 text-sm leading-[1.9] font-light">
+                We kindly ask customers to place orders only if they are comfortable with possible delays, changing shipping costs, customs procedures, and international sourcing timelines. Our goal is to be <strong className="font-semibold text-white">transparent from the beginning</strong> so there are no surprises later.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ NAVIGATION ═══════ */}
+      <section className="bg-[#0A0A0A] py-8">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 flex justify-between items-center">
+          <Link href="/order-info/order-process" className="flex items-center gap-3 text-white/30 hover:text-white/60 transition-colors text-[10px] font-bold tracking-[0.2em] uppercase group">
+            <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7" /></svg>
             Order Process
           </Link>
-          <Link href="/order-info/policies" className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#8A001A] hover:gap-3 transition-all">
+          <Link href="/order-info/policies" className="flex items-center gap-3 text-[#8A001A] hover:gap-4 transition-all text-[10px] font-bold tracking-[0.2em] uppercase">
             Policies & Guidelines
-            <ArrowRight className="w-3 h-3" />
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </Link>
         </div>
-      </article>
+      </section>
     </div>
   );
 }
