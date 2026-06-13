@@ -18,18 +18,18 @@ import { useCurrencyStore } from '@/store/currencyStore';
 import PriceDisplay from '@/components/PriceDisplay';
 
 const categories = [
-  { title: "DRESSES", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80", link: "/category/women/dresses" },
-  { title: "TOPS", img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "BOTTOMS", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
-  { title: "DENIM", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
-  { title: "ACTIVEWEAR", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&auto=format&fit=crop&q=80", link: "/category/women/beach-wear" },
-  { title: "T-SHIRTS", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "CO-ORDS", img: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "HOMEWEAR", img: "https://images.unsplash.com/photo-1608748010899-18f300247112?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "BAGS", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&auto=format&fit=crop&q=80", link: "/category/bags" },
-  { title: "JEWELLERY", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/jewellery" },
-  { title: "ACCESSORIES", img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&auto=format&fit=crop&q=80", link: "/category/accessories" },
-  { title: "BEAUTY", img: "https://images.unsplash.com/photo-1607606324485-26514b772c63?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/nails" }
+  { title: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80", link: "/category/women/dresses" },
+  { title: "Tops", img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "Bottoms", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
+  { title: "Denim", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
+  { title: "Activewear", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&auto=format&fit=crop&q=80", link: "/category/women/beach-wear" },
+  { title: "T-shirts", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "Co-ords", img: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "Homewear", img: "https://images.unsplash.com/photo-1608748010899-18f300247112?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "Bags", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&auto=format&fit=crop&q=80", link: "/category/bags" },
+  { title: "Jewllery", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/jewellery" },
+  { title: "Accessories", img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&auto=format&fit=crop&q=80", link: "/category/accessories" },
+  { title: "Beauty", img: "https://images.unsplash.com/photo-1607606324485-26514b772c63?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/nails" }
 ];
 
 const aestheticsCards = [
@@ -294,19 +294,19 @@ export default function Home() {
 
       {/* Categories Grid Section */}
       <section className="w-full bg-[#FFFFFF] py-16 md:py-24">
-        <div className="w-full text-center mb-10 relative">
-          <h2 className="text-3xl md:text-5xl font-perandory font-bold tracking-widest text-[#8A001A] uppercase mb-1">
-            OUR CATEGORIES
+        <div className="w-full text-left max-w-[1600px] mx-auto px-4 md:px-8 mb-6">
+          <h2 className="text-3xl md:text-4xl font-sans font-black tracking-tighter text-[#000000] uppercase">
+            CATEGORIES
           </h2>
         </div>
 
-        {/* 12-Card Grid (2 columns on mobile, 4 columns on desktop) */}
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 px-6 md:px-12">
+        {/* 12-Card Grid (4 columns on desktop, minimal gap) */}
+        <div className="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2 px-4 md:px-8">
           {categories.map((cat, idx) => (
             <Link
               key={idx}
               href={cat.link}
-              className="relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none"
+              className="relative aspect-square md:aspect-[3/4] block overflow-hidden bg-gray-200 group cursor-pointer"
             >
               <img
                 src={cat.img}
@@ -314,15 +314,17 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
-              {/* Dark Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+              {/* Dark Overlay Gradient (bottom only) */}
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-90 transition-opacity duration-300" />
               
-              {/* Bottom Label and Arrow */}
-              <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white z-10">
-                <span className="text-xs md:text-sm font-bold tracking-widest uppercase">{cat.title}</span>
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+              {/* Bottom Centered Label */}
+              <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center z-10 px-2">
+                <span 
+                  className="text-white text-xl md:text-3xl font-sans font-black tracking-wide text-center"
+                  style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
+                >
+                  {cat.title}
+                </span>
               </div>
             </Link>
           ))}
@@ -341,7 +343,7 @@ export default function Home() {
               <div
                 key={idx}
                 onClick={() => setActiveAesthetic(cat.title)}
-                className={`relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none border-2 transition-all ${activeAesthetic === cat.title ? 'border-[#000000]' : 'border-transparent'}`}
+                className={`relative aspect-square md:aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none border-2 transition-all ${activeAesthetic === cat.title ? 'border-[#000000]' : 'border-transparent'}`}
               >
                 <img
                   src={cat.img}
