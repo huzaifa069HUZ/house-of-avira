@@ -34,7 +34,7 @@ const categories = [
 
 const aestheticsCards = [
   { title: "babydoll / coquette", img: "/babydoll.png" },
-  { title: "dark feminine", img: "/darkfeminine.png" },
+  { title: "dark feminine", img: "/dark-feminine.png" },
   { title: "office siren", img: "/officesiren.png" },
   { title: "y2k", img: "/y2k.png" },
   { title: "streetwear", img: "/streetwear.png" },

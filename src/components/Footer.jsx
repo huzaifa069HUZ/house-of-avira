@@ -68,8 +68,10 @@ export default function Footer() {
         <div>
           <h5 className="text-xs uppercase tracking-widest mb-6 opacity-60">Assistance</h5>
           <ul className="space-y-4 text-sm font-light">
-            <li><Link href="/shipping-returns" className="hover:opacity-70 transition-opacity">Shipping & Returns</Link></li>
-            <li><Link href="/care-guide" className="hover:opacity-70 transition-opacity">Care Guide</Link></li>
+            <li><Link href="/order-info" className="hover:opacity-70 transition-opacity">Read Before Ordering</Link></li>
+            <li><Link href="/order-info/order-process" className="hover:opacity-70 transition-opacity">Order Process</Link></li>
+            <li><Link href="/order-info/shipping" className="hover:opacity-70 transition-opacity">Shipping & Delivery</Link></li>
+            <li><Link href="/order-info/policies" className="hover:opacity-70 transition-opacity">Policies & Guidelines</Link></li>
             <li><Link href="/contact" className="hover:opacity-70 transition-opacity">Contact Us</Link></li>
             <li><Link href="/faq" className="hover:opacity-70 transition-opacity">FAQ</Link></li>
           </ul>

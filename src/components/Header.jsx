@@ -120,6 +120,11 @@ const menuData = [
     title: "Shipping",
     href: "/shipping",
     customClass: "text-[#8A001A] font-symphony text-[22px] md:text-2xl capitalize tracking-normal leading-none pt-1"
+  },
+  {
+    title: "Read Before Ordering",
+    href: "/order-info",
+    customClass: "text-[#8A001A] font-symphony text-[22px] md:text-2xl capitalize tracking-normal leading-none pt-1"
   }
 ];
 
