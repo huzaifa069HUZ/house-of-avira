@@ -32,6 +32,16 @@ const categories = [
   { title: "BEAUTY", img: "https://images.unsplash.com/photo-1607606324485-26514b772c63?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/nails" }
 ];
 
+const aestheticsCards = [
+  { title: "babydoll / coquette", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80" },
+  { title: "dark feminine", img: "https://images.unsplash.com/photo-1617260517551-70ee979c55b6?w=600&auto=format&fit=crop&q=80" },
+  { title: "office siren", img: "https://images.unsplash.com/photo-1548624149-f9b1859aa7d0?w=600&auto=format&fit=crop&q=80" },
+  { title: "y2k", img: "https://images.unsplash.com/photo-1550614000-4b95dcb5f0d8?w=600&auto=format&fit=crop&q=80" },
+  { title: "streetwear", img: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=600&auto=format&fit=crop&q=80" },
+  { title: "elegant chic", img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=600&auto=format&fit=crop&q=80" },
+  { title: "opiúm", img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80" }
+];
+
 export default function Home() {
   const router = useRouter();
   const { user } = useAuthStore();
@@ -288,9 +298,6 @@ export default function Home() {
           <h2 className="text-3xl md:text-5xl font-perandory font-bold tracking-widest text-[#8A001A] uppercase mb-1">
             OUR CATEGORIES
           </h2>
-          <p className="text-3xl md:text-5xl text-[#000000] font-perandory font-bold tracking-widest uppercase">
-            OUR CATEGORIES
-          </p>
         </div>
 
         {/* 12-Card Grid (2 columns on mobile, 4 columns on desktop) */}
@@ -326,7 +333,35 @@ export default function Home() {
       <section className="py-20 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
           <h2 className="text-2xl md:text-3xl font-sans font-bold tracking-tight text-[#000000] mb-2">{t.curated.title}</h2>
-          <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-8">{t.curated.subtitle}</p>
+          <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-12">{t.curated.subtitle}</p>
+
+          {/* Aesthetic Cards Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 md:gap-4 mb-16 text-left">
+            {aestheticsCards.map((cat, idx) => (
+              <div
+                key={idx}
+                onClick={() => setActiveAesthetic(cat.title)}
+                className={`relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none border-2 transition-all ${activeAesthetic === cat.title ? 'border-[#000000]' : 'border-transparent'}`}
+              >
+                <img
+                  src={cat.img}
+                  alt={cat.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                {/* Dark Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                
+                {/* Bottom Label and Arrow */}
+                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white z-10">
+                  <span className="text-xs md:text-sm font-bold tracking-widest uppercase">{cat.title}</span>
+                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </div>
+            ))}
+          </div>
 
           {/* Pills / Filters */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
