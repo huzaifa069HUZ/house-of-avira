@@ -5,6 +5,7 @@ import HeroCarousel from '@/components/HeroCarousel';
 import HowItWorks from '@/components/HowItWorks';
 import WhyHouseOfAvira from '@/components/WhyHouseOfAvira';
 import CampaignAndGrid from '@/components/CampaignAndGrid';
+import { StaggerTestimonials } from '@/components/ui/stagger-testimonials';
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
@@ -283,16 +284,13 @@ export default function Home() {
 
       {/* Categories Grid Section */}
       <section className="w-full bg-[#FFFFFF] py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-sans font-black tracking-tight text-black uppercase">
-            Categories
+        <div className="w-full text-center mb-10 relative">
+          <h2 className="text-3xl md:text-5xl font-perandory font-bold tracking-widest text-[#8A001A] uppercase mb-1">
+            OUR CATEGORIES
           </h2>
-          <Link href="/catalogue" className="text-xs font-bold tracking-widest uppercase text-black hover:opacity-70 flex items-center gap-1.5 transition-opacity">
-            <span>Shop All</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
+          <p className="text-3xl md:text-5xl text-[#000000] font-perandory font-bold tracking-widest uppercase">
+            OUR CATEGORIES
+          </p>
         </div>
 
         {/* 12-Card Grid (2 columns on mobile, 4 columns on desktop) */}
@@ -301,7 +299,7 @@ export default function Home() {
             <Link
               key={idx}
               href={cat.link}
-              className="relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer"
+              className="relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none"
             >
               <img
                 src={cat.img}
@@ -468,6 +466,16 @@ export default function Home() {
       <div id="how-it-works">
         <HowItWorks />
       </div>
+
+      {/* Testimonials Section */}
+      <section className="w-full bg-[#FFFFFF] py-16 md:py-24 border-t-[3px] border-[#000000]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10 text-center">
+          <h2 className="text-3xl md:text-5xl font-perandory font-bold tracking-widest text-[#000000] uppercase">
+            What Our Archive Says
+          </h2>
+        </div>
+        <StaggerTestimonials />
+      </section>
 
       {/* Join the Archive Section */}
       <section className="py-32 md:py-48 px-6 bg-[#FFFFFF] flex flex-col items-center justify-center text-center w-full">

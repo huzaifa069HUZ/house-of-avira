@@ -45,8 +45,39 @@ export default function CategoryClient({ slug = [] }) {
   // Filter strictly by the route URL first
   const routeFilteredProducts = useMemo(() => {
     return products.filter(p => {
-      const matchMain = !mainCategory || (p.category?.toLowerCase() === mainCategory);
-      const matchSub = !subCategory || (p.subcategory?.toLowerCase() === subCategory);
+      const dbMain = p.category?.toLowerCase().trim() || '';
+      const urlMain = mainCategory.toLowerCase().trim();
+
+      const matchMain = !urlMain || (() => {
+        if (dbMain === urlMain) return true;
+        const cleanDb = dbMain.replace(/[^a-z0-9]/g, '');
+        const cleanUrl = urlMain.replace(/[^a-z0-9]/g, '');
+        return cleanDb === cleanUrl;
+      })();
+
+      const dbSub = p.subcategory?.toLowerCase().trim() || '';
+      const urlSub = subCategory.toLowerCase().trim();
+
+      const matchSub = !urlSub || (() => {
+        if (dbSub === urlSub) return true;
+        
+        // Normalize spaces/dashes/slashes
+        const cleanDb = dbSub.replace(/[^a-z0-9]/g, '');
+        const cleanUrl = urlSub.replace(/[^a-z0-9]/g, '');
+        if (cleanDb === cleanUrl) return true;
+        
+        // Custom mappings for common subcategory name mismatches
+        if (urlSub === 'pants-jeans' && (dbSub === 'pants / jeans' || dbSub === 'pants/jeans' || dbSub === 'pants' || dbSub === 'jeans')) return true;
+        if (urlSub === 'beach-wear' && dbSub === 'beach wear') return true;
+        if (urlSub === 'hair' && dbSub === 'hair accessories') return true;
+        if (urlSub === 'nails' && dbSub === 'nails and nail art supplies') return true;
+        if (urlSub === 'mini-bags' && dbSub === 'mini bags') return true;
+        if (urlSub === 'shoulder-bags' && (dbSub === 'shoulder bags' || dbSub === 'sholder bags' || dbSub === 'shoulder Bags' || dbSub === 'sholder Bags')) return true;
+        if (urlSub === 'phone-cases' && dbSub === 'phone cases') return true;
+        
+        return false;
+      })();
+
       return matchMain && matchSub;
     });
   }, [products, mainCategory, subCategory]);
