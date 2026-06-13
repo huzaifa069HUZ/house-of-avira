@@ -16,6 +16,21 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { useCurrencyStore } from '@/store/currencyStore';
 import PriceDisplay from '@/components/PriceDisplay';
 
+const categories = [
+  { title: "DRESSES", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80", link: "/category/women/dresses" },
+  { title: "TOPS", img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "BOTTOMS", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
+  { title: "DENIM", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
+  { title: "ACTIVEWEAR", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&auto=format&fit=crop&q=80", link: "/category/women/beach-wear" },
+  { title: "T-SHIRTS", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "CO-ORDS", img: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "HOMEWEAR", img: "https://images.unsplash.com/photo-1608748010899-18f300247112?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
+  { title: "BAGS", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&auto=format&fit=crop&q=80", link: "/category/bags" },
+  { title: "JEWELLERY", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/jewellery" },
+  { title: "ACCESSORIES", img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&auto=format&fit=crop&q=80", link: "/category/accessories" },
+  { title: "BEAUTY", img: "https://images.unsplash.com/photo-1607606324485-26514b772c63?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/nails" }
+];
+
 export default function Home() {
   const router = useRouter();
   const { user } = useAuthStore();
@@ -33,6 +48,7 @@ export default function Home() {
     'opiúm'
   ];
   const [activeAesthetic, setActiveAesthetic] = useState(aestheticsTabs[0]);
+  const [activeTab, setActiveTab] = useState('new'); // 'new' or 'best'
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -140,6 +156,8 @@ export default function Home() {
   }, []);
 
   const newArrivals = products.filter(p => p.section === 'New Arrivals' || !p.section);
+  const bestSellers = products.filter(p => p.bestSeller === true || p.section === 'Best Sellers' || p.badge === 'MOST LOVED' || p.badge === 'MOST LOVED'.toUpperCase());
+  const bestSellersList = bestSellers.length > 0 ? bestSellers : products.slice(0, 4);
   const curatedAestheticsRaw = products.filter(p => p.sections?.includes('Shop your aesthetic') || p.section === 'Shop your aesthetic');
   const curatedAesthetics = curatedAestheticsRaw.filter(p => p.aesthetic === activeAesthetic);
   const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts.slice(0, 5);
@@ -163,7 +181,7 @@ export default function Home() {
           <span className="text-[#000000]/20 shrink-0">•</span>
           <div className="flex items-center gap-2 shrink-0">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l6 5-3 3-3-1-1.5 1.5L9 21l3-3 5 6c.4.2.8.1 1.1-.3l1.2-1.2c.3-.4.2-.8-.1-1.1l-1.4-1.2z" />
+              <path d="M21 16V8a2 2 0 0 0-2-2h-3.5l-7-4-1.5 1 3.5 5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h6.5l-3.5 5 1.5 1 7-4H19a2 2 0 0 0 2-2z" />
             </svg>
             <span>Imported Directly</span>
           </div>
@@ -176,34 +194,53 @@ export default function Home() {
         <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-perandory font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
           <div className="flex items-center gap-2 shrink-0">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-            <span>2+ Years Trusted</span>
+            <span>4+ Years Trusted</span>
           </div>
         </div>
       </div>
 
-      {/* New Arrivals Section */}
+      {/* New Arrivals & Best Sellers Tabbed Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
         {/* Section Header */}
-        <div className="flex justify-between items-end mb-8 border-b border-[#000000]/10 pb-4">
-          <div className="flex items-baseline gap-6">
-            <h2 className="text-3xl font-serif tracking-tight text-[#000000] italic">{t.hero.newArrivals}</h2>
-            <a href="/catalogue" className="text-xs font-semibold tracking-widest uppercase text-[#000000]/70 hover:text-[#000000]">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 border-b border-[#000000]/10 pb-4 gap-4">
+          <div className="flex items-baseline gap-6 sm:gap-8 flex-wrap">
+            <button
+              onClick={() => setActiveTab('new')}
+              className={`text-3xl font-serif tracking-tight transition-all pb-1 border-b-2 cursor-pointer ${
+                activeTab === 'new' 
+                  ? 'text-[#000000] border-black font-semibold italic' 
+                  : 'text-[#000000]/30 border-transparent hover:text-[#000000]/70 italic'
+              }`}
+            >
+              {t.hero.newArrivals}
+            </button>
+            <button
+              onClick={() => setActiveTab('best')}
+              className={`text-3xl font-serif tracking-tight transition-all pb-1 border-b-2 cursor-pointer ${
+                activeTab === 'best' 
+                  ? 'text-[#000000] border-black font-semibold italic' 
+                  : 'text-[#000000]/30 border-transparent hover:text-[#000000]/70 italic'
+              }`}
+            >
+              {t.curated.bestSellers}
+            </button>
+            <a href="/catalogue" className="text-xs font-semibold tracking-widest uppercase text-[#000000]/70 hover:text-[#000000] sm:ml-2">
               {t.hero.shopAll}
             </a>
           </div>
-          <div className="flex gap-2 text-[#000000]/40">
-            <button className="hover:text-[#000000] transition-colors" aria-label="Previous">
+          <div className="flex gap-2 text-[#000000]/40 self-end sm:self-auto">
+            <button className="hover:text-[#000000] transition-colors cursor-pointer" aria-label="Previous">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
             </button>
-            <button className="hover:text-[#000000] transition-colors" aria-label="Next">
+            <button className="hover:text-[#000000] transition-colors cursor-pointer" aria-label="Next">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
             </button>
           </div>
         </div>
 
         {/* Horizontally Scrollable Product List */}
-        <div className="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
-          {newArrivals.map((product, idx) => (
+        <div className="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 transition-opacity duration-300">
+          {(activeTab === 'new' ? newArrivals : bestSellersList).map((product, idx) => (
             <div key={product.id || idx} className="w-[calc(50%-8px)] md:w-[calc(25%-12px)] snap-start flex-shrink-0">
               <ProductCard product={product} />
             </div>
@@ -211,41 +248,81 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Shop Your Look Section */}
+      <section className="w-full bg-[#000000] flex flex-col">
+        {/* Header */}
+        <div className="w-full px-6 md:px-12 py-8 md:py-12 flex items-center">
+          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-sans font-bold tracking-tight uppercase">Shop your look</h2>
+        </div>
 
+        {/* Images Grid */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 aspect-auto md:aspect-[4/1.5] lg:aspect-[4/1.8]">
+          {[
+            { img: '/images/looks/casual.jfif', title: 'CASUAL' },
+            { img: '/images/looks/summer.png', title: 'SUMMER' },
+            { img: '/images/looks/festival-concerts.png', title: 'FESTIVALS / CONCERTS' },
+            { img: '/images/looks/trendy.png', title: 'TRENDY' }
+          ].map((look, idx) => (
+            <Link href={`/catalogue?look=${encodeURIComponent(look.title.toLowerCase())}`} key={idx} className="relative group overflow-hidden block w-full h-[60vh] md:h-full cursor-pointer">
+              <img src={look.img} alt={look.title} className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:from-black/60 md:via-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
+                <span className="text-white text-lg md:text-xl font-bold tracking-widest uppercase">{look.title}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
 
-      {/* Top Picks Grid Section */}
-      {topPicksGridItems.length > 0 && (
-        <section className="w-full bg-[#FFFFFF] py-16 md:py-24">
-          <div className="w-full text-center mb-10">
-            <h2 className="text-3xl md:text-5xl font-perandory font-bold tracking-widest text-[#8A001A] uppercase mb-1">
-              {t.topPicks.title}
-            </h2>
-            <p className="text-3xl md:text-5xl text-[#000000] font-symphony lowercase">
-              {t.topPicks.subtitle}
-            </p>
-          </div>
+        {/* Footer */}
+        <div className="w-full flex justify-center items-center py-10 md:py-16">
+          <Link href="/catalogue" className="border border-white text-white px-8 py-3 text-sm md:text-base font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
+            SEE ALL STYLES
+          </Link>
+        </div>
+      </section>
 
-          {/* Seamless Image Grid (4 cols mobile, 6 cols desktop) */}
-          <div className="w-full grid grid-cols-4 md:grid-cols-6 gap-0">
-            {topPicksGridItems.map((item, idx) => (
-              <Link
-                key={item.id || idx}
-                href={`/product/${item.id}`}
-                className="relative aspect-[3/4] block overflow-hidden bg-white group cursor-pointer"
-              >
-                <img
-                  src={item.images?.[0] || item.imageUrl || item.img}
-                  alt={item.name || item.title || "Top Pick"}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Categories Grid Section */}
+      <section className="w-full bg-[#FFFFFF] py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-sans font-black tracking-tight text-black uppercase">
+            Categories
+          </h2>
+          <Link href="/catalogue" className="text-xs font-bold tracking-widest uppercase text-black hover:opacity-70 flex items-center gap-1.5 transition-opacity">
+            <span>Shop All</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </Link>
+        </div>
 
-
+        {/* 12-Card Grid (2 columns on mobile, 4 columns on desktop) */}
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 px-6 md:px-12">
+          {categories.map((cat, idx) => (
+            <Link
+              key={idx}
+              href={cat.link}
+              className="relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer"
+            >
+              <img
+                src={cat.img}
+                alt={cat.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              {/* Dark Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+              
+              {/* Bottom Label and Arrow */}
+              <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white z-10">
+                <span className="text-xs md:text-sm font-bold tracking-widest uppercase">{cat.title}</span>
+                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       {/* Curated Aesthetics Section */}
       <section className="py-20 bg-white w-full">
@@ -365,39 +442,6 @@ export default function Home() {
 
       {/* Soft Silhouettes Campaign & 4-Grid GSAP Section */}
       <CampaignAndGrid />
-
-      {/* Shop Your Look Section */}
-      <section className="w-full bg-[#000000] flex flex-col">
-        {/* Header */}
-        <div className="w-full px-6 md:px-12 py-8 md:py-12 flex items-center">
-          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-sans font-bold tracking-tight uppercase">Shop your look</h2>
-        </div>
-
-        {/* Images Grid */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-4 aspect-auto md:aspect-[4/1.5] lg:aspect-[4/1.8]">
-          {[
-            { img: '/images/looks/casual.jfif', title: 'CASUAL' },
-            { img: '/images/looks/summer.png', title: 'SUMMER' },
-            { img: '/images/looks/festival-concerts.png', title: 'FESTIVALS / CONCERTS' },
-            { img: '/images/looks/trendy.png', title: 'TRENDY' }
-          ].map((look, idx) => (
-            <Link href={`/catalogue?look=${encodeURIComponent(look.title.toLowerCase())}`} key={idx} className="relative group overflow-hidden block w-full h-[60vh] md:h-full cursor-pointer">
-              <img src={look.img} alt={look.title} className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:from-black/60 md:via-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
-                <span className="text-white text-lg md:text-xl font-bold tracking-widest uppercase">{look.title}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Footer */}
-        <div className="w-full flex justify-center items-center py-10 md:py-16">
-          <Link href="/catalogue" className="border border-white text-white px-8 py-3 text-sm md:text-base font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
-            SEE ALL STYLES
-          </Link>
-        </div>
-      </section>
 
       {/* Split Categories Section */}
       <section className="w-full flex flex-col md:flex-row h-[120vh] md:h-screen relative z-20 bg-white">
