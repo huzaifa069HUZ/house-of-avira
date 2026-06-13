@@ -33,13 +33,14 @@ const categories = [
 ];
 
 const aestheticsCards = [
-  { title: "babydoll / coquette", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80" },
-  { title: "dark feminine", img: "https://images.unsplash.com/photo-1617260517551-70ee979c55b6?w=600&auto=format&fit=crop&q=80" },
-  { title: "office siren", img: "https://images.unsplash.com/photo-1548624149-f9b1859aa7d0?w=600&auto=format&fit=crop&q=80" },
-  { title: "y2k", img: "https://images.unsplash.com/photo-1550614000-4b95dcb5f0d8?w=600&auto=format&fit=crop&q=80" },
-  { title: "streetwear", img: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=600&auto=format&fit=crop&q=80" },
-  { title: "elegant chic", img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=600&auto=format&fit=crop&q=80" },
-  { title: "opiúm", img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80" }
+  { title: "babydoll / coquette", img: "/babydoll.png" },
+  { title: "dark feminine", img: "/darkfeminine.png" },
+  { title: "office siren", img: "/officesiren.png" },
+  { title: "y2k", img: "/y2k.png" },
+  { title: "streetwear", img: "/streetwear.png" },
+  { title: "elegant chic", img: "/elegant-chic.png" },
+  { title: "opiúm", img: "/opium.png" },
+  { title: "Summer vacation", img: "/summer-vacation.png" }
 ];
 
 export default function Home() {
@@ -306,7 +307,7 @@ export default function Home() {
             <Link
               key={idx}
               href={cat.link}
-              className="relative aspect-square md:aspect-[3/4] block overflow-hidden bg-gray-200 group cursor-pointer"
+              className="relative aspect-[3/4] block overflow-hidden bg-gray-200 group cursor-pointer"
             >
               <img
                 src={cat.img}
@@ -338,12 +339,12 @@ export default function Home() {
           <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-12">{t.curated.subtitle}</p>
 
           {/* Aesthetic Cards Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 md:gap-4 mb-16 text-left">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-left">
             {aestheticsCards.map((cat, idx) => (
-              <div
+              <Link
                 key={idx}
-                onClick={() => setActiveAesthetic(cat.title)}
-                className={`relative aspect-square md:aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none border-2 transition-all ${activeAesthetic === cat.title ? 'border-[#000000]' : 'border-transparent'}`}
+                href={`/shop-aesthetic?category=${encodeURIComponent(cat.title)}`}
+                className="relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none transition-all hover:ring-2 hover:ring-[#000000]"
               >
                 <img
                   src={cat.img}
@@ -354,79 +355,12 @@ export default function Home() {
                 {/* Dark Overlay Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
                 
-                {/* Bottom Label and Arrow */}
+                {/* Bottom Label */}
                 <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white z-10">
                   <span className="text-xs md:text-sm font-bold tracking-widest uppercase">{cat.title}</span>
                   <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Pills / Filters */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
-            <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar w-full md:w-auto pb-2 md:pb-0">
-              {aestheticsTabs.map((tab) => (
-                <button 
-                  key={tab}
-                  onClick={() => setActiveAesthetic(tab)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors capitalize ${activeAesthetic === tab ? 'bg-[#000000] text-white' : 'border border-[#000000] text-[#000000] hover:bg-[#000000]/5'}`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors hidden md:block">Shop Best Sellers</button>
-          </div>
-        </div>
-
-        {/* Seamless Grid */}
-        <div className="w-full border-t border-b border-[#000000]/20">
-          <div className="grid grid-cols-2 md:grid-cols-5 w-full">
-            {curatedItems.map((item, idx) => (
-              <Link href={`/product/${item.id}`} key={item.id || idx} className="border-r border-[#000000]/20 group cursor-pointer flex flex-col relative bg-white block">
-                {/* Image Block */}
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#FFFFFF]">
-                  <img src={item.imageUrl || item.img} alt={item.name || item.title} className="w-full h-full object-cover" />
-
-                  {idx < 2 && (
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-semibold text-[#000000]">
-                      {t.curated.sellingFast}
-                    </div>
-                  )}
-
-                  {/* Hover Size Selector */}
-                  <div className="absolute bottom-0 left-0 w-full bg-white/80 backdrop-blur-md p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center">
-                    <p className="text-[10px] font-bold tracking-widest mb-2 uppercase text-[#000000]">{t.curated.selectSize}</p>
-                    <div className="flex gap-1.5 justify-center flex-wrap">
-                      {(item.sizes || [4, 6, 8, 10, 12, 14, 16]).map(s => (
-                        <button key={s} className="w-6 h-6 border border-[#000000]/20 bg-white text-[10px] font-medium flex items-center justify-center hover:border-[#000000] transition-colors text-[#000000]">
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Text Block */}
-                <div className="p-4 flex justify-between items-start bg-white h-24">
-                  <div className="flex flex-col pr-2">
-                    <h3 className="text-xs font-medium text-[#000000] line-clamp-2 leading-tight">{item.name || item.title}</h3>
-                    <p className="text-xs text-[#000000]/60 mt-1.5">
-                      {typeof item.price === 'number' ? <PriceDisplay basePrice={item.price} /> : item.price}
-                    </p>
-                  </div>
-                  <button
-                    onClick={(e) => handleWishlistToggle(e, item)}
-                    className={`transition-colors shrink-0 ${wishlist.some(w => w.id === item.id) ? 'text-[#000000]' : 'text-[#000000]/40 hover:text-[#000000]'}`}
-                    aria-label="Toggle wishlist"
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill={wishlist.some(w => w.id === item.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
-                  </button>
                 </div>
               </Link>
             ))}
