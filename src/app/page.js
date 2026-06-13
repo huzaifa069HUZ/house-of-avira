@@ -23,6 +23,17 @@ export default function Home() {
   const { t } = useTranslation();
   const { initSettings } = useCurrencyStore();
 
+  const aestheticsTabs = [
+    'babydoll / coquette',
+    'dark feminine',
+    'office siren',
+    'y2k',
+    'streetwear',
+    'elegant chic',
+    'opiúm'
+  ];
+  const [activeAesthetic, setActiveAesthetic] = useState(aestheticsTabs[0]);
+
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const cookies = document.cookie.split('; ').reduce((prev, current) => {
@@ -129,8 +140,9 @@ export default function Home() {
   }, []);
 
   const newArrivals = products.filter(p => p.section === 'New Arrivals' || !p.section);
-  const curatedAesthetics = products.filter(p => p.section === 'Curated Aesthetics');
-  const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts;
+  const curatedAestheticsRaw = products.filter(p => p.sections?.includes('Shop your aesthetic') || p.section === 'Shop your aesthetic');
+  const curatedAesthetics = curatedAestheticsRaw.filter(p => p.aesthetic === activeAesthetic);
+  const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts.slice(0, 5);
   const topPicksGridItemsRaw = products.filter(p => p.sections?.includes('Top Picks Grid') || p.section === 'Top Picks Grid');
   const topPicksGridItems = topPicksGridItemsRaw.slice(0, 12);
 
@@ -233,37 +245,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Featured Categories (Edgy 3-Grid) */}
-      <section className="w-full bg-white p-2 md:p-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 w-full h-[150vh] md:h-[90vh]">
-          {[
-            { img: '/dress.png', title: t.categories.dress, link: '/category/women/dresses' },
-            { img: '/swim.png', title: t.categories.swim, link: '/category/women/beach-wear' },
-            { img: '/sets.png', title: t.categories.sets, link: '/category/women/tops' }
-          ].map((item, idx) => (
-            <Link
-              key={idx}
-              href={item.link}
-              className="relative w-full h-full overflow-hidden group cursor-pointer bg-[#FFFFFF] rounded-2xl md:rounded-3xl"
-            >
-              <img
-                src={item.img}
-                alt={item.title}
-                className="w-full h-full object-cover object-center transition-transform duration-[2s] ease-out group-hover:scale-105"
-              />
-              {/* Subtle dark gradient at bottom for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
 
-              {/* Edgy typography bottom left */}
-              <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-10 overflow-hidden">
-                <h3 className="text-white text-4xl md:text-5xl font-serif italic tracking-wide capitalize translate-y-2 group-hover:translate-y-0 transition-transform duration-500 font-light drop-shadow-md">
-                  {item.title}
-                </h3>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {/* Curated Aesthetics Section */}
       <section className="py-20 bg-white w-full">
@@ -274,12 +256,15 @@ export default function Home() {
           {/* Pills / Filters */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
             <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar w-full md:w-auto pb-2 md:pb-0">
-              <button className="bg-[#000000] text-white px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap">{t.curated.bestSellers}</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.newArrivals}</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.categories.sets}</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.dresses}</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.tops}</button>
-              <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors">{t.curated.outerwear}</button>
+              {aestheticsTabs.map((tab) => (
+                <button 
+                  key={tab}
+                  onClick={() => setActiveAesthetic(tab)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors capitalize ${activeAesthetic === tab ? 'bg-[#000000] text-white' : 'border border-[#000000] text-[#000000] hover:bg-[#000000]/5'}`}
+                >
+                  {tab}
+                </button>
+              ))}
             </div>
             <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors hidden md:block">Shop Best Sellers</button>
           </div>
@@ -380,6 +365,39 @@ export default function Home() {
 
       {/* Soft Silhouettes Campaign & 4-Grid GSAP Section */}
       <CampaignAndGrid />
+
+      {/* Shop Your Look Section */}
+      <section className="w-full bg-[#000000] flex flex-col">
+        {/* Header */}
+        <div className="w-full px-6 md:px-12 py-8 md:py-12 flex items-center">
+          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-sans font-bold tracking-tight uppercase">Shop your look</h2>
+        </div>
+
+        {/* Images Grid */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 aspect-auto md:aspect-[4/1.5] lg:aspect-[4/1.8]">
+          {[
+            { img: '/images/looks/casual.jfif', title: 'CASUAL' },
+            { img: '/images/looks/summer.png', title: 'SUMMER' },
+            { img: '/images/looks/festival-concerts.png', title: 'FESTIVALS / CONCERTS' },
+            { img: '/images/looks/trendy.png', title: 'TRENDY' }
+          ].map((look, idx) => (
+            <Link href={`/catalogue?look=${encodeURIComponent(look.title.toLowerCase())}`} key={idx} className="relative group overflow-hidden block w-full h-[60vh] md:h-full cursor-pointer">
+              <img src={look.img} alt={look.title} className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:from-black/60 md:via-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
+                <span className="text-white text-lg md:text-xl font-bold tracking-widest uppercase">{look.title}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="w-full flex justify-center items-center py-10 md:py-16">
+          <Link href="/catalogue" className="border border-white text-white px-8 py-3 text-sm md:text-base font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
+            SEE ALL STYLES
+          </Link>
+        </div>
+      </section>
 
       {/* Split Categories Section */}
       <section className="w-full flex flex-col md:flex-row h-[120vh] md:h-screen relative z-20 bg-white">

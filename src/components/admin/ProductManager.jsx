@@ -52,6 +52,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   // Categories state
   const [category, setCategory] = useState(CATEGORY_DATA[0].title);
   const [subcategory, setSubcategory] = useState(CATEGORY_DATA[0].children[0] || '');
+  const [aesthetic, setAesthetic] = useState('');
   
   // State for interactive tags (Sizes and Colors)
   const [sizes, setSizes] = useState([]);
@@ -79,6 +80,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       setBadge(initialProduct.badge || '');
       setCategory(initialProduct.category || CATEGORY_DATA[0].title);
       setSubcategory(initialProduct.subcategory || '');
+      setAesthetic(initialProduct.aesthetic || '');
       setSizes(initialProduct.sizes || []);
       setColors(initialProduct.swatches?.map((s, idx) => ({
         id: Date.now() + idx,
@@ -243,6 +245,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         sections,
         category,
         subcategory,
+        aesthetic: sections.includes('Shop your aesthetic') ? aesthetic : '',
         badge,
         imageUrl: finalImageUrls[0] || '', // Primary image
         images: finalImageUrls, // All images
@@ -265,7 +268,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         
         // Reset form only on add
         setName(''); setPrice(''); setDescription(''); setSections(['New Arrivals']); setBadge('');
-        setCategory(CATEGORY_DATA[0].title); setSubcategory(CATEGORY_DATA[0].children[0] || '');
+        setCategory(CATEGORY_DATA[0].title); setSubcategory(CATEGORY_DATA[0].children[0] || ''); setAesthetic('');
         setSizes([]); setColors([]); setFiles([]); setPreviews([]); setExistingImages([]);
       }
 
@@ -544,11 +547,29 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                     }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> New Arrivals
                   </label>
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
-                    <input type="checkbox" checked={sections.includes('Curated Aesthetics')} onChange={(e) => {
-                      if (e.target.checked) setSections([...sections, 'Curated Aesthetics']);
-                      else setSections(sections.filter(s => s !== 'Curated Aesthetics'));
-                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Curated Aesthetics
+                    <input type="checkbox" checked={sections.includes('Shop your aesthetic')} onChange={(e) => {
+                      if (e.target.checked) setSections([...sections, 'Shop your aesthetic']);
+                      else setSections(sections.filter(s => s !== 'Shop your aesthetic'));
+                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Shop your aesthetic
                   </label>
+                  {sections.includes('Shop your aesthetic') && (
+                    <div className="pl-6 mt-1">
+                      <select 
+                        value={aesthetic}
+                        onChange={(e) => setAesthetic(e.target.value)}
+                        className="w-full px-3 py-2 bg-white border border-[#d2d2d7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none"
+                      >
+                        <option value="">Select Aesthetic</option>
+                        <option value="babydoll / coquette">babydoll / coquette</option>
+                        <option value="dark feminine">dark feminine</option>
+                        <option value="office siren">office siren</option>
+                        <option value="y2k">y2k</option>
+                        <option value="streetwear">streetwear</option>
+                        <option value="elegant chic">elegant chic</option>
+                        <option value="opiúm">opiúm</option>
+                      </select>
+                    </div>
+                  )}
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
                     <input type="checkbox" checked={sections.includes('Top Picks Grid')} onChange={(e) => {
                       if (e.target.checked) setSections([...sections, 'Top Picks Grid']);

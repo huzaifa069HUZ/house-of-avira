@@ -16,7 +16,7 @@ export const dictionaries = {
       accessories: "Go To Accesories"
     },
     curated: {
-      title: "Curated Aesthetics",
+      title: "Shop your aesthetic",
       subtitle: "OUR CUTEST PICKS, JUST FOR YOU 💕",
       sellingFast: "Selling Fast",
       selectSize: "Select a Size",
