@@ -18,18 +18,18 @@ import { useCurrencyStore } from '@/store/currencyStore';
 import PriceDisplay from '@/components/PriceDisplay';
 
 const categories = [
-  { title: "Dresses", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80", link: "/category/women/dresses" },
-  { title: "Tops", img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "Bottoms", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
-  { title: "Denim", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80", link: "/category/women/pants-jeans" },
-  { title: "Activewear", img: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&auto=format&fit=crop&q=80", link: "/category/women/beach-wear" },
-  { title: "T-shirts", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "Co-ords", img: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "Homewear", img: "https://images.unsplash.com/photo-1608748010899-18f300247112?w=600&auto=format&fit=crop&q=80", link: "/category/women/tops" },
-  { title: "Bags", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&auto=format&fit=crop&q=80", link: "/category/bags" },
-  { title: "Jewllery", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/jewellery" },
-  { title: "Accessories", img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&auto=format&fit=crop&q=80", link: "/category/accessories" },
-  { title: "Beauty", img: "https://images.unsplash.com/photo-1607606324485-26514b772c63?w=600&auto=format&fit=crop&q=80", link: "/category/accessories/nails" }
+  { title: "Dresses", img: "/images/categories/dress.png", link: "/category/women/dresses" },
+  { title: "Tops", img: "/top.png", link: "/category/women/tops" },
+  { title: "Bottoms", img: "/images/categories/bottoms.png", link: "/category/women/pants-jeans" },
+  { title: "Denim", img: "/images/categories/denim.png", link: "/category/women/pants-jeans" },
+  { title: "Activewear", img: "/images/categories/gymwear.png", link: "/category/women/beach-wear" },
+  { title: "T-shirts", img: "/images/categories/tshirts.png", link: "/category/women/tops" },
+  { title: "Co-ords", img: "/images/categories/co-ords.png", link: "/category/women/tops" },
+  { title: "Homewear", img: "/images/categories/homewear.png", link: "/category/women/tops" },
+  { title: "Bags", img: "/images/categories/bags.jfif", link: "/category/bags" },
+  { title: "Jewellery", img: "/images/categories/jewellery.png", link: "/category/accessories/jewellery" },
+  { title: "Accessories", img: "/images/categories/accessories.jfif", link: "/category/accessories" },
+  { title: "Beauty", img: "/images/categories/beauty.png", link: "/category/accessories/nails" }
 ];
 
 const aestheticsCards = [
@@ -319,9 +319,9 @@ export default function Home() {
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-90 transition-opacity duration-300" />
               
               {/* Bottom Centered Label */}
-              <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center z-10 px-2">
+              <div className="absolute bottom-3 md:bottom-6 left-0 right-0 flex justify-center items-center z-10 px-1">
                 <span 
-                  className="text-white text-xl md:text-3xl font-sans font-black tracking-wide text-center"
+                  className="text-white text-[10px] sm:text-[11px] md:text-3xl font-sans font-black tracking-widest md:tracking-wide text-center whitespace-nowrap overflow-hidden text-ellipsis w-full max-w-full"
                   style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
                 >
                   {cat.title}
