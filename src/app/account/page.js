@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
+import AddressManager from '@/components/profile/AddressManager';
 
 export default function AccountPage() {
   const { user, role, loading, signOut } = useAuthStore();
@@ -56,6 +57,8 @@ export default function AccountPage() {
               )}
             </div>
           </div>
+          
+          <AddressManager />
         </div>
         
         <div className="col-span-2">

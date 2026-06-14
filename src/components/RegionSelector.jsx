@@ -1,28 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, X, Check } from 'lucide-react';
+import { Globe, X, Check, Search } from 'lucide-react';
 import { useCurrencyStore } from '@/store/currencyStore';
-
-const regions = [
-  { id: 'IN', currency: 'INR', locale: 'en', label: 'India', symbol: '₹' },
-  { id: 'US', currency: 'USD', locale: 'en', label: 'United States', symbol: '$' },
-  { id: 'GB', currency: 'GBP', locale: 'en', label: 'United Kingdom', symbol: '£' },
-  { id: 'PH', currency: 'PHP', locale: 'tl', label: 'Philippines', symbol: '₱' }
-];
+import { Country } from 'country-state-city';
 
 export default function RegionSelector() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { currency, setCurrency, setLocale } = useCurrencyStore();
 
-  const handleSelect = (region) => {
-    setCurrency(region.currency);
-    setLocale(region.locale);
+  const allCountries = useMemo(() => Country.getAllCountries(), []);
+
+  const filteredCountries = useMemo(() => {
+    if (!searchQuery) return allCountries;
+    const lowerQuery = searchQuery.toLowerCase();
+    return allCountries.filter(c => 
+      c.name.toLowerCase().includes(lowerQuery) || 
+      (c.currency && c.currency.toLowerCase().includes(lowerQuery)) ||
+      c.isoCode.toLowerCase().includes(lowerQuery)
+    );
+  }, [allCountries, searchQuery]);
+
+  const handleSelect = (country) => {
+    if (country.currency) {
+      setCurrency(country.currency);
+      // Determine locale loosely from country code (en-US, en-GB, etc)
+      setLocale(`en-${country.isoCode}`);
+    }
     setIsOpen(false);
   };
 
-  const activeRegion = regions.find(r => r.currency === currency) || regions[0];
+  const activeRegion = allCountries.find(c => c.currency === currency) || allCountries.find(c => c.isoCode === 'IN');
 
   return (
     <>
@@ -35,7 +45,7 @@ export default function RegionSelector() {
       >
         <Globe className="w-4 h-4 text-[#000000] group-hover:rotate-12 transition-transform" />
         <span className="text-xs font-bold tracking-widest text-[#000000] uppercase">
-          {activeRegion.currency}
+          {activeRegion?.flag} {currency}
         </span>
       </motion.button>
 
@@ -46,7 +56,7 @@ export default function RegionSelector() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 sm:p-6"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
@@ -54,57 +64,79 @@ export default function RegionSelector() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="w-full max-w-sm bg-white/90 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl overflow-hidden relative"
+              className="w-full max-w-md bg-white/95 backdrop-blur-2xl border border-white/40 shadow-2xl rounded-[2rem] overflow-hidden relative flex flex-col max-h-[85vh]"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6">
+              <div className="p-6 pb-4 border-b border-[#000000]/5 flex-shrink-0">
                 <div className="flex justify-between items-center mb-6">
                   <div>
-                    <h3 className="text-xl font-serif font-bold text-[#000000]">Select Region</h3>
-                    <p className="text-xs text-[#000000]/60 uppercase tracking-widest mt-1">Language & Currency</p>
+                    <h3 className="text-2xl font-serif font-bold text-[#000000] tracking-tight">Select Region</h3>
+                    <p className="text-[11px] text-[#000000]/50 uppercase tracking-widest mt-1 font-medium">Choose your location & currency</p>
                   </div>
                   <button 
                     onClick={() => setIsOpen(false)}
-                    className="w-8 h-8 rounded-full bg-[#000000]/5 flex items-center justify-center hover:bg-[#000000]/10 transition-colors"
+                    className="w-10 h-10 rounded-full bg-[#000000]/5 flex items-center justify-center hover:bg-[#000000]/10 transition-colors"
                   >
-                    <X className="w-4 h-4 text-[#000000]" />
+                    <X className="w-5 h-5 text-[#000000]" />
                   </button>
                 </div>
-
-                <div className="space-y-2">
-                  {regions.map((region) => (
-                    <button
-                      key={region.id}
-                      onClick={() => handleSelect(region)}
-                      className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all duration-300 ${
-                        currency === region.currency 
-                          ? 'bg-[#000000] text-white shadow-md' 
-                          : 'bg-white/50 hover:bg-white text-[#000000] border border-[#000000]/5'
-                      }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-inner ${
-                          currency === region.currency ? 'bg-white text-[#000000]' : 'bg-[#FAFAFA] text-[#000000]/60'
-                        }`}>
-                          {region.symbol}
-                        </div>
-                        <div className="flex flex-col items-start">
-                          <span className="font-medium text-sm">{region.label}</span>
-                          <span className={`text-[10px] tracking-widest uppercase mt-0.5 ${
-                            currency === region.currency ? 'text-white/70' : 'text-[#000000]/50'
-                          }`}>
-                            {region.currency} • {region.locale.toUpperCase()}
-                          </span>
-                        </div>
-                      </div>
-                      {currency === region.currency && (
-                        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                          <Check className="w-5 h-5 text-white" />
-                        </motion.div>
-                      )}
-                    </button>
-                  ))}
+                
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#000000]/40" />
+                  <input
+                    type="text"
+                    placeholder="Search country or currency..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-[#FAFAFA] border border-[#000000]/10 text-[#000000] text-sm rounded-xl pl-11 pr-4 py-3.5 outline-none focus:ring-2 focus:ring-[#000000]/20 focus:border-[#000000]/30 transition-all font-medium placeholder:text-[#000000]/30"
+                  />
                 </div>
+              </div>
+
+              <div className="overflow-y-auto p-4 space-y-2 custom-scrollbar">
+                {filteredCountries.length === 0 ? (
+                  <div className="text-center py-10 text-[#000000]/50 text-sm font-medium">
+                    No regions found.
+                  </div>
+                ) : (
+                  filteredCountries.map((country) => {
+                    if (!country.currency) return null; // Skip if no currency info
+                    const isSelected = currency === country.currency;
+                    
+                    return (
+                      <button
+                        key={country.isoCode}
+                        onClick={() => handleSelect(country)}
+                        className={`w-full flex items-center justify-between p-3 sm:p-4 rounded-2xl transition-all duration-300 group ${
+                          isSelected 
+                            ? 'bg-[#000000] text-white shadow-lg shadow-black/10' 
+                            : 'bg-transparent hover:bg-[#000000]/5 text-[#000000]'
+                        }`}
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-sm ${
+                            isSelected ? 'bg-white/10' : 'bg-white border border-[#000000]/5'
+                          }`}>
+                            {country.flag}
+                          </div>
+                          <div className="flex flex-col items-start text-left">
+                            <span className="font-semibold text-sm tracking-tight">{country.name}</span>
+                            <span className={`text-[10px] tracking-widest uppercase mt-0.5 font-bold ${
+                              isSelected ? 'text-white/70' : 'text-[#000000]/40 group-hover:text-[#000000]/60'
+                            }`}>
+                              {country.currency}
+                            </span>
+                          </div>
+                        </div>
+                        {isSelected && (
+                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                            <Check className="w-5 h-5 text-white" />
+                          </motion.div>
+                        )}
+                      </button>
+                    );
+                  })
+                )}
               </div>
             </motion.div>
           </motion.div>
@@ -113,3 +145,4 @@ export default function RegionSelector() {
     </>
   );
 }
+

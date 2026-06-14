@@ -7,7 +7,8 @@ import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
-import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown } from 'lucide-react';
+import Link from 'next/link';
+import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight } from 'lucide-react';
 
 export default function ProductPage({ params: paramsPromise }) {
   const params = use(paramsPromise);
@@ -436,6 +437,48 @@ export default function ProductPage({ params: paramsPromise }) {
                   <span className="text-xs text-red-500/80 uppercase tracking-widest font-medium">
                     * Extra Delivery Charge Applies
                   </span>
+                </div>
+              </div>
+
+              {/* Read Before Ordering Cards */}
+              <div className="mt-12">
+                <h3 className="text-xs uppercase tracking-[0.2em] font-bold text-black mb-5">Read Before Ordering</h3>
+                <div className="flex flex-col gap-3">
+                  <Link href="/order-info/order-process" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                        <Package className="w-4 h-4" />
+                      </div>
+                      <span className="text-xs font-bold tracking-widest uppercase text-black">Order Process</span>
+                    </div>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
+                      Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </Link>
+
+                  <Link href="/order-info/shipping" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                        <Truck className="w-4 h-4" />
+                      </div>
+                      <span className="text-xs font-bold tracking-widest uppercase text-black">Shipping</span>
+                    </div>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
+                      Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </Link>
+
+                  <Link href="/order-info/policies" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                        <FileText className="w-4 h-4" />
+                      </div>
+                      <span className="text-xs font-bold tracking-widest uppercase text-black">Policies</span>
+                    </div>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
+                      Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </Link>
                 </div>
               </div>
 

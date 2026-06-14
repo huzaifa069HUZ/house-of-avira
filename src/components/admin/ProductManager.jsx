@@ -590,12 +590,6 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                       </select>
                     </div>
                   )}
-                  <label className="flex items-center gap-2 text-sm cursor-pointer">
-                    <input type="checkbox" checked={sections.includes('Top Picks Grid')} onChange={(e) => {
-                      if (e.target.checked) setSections([...sections, 'Top Picks Grid']);
-                      else setSections(sections.filter(s => s !== 'Top Picks Grid'));
-                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Top Picks Grid
-                  </label>
                 </div>
               </div>
 

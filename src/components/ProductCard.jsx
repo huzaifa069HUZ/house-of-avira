@@ -4,7 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { useQuickAddStore } from '@/store/quickAddStore';
 import { useRouter } from 'next/navigation';
-import { Heart, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingBag, Layers } from 'lucide-react';
 import PriceDisplay from '@/components/PriceDisplay';
 
 export default function ProductCard({ product }) {
@@ -102,19 +102,14 @@ export default function ProductCard({ product }) {
           </div>
         )}
 
-        {/* Wishlist Heart Button with Animation */}
+        {/* Add to Cart Button (Top Right) */}
         <button 
-          onClick={handleWishlistClick}
-          className="absolute top-2 right-2 z-20 w-7 h-7 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors group/heart"
-          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          onClick={handleAddToCart}
+          disabled={product.inStock === false}
+          className={`absolute top-2 right-2 z-20 w-7 h-7 bg-white/90 backdrop-blur-sm rounded-sm flex items-center justify-center hover:bg-white transition-all duration-300 hover:scale-105 shadow-sm ${product.inStock === false ? 'cursor-not-allowed hidden' : ''}`}
+          aria-label="Add to cart"
         >
-          <Heart 
-            className={`w-3.5 h-3.5 transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
-              isWishlisted 
-                ? 'fill-red-500 stroke-red-500 scale-110' 
-                : 'fill-none stroke-black group-hover/heart:scale-110'
-            }`} 
-          />
+          <Layers className="w-3.5 h-3.5 text-black" />
         </button>
 
         {/* Hover Sizes Panel */}
@@ -127,14 +122,19 @@ export default function ProductCard({ product }) {
           </div>
         )}
 
-        {/* Add to Cart Button */}
+        {/* Wishlist Heart Button (Bottom Right) */}
         <button 
-          onClick={handleAddToCart}
-          disabled={product.inStock === false}
-          className={`absolute bottom-2 right-2 z-20 w-8 h-8 bg-black/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black transition-all duration-300 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 ${product.inStock === false ? 'cursor-not-allowed hidden' : ''}`}
-          aria-label="Add to cart"
+          onClick={handleWishlistClick}
+          className="absolute bottom-2 right-2 z-20 w-7 h-7 bg-white/90 backdrop-blur-sm rounded-sm flex items-center justify-center hover:bg-white transition-colors group/heart shadow-sm hover:scale-105"
+          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
-          <ShoppingBag className="w-4 h-4 text-white" />
+          <Heart 
+            className={`w-3.5 h-3.5 transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+              isWishlisted 
+                ? 'fill-[#8A001A] stroke-[#8A001A] scale-110' 
+                : 'fill-none stroke-black group-hover/heart:scale-110 group-hover/heart:stroke-[#8A001A]'
+            }`} 
+          />
         </button>
       </div>
 

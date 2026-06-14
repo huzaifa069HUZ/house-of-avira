@@ -7,6 +7,7 @@ import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { Loader2, Layers, Heart, X, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
+import { useQuickAddStore } from '@/store/quickAddStore';
 import PriceDisplay from '@/components/PriceDisplay';
 import './catalogue.css';
 
@@ -41,6 +42,7 @@ export default function CatalogueClient() {
 
   const { user } = useAuthStore();
   const { wishlist, toggleWishlist } = useWishlistStore();
+  const { openQuickAdd } = useQuickAddStore();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -427,8 +429,15 @@ export default function CatalogueClient() {
                   
                   <div className="avira-item-overlay">
                     {/* Top Right Layers Icon */}
-                    <div className="avira-icon-top-right">
-                      <Layers className="w-4 h-4" />
+                    <div 
+                      className="avira-icon-top-right cursor-pointer hover:scale-105 transition-transform"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openQuickAdd(product);
+                      }}
+                    >
+                      <Layers className="w-4 h-4 text-black" />
                     </div>
                     
                     {/* Bottom Left Username Tag */}
