@@ -25,7 +25,11 @@ const defaultDesktopSlides = [
 export default function HeroCarousel() {
   const [currentDesktopSlide, setCurrentDesktopSlide] = useState(0);
   const [currentMobileSlide, setCurrentMobileSlide] = useState(0);
-  const [mobileSlides, setMobileSlides] = useState([]);
+  const [mobileSlides, setMobileSlides] = useState([{
+    id: 'fixed_banner_1',
+    mobileImage: '/banner-mob.png',
+    link: '/catalogue'
+  }]);
 
   useEffect(() => {
     async function fetchMobileBanners() {

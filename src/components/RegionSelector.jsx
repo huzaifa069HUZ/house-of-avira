@@ -14,13 +14,34 @@ export default function RegionSelector() {
   const allCountries = useMemo(() => Country.getAllCountries(), []);
 
   const filteredCountries = useMemo(() => {
-    if (!searchQuery) return allCountries;
-    const lowerQuery = searchQuery.toLowerCase();
-    return allCountries.filter(c => 
-      c.name.toLowerCase().includes(lowerQuery) || 
-      (c.currency && c.currency.toLowerCase().includes(lowerQuery)) ||
-      c.isoCode.toLowerCase().includes(lowerQuery)
-    );
+    let list = allCountries;
+    if (searchQuery) {
+      const lowerQuery = searchQuery.toLowerCase();
+      list = allCountries.filter(c => 
+        c.name.toLowerCase().includes(lowerQuery) || 
+        (c.currency && c.currency.toLowerCase().includes(lowerQuery)) ||
+        c.isoCode.toLowerCase().includes(lowerQuery)
+      );
+    }
+
+    // Prioritize top countries
+    const topCodes = ['US', 'IN', 'PH'];
+    const sorted = [...list].sort((a, b) => {
+      const aIndex = topCodes.indexOf(a.isoCode);
+      const bIndex = topCodes.indexOf(b.isoCode);
+      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+      if (aIndex !== -1) return -1;
+      if (bIndex !== -1) return 1;
+      return 0;
+    });
+
+    // Fix US flag
+    return sorted.map(c => {
+      if (c.isoCode === 'US') {
+        return { ...c, flag: '🇺🇸', name: 'United States' };
+      }
+      return c;
+    });
   }, [allCountries, searchQuery]);
 
   const handleSelect = (country) => {

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 import { Loader2, Layers, Heart, X, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
@@ -47,7 +47,7 @@ export default function CatalogueClient() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), limit(100));
         const querySnapshot = await getDocs(q);
         const productsList = querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -392,9 +392,14 @@ export default function CatalogueClient() {
 
       {/* Masonry Grid */}
       {loading ? (
-        <div className="avira-loading">
-          <Loader2 className="w-5 h-5 animate-spin" />
-          Loading collection...
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-8 sm:gap-x-4 sm:gap-y-12 px-2 sm:px-8 mt-6">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="flex flex-col gap-2">
+              <div className="w-full aspect-[3/4] bg-neutral-200 animate-pulse rounded-md" />
+              <div className="w-2/3 h-3 bg-neutral-200 animate-pulse rounded-full mt-2" />
+              <div className="w-1/3 h-3 bg-neutral-200 animate-pulse rounded-full" />
+            </div>
+          ))}
         </div>
       ) : displayProducts.length === 0 ? (
         <div className="avira-empty">
