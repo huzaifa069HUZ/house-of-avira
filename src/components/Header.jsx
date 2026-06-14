@@ -22,7 +22,6 @@ const menuData = [
       { title: "skirts", href: "/category/women/skirts" },
       { title: "dresses", href: "/category/women/dresses" },
       { title: "jackets", href: "/category/women/jackets" },
-      { title: "footwear", href: "/category/women/footwear" },
       { title: "beach wear", href: "/category/women/beach-wear" },
     ]
   },
@@ -33,16 +32,16 @@ const menuData = [
       { title: "tops", href: "/category/men/tops" },
       { title: "pants/jeans", href: "/category/men/pants-jeans" },
       { title: "jackets", href: "/category/men/jackets" },
-      { title: "footwear", href: "/category/men/footwear" },
     ]
   },
   {
-    title: "Unisex",
-    href: "/category/unisex",
+    title: "Footwear",
+    href: "/category/footwear",
     children: [
-      { title: "tops", href: "/category/unisex/tops" },
-      { title: "pants/jeans", href: "/category/unisex/pants-jeans" },
-      { title: "jackets", href: "/category/unisex/jackets" },
+      { title: "heels", href: "/category/footwear/heels" },
+      { title: "boots", href: "/category/footwear/boots" },
+      { title: "shoes", href: "/category/footwear/shoes" },
+      { title: "flats", href: "/category/footwear/flats" },
     ]
   },
   {

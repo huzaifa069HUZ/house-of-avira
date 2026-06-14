@@ -34,12 +34,12 @@ const categories = [
 
 const aestheticsCards = [
   { title: "babydoll / coquette", img: "/babydoll.png" },
-  { title: "dark feminine", img: "/dark-feminine.png" },
+  { title: "dark feminine", img: "/opium.png" },
   { title: "office siren", img: "/officesiren.png" },
-  { title: "y2k", img: "/y2k.png" },
+  { title: "y2k", img: "/elegant-chic.png" },
   { title: "streetwear", img: "/streetwear.png" },
-  { title: "elegant chic", img: "/elegant-chic.png" },
-  { title: "opiúm", img: "/opium.png" },
+  { title: "elegant chic", img: "/y2k.png" },
+  { title: "opiúm", img: "/dark-feminine.png" },
   { title: "Summer vacation", img: "/summer-vacation.png" }
 ];
 
@@ -301,8 +301,8 @@ export default function Home() {
           </h2>
         </div>
 
-        {/* 12-Card Grid (4 columns on desktop, minimal gap) */}
-        <div className="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2 px-4 md:px-8">
+        {/* 12-Card Grid (4 columns on desktop and mobile, minimal gap) */}
+        <div className="max-w-[1600px] mx-auto grid grid-cols-4 gap-1 md:gap-2 px-4 md:px-8">
           {categories.map((cat, idx) => (
             <Link
               key={idx}

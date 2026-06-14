@@ -9,15 +9,15 @@ import { UploadCloud, X, Image as ImageIcon, Tag, Loader2, CheckCircle2, Plus, T
 const CATEGORY_DATA = [
   { 
     title: "Women", 
-    children: ["tops", "pants / jeans", "skirts", "dresses", "jackets", "footwear", "beach wear"]
+    children: ["tops", "pants / jeans", "skirts", "dresses", "jackets", "beach wear"]
   },
   {
     title: "Men",
-    children: ["tops", "pants/jeans", "jackets", "footwear"]
+    children: ["tops", "pants/jeans", "jackets"]
   },
   {
-    title: "Unisex",
-    children: ["tops", "pants/jeans", "jackets"]
+    title: "Footwear",
+    children: ["heels", "boots", "shoes", "flats"]
   },
   {
     title: "Bags",
