@@ -5,6 +5,7 @@ import HeroCarousel from '@/components/HeroCarousel';
 import HowItWorks from '@/components/HowItWorks';
 import WhyHouseOfAvira from '@/components/WhyHouseOfAvira';
 import CampaignAndGrid from '@/components/CampaignAndGrid';
+import PinterestFeed from '@/components/PinterestFeed';
 import { StaggerTestimonials } from '@/components/ui/stagger-testimonials';
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
@@ -437,6 +438,9 @@ export default function Home() {
       <div id="how-it-works">
         <HowItWorks />
       </div>
+
+      {/* Pinterest-Style Feed */}
+      <PinterestFeed />
 
       {/* Testimonials Section */}
       <section className="w-full bg-[#FFFFFF] py-16 md:py-24 border-t-[3px] border-[#000000]">

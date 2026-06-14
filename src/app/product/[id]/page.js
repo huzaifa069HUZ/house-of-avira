@@ -441,15 +441,15 @@ export default function ProductPage({ params: paramsPromise }) {
               </div>
 
               {/* Read Before Ordering Cards */}
-              <div className="mt-12">
-                <h3 className="text-xs uppercase tracking-[0.2em] font-bold text-black mb-5">Read Before Ordering</h3>
+              <div className="mt-12 font-chillax">
+                <h3 className="text-xl md:text-2xl uppercase tracking-wider font-blosta text-black mb-5">Read Before Ordering</h3>
                 <div className="flex flex-col gap-3">
                   <Link href="/order-info/order-process" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
                         <Package className="w-4 h-4" />
                       </div>
-                      <span className="text-xs font-bold tracking-widest uppercase text-black">Order Process</span>
+                      <span className="text-sm font-bold tracking-widest uppercase text-black">Order Process</span>
                     </div>
                     <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
                       Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -461,7 +461,7 @@ export default function ProductPage({ params: paramsPromise }) {
                       <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
                         <Truck className="w-4 h-4" />
                       </div>
-                      <span className="text-xs font-bold tracking-widest uppercase text-black">Shipping</span>
+                      <span className="text-sm font-bold tracking-widest uppercase text-black">Shipping</span>
                     </div>
                     <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
                       Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -473,7 +473,7 @@ export default function ProductPage({ params: paramsPromise }) {
                       <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
                         <FileText className="w-4 h-4" />
                       </div>
-                      <span className="text-xs font-bold tracking-widest uppercase text-black">Policies</span>
+                      <span className="text-sm font-bold tracking-widest uppercase text-black">Policies</span>
                     </div>
                     <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
                       Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
