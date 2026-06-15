@@ -48,7 +48,6 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   const [description, setDescription] = useState('');
   const [sections, setSections] = useState(['New Arrivals']);
   const [badge, setBadge] = useState('');
-  const [bestSeller, setBestSeller] = useState(false);
   
   // Categories state
   const [category, setCategory] = useState(CATEGORY_DATA[0].title);
@@ -91,7 +90,6 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         imageFile: null
       })) || []);
       setInStock(initialProduct.inStock !== false);
-      setBestSeller(initialProduct.bestSeller === true);
       setExistingImages(initialProduct.images || [initialProduct.imageUrl].filter(Boolean));
     }
   }, [initialProduct]);
@@ -255,7 +253,6 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         swatches: swatchesArray,
         extraColors: swatchesArray.length > 3 ? swatchesArray.length - 3 : 0,
         inStock,
-        bestSeller,
       };
 
       if (initialProduct) {
@@ -273,7 +270,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         setName(''); setPrice(''); setDescription(''); setSections(['New Arrivals']); setBadge('');
         setCategory(CATEGORY_DATA[0].title); setSubcategory(CATEGORY_DATA[0].children[0] || ''); setAesthetic('');
         setSizes([]); setColors([]); setFiles([]); setPreviews([]); setExistingImages([]);
-        setBestSeller(false);
+        setInStock(true);
       }
 
       if (onSuccess) {
@@ -361,22 +358,6 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                   className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${inStock ? 'bg-[#34c759]' : 'bg-[#d2d2d7]'}`}
                 >
                   <div className={`bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform ${inStock ? 'translate-x-6' : 'translate-x-0'}`} />
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col justify-center">
-                <label className="block text-sm font-medium text-black mb-2 flex items-center justify-between">
-                  <span>Best Seller Status</span>
-                  {bestSeller ? (
-                    <span className="text-[10px] font-bold tracking-widest uppercase bg-[#ebf5ff] text-[#0071e3] px-2 py-0.5 rounded-full border border-[#0071e3]/20">Best Seller</span>
-                  ) : (
-                    <span className="text-[10px] font-bold tracking-widest uppercase bg-[#F5F5F7] text-[#86868b] px-2 py-0.5 rounded-full border border-[#d2d2d7]/20">Normal</span>
-                  )}
-                </label>
-                <div 
-                  onClick={() => setBestSeller(!bestSeller)}
-                  className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${bestSeller ? 'bg-[#0071e3]' : 'bg-[#d2d2d7]'}`}
-                >
-                  <div className={`bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform ${bestSeller ? 'translate-x-6' : 'translate-x-0'}`} />
                 </div>
               </div>
             </div>

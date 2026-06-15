@@ -412,7 +412,7 @@ export default function Header() {
               <div key={item.title} className="relative group flex items-center h-full">
                 <Link 
                   href={item.href} 
-                  className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-[11px] font-chillax font-bold uppercase tracking-[0.15em] transition-colors ${textClass}`}
+                  className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-[11px] font-dm-sans font-bold uppercase tracking-[0.15em] transition-colors ${textClass}`}
                 >
                   {item.title}
                 </Link>
@@ -424,7 +424,7 @@ export default function Header() {
                       <div key={child.title} className="relative group/sub">
                         <Link 
                           href={child.href}
-                          className="flex justify-between items-center px-4 py-2 text-[10px] font-chillax font-bold text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-[0.15em]"
+                          className="flex justify-between items-center px-4 py-2 text-[10px] font-dm-sans font-bold text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-[0.15em]"
                         >
                           {child.title}
                           {child.subChildren && <ChevronRight className="w-3 h-3" />}
@@ -437,7 +437,7 @@ export default function Header() {
                               <Link 
                                 key={subChild.title}
                                 href={subChild.href}
-                                className="block px-4 py-2 text-[10px] font-chillax font-semibold text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-wider"
+                                className="block px-4 py-2 text-[10px] font-dm-sans font-semibold text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-wider"
                               >
                                 {subChild.title}
                               </Link>
@@ -475,11 +475,11 @@ export default function Header() {
             <div className="px-6 py-4 flex gap-6 border-b border-[#000000]/10 mb-2">
               <button onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm">
                 <User className="w-5 h-5" />
-                <span className="text-[10px] font-chillax uppercase tracking-[0.15em] font-bold">Account</span>
+                <span className="text-[10px] font-dm-sans uppercase tracking-[0.15em] font-bold">Account</span>
               </button>
               <Link href="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
                 <Heart className="w-5 h-5" />
-                <span className="text-[10px] font-chillax uppercase tracking-[0.15em] font-bold">Wishlist</span>
+                <span className="text-[10px] font-dm-sans uppercase tracking-[0.15em] font-bold">Wishlist</span>
                 {wishlist.length > 0 && (
                   <span className="absolute top-1 right-3 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                     {wishlist.length}
@@ -488,7 +488,7 @@ export default function Header() {
               </Link>
               <button onClick={() => { setIsMobileMenuOpen(false); openCart(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
                 <ShoppingBag className="w-5 h-5" />
-                <span className="text-[10px] font-chillax uppercase tracking-[0.15em] font-bold">Cart</span>
+                <span className="text-[10px] font-dm-sans uppercase tracking-[0.15em] font-bold">Cart</span>
                 {cart.length > 0 && (
                   <span className="absolute top-1 right-3 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                     {cart.reduce((total, item) => total + item.quantity, 0)}
@@ -501,7 +501,7 @@ export default function Header() {
               <div key={idx} className="border-b border-[#000000]/5">
                 {item.children ? (
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex justify-between items-center px-6 py-4 text-[11px] font-chillax font-bold uppercase tracking-[0.15em] text-[#000000] cursor-pointer list-none">
+                    <summary className="flex justify-between items-center px-6 py-4 text-[11px] font-dm-sans font-bold uppercase tracking-[0.15em] text-[#000000] cursor-pointer list-none">
                       {item.title}
                       <ChevronRight className="w-4 h-4 transition-transform group-open:rotate-90 text-[#000000]/40" />
                     </summary>
@@ -510,20 +510,20 @@ export default function Header() {
                         <div key={child.title}>
                           {child.subChildren ? (
                             <details className="group/sub [&_summary::-webkit-details-marker]:hidden">
-                              <summary className="flex justify-between items-center py-3 text-[11px] font-chillax font-bold uppercase tracking-wider text-[#000000]/80 cursor-pointer list-none">
+                              <summary className="flex justify-between items-center py-3 text-[11px] font-dm-sans font-bold uppercase tracking-wider text-[#000000]/80 cursor-pointer list-none">
                                 {child.title}
                                 <ChevronRight className="w-3 h-3 transition-transform group-open/sub:rotate-90 text-[#000000]/40" />
                               </summary>
                               <div className="pl-4 pb-2 flex flex-col gap-2 border-l border-[#000000]/10 ml-1">
                                 {child.subChildren.map(subChild => (
-                                    <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[10px] font-chillax font-semibold uppercase tracking-wider text-[#000000]/60 block hover:text-[#000000]">
+                                    <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[10px] font-dm-sans font-semibold uppercase tracking-wider text-[#000000]/60 block hover:text-[#000000]">
                                     {subChild.title}
                                   </Link>
                                 ))}
                               </div>
                             </details>
                           ) : (
-                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[11px] font-chillax font-bold uppercase tracking-wider text-[#000000]/80 block hover:text-[#000000]">
+                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[11px] font-dm-sans font-bold uppercase tracking-wider text-[#000000]/80 block hover:text-[#000000]">
                               {child.title}
                             </Link>
                           )}
@@ -532,7 +532,7 @@ export default function Header() {
                     </div>
                   </details>
                 ) : (
-                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={item.customClass ? `block px-6 py-4 ${item.customClass}` : `block px-6 py-4 text-[11px] font-chillax font-bold uppercase tracking-[0.15em] text-[#000000]`}>
+                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={item.customClass ? `block px-6 py-4 ${item.customClass}` : `block px-6 py-4 text-[11px] font-dm-sans font-bold uppercase tracking-[0.15em] text-[#000000]`}>
                     {item.title}
                   </Link>
                 )}
