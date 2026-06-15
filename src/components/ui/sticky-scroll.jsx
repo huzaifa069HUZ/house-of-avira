@@ -5,14 +5,18 @@ import Link from 'next/link';
 
 const StickyScroll = forwardRef(({ products = [], children }, ref) => {
   const leftCol = [];
-  const centerCol = [];
   const rightCol = [];
 
-  // Reserve 3 items for the center sticky column
+  // Explicitly use the requested 3 images for the center column
+  const centerCol = [
+    { id: 'static-swim', src: '/swim.png' },
+    { id: 'static-sets', src: '/sets.png' },
+    { id: 'static-product5', src: '/product5.png' }
+  ];
+
+  // Distribute all fetched products to the left and right columns
   products.forEach((prod, i) => {
-    if (i < 3) {
-      centerCol.push(prod);
-    } else if (i % 2 === 0) {
+    if (i % 2 === 0) {
       leftCol.push(prod);
     } else {
       rightCol.push(prod);
@@ -49,7 +53,7 @@ const StickyScroll = forwardRef(({ products = [], children }, ref) => {
               {/* Center Column - Sticky on Desktop */}
               <div className='md:sticky md:top-0 md:h-screen w-full col-span-12 md:col-span-4 gap-4 md:gap-6 grid grid-rows-3 md:py-6'>
                 {centerCol.map((item) => (
-                  <Link key={item.id} href={`/product/${item.id}`} className="block group w-full h-72 md:h-full relative overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-500">
+                  <Link key={item.id} href={item.id.startsWith('static-') ? '/catalogue' : `/product/${item.id}`} className="block group w-full h-72 md:h-full relative overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-500">
                     <figure className='w-full h-full'>
                       <img
                         src={item.src}
