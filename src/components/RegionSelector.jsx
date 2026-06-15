@@ -5,11 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, X, Check, Search } from 'lucide-react';
 import { useCurrencyStore } from '@/store/currencyStore';
 import { Country } from 'country-state-city';
+import { usePathname } from 'next/navigation';
 
 export default function RegionSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { currency, setCurrency, setLocale } = useCurrencyStore();
+  const pathname = usePathname();
+  const isCatalogue = pathname?.startsWith('/catalogue');
 
   const allCountries = useMemo(() => Country.getAllCountries(), []);
 
@@ -60,14 +63,22 @@ export default function RegionSelector() {
       {/* Floating Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[90] flex items-center gap-2 bg-white/80 backdrop-blur-md border border-[#000000]/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] px-4 py-2.5 rounded-full hover:bg-white hover:shadow-xl transition-all duration-300 group"
+        className={`fixed z-[90] flex items-center justify-center bg-white/90 backdrop-blur-md border border-[#000000]/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-white hover:shadow-xl transition-all duration-300 group ${isCatalogue ? 'bottom-6 right-4 w-11 h-11 rounded-full p-0' : 'bottom-6 right-6 gap-2 px-4 py-2.5 rounded-full'}`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        <Globe className="w-4 h-4 text-[#000000] group-hover:rotate-12 transition-transform" />
-        <span className="text-xs font-bold tracking-widest text-[#000000] uppercase">
-          {activeRegion?.flag} {currency}
-        </span>
+        {isCatalogue ? (
+          <span className="text-[10px] font-bold tracking-widest text-[#000000] uppercase">
+            {currency}
+          </span>
+        ) : (
+          <>
+            <Globe className="w-4 h-4 text-[#000000] group-hover:rotate-12 transition-transform" />
+            <span className="text-xs font-bold tracking-widest text-[#000000] uppercase">
+              {activeRegion?.flag} {currency}
+            </span>
+          </>
+        )}
       </motion.button>
 
       {/* Glassmorphic Modal overlay */}

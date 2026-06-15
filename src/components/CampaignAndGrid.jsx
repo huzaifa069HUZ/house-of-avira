@@ -1,12 +1,14 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function CampaignAndGrid() {
 
   const items = [
-    { title: "UNDER 199", img: "under199.png", bg: "bg-[#F9F9F9]" },
-    { title: "UNDER 299", img: "/under299.png", bg: "bg-[#0A0A0A]" },
-    { title: "UNDER 499", img: "/under499.png", bg: "bg-[#F9F9F9]" },
-    { title: "UNDER 999", img: "/under999.png", bg: "bg-[#0A0A0A]" }
+    { title: "UNDER 199", img: "/under199.png", bg: "bg-[#F9F9F9]", priceValue: "199" },
+    { title: "UNDER 299", img: "/under299.png", bg: "bg-[#0A0A0A]", priceValue: "299" },
+    { title: "UNDER 499", img: "/under499.png", bg: "bg-[#F9F9F9]", priceValue: "499" },
+    { title: "UNDER 999", img: "/under999.png", bg: "bg-[#0A0A0A]", priceValue: "999" }
   ];
 
   return (
@@ -34,9 +36,10 @@ export default function CampaignAndGrid() {
         {/* Mobile: 2x2 Grid with Text inside. Desktop: 4x1 Flex with images */}
         <div className="grid grid-cols-2 md:flex md:flex-row w-full md:h-[70vh]">
           {items.map((item, idx) => (
-            <div
+            <Link
+              href={`/shop-by-price?price=${item.priceValue}`}
               key={idx}
-              className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#000000]/10`}
+              className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#000000]/10 block`}
             >
               <div className={`w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden p-4 md:p-6 ${item.bg}`}>
                 <img
@@ -51,18 +54,18 @@ export default function CampaignAndGrid() {
                   {item.title}
                 </h3>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
         {/* The White Text Bar at the Bottom (Desktop Only) */}
         <div className="hidden md:flex w-full flex-row bg-white border-b border-[#000000]/10">
           {items.map((item, idx) => (
-            <div key={idx} className="w-1/4 p-5">
+            <Link href={`/shop-by-price?price=${item.priceValue}`} key={idx} className="w-1/4 p-5 hover:bg-[#000000]/5 transition-colors block cursor-pointer">
               <h3 className="font-sans font-bold text-[13px] tracking-tight w-full text-left uppercase text-[#000000]">
                 {item.title}
               </h3>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

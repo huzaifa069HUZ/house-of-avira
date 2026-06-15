@@ -420,7 +420,7 @@ export default function ProductPage({ params: paramsPromise }) {
                 <div className="mt-8 pt-8 border-t border-neutral-200">
                   <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4">Shipping & Returns</h3>
                   <p className="text-sm text-neutral-600 leading-relaxed font-light">
-                    Free standard shipping on orders over ₹5,000. Returns are accepted within 14 days of delivery for unworn items in perfect condition with original tags.
+                    SHIPPING CHARGES ARE SEPERATE AS PRODUCTS ARE IMPORT BASED. Returns are accepted within 14 days of delivery for unworn items in perfect condition with original tags.
                   </p>
                 </div>
               </div>
