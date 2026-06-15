@@ -412,7 +412,7 @@ export default function Header() {
               <div key={item.title} className="relative group flex items-center h-full">
                 <Link 
                   href={item.href} 
-                  className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-[11px] font-dm-sans font-bold uppercase tracking-[0.15em] transition-colors ${textClass}`}
+                  className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-[14px] leading-[14px] font-dm-sans font-normal transition-colors ${textClass}`}
                 >
                   {item.title}
                 </Link>
@@ -424,7 +424,7 @@ export default function Header() {
                       <div key={child.title} className="relative group/sub">
                         <Link 
                           href={child.href}
-                          className="flex justify-between items-center px-4 py-2 text-[10px] font-dm-sans font-bold text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-[0.15em]"
+                          className="flex justify-between items-center px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000]"
                         >
                           {child.title}
                           {child.subChildren && <ChevronRight className="w-3 h-3" />}
@@ -437,7 +437,7 @@ export default function Header() {
                               <Link 
                                 key={subChild.title}
                                 href={subChild.href}
-                                className="block px-4 py-2 text-[10px] font-dm-sans font-semibold text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] uppercase tracking-wider"
+                                className="block px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000]"
                               >
                                 {subChild.title}
                               </Link>
@@ -501,7 +501,7 @@ export default function Header() {
               <div key={idx} className="border-b border-[#000000]/5">
                 {item.children ? (
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex justify-between items-center px-6 py-4 text-[11px] font-dm-sans font-bold uppercase tracking-[0.15em] text-[#000000] cursor-pointer list-none">
+                    <summary className="flex justify-between items-center px-6 py-4 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000] cursor-pointer list-none">
                       {item.title}
                       <ChevronRight className="w-4 h-4 transition-transform group-open:rotate-90 text-[#000000]/40" />
                     </summary>
@@ -510,20 +510,20 @@ export default function Header() {
                         <div key={child.title}>
                           {child.subChildren ? (
                             <details className="group/sub [&_summary::-webkit-details-marker]:hidden">
-                              <summary className="flex justify-between items-center py-3 text-[11px] font-dm-sans font-bold uppercase tracking-wider text-[#000000]/80 cursor-pointer list-none">
+                              <summary className="flex justify-between items-center py-3 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 cursor-pointer list-none">
                                 {child.title}
                                 <ChevronRight className="w-3 h-3 transition-transform group-open/sub:rotate-90 text-[#000000]/40" />
                               </summary>
                               <div className="pl-4 pb-2 flex flex-col gap-2 border-l border-[#000000]/10 ml-1">
                                 {child.subChildren.map(subChild => (
-                                    <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[10px] font-dm-sans font-semibold uppercase tracking-wider text-[#000000]/60 block hover:text-[#000000]">
+                                    <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/60 block hover:text-[#000000]">
                                     {subChild.title}
                                   </Link>
                                 ))}
                               </div>
                             </details>
                           ) : (
-                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[11px] font-dm-sans font-bold uppercase tracking-wider text-[#000000]/80 block hover:text-[#000000]">
+                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 block hover:text-[#000000]">
                               {child.title}
                             </Link>
                           )}
@@ -532,7 +532,7 @@ export default function Header() {
                     </div>
                   </details>
                 ) : (
-                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={item.customClass ? `block px-6 py-4 ${item.customClass}` : `block px-6 py-4 text-[11px] font-dm-sans font-bold uppercase tracking-[0.15em] text-[#000000]`}>
+                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={item.customClass ? `block px-6 py-4 ${item.customClass}` : `block px-6 py-4 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]`}>
                     {item.title}
                   </Link>
                 )}
