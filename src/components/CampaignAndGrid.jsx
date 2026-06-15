@@ -3,10 +3,10 @@
 export default function CampaignAndGrid() {
 
   const items = [
-    { title: "TOPS", img: "/top.png", bg: "bg-[#F9F9F9]" },
-    { title: "SHORTS AND SKIRTS", img: "/skirt.png", bg: "bg-[#0A0A0A]" },
-    { title: "BOOTS", img: "/boots.png", bg: "bg-[#F9F9F9]" },
-    { title: "TROUSERS", img: "/trousers.png", bg: "bg-[#0A0A0A]" }
+    { title: "UNDER 199", img: "under199.png", bg: "bg-[#F9F9F9]" },
+    { title: "UNDER 299", img: "/under299.png", bg: "bg-[#0A0A0A]" },
+    { title: "UNDER 499", img: "/under499.png", bg: "bg-[#F9F9F9]" },
+    { title: "UNDER 999", img: "/under999.png", bg: "bg-[#0A0A0A]" }
   ];
 
   return (
