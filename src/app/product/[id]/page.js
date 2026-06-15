@@ -442,7 +442,7 @@ export default function ProductPage({ params: paramsPromise }) {
 
               {/* Read Before Ordering Cards */}
               <div className="mt-12 font-chillax">
-                <h3 className="text-xl md:text-2xl uppercase tracking-wider font-blosta text-black mb-5">Read Before Ordering</h3>
+                <h3 className="text-3xl md:text-4xl font-aston-script text-black mb-5">Read Before Ordering</h3>
                 <div className="flex flex-col gap-3">
                   <Link href="/order-info/order-process" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
                     <div className="flex items-center gap-4">

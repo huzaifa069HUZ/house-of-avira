@@ -52,7 +52,7 @@ export default function PinterestFeed() {
           <h2 className="font-perandory text-4xl md:text-5xl lg:text-7xl font-bold tracking-widest uppercase text-black mb-6">
             Might Interest You
           </h2>
-          <p className="font-blosta-script text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-relaxed max-w-4xl mx-auto px-4">
+          <p className="font-aston-script text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-relaxed max-w-4xl mx-auto px-4">
             Scroll and find according to your choice from our Pinterest board
           </p>
 
