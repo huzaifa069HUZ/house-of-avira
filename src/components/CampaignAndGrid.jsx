@@ -41,16 +41,16 @@ export default function CampaignAndGrid() {
               key={idx}
               className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#000000]/10 block`}
             >
-              <div className={`w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden p-4 md:p-6 ${item.bg}`}>
+              <div className={`w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden ${item.bg}`}>
                 <img
                   src={item.img}
                   alt={item.title}
-                  className="w-[85%] h-[85%] object-contain hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
               {/* Mobile text (hidden on desktop) */}
               <div className="md:hidden w-full p-3 bg-white">
-                <h3 className="font-sans font-bold text-[11px] tracking-tight text-center uppercase text-[#000000]">
+                <h3 className="font-serif italic text-[13px] tracking-tight text-center uppercase text-[#000000]">
                   {item.title}
                 </h3>
               </div>
@@ -62,7 +62,7 @@ export default function CampaignAndGrid() {
         <div className="hidden md:flex w-full flex-row bg-white border-b border-[#000000]/10">
           {items.map((item, idx) => (
             <Link href={`/shop-by-price?price=${item.priceValue}`} key={idx} className="w-1/4 p-5 hover:bg-[#000000]/5 transition-colors block cursor-pointer">
-              <h3 className="font-sans font-bold text-[13px] tracking-tight w-full text-left uppercase text-[#000000]">
+              <h3 className="font-serif italic text-[15px] tracking-tight w-full text-left uppercase text-[#000000]">
                 {item.title}
               </h3>
             </Link>

@@ -294,7 +294,7 @@ export default function Home() {
       {/* Categories Grid Section */}
       <section className="w-full bg-[#FFFFFF] pt-16 pb-8 md:pt-24 md:pb-12">
         <div className="w-full text-left max-w-[1600px] mx-auto px-4 md:px-8 mb-6">
-          <h2 className="text-3xl md:text-4xl font-sans font-black tracking-tighter text-[#000000] uppercase">
+          <h2 className="text-4xl md:text-5xl font-perandory font-bold tracking-widest text-[#000000] uppercase">
             CATEGORIES
           </h2>
         </div>

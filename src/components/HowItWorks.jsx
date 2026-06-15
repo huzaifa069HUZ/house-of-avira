@@ -9,13 +9,13 @@ export default function HowItWorks() {
         
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-[#8A001A] mb-6">
+          <h2 className="text-sm md:text-base font-serif italic tracking-[0.3em] uppercase text-[#8A001A] mb-6">
             How It Works
           </h2>
-          <p className="text-4xl md:text-5xl font-serif text-[#000000] mb-2 leading-tight">
+          <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] mb-2 leading-tight">
             Internally sourced and
           </p>
-          <p className="text-4xl md:text-5xl font-serif text-[#000000] leading-tight">
+          <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] leading-tight">
             <span className="font-symphony text-5xl md:text-6xl text-[#8A001A] mr-3 lowercase tracking-normal">delivered</span> 
             to your doorstep.
           </p>
@@ -45,7 +45,7 @@ export default function HowItWorks() {
             <div className="flex-1 pt-2 pb-14">
               <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">01.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-[#000000]">
+                <h3 className="text-xs md:text-sm font-serif italic tracking-[0.15em] uppercase text-[#000000]">
                   Place Your Order
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
@@ -72,7 +72,7 @@ export default function HowItWorks() {
             <div className="flex-1 pt-2 pb-14">
               <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">02.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-[#000000]">
+                <h3 className="text-xs md:text-sm font-serif italic tracking-[0.15em] uppercase text-[#000000]">
                   International Shipping
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
@@ -96,7 +96,7 @@ export default function HowItWorks() {
             <div className="flex-1 pt-2">
               <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">03.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-xs md:text-sm font-bold tracking-[0.15em] uppercase text-[#000000]">
+                <h3 className="text-xs md:text-sm font-serif italic tracking-[0.15em] uppercase text-[#000000]">
                   Delivered to Your Doorstep
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">

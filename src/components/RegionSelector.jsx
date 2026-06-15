@@ -152,7 +152,7 @@ export default function RegionSelector() {
                             {country.flag}
                           </div>
                           <div className="flex flex-col items-start text-left">
-                            <span className="font-semibold text-sm tracking-tight">{country.name}</span>
+                            <span className="font-serif italic text-base tracking-tight">{country.name}</span>
                             <span className={`text-[10px] tracking-widest uppercase mt-0.5 font-bold ${
                               isSelected ? 'text-white/70' : 'text-[#000000]/40 group-hover:text-[#000000]/60'
                             }`}>
