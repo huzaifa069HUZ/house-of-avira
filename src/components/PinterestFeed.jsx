@@ -30,7 +30,16 @@ export default function PinterestFeed({ children }) {
     fetchImages();
   }, []);
 
-  if (images.length === 0) return null;
+  if (images.length === 0) {
+    return (
+      <div className="w-full relative z-20">
+        {children}
+        <div className="flex justify-center items-center py-20">
+          <div className="w-8 h-8 border-2 border-[#8A001A] border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <StickyScroll products={images}>

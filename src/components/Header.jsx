@@ -212,7 +212,7 @@ export default function Header() {
   // Determine styles based on scroll state and page
   // Determine styles based on scroll state and page
   const headerBgClass = isHome && !isScrolled ? 'bg-transparent border-transparent' : 'bg-[#FFFFFF] border-[#000000]/10 shadow-sm';
-  const textClass = isHome && !isScrolled ? 'text-white hover:text-white/80' : 'text-neutral-500 hover:text-[#000000]';
+  const textClass = isHome && !isScrolled ? 'text-white hover:text-white/80' : 'text-[#000000] hover:text-[#000000]/80';
   const logoClass = isHome && !isScrolled ? 'text-white' : 'text-[#000000]';
   const topBannerClass = 'bg-[#8A001A] text-white';
 
@@ -269,8 +269,8 @@ export default function Header() {
             {/* Center Area (Desktop: Text Title, Mobile: Logo Image) */}
             <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
               {/* Desktop Title */}
-              <Link href="/" className={`hidden lg:block font-cormorant uppercase text-2xl md:text-4xl tracking-widest transition-colors ${logoClass}`}>
-                House of Avira
+              <Link href="/" className={`hidden lg:flex items-center gap-2 text-2xl md:text-4xl tracking-widest transition-colors ${logoClass}`}>
+                <span className="font-perandory uppercase">House of</span> <span className="font-aston-script capitalize text-3xl md:text-5xl translate-y-1">Avira</span>
               </Link>
               {/* Mobile Logo Image - Increased by 80% */}
               <Link href="/" className="lg:hidden block mt-1">
@@ -306,7 +306,7 @@ export default function Header() {
 
                 {/* Search Dropdown */}
                 {showSearchDropdown && (
-                  <div className="absolute top-[120%] right-0 w-[300vw] max-w-[320px] sm:max-w-none sm:w-[400px] max-h-[70vh] overflow-y-auto bg-white border border-black/10 shadow-2xl rounded-2xl p-4 z-[100] animate-in fade-in slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default">
+                  <div className="absolute top-[120%] right-[-1rem] md:right-0 w-[calc(100vw-2rem)] md:w-[400px] max-h-[70vh] overflow-y-auto bg-white border border-black/10 shadow-2xl rounded-2xl p-4 z-[100] animate-in fade-in slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default">
                     {/* Mobile Search Input visible only on small screens inside the dropdown */}
                     <div className="sm:hidden flex items-center border border-black/20 rounded-full px-3 py-2">
                       <Search className="w-4 h-4 mr-2 text-neutral-500" />

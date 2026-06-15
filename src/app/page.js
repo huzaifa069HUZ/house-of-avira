@@ -213,7 +213,7 @@ export default function Home() {
       </div>
 
       {/* New Arrivals Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full border-b border-[#000000]/10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20 w-full border-b border-[#000000]/10">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
           <div className="flex items-baseline gap-6 sm:gap-8 flex-wrap">
@@ -246,7 +246,7 @@ export default function Home() {
 
       {/* Best Sellers & Might Interest You Section */}
       <PinterestFeed>
-        <div className="w-full bg-[#FAFAFA] pt-24 pb-8 md:pb-16 relative z-30">
+        <div className="w-full bg-[#FAFAFA] pt-12 md:pt-24 pb-8 md:pb-16 relative z-30">
           <div className="text-center max-w-[1400px] mx-auto fade-up px-4">
             <h2 className="font-perandory text-4xl md:text-5xl lg:text-7xl font-bold tracking-widest uppercase text-black mb-6">
               Best Seller
@@ -292,7 +292,7 @@ export default function Home() {
       </section>
 
       {/* Categories Grid Section */}
-      <section className="w-full bg-[#FFFFFF] py-16 md:py-24">
+      <section className="w-full bg-[#FFFFFF] pt-16 pb-8 md:pt-24 md:pb-12">
         <div className="w-full text-left max-w-[1600px] mx-auto px-4 md:px-8 mb-6">
           <h2 className="text-3xl md:text-4xl font-sans font-black tracking-tighter text-[#000000] uppercase">
             CATEGORIES
@@ -331,7 +331,7 @@ export default function Home() {
       </section>
 
       {/* Curated Aesthetics Section */}
-      <section className="py-20 bg-white w-full">
+      <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-sans font-black tracking-tight text-[#000000] mb-4">{t.curated.title}</h2>
           <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-12">{t.curated.subtitle}</p>
