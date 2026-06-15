@@ -268,15 +268,15 @@ export default function OrderProcessPage() {
       </section>
 
       {/* ═══════ NAVIGATION ═══════ */}
-      <section className="bg-[#0A0A0A] py-8">
-        <div className="max-w-4xl mx-auto px-6 md:px-12 flex justify-between items-center">
-          <Link href="/order-info" className="flex items-center gap-3 text-white/30 hover:text-white/60 transition-colors text-[10px] font-bold tracking-[0.2em] uppercase group">
-            <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7" /></svg>
-            Overview
+      <section className="bg-[#0A0A0A] py-12 md:py-16 border-t border-white/10">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-6">
+          <Link href="/order-info" className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-4 text-white/60 hover:text-white hover:bg-white/5 border border-white/10 rounded-full px-8 py-4 transition-all text-xs md:text-sm font-bold tracking-[0.2em] uppercase group">
+            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7" /></svg>
+            Back to Overview
           </Link>
-          <Link href="/order-info/shipping" className="flex items-center gap-3 text-[#8A001A] hover:gap-4 transition-all text-[10px] font-bold tracking-[0.2em] uppercase">
+          <Link href="/order-info/shipping" className="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-4 text-white bg-[#8A001A] hover:bg-[#A3001E] rounded-full px-8 py-4 transition-all text-xs md:text-sm font-bold tracking-[0.2em] uppercase group shadow-[0_0_20px_rgba(138,0,26,0.2)]">
             Shipping & Delivery
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0l-7-7m7 7l-7 7" /></svg>
           </Link>
         </div>
       </section>

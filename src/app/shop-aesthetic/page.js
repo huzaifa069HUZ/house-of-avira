@@ -108,7 +108,7 @@ function ShopAestheticContent() {
     <div className="pt-24 min-h-screen bg-white">
       <section className="py-10 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-          <h1 className="text-3xl md:text-5xl font-sans font-bold tracking-tight text-[#000000] mb-4">Shop Your Aesthetic</h1>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans font-black tracking-tight text-[#000000] mb-4">Shop Your Aesthetic</h1>
           
           {/* Pills / Filters */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full mt-8">

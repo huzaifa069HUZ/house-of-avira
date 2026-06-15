@@ -112,10 +112,13 @@ export default function HowItWorks() {
         </div>
 
         {/* Disclaimer Note */}
-        <div className="bg-[#FAFAFA] border border-[#000000]/5 px-8 py-6 rounded-2xl max-w-xl w-full text-center shadow-sm">
+        <div className="bg-[#FAFAFA] border border-[#000000]/5 px-8 py-6 md:py-8 rounded-2xl max-w-xl w-full text-center shadow-sm flex flex-col items-center gap-6">
           <p className="text-xs md:text-sm font-bold tracking-widest text-[#000000]/70 uppercase leading-relaxed">
             * Please place an order only if you are comfortable with the international shipping process and charges.
           </p>
+          <Link href="/order-info/order-process" className="inline-block bg-[#000000] text-white px-8 py-3 rounded-full text-xs md:text-sm font-bold tracking-[0.2em] uppercase hover:bg-[#8A001A] transition-colors shadow-md">
+            Read Full Shipping Details
+          </Link>
         </div>
 
       </div>

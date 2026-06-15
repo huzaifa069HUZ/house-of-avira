@@ -336,7 +336,7 @@ export default function Home() {
       {/* Curated Aesthetics Section */}
       <section className="py-20 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-sans font-bold tracking-tight text-[#000000] mb-2">{t.curated.title}</h2>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-sans font-black tracking-tight text-[#000000] mb-4">{t.curated.title}</h2>
           <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-12">{t.curated.subtitle}</p>
 
           {/* Aesthetic Cards Grid */}
