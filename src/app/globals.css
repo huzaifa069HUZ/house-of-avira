@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Syne:wght@600;700;800&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=gambetta@401&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=gambetta@400,401,700,701&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";

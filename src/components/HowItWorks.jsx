@@ -16,7 +16,7 @@ export default function HowItWorks() {
             Internally sourced and
           </p>
           <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] leading-tight">
-            <span className="font-symphony text-5xl md:text-6xl text-[#8A001A] mr-3 lowercase tracking-normal">delivered</span> 
+            <span className="font-aston-script text-5xl md:text-6xl text-[#8A001A] mr-3 lowercase tracking-normal">delivered</span> 
             to your doorstep.
           </p>
           
@@ -45,7 +45,7 @@ export default function HowItWorks() {
             <div className="flex-1 pt-2 pb-14">
               <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">01.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-xs md:text-sm font-serif italic tracking-[0.15em] uppercase text-[#000000]">
+                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-serif italic font-normal text-[#000000] capitalize">
                   Place Your Order
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
@@ -72,7 +72,7 @@ export default function HowItWorks() {
             <div className="flex-1 pt-2 pb-14">
               <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">02.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-xs md:text-sm font-serif italic tracking-[0.15em] uppercase text-[#000000]">
+                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-serif italic font-normal text-[#000000] capitalize">
                   International Shipping
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
@@ -96,7 +96,7 @@ export default function HowItWorks() {
             <div className="flex-1 pt-2">
               <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">03.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-xs md:text-sm font-serif italic tracking-[0.15em] uppercase text-[#000000]">
+                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-serif italic font-normal text-[#000000] capitalize">
                   Delivered to Your Doorstep
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
