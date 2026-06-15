@@ -212,31 +212,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* New Arrivals & Best Sellers Tabbed Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+      {/* New Arrivals Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full border-b border-[#000000]/10">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 border-b border-[#000000]/10 pb-4 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
           <div className="flex items-baseline gap-6 sm:gap-8 flex-wrap">
-            <button
-              onClick={() => setActiveTab('new')}
-              className={`text-3xl font-serif tracking-tight transition-all pb-1 border-b-2 cursor-pointer ${
-                activeTab === 'new' 
-                  ? 'text-[#000000] border-black font-semibold italic' 
-                  : 'text-[#000000]/30 border-transparent hover:text-[#000000]/70 italic'
-              }`}
-            >
+            <h2 className="text-3xl font-serif tracking-tight text-[#000000] font-semibold italic border-black border-b-2 pb-1">
               {t.hero.newArrivals}
-            </button>
-            <button
-              onClick={() => setActiveTab('best')}
-              className={`text-3xl font-serif tracking-tight transition-all pb-1 border-b-2 cursor-pointer ${
-                activeTab === 'best' 
-                  ? 'text-[#000000] border-black font-semibold italic' 
-                  : 'text-[#000000]/30 border-transparent hover:text-[#000000]/70 italic'
-              }`}
-            >
-              {t.curated.bestSellers}
-            </button>
+            </h2>
             <a href="/catalogue" className="text-xs font-semibold tracking-widest uppercase text-[#000000]/70 hover:text-[#000000] sm:ml-2">
               {t.hero.shopAll}
             </a>
@@ -252,14 +235,50 @@ export default function Home() {
         </div>
 
         {/* Horizontally Scrollable Product List */}
-        <div className="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 transition-opacity duration-300">
-          {(activeTab === 'new' ? newArrivals : bestSellersList).map((product, idx) => (
+        <div className="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+          {newArrivals.map((product, idx) => (
             <div key={product.id || idx} className="w-[calc(50%-8px)] md:w-[calc(25%-12px)] snap-start flex-shrink-0">
               <ProductCard product={product} />
             </div>
           ))}
         </div>
       </section>
+
+      {/* Best Sellers & Might Interest You Section */}
+      <PinterestFeed>
+        <div className="w-full bg-[#FAFAFA] pt-24 pb-16 relative z-30">
+          <div className="text-center max-w-[1400px] mx-auto fade-up">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="w-16 h-px bg-[#8A001A]/30" />
+              <div className="w-2 h-2 bg-[#8A001A] rotate-45" />
+              <div className="w-16 h-px bg-[#8A001A]/30" />
+            </div>
+
+            <h2 className="font-perandory text-4xl md:text-5xl lg:text-7xl font-bold tracking-widest uppercase text-black mb-6">
+              Best Seller
+            </h2>
+            <p className="font-aston-script text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-relaxed max-w-4xl mx-auto px-4">
+              Our most loved pieces, curated just for you
+            </p>
+
+            <div className="flex items-center justify-center gap-4 mt-8 mb-16">
+              <div className="w-24 h-px bg-black/10" />
+              <div className="w-2 h-2 bg-[#8A001A] rotate-45" />
+              <div className="w-24 h-px bg-black/10" />
+            </div>
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+              {bestSellersList.map((product, idx) => (
+                <div key={product.id || idx} className="w-[calc(50%-8px)] md:w-[calc(25%-12px)] snap-start flex-shrink-0">
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </PinterestFeed>
 
       {/* Shop Your Look Section */}
       <section className="w-full bg-[#000000] flex flex-col">
@@ -439,8 +458,6 @@ export default function Home() {
         <HowItWorks />
       </div>
 
-      {/* Pinterest-Style Feed */}
-      <PinterestFeed />
 
       {/* Testimonials Section */}
       <section className="w-full bg-[#FFFFFF] py-16 md:py-24 border-t-[3px] border-[#000000]">
