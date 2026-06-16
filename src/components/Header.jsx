@@ -306,18 +306,26 @@ export default function Header() {
                   <Search className="w-5 h-5" />
                 </button>
 
-                {/* Search Dropdown */}
+                {/* Search Dropdown / Fullscreen Mobile Search */}
                 {showSearchDropdown && (
-                  <div className="absolute top-[120%] right-[-1rem] md:right-0 w-[calc(100vw-2rem)] md:w-[400px] max-h-[70vh] overflow-y-auto bg-white border border-black/10 shadow-2xl rounded-2xl p-4 z-[100] animate-in fade-in slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default">
+                  <div className="fixed inset-0 sm:absolute sm:inset-auto sm:top-[120%] sm:right-0 w-[100vw] h-[100vh] sm:h-auto sm:w-[400px] sm:max-h-[70vh] overflow-y-auto bg-white sm:border border-black/10 sm:shadow-2xl sm:rounded-2xl p-4 sm:p-4 z-[100] animate-in fade-in sm:slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default">
+                    {/* Mobile Close Header */}
+                    <div className="sm:hidden flex items-center justify-between pb-2 border-b border-black/5 mb-2">
+                      <span className="font-cormorant text-xl tracking-widest uppercase">Search</span>
+                      <button onClick={() => setShowSearchDropdown(false)} className="p-2 hover:bg-black/5 rounded-full">
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+
                     {/* Mobile Search Input visible only on small screens inside the dropdown */}
-                    <div className="sm:hidden flex items-center border border-black/20 rounded-full px-3 py-2">
-                      <Search className="w-4 h-4 mr-2 text-neutral-500" />
+                    <div className="sm:hidden flex items-center border border-black/20 rounded-xl px-4 py-3 bg-[#FAFAFA]">
+                      <Search className="w-5 h-5 mr-3 text-neutral-500" />
                       <input 
                         type="text" 
                         placeholder="Search products..." 
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="bg-transparent outline-none flex-1 text-sm placeholder:text-neutral-500"
+                        className="bg-transparent outline-none flex-1 text-base placeholder:text-neutral-500"
                         autoFocus
                       />
                     </div>

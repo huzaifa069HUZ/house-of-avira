@@ -6,7 +6,7 @@ import HowItWorks from '@/components/HowItWorks';
 import WhyHouseOfAvira from '@/components/WhyHouseOfAvira';
 import CampaignAndGrid from '@/components/CampaignAndGrid';
 import PinterestFeed from '@/components/PinterestFeed';
-import { StaggerTestimonials } from '@/components/ui/stagger-testimonials';
+import { ScrollReelTestimonials } from '@/components/ui/scroll-reel-testimonials';
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
@@ -444,7 +444,26 @@ export default function Home() {
             What Our Archive Says
           </h2>
         </div>
-        <StaggerTestimonials />
+        <ScrollReelTestimonials testimonials={[
+          {
+            quote: "Love the fast delivery and the aesthetic. It perfectly matches my style.",
+            author: "Sarah M.",
+            image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80&auto=format&fit=crop",
+            alt: "Portrait of Sarah M.",
+          },
+          {
+            quote: "The prices are amazing for the quality you get. House of Avira is my go-to store now.",
+            author: "Emily R.",
+            image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80&auto=format&fit=crop",
+            alt: "Portrait of Emily R.",
+          },
+          {
+            quote: "International shipping took a bit of time but the quality is unmatched! Totally worth the wait.",
+            author: "Jessica T.",
+            image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80&auto=format&fit=crop",
+            alt: "Portrait of Jessica T.",
+          }
+        ]} />
       </section>
 
       {/* Join the Archive Section */}
