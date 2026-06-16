@@ -98,31 +98,31 @@ export default function AddressManager() {
 
   if (!isEditing && address) {
     return (
-      <div className="bg-[#E5E0DA]/30 border border-[#000000]/10 rounded-md p-6 relative">
-        <div className="flex justify-between items-start mb-4">
-          <h2 className="text-sm font-bold tracking-widest uppercase text-[#000000] flex items-center gap-2">
+      <div className="bg-white border border-black/10 p-8 relative">
+        <div className="flex justify-between items-start mb-6 pb-4 border-b border-black/5">
+          <h2 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000] flex items-center gap-2">
             <MapPin className="w-4 h-4" /> Default Address
           </h2>
           <button 
             onClick={() => setIsEditing(true)}
-            className="text-xs text-[#000000]/60 hover:text-[#000000] flex items-center gap-1 transition-colors"
+            className="text-[10px] uppercase font-bold tracking-widest text-[#000000]/50 hover:text-[#000000] flex items-center gap-1.5 transition-colors"
           >
             <Edit2 className="w-3 h-3" /> Edit
           </button>
         </div>
-        <div className="text-sm text-[#000000]/80 space-y-1">
-          <p>{address.street}</p>
-          <p>{address.city}, {address.stateName} {address.zip}</p>
-          <p className="font-medium text-[#000000]">{address.countryName}</p>
+        <div className="text-sm text-[#000000] space-y-2">
+          <p className="font-medium">{address.street}</p>
+          <p className="opacity-80">{address.city}, {address.stateName} {address.zip}</p>
+          <p className="opacity-80">{address.countryName}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#E5E0DA]/30 border border-[#000000]/10 rounded-md p-6">
-      <div className="flex justify-between items-start mb-6">
-        <h2 className="text-sm font-bold tracking-widest uppercase text-[#000000] flex items-center gap-2">
+    <div className="bg-white border border-black/10 p-8">
+      <div className="flex justify-between items-start mb-8 pb-4 border-b border-black/5">
+        <h2 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000] flex items-center gap-2">
           <MapPin className="w-4 h-4" /> 
           {address ? 'Edit Address' : 'Add New Address'}
         </h2>
@@ -136,28 +136,28 @@ export default function AddressManager() {
         )}
       </div>
 
-      <form onSubmit={handleSave} className="space-y-4">
+      <form onSubmit={handleSave} className="space-y-6">
         <div>
-          <label className="block text-xs font-bold tracking-widest uppercase text-[#000000]/60 mb-2">Street Address</label>
+          <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Street Address</label>
           <input 
             type="text" 
             required
             value={formData.street}
             onChange={(e) => setFormData({...formData, street: e.target.value})}
-            className="w-full bg-white border border-[#000000]/10 text-[#000000] text-sm rounded-none px-4 py-3 outline-none focus:border-[#000000]/40 transition-colors"
+            className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm transition-colors bg-transparent"
             placeholder="123 Main St, Apt 4B"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-xs font-bold tracking-widest uppercase text-[#000000]/60 mb-2">Country</label>
+            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Country</label>
             <div className="relative">
               <select 
                 required
                 value={formData.countryCode}
                 onChange={(e) => setFormData({...formData, countryCode: e.target.value, stateCode: '', city: ''})}
-                className="w-full bg-white border border-[#000000]/10 text-[#000000] text-sm rounded-none px-4 py-3 appearance-none outline-none focus:border-[#000000]/40 transition-colors"
+                className="w-full border-b border-black/20 pb-2 appearance-none outline-none focus:border-black text-sm transition-colors bg-transparent"
               >
                 <option value="">Select Country</option>
                 {countries.map(c => (
@@ -169,14 +169,14 @@ export default function AddressManager() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold tracking-widest uppercase text-[#000000]/60 mb-2">State / Province</label>
+            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">State / Province</label>
             <div className="relative">
               <select 
                 required
                 disabled={!formData.countryCode || states.length === 0}
                 value={formData.stateCode}
                 onChange={(e) => setFormData({...formData, stateCode: e.target.value, city: ''})}
-                className="w-full bg-white border border-[#000000]/10 text-[#000000] text-sm rounded-none px-4 py-3 appearance-none outline-none focus:border-[#000000]/40 transition-colors disabled:opacity-50"
+                className="w-full border-b border-black/20 pb-2 appearance-none outline-none focus:border-black text-sm transition-colors bg-transparent disabled:opacity-50"
               >
                 <option value="">{states.length === 0 && formData.countryCode ? 'No States Available' : 'Select State'}</option>
                 {states.map(s => (
@@ -188,16 +188,16 @@ export default function AddressManager() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-xs font-bold tracking-widest uppercase text-[#000000]/60 mb-2">City</label>
+            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">City</label>
             {cities.length > 0 ? (
               <div className="relative">
                 <select 
                   required
                   value={formData.city}
                   onChange={(e) => setFormData({...formData, city: e.target.value})}
-                  className="w-full bg-white border border-[#000000]/10 text-[#000000] text-sm rounded-none px-4 py-3 appearance-none outline-none focus:border-[#000000]/40 transition-colors"
+                  className="w-full border-b border-black/20 pb-2 appearance-none outline-none focus:border-black text-sm transition-colors bg-transparent"
                 >
                   <option value="">Select City</option>
                   {cities.map(c => (
@@ -212,20 +212,20 @@ export default function AddressManager() {
                 required
                 value={formData.city}
                 onChange={(e) => setFormData({...formData, city: e.target.value})}
-                className="w-full bg-white border border-[#000000]/10 text-[#000000] text-sm rounded-none px-4 py-3 outline-none focus:border-[#000000]/40 transition-colors"
+                className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm transition-colors bg-transparent"
                 placeholder="City Name"
               />
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-bold tracking-widest uppercase text-[#000000]/60 mb-2">Postal / Zip Code</label>
+            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Postal / Zip Code</label>
             <input 
               type="text" 
               required
               value={formData.zip}
               onChange={(e) => setFormData({...formData, zip: e.target.value})}
-              className="w-full bg-white border border-[#000000]/10 text-[#000000] text-sm rounded-none px-4 py-3 outline-none focus:border-[#000000]/40 transition-colors"
+              className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm transition-colors bg-transparent"
               placeholder="10001"
             />
           </div>
@@ -235,7 +235,7 @@ export default function AddressManager() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-[#000000] text-white text-xs font-bold tracking-widest uppercase py-4 flex items-center justify-center gap-2 hover:bg-[#000000]/90 transition-colors disabled:opacity-70"
+            className="w-full bg-[#000000] text-white text-[10px] font-bold tracking-[0.2em] uppercase py-3.5 flex items-center justify-center gap-2 hover:bg-black/80 transition-colors disabled:opacity-70 mt-6"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
             {loading ? 'Saving...' : 'Save Address'}

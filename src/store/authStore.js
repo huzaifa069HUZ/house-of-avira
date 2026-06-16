@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { auth, db } from '@/lib/firebase';
-import { onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { onAuthStateChanged, signOut as firebaseSignOut, updateProfile } from 'firebase/auth';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 export const useAuthStore = create((set, get) => ({
   user: null,
@@ -58,6 +58,25 @@ export const useAuthStore = create((set, get) => ({
       set({ user: null, role: null });
     } catch (error) {
       console.error("Error signing out:", error);
+    }
+  },
+
+  updateUser: async (updates) => {
+    try {
+      const { user } = get();
+      if (!user) return;
+
+      const userRef = doc(db, 'users', user.uid);
+      await updateDoc(userRef, updates);
+
+      if (updates.name && auth.currentUser) {
+        await updateProfile(auth.currentUser, { displayName: updates.name });
+      }
+
+      set({ user: { ...user, ...updates } });
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
     }
   }
 }));
