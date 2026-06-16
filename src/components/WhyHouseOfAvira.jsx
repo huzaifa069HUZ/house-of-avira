@@ -42,9 +42,9 @@ export default function WhyHouseOfAvira() {
         {/* Two Stage Pricing Header */}
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-perandory font-bold text-[#000000] mb-4">
-            Two-Stage Pricing
+            Two-Stage <span className="font-aston-script text-5xl md:text-6xl lg:text-7xl text-[#8A001A] lowercase tracking-normal font-normal">Pricing</span>
           </h3>
-          <p className="max-w-3xl mx-auto text-[#000000] text-lg md:text-xl font-medium tracking-wide" style={{ fontFamily: "var(--font-playfair), serif" }}>
+          <p className="max-w-3xl mx-auto text-[#000000] text-lg md:text-xl font-medium tracking-wide" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
             We only take two payments: one is the product price which you pay on the website while ordering, and the other is the SHIPPING + DELIVERY CHARGES.
           </p>
         </motion.div>

@@ -184,7 +184,7 @@ export default function ShippingPage() {
           <div className="text-[11px] tracking-[0.12em] uppercase text-[#999999] font-medium mb-4">Shipping &amp; Import Information</div>
           <h1 className="font-perandory text-5xl md:text-6xl font-light text-[#000000] mb-5 leading-tight">
             Everything about<br />
-            <em className="font-aston-script text-5xl md:text-7xl lowercase text-[#000000]">how your order travels</em>
+            <em className="font-aston-script text-5xl md:text-7xl lowercase text-[#8A001A]">how your order travels</em>
           </h1>
           <div className="bg-gradient-to-br from-[#FAFAFA] to-[#FFFFFF] border-2 border-[#E5E5E5] rounded-2xl p-6 md:p-8 max-w-2xl mx-auto mb-12 shadow-sm relative overflow-hidden group hover:border-[#8A001A] transition-colors duration-500">
             <div className="absolute -top-6 -right-6 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-500 group-hover:rotate-12">
@@ -403,7 +403,7 @@ export default function ShippingPage() {
                 <div className={`${cat.bg} border ${cat.border} rounded-2xl p-5 md:p-6 flex items-start gap-4 h-full shadow-sm hover:shadow-md transition-shadow`}>
                   <cat.icon className="w-8 h-8 shrink-0" style={{ color: cat.iconColor }} strokeWidth={1.5} />
                   <div>
-                    <h3 className="text-[14px] font-medium text-[#000000] mb-1.5">{cat.title}</h3>
+                    <h3 className="text-[16px] md:text-[18px] font-perandory font-bold text-[#000000] mb-1.5">{cat.title}</h3>
                     <p className="text-[12px] text-[#666666] leading-relaxed">{cat.text}</p>
                   </div>
                 </div>
@@ -460,6 +460,7 @@ export default function ShippingPage() {
                 <button 
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                   className="w-full flex items-center justify-between py-5 text-left text-[14px] font-medium text-[#000000] hover:text-[#8A001A] transition-colors focus:outline-none"
+                  style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
                 >
                   <span className="pr-4">{faq.q}</span>
                   <ChevronDown className={`w-4 h-4 text-[#999999] shrink-0 transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`} />
