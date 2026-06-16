@@ -4,11 +4,13 @@ import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { Heart } from 'lucide-react';
+import { Heart, Globe } from 'lucide-react';
+import { useCurrencyStore } from '@/store/currencyStore';
 import AddressManager from '@/components/profile/AddressManager';
 
 export default function AccountPage() {
   const { user, role, loading, signOut } = useAuthStore();
+  const { currency, setRegionModalOpen } = useCurrencyStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -50,6 +52,13 @@ export default function AccountPage() {
                 <span>My Wishlist</span>
                 <Heart className="w-4 h-4" />
               </Link>
+              <button onClick={() => setRegionModalOpen(true)} className="group flex items-center justify-between text-xs font-bold text-[#000000] border border-[#000000]/20 px-4 py-2.5 uppercase tracking-widest hover:bg-[#000000] hover:text-[#FFFFFF] transition-colors">
+                <div className="flex items-center gap-2">
+                  <span>Region / Currency</span>
+                  <span className="bg-[#000000]/10 text-[#000000] px-1.5 py-0.5 rounded text-[10px] group-hover:bg-white/20 group-hover:text-white transition-colors">{currency}</span>
+                </div>
+                <Globe className="w-4 h-4" />
+              </button>
               {role === 'admin_owner' && (
                 <Link href="/admin" className="text-xs font-bold text-[#FFFFFF] bg-[#000000] px-4 py-2.5 uppercase tracking-widest hover:bg-[#000000]/90 transition-colors text-center border border-[#000000]">
                   Admin Dashboard

@@ -8,9 +8,8 @@ import { Country } from 'country-state-city';
 import { usePathname } from 'next/navigation';
 
 export default function RegionSelector() {
-  const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { currency, setCurrency, setLocale } = useCurrencyStore();
+  const { currency, setCurrency, setLocale, isRegionModalOpen, setRegionModalOpen } = useCurrencyStore();
   const pathname = usePathname();
   const isCatalogue = pathname?.startsWith('/catalogue');
 
@@ -53,7 +52,7 @@ export default function RegionSelector() {
       // Determine locale loosely from country code (en-US, en-GB, etc)
       setLocale(`en-${country.isoCode}`);
     }
-    setIsOpen(false);
+    setRegionModalOpen(false);
   };
 
   const activeRegion = allCountries.find(c => c.currency === currency) || allCountries.find(c => c.isoCode === 'IN');
@@ -62,7 +61,7 @@ export default function RegionSelector() {
     <>
       {/* Floating Button */}
       <motion.button
-        onClick={() => setIsOpen(true)}
+        onClick={() => setRegionModalOpen(true)}
         className={`fixed z-[90] flex items-center justify-center bg-white/90 backdrop-blur-md border border-[#000000]/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-white hover:shadow-xl transition-all duration-300 group ${isCatalogue ? 'bottom-6 right-4 w-11 h-11 rounded-full p-0' : 'bottom-6 right-6 gap-2 px-4 py-2.5 rounded-full'}`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -83,13 +82,13 @@ export default function RegionSelector() {
 
       {/* Glassmorphic Modal overlay */}
       <AnimatePresence>
-        {isOpen && (
+        {isRegionModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 sm:p-6"
-            onClick={() => setIsOpen(false)}
+            onClick={() => setRegionModalOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20, opacity: 0 }}
@@ -106,7 +105,7 @@ export default function RegionSelector() {
                     <p className="text-[11px] text-[#000000]/50 uppercase tracking-widest mt-1 font-medium">Choose your location & currency</p>
                   </div>
                   <button 
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setRegionModalOpen(false)}
                     className="w-10 h-10 rounded-full bg-[#000000]/5 flex items-center justify-center hover:bg-[#000000]/10 transition-colors"
                   >
                     <X className="w-5 h-5 text-[#000000]" />

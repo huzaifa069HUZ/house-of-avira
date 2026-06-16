@@ -22,6 +22,9 @@ export const useCurrencyStore = create((set, get) => ({
     set({ locale });
   },
 
+  isRegionModalOpen: false,
+  setRegionModalOpen: (isOpen) => set({ isRegionModalOpen: isOpen }),
+
   fetchRates: async () => {
     const state = get();
     if (state.loading) return;

@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Search, ShoppingBag, User, Menu, ChevronRight, Heart, X } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, ChevronRight, Heart, X, Globe } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
+import { useCurrencyStore } from '@/store/currencyStore';
 import { useCartStore } from '@/store/cartStore';
 import CartSlideOver from '@/components/ui/CartSlideOver';
 import React, { useState, useEffect, useRef } from 'react';
@@ -133,6 +134,7 @@ export default function Header() {
   const { user } = useAuthStore();
   const { wishlist } = useWishlistStore();
   const { cart, openCart } = useCartStore();
+  const { currency, setRegionModalOpen } = useCurrencyStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
@@ -494,6 +496,16 @@ export default function Header() {
                     {cart.reduce((total, item) => total + item.quantity, 0)}
                   </span>
                 )}
+              </button>
+            </div>
+            
+            <div className="px-6 py-2 border-b border-[#000000]/10 mb-2">
+              <button onClick={() => { setIsMobileMenuOpen(false); setRegionModalOpen(true); }} className="w-full flex items-center justify-between text-[#000000]/80 hover:text-[#000000] py-3 px-4 bg-[#FAFAFA] rounded-xl transition-colors">
+                <div className="flex items-center gap-3">
+                  <Globe className="w-5 h-5" />
+                  <span className="text-[14px] font-dm-sans font-medium">Region & Currency</span>
+                </div>
+                <span className="text-[12px] font-bold tracking-widest uppercase bg-[#000000]/5 px-2 py-1 rounded-md">{currency}</span>
               </button>
             </div>
 
