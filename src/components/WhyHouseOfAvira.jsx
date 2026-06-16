@@ -44,7 +44,7 @@ export default function WhyHouseOfAvira() {
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-perandory font-bold text-[#000000] mb-4">
             Transparent 3-Stage Pricing
           </h3>
-          <p className="max-w-2xl mx-auto text-[#000000] font-serif font-bold text-lg md:text-xl">
+          <p className="max-w-2xl mx-auto text-[#000000] font-gambetta font-bold text-lg md:text-xl">
             Because we ship directly to you internationally, we separate the product cost from the shipping and duties. This ensures you only pay for exactly what you get.
           </p>
         </motion.div>

@@ -50,7 +50,7 @@ export default function CampaignAndGrid() {
               </div>
               {/* Mobile text (hidden on desktop) */}
               <div className="md:hidden w-full p-3 bg-white">
-                <h3 className="font-serif italic text-[13px] tracking-tight text-center uppercase text-[#000000]">
+                <h3 className="font-gambetta italic text-[13px] tracking-tight text-center uppercase text-[#000000]">
                   {item.title}
                 </h3>
               </div>
@@ -62,7 +62,7 @@ export default function CampaignAndGrid() {
         <div className="hidden md:flex w-full flex-row bg-white border-b border-[#000000]/10">
           {items.map((item, idx) => (
             <Link href={`/shop-by-price?price=${item.priceValue}`} key={idx} className="w-1/4 p-5 hover:bg-[#000000]/5 transition-colors block cursor-pointer">
-              <h3 className="font-serif italic text-[15px] tracking-tight w-full text-left uppercase text-[#000000]">
+              <h3 className="font-gambetta italic text-[15px] tracking-tight w-full text-left uppercase text-[#000000]">
                 {item.title}
               </h3>
             </Link>

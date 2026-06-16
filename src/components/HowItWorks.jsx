@@ -9,7 +9,7 @@ export default function HowItWorks() {
         
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-sm md:text-base font-serif italic tracking-[0.3em] uppercase text-[#8A001A] mb-6">
+          <h2 className="text-sm md:text-base font-gambetta italic tracking-[0.3em] uppercase text-[#8A001A] mb-6">
             How It Works
           </h2>
           <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] mb-2 leading-tight">
@@ -43,9 +43,9 @@ export default function HowItWorks() {
             
             {/* Content */}
             <div className="flex-1 pt-2 pb-14">
-              <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">01.</div>
+              <div className="text-black/30 text-2xl md:text-3xl font-gambetta mb-1">01.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-serif italic font-normal text-[#000000] capitalize">
+                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-gambetta italic font-normal text-[#000000] capitalize">
                   Place Your Order
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
@@ -70,9 +70,9 @@ export default function HowItWorks() {
             
             {/* Content */}
             <div className="flex-1 pt-2 pb-14">
-              <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">02.</div>
+              <div className="text-black/30 text-2xl md:text-3xl font-gambetta mb-1">02.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-serif italic font-normal text-[#000000] capitalize">
+                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-gambetta italic font-normal text-[#000000] capitalize">
                   International Shipping
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
@@ -94,9 +94,9 @@ export default function HowItWorks() {
             
             {/* Content */}
             <div className="flex-1 pt-2">
-              <div className="text-black/30 text-2xl md:text-3xl font-serif mb-1">03.</div>
+              <div className="text-black/30 text-2xl md:text-3xl font-gambetta mb-1">03.</div>
               <div className="flex items-center justify-between mb-3 pr-2">
-                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-serif italic font-normal text-[#000000] capitalize">
+                <h3 className="text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] font-gambetta italic font-normal text-[#000000] capitalize">
                   Delivered to Your Doorstep
                 </h3>
                 <Link href="/order-info/policies" aria-label="Read policies">
