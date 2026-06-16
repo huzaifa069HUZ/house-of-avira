@@ -13,11 +13,11 @@ export default function HowItWorks() {
             How It Works
           </h2>
           <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] mb-2 leading-tight">
-            Internally sourced and
+            Internationally Sourced &
           </p>
           <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] leading-tight">
-            <span className="font-aston-script text-5xl md:text-6xl text-[#8A001A] mr-3 lowercase tracking-normal">delivered</span> 
-            to your doorstep.
+            <span className="font-aston-script text-5xl md:text-6xl text-[#8A001A] mr-3 tracking-normal">Delivered</span> 
+            to Your Doorstep.
           </p>
           
           {/* Decorative Divider */}
