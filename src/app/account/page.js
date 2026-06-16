@@ -52,7 +52,7 @@ export default function AccountPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 pb-6 border-b border-black/10">
         <div>
-          <h1 className="text-4xl md:text-5xl font-[family-name:var(--font-cormorant-garamond)] tracking-tight text-[#000000] mb-2">My Account</h1>
+          <h1 className="text-4xl md:text-5xl font-cormorant-garamond tracking-tight text-[#000000] mb-2">My Account</h1>
           <p className="text-xs tracking-widest text-[#000000]/50 uppercase">Manage your profile and orders</p>
         </div>
         <button 
@@ -68,7 +68,7 @@ export default function AccountPage() {
           {/* Profile Section */}
           <div className="bg-white">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-[family-name:var(--font-cormorant-garamond)] tracking-tight text-[#000000]">Personal Details</h2>
+              <h2 className="text-2xl font-perandory tracking-tight text-[#000000] uppercase">Personal Details</h2>
               {!isEditing ? (
                 <button onClick={() => setIsEditing(true)} className="text-[10px] uppercase tracking-widest text-[#000000]/50 hover:text-[#000000] flex items-center gap-1.5 transition-colors font-bold">
                   <Edit2 className="w-3 h-3" /> Edit
@@ -144,12 +144,12 @@ export default function AccountPage() {
         </div>
         
         <div className="col-span-1 lg:col-span-8 space-y-12 pl-0 lg:pl-12 lg:border-l border-black/10">
-          <div className="prose prose-sm prose-h3:font-[family-name:var(--font-cormorant-garamond)] prose-h3:text-2xl prose-h3:font-normal prose-h3:tracking-tight prose-headings:text-black">
+          <div>
             <AddressManager />
           </div>
 
           <div>
-            <h2 className="text-2xl font-[family-name:var(--font-cormorant-garamond)] tracking-tight text-[#000000] mb-6">Recent Orders</h2>
+            <h2 className="text-2xl font-cormorant-garamond tracking-tight text-[#000000] mb-6">Recent Orders</h2>
             <div className="bg-[#FAFAFA] border border-black/5 p-16 text-center flex flex-col items-center justify-center">
               <p className="text-[10px] tracking-[0.2em] text-[#000000]/40 uppercase font-bold mb-6">No orders placed yet</p>
               <Link href="/catalogue" className="text-[11px] uppercase tracking-widest font-bold border-b-2 border-black pb-1 hover:text-black/60 hover:border-black/60 transition-colors">
