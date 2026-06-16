@@ -185,7 +185,7 @@ export default function ShippingPage() {
           <div className="text-[11px] tracking-[0.12em] uppercase text-[#B8A99A] font-medium mb-4">Shipping &amp; Import Information</div>
           <h1 className="font-perandory text-5xl md:text-6xl font-light text-[#2D2420] mb-5 leading-tight">
             Everything about<br />
-            <em className="font-symphony text-5xl md:text-7xl lowercase text-[#8B5E52]">how your order travels</em>
+            <em className="font-aston-script text-5xl md:text-7xl lowercase text-[#8B5E52]">how your order travels</em>
           </h1>
           <div className="bg-gradient-to-br from-[#FDF0EB] to-[#FAF7F2] border-2 border-[#E8C4B8] rounded-2xl p-6 md:p-8 max-w-2xl mx-auto mb-12 shadow-sm relative overflow-hidden group hover:border-[#C97B6E] transition-colors duration-500">
             <div className="absolute -top-6 -right-6 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-500 group-hover:rotate-12">

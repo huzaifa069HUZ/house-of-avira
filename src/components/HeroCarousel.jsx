@@ -66,7 +66,7 @@ export default function HeroCarousel() {
   useEffect(() => {
     const mobileTimer = setInterval(() => {
       setCurrentMobileSlide((prev) => (prev === mobileSlides.length - 1 ? 0 : prev + 1));
-    }, 5000);
+    }, 2000);
 
     return () => clearInterval(mobileTimer);
   }, [mobileSlides]);
