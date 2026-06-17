@@ -55,8 +55,8 @@ export default function FAQSection() {
           <h2 className="font-perandory text-4xl md:text-5xl lg:text-7xl font-bold tracking-widest uppercase text-black mb-4" style={{ textShadow: '2px 2px 0px white' }}>
             QUESTIONS?
           </h2>
-          <h2 className="font-aston-script capitalize text-5xl md:text-6xl lg:text-8xl tracking-normal text-[#8A001A] leading-none" style={{ textShadow: '2px 2px 0px white' }}>
-            ANSWERED.
+          <h2 className="font-aston-script text-5xl md:text-6xl lg:text-8xl tracking-normal text-[#8A001A] leading-none" style={{ textShadow: '2px 2px 0px white' }}>
+            Answered.
           </h2>
         </div>
 
