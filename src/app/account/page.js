@@ -93,17 +93,17 @@ export default function AccountPage() {
                     type="text" 
                     value={editName} 
                     onChange={(e) => setEditName(e.target.value)}
-                    className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm transition-colors bg-transparent"
+                    className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm font-dm-sans transition-colors bg-transparent"
                     placeholder="Enter your name"
                   />
                 ) : (
-                  <p className="text-xl font-cormorant-garamond text-[#000000]">{user.name || user.displayName || 'No name set'}</p>
+                  <p className="text-lg font-dm-sans text-[#000000]">{user.name || user.displayName || 'No name set'}</p>
                 )}
               </div>
               
               <div>
                 <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Email</label>
-                <p className="text-xl font-cormorant-garamond text-[#000000] opacity-80">{user.email}</p>
+                <p className="text-lg font-dm-sans text-[#000000] opacity-80">{user.email}</p>
               </div>
 
               <div>
@@ -113,29 +113,32 @@ export default function AccountPage() {
                     type="tel" 
                     value={editPhone} 
                     onChange={(e) => setEditPhone(e.target.value)}
-                    className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm transition-colors bg-transparent"
+                    className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm font-dm-sans transition-colors bg-transparent"
                     placeholder="+1 (234) 567-8900"
                   />
                 ) : (
-                  <p className="text-xl font-cormorant-garamond text-[#000000]">{user.phoneNumber || <span className="font-gambetta italic text-lg text-black/40">No phone added</span>}</p>
+                  <p className="text-lg font-dm-sans text-[#000000]">{user.phoneNumber || <span className="font-gambetta italic text-base text-black/40">No phone added</span>}</p>
                 )}
               </div>
             </div>
 
             <div className="mt-10 flex flex-col gap-2.5">
-              <Link href="/wishlist" className="flex items-center justify-between text-[11px] font-bold text-[#000000] border border-black/10 px-5 py-3.5 uppercase tracking-widest hover:border-black hover:bg-black/5 transition-colors">
-                <span>My Wishlist</span>
-                <Heart className="w-4 h-4" />
-              </Link>
-              <button onClick={() => setRegionModalOpen(true)} className="group flex items-center justify-between text-[11px] font-bold text-[#000000] border border-black/10 px-5 py-3.5 uppercase tracking-widest hover:border-black hover:bg-black/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <span>Region / Currency</span>
-                  <span className="bg-black/5 px-2 py-0.5 text-[9px] rounded-sm">{currency}</span>
+              <Link href="/wishlist" className="flex items-center justify-between border border-black/10 px-5 py-3 hover:border-black hover:bg-black/5 transition-colors group">
+                <div className="flex items-center gap-2">
+                  <span className="font-aston-script text-xl text-white bg-black px-3 py-1 rounded-sm lowercase leading-none">my</span>
+                  <span className="font-perandory text-lg tracking-widest uppercase text-black">Wishlist</span>
                 </div>
-                <Globe className="w-4 h-4" />
+                <Heart className="w-4 h-4 text-black group-hover:fill-black/10 transition-colors" />
+              </Link>
+              <button onClick={() => setRegionModalOpen(true)} className="group flex items-center justify-between border border-black/10 px-5 py-3 hover:border-black hover:bg-black/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <span className="font-perandory text-sm tracking-widest uppercase text-black">Region / Currency</span>
+                  <span className="bg-black/5 px-2 py-0.5 text-[9px] rounded-sm font-dm-sans font-bold">{currency}</span>
+                </div>
+                <Globe className="w-4 h-4 text-black" />
               </button>
               {role === 'admin_owner' && (
-                <Link href="/admin" className="mt-4 flex items-center justify-center text-[11px] font-bold text-white bg-black px-5 py-3.5 uppercase tracking-widest hover:bg-black/80 transition-colors">
+                <Link href="/admin" className="mt-4 flex items-center justify-center font-perandory text-sm text-white bg-black px-5 py-3.5 uppercase tracking-widest hover:bg-black/80 transition-colors">
                   Admin Dashboard
                 </Link>
               )}
@@ -152,7 +155,7 @@ export default function AccountPage() {
             <h2 className="text-2xl font-perandory tracking-tight text-[#000000] mb-6">Recent Orders</h2>
             <div className="bg-[#FAFAFA] border border-black/5 p-16 text-center flex flex-col items-center justify-center">
               <p className="text-lg font-gambetta italic text-[#000000]/60 mb-6">No orders placed yet</p>
-              <Link href="/catalogue" className="text-[11px] uppercase tracking-widest font-bold border-b-2 border-black pb-1 hover:text-black/60 hover:border-black/60 transition-colors">
+              <Link href="/catalogue" className="text-[11px] font-dm-sans uppercase tracking-widest font-bold border-b-2 border-black pb-1 hover:text-black/60 hover:border-black/60 transition-colors">
                 Continue Shopping
               </Link>
             </div>

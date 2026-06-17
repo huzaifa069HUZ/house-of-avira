@@ -110,7 +110,7 @@ export default function AddressManager() {
             <Edit2 className="w-3 h-3" /> Edit
           </button>
         </div>
-        <div className="text-xl font-cormorant-garamond text-[#000000] space-y-1 mt-2">
+        <div className="text-lg font-dm-sans text-[#000000] space-y-1 mt-2">
           <p>{address.street}</p>
           <p className="opacity-80">{address.city}, {address.stateName} {address.zip}</p>
           <p className="opacity-80">{address.countryName}</p>
