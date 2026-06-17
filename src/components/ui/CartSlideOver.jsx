@@ -64,6 +64,17 @@ export default function CartSlideOver() {
   const router = useRouter();
   const { user } = useAuthStore();
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const allConsented = Object.values(consents).every(Boolean);
 
   const handleProceed = async () => {
@@ -232,6 +243,7 @@ export default function CartSlideOver() {
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col overflow-hidden border-none rounded-none"
+            style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-white/80 backdrop-blur-md">
@@ -266,25 +278,16 @@ export default function CartSlideOver() {
                   </button>
                 </div>
               ) : (
-                <div className="space-y-6">
-                  <div className="bg-gradient-to-r from-[#000000] to-[#2c2c2c] rounded-xl p-4 flex gap-3 items-center shadow-lg mb-6 relative overflow-hidden">
-                    <div className="absolute right-0 top-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-                    <div className="bg-white/10 p-2.5 rounded-full backdrop-blur-md shrink-0 border border-white/10">
-                      <Globe className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="relative z-10">
-                      <p className="text-[10px] font-bold text-white uppercase tracking-[0.2em] mb-0.5 flex items-center gap-2">
-                        Global Sourcing <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-                      </p>
-                      <p className="text-[11px] text-gray-300 font-light leading-relaxed pr-2">
-                        Premium imported goods sourced directly from international suppliers.
-                      </p>
+                <div className="space-y-8">
+                  <div className="flex justify-center mb-2">
+                    <div className="bg-gray-50 p-3 rounded-full border border-gray-200 text-gray-800 shadow-sm flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-gray-600" />
                     </div>
                   </div>
 
                   {cart.map((item) => (
-                    <div key={item.cartItemId || item.id} className="flex bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100/80 p-4 relative transition-all hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                      <div className="flex gap-5 w-full">
+                    <div key={item.cartItemId || item.id} className="flex bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100/80 p-5 relative transition-all hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+                      <div className="flex gap-6 w-full">
                         {/* Image */}
                         <div className="relative w-[100px] h-[135px] rounded-xl overflow-hidden bg-[#F5F5F7] flex-shrink-0 border border-gray-100/50 shadow-sm">
                           {item.image ? (
@@ -389,7 +392,7 @@ export default function CartSlideOver() {
                   <div className="bg-[#FAFAFA] border border-gray-200 rounded-xl overflow-hidden mb-4">
                     <button 
                       onClick={() => setShowEstimator(!showEstimator)} 
-                      className="w-full px-4 py-3 flex items-center justify-between text-sm font-bold bg-white hover:bg-gray-50 transition-colors"
+                      className="w-full px-3 py-2.5 flex items-center justify-between text-sm font-bold bg-white hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-center gap-2">
                         <Calculator className="w-4 h-4 text-[#8A001A]" />
@@ -404,7 +407,7 @@ export default function CartSlideOver() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          className="px-4 py-4 border-t border-gray-100"
+                          className="px-3 py-3 border-t border-gray-100"
                         >
                           <div className="space-y-3 mb-4">
                             <div className="flex gap-2">
@@ -482,8 +485,8 @@ export default function CartSlideOver() {
                         {shippingCosts ? <><PriceDisplay basePrice={shippingCosts.totalLow} /> - <PriceDisplay basePrice={shippingCosts.totalHigh} /></> : <PriceDisplay basePrice={0} />}
                       </span>
                     </div>
-                    <div className="w-full mb-3 space-y-1.5 flex flex-col items-end">
-                      <p className="font-sans text-[10px] font-bold text-red-500 uppercase tracking-tight text-right leading-tight">
+                    <div className="w-full mb-3 space-y-1.5 flex flex-col items-end overflow-hidden">
+                      <p className="font-sans text-[8px] sm:text-[9px] whitespace-nowrap overflow-hidden text-ellipsis font-bold text-red-500 uppercase tracking-tight text-right w-full">
                         * THIS PRICE IS AN ESTIMATE AND MIGHT GO HIGHER AS PER CUSTOM DUTY AND TAXES.
                       </p>
                       <Link href="/shipping" onClick={closeCart} className="font-sans text-[10px] font-bold text-blue-600 hover:text-blue-800 underline uppercase tracking-tight">
