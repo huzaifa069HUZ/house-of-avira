@@ -4,15 +4,26 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
-import { ChevronRight, ArrowLeft, ShieldCheck, MapPin, CreditCard, ChevronDown, Check } from 'lucide-react';
+import { ChevronRight, ArrowLeft, ShieldCheck, MapPin, CreditCard, ChevronDown, Check, Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import PriceDisplay from '@/components/PriceDisplay';
 
 const countries = [
-  "United States", "United Kingdom", "Canada", "Australia", "India", 
+  "India", "United States", "United Kingdom", "Canada", "Australia", 
   "Germany", "France", "United Arab Emirates", "Singapore", "Japan", 
   "Saudi Arabia", "South Africa", "New Zealand", "Netherlands", "Italy", "Spain"
+];
+
+const phoneCodes = [
+  { code: '+91', country: 'IN' },
+  { code: '+1', country: 'US/CA' },
+  { code: '+44', country: 'UK' },
+  { code: '+61', country: 'AU' },
+  { code: '+49', country: 'DE' },
+  { code: '+33', country: 'FR' },
+  { code: '+971', country: 'AE' },
+  { code: '+65', country: 'SG' },
 ];
 
 // Custom Country Select with Type & Select functionality
@@ -104,13 +115,14 @@ const InputField = ({ label, type = "text", value, onChange, placeholder, requir
 );
 
 export default function CheckoutPage() {
-  const { cart, discountAmount, appliedCoupon } = useCartStore();
+  const { cart, discountAmount, appliedCoupon, updateQuantity } = useCartStore();
   const { user } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   
   // Form State
   const [formData, setFormData] = useState({
     fullName: '',
+    phoneCode: '+91',
     phone: '',
     email: '',
     instagram: '',
@@ -119,7 +131,7 @@ export default function CheckoutPage() {
     city: '',
     state: '',
     pincode: '',
-    country: ''
+    country: 'India'
   });
 
   useEffect(() => {
@@ -137,6 +149,26 @@ export default function CheckoutPage() {
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handlePincodeChange = async (e) => {
+    const val = e.target.value;
+    handleChange('pincode', val);
+    
+    // Autofetch logic for India
+    if (formData.country === 'India' && val.length === 6) {
+      try {
+        const res = await fetch(`https://api.postalpincode.in/pincode/${val}`);
+        const data = await res.json();
+        if (data && data[0] && data[0].Status === 'Success') {
+          const postOffice = data[0].PostOffice[0];
+          handleChange('city', postOffice.District || postOffice.Block || postOffice.Name);
+          handleChange('state', postOffice.State);
+        }
+      } catch (err) {
+        console.error("Failed to fetch pincode details", err);
+      }
+    }
   };
 
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
@@ -175,7 +207,7 @@ export default function CheckoutPage() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto"
           >
-            <h1 className="text-3xl lg:text-4xl font-black tracking-tighter mb-2">Checkout.</h1>
+            <h1 className="text-4xl lg:text-5xl mb-2 tracking-normal" style={{ fontFamily: 'var(--font-perandory, "Perandory", sans-serif)' }}>Checkout.</h1>
             <p className="text-gray-500 font-medium text-sm mb-10">Please enter your details to complete your order.</p>
 
             <form id="checkout-form" onSubmit={handlePlaceOrder} className="space-y-12">
@@ -190,8 +222,33 @@ export default function CheckoutPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <InputField label="Full Name" value={formData.fullName} onChange={e => handleChange('fullName', e.target.value)} required />
                   <InputField label="Email Address" type="email" value={formData.email} onChange={e => handleChange('email', e.target.value)} required />
-                  <InputField label="Phone Number" type="tel" value={formData.phone} onChange={e => handleChange('phone', e.target.value)} required />
-                  <InputField label="Instagram Handle" placeholder="@username" value={formData.instagram} onChange={e => handleChange('instagram', e.target.value)} required />
+                  
+                  <div className="w-full">
+                    <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">
+                      Phone Number <span className="text-red-500">*</span>
+                    </label>
+                    <div className="flex">
+                      <select 
+                        value={formData.phoneCode} 
+                        onChange={(e) => handleChange('phoneCode', e.target.value)}
+                        className="bg-transparent border-b-2 border-gray-200 focus:border-black text-gray-900 py-2 outline-none transition-colors text-sm font-bold w-24 cursor-pointer"
+                      >
+                        {phoneCodes.map(pc => (
+                          <option key={pc.code} value={pc.code}>{pc.country} {pc.code}</option>
+                        ))}
+                      </select>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={e => handleChange('phone', e.target.value)}
+                        placeholder="Phone Number"
+                        required
+                        className="w-full bg-transparent border-b-2 border-gray-200 focus:border-black text-gray-900 placeholder-gray-400 py-2 outline-none transition-colors text-sm font-medium pl-3"
+                      />
+                    </div>
+                  </div>
+
+                  <InputField label="Instagram Handle (Optional)" placeholder="@username" value={formData.instagram} onChange={e => handleChange('instagram', e.target.value)} />
                 </div>
               </div>
 
@@ -213,7 +270,7 @@ export default function CheckoutPage() {
                     <InputField label="State / Province" value={formData.state} onChange={e => handleChange('state', e.target.value)} required />
                   </div>
                   <div className="w-1/2 pr-3">
-                    <InputField label="Postal / ZIP Code" value={formData.pincode} onChange={e => handleChange('pincode', e.target.value)} required />
+                    <InputField label="Postal / ZIP Code" value={formData.pincode} onChange={handlePincodeChange} required />
                   </div>
                 </div>
               </div>
@@ -230,22 +287,39 @@ export default function CheckoutPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="p-6 lg:p-10"
           >
-            <h2 className="text-lg font-bold tracking-tight mb-6">Order Summary</h2>
+            <h2 className="text-3xl mb-6 tracking-normal" style={{ fontFamily: 'var(--font-gambetta, "Gambetta", serif)', fontStyle: 'italic', fontWeight: 400 }}>Order Summary</h2>
 
             {/* Products List */}
-            <div className="space-y-4 mb-8 max-h-[40vh] overflow-y-auto pr-2">
+            <div className="space-y-6 mb-8 max-h-[40vh] overflow-y-auto pr-2 hide-scrollbar">
               {cart.map((item) => (
-                <div key={item.cartItemId || item.id} className="flex gap-4">
-                  <div className="relative w-20 h-24 bg-gray-100 rounded-lg overflow-hidden shrink-0 border border-gray-200">
-                    {item.image && <Image src={item.image} alt={item.title} fill className="object-cover" />}
-                    <div className="absolute -top-2 -right-2 w-5 h-5 bg-black text-white text-[10px] font-bold rounded-full flex items-center justify-center z-10 border-2 border-[#FAFAFA]">
+                <div key={item.cartItemId || item.id} className="flex gap-5">
+                  <div className="relative w-24 h-28 shrink-0">
+                    <div className="w-full h-full bg-gray-100 rounded-xl overflow-hidden border border-gray-200 relative z-0">
+                      {item.image && <Image src={item.image} alt={item.title} fill className="object-cover" />}
+                    </div>
+                    {/* Quantity Badge perfectly placed above the image container */}
+                    <div className="absolute -top-2.5 -right-2.5 w-6 h-6 bg-black text-white text-[11px] font-bold rounded-full flex items-center justify-center z-20 shadow-md border-2 border-white">
                       {item.quantity}
                     </div>
                   </div>
-                  <div className="flex-1 flex flex-col justify-center">
-                    <h3 className="text-sm font-bold leading-snug line-clamp-2">{item.title}</h3>
-                    <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest font-semibold">{item.size && `Size: ${item.size}`} {item.color && `| Color: ${item.color}`}</p>
-                    <p className="text-sm font-black mt-2"><PriceDisplay basePrice={item.price} /></p>
+                  <div className="flex-1 flex flex-col justify-center py-1">
+                    <h3 className="text-[15px] font-bold leading-snug line-clamp-2 text-gray-900">{item.title}</h3>
+                    <p className="text-xs text-gray-500 mt-1.5 uppercase tracking-widest font-semibold">{item.size && `Size: ${item.size}`} {item.color && `| Color: ${item.color}`}</p>
+                    
+                    <div className="flex items-center justify-between mt-3">
+                      <p className="text-[15px] font-black text-black"><PriceDisplay basePrice={item.price} /></p>
+                      
+                      {/* Quantity Increaser */}
+                      <div className="flex items-center bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden h-7">
+                        <button type="button" onClick={() => updateQuantity(item.cartItemId || item.id, -1)} className="w-7 h-full flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors">
+                          <Minus className="w-3 h-3" />
+                        </button>
+                        <span className="w-5 text-center text-xs font-bold text-black">{item.quantity}</span>
+                        <button type="button" onClick={() => updateQuantity(item.cartItemId || item.id, 1)} className="w-7 h-full flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors">
+                          <Plus className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
