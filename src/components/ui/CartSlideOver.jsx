@@ -7,6 +7,10 @@ import { X, Minus, Plus, ShoppingBag, Trash2, Globe, ChevronDown, Tag, Calculato
 import Image from 'next/image';
 import Link from 'next/link';
 import PriceDisplay from '@/components/PriceDisplay';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const getCategoryMetrics = (item) => {
   const catStr = (item.subcategory || item.category || item.title || '').toLowerCase();
@@ -44,6 +48,58 @@ export default function CartSlideOver() {
   const [showEstimator, setShowEstimator] = useState(false);
   const [shippingMode, setShippingMode] = useState('sea');
   const [customWeight, setCustomWeight] = useState(0);
+
+  // Consent Modal State
+  const [showConsentModal, setShowConsentModal] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [consents, setConsents] = useState({
+    c1: false,
+    c2: false,
+    c3: false,
+    c4: false,
+    c5: false,
+    c6: false,
+  });
+
+  const router = useRouter();
+  const { user } = useAuthStore();
+
+  const allConsented = Object.values(consents).every(Boolean);
+
+  const handleProceed = async () => {
+    if (!allConsented) return;
+    setIsProcessing(true);
+    
+    try {
+      // Fetch IP
+      let ip = 'Unknown';
+      try {
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        ip = ipData.ip;
+      } catch (e) {
+        console.error('Failed to fetch IP', e);
+      }
+
+      // Log to Firestore
+      await addDoc(collection(db, 'checkout_consents'), {
+        userId: user?.uid || 'guest',
+        userEmail: user?.email || 'guest',
+        ipAddress: ip,
+        timestamp: serverTimestamp(),
+        agreedToTerms: true,
+      });
+
+      // Navigate to checkout
+      closeCart();
+      router.push('/checkout');
+    } catch (error) {
+      console.error('Error proceeding to checkout', error);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   const baseCartWeight = useMemo(() => {
     return cart.reduce((total, item) => {
@@ -442,12 +498,72 @@ export default function CartSlideOver() {
                 </p>
 
                 <button
+                  onClick={() => setShowConsentModal(true)}
                   className="w-full bg-black text-white py-4 rounded-xl font-semibold tracking-wide hover:bg-gray-800 transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-lg shadow-black/10"
                 >
                   Proceed to Checkout
                 </button>
               </div>
             )}
+
+            {/* Consent Modal Overlay */}
+            <AnimatePresence>
+              {showConsentModal && (
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 50 }}
+                  className="absolute inset-0 z-50 bg-white flex flex-col h-full w-full"
+                >
+                  <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-white/80 backdrop-blur-md">
+                    <h2 className="text-xl font-bold tracking-tight text-black">Terms of Checkout</h2>
+                    <button
+                      onClick={() => setShowConsentModal(false)}
+                      className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-500 hover:text-black"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                  
+                  <div className="flex-1 overflow-y-auto px-6 py-6 bg-[#FAFAFA] space-y-5">
+                    <p className="text-sm font-semibold text-red-600 bg-red-50 p-3 rounded-lg border border-red-100">
+                      Please read and acknowledge the following terms before proceeding. All fields are mandatory.
+                    </p>
+
+                    <div className="space-y-4 text-sm font-medium text-gray-800">
+                      {[
+                        { id: 'c1', label: 'I understand this is a preorder item. Products are not available for immediate delivery.' },
+                        { id: 'c2', label: 'I understand delivery timelines are estimates only and may vary due to factors outside House of Avira\'s control.' },
+                        { id: 'c3', label: 'I understand international shipping charges are compulsory and will be collected separately at a later stage.' },
+                        { id: 'c4', label: 'I understand domestic shipping charges are compulsory and will be collected separately before final dispatch.' },
+                        { id: 'c5', label: 'I understand shipping costs may vary based on weight, customs duties, taxes, packaging requirements, and product category.' },
+                        { id: 'c6', label: 'I understand there are absolutely no cancellations, refunds, or exchanges after placing an order.' }
+                      ].map(item => (
+                        <label key={item.id} className="flex items-start gap-3 p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-gray-300 transition-colors shadow-sm">
+                          <input
+                            type="checkbox"
+                            checked={consents[item.id]}
+                            onChange={(e) => setConsents(prev => ({ ...prev, [item.id]: e.target.checked }))}
+                            className="mt-0.5 w-5 h-5 accent-black rounded border-gray-300 cursor-pointer"
+                          />
+                          <span className="leading-snug">{item.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-gray-100 px-6 py-6 bg-white shrink-0">
+                    <button
+                      onClick={handleProceed}
+                      disabled={!allConsented || isProcessing}
+                      className="w-full bg-black text-white py-4 rounded-xl font-semibold tracking-wide disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-gray-800 transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-lg shadow-black/10"
+                    >
+                      {isProcessing ? 'Processing...' : 'Accept & Proceed'}
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </>
       )}
