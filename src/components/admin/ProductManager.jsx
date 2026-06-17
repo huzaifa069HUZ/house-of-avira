@@ -67,6 +67,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   const [existingImages, setExistingImages] = useState([]);
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [primaryIsNew, setPrimaryIsNew] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -178,11 +179,25 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   };
 
   const makeExistingPrimary = (index) => {
+    setPrimaryIsNew(false);
     if (index === 0) return;
     const newImages = [...existingImages];
     const [selected] = newImages.splice(index, 1);
     newImages.unshift(selected);
     setExistingImages(newImages);
+  };
+
+  const makeNewPrimary = (index) => {
+    setPrimaryIsNew(true);
+    if (index === 0) return;
+    const newFiles = [...files];
+    const newPreviews = [...previews];
+    const [selectedFile] = newFiles.splice(index, 1);
+    const [selectedPreview] = newPreviews.splice(index, 1);
+    newFiles.unshift(selectedFile);
+    newPreviews.unshift(selectedPreview);
+    setFiles(newFiles);
+    setPreviews(newPreviews);
   };
 
 
@@ -213,7 +228,11 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
           throw new Error(uploadResult.error || 'Failed to upload images');
         }
         
-        finalImageUrls = [...finalImageUrls, ...uploadResult.urls];
+        if (primaryIsNew) {
+          finalImageUrls = [uploadResult.urls[0], ...finalImageUrls, ...uploadResult.urls.slice(1)];
+        } else {
+          finalImageUrls = [...finalImageUrls, ...uploadResult.urls];
+        }
       }
 
       // 2. Format Colors and upload variant images
@@ -514,16 +533,16 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                     <button 
                       type="button"
                       onClick={(e) => { e.stopPropagation(); removeExistingImage(idx); }}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 bg-black/60 hover:bg-[#ff3b30] text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm"
+                      className="absolute top-1.5 right-1.5 w-7 h-7 bg-white/80 hover:bg-[#ff3b30] hover:text-white text-black shadow-md rounded-full flex items-center justify-center opacity-100 transition-all backdrop-blur-sm"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      <X className="w-4 h-4" />
                     </button>
-                    {idx === 0 && <span className="absolute bottom-1 left-1 text-[9px] font-medium bg-black/70 backdrop-blur-sm text-white px-2 py-0.5 rounded-full shadow-sm">Primary</span>}
-                    {idx !== 0 && (
+                    {!primaryIsNew && idx === 0 && <span className="absolute bottom-1.5 left-1.5 text-[10px] font-semibold bg-black/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-full shadow-sm">Primary</span>}
+                    {(primaryIsNew || idx !== 0) && (
                       <button 
                         type="button"
                         onClick={(e) => { e.stopPropagation(); makeExistingPrimary(idx); }}
-                        className="absolute bottom-1 left-1 text-[9px] font-medium bg-black/60 hover:bg-[#0071e3] backdrop-blur-sm text-white px-2 py-0.5 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-all"
+                        className="absolute bottom-1.5 left-1.5 text-[10px] font-semibold bg-white/80 hover:bg-black hover:text-white text-black shadow-md px-2.5 py-1 rounded-full opacity-100 transition-all"
                       >
                         Set Primary
                       </button>
@@ -538,12 +557,21 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                     <button 
                       type="button"
                       onClick={(e) => { e.stopPropagation(); removeFile(idx); }}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 bg-black/60 hover:bg-[#ff3b30] text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm"
+                      className="absolute top-1.5 right-1.5 w-7 h-7 bg-white/80 hover:bg-[#ff3b30] hover:text-white text-black shadow-md rounded-full flex items-center justify-center opacity-100 transition-all backdrop-blur-sm"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      <X className="w-4 h-4" />
                     </button>
-                    <span className="absolute bottom-1 right-1 text-[9px] font-bold text-[#0071e3] bg-white px-1.5 py-0.5 rounded shadow-sm">NEW</span>
-                    {existingImages.length === 0 && idx === 0 && <span className="absolute bottom-1 left-1 text-[9px] font-medium bg-black/70 backdrop-blur-sm text-white px-2 py-0.5 rounded-full shadow-sm">Primary</span>}
+                    <span className="absolute bottom-1.5 right-1.5 text-[10px] font-bold text-[#0071e3] bg-white px-1.5 py-0.5 rounded shadow-sm">NEW</span>
+                    {(primaryIsNew || existingImages.length === 0) && idx === 0 && <span className="absolute bottom-1.5 left-1.5 text-[10px] font-semibold bg-black/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-full shadow-sm">Primary</span>}
+                    {((!primaryIsNew && existingImages.length > 0) || idx !== 0) && (
+                      <button 
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); makeNewPrimary(idx); }}
+                        className="absolute bottom-1.5 left-1.5 text-[10px] font-semibold bg-white/80 hover:bg-black hover:text-white text-black shadow-md px-2.5 py-1 rounded-full opacity-100 transition-all"
+                      >
+                        Set Primary
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
