@@ -7,6 +7,7 @@ import WhyHouseOfAvira from '@/components/WhyHouseOfAvira';
 import CampaignAndGrid from '@/components/CampaignAndGrid';
 import PinterestFeed from '@/components/PinterestFeed';
 import { ScrollReelTestimonials } from '@/components/ui/scroll-reel-testimonials';
+import FAQSection from '@/components/FAQSection';
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
@@ -436,6 +437,9 @@ export default function Home() {
         <HowItWorks />
       </div>
 
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* Testimonials Section */}
       <section className="w-full bg-[#FFFFFF] py-16 md:py-24 border-t-[3px] border-[#000000]">
