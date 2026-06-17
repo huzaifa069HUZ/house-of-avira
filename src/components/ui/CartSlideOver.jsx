@@ -558,8 +558,8 @@ export default function CartSlideOver() {
 
                   <div className="border-t border-gray-100 px-6 py-6 bg-white shrink-0">
                     <div className="text-center mb-4">
-                      <Link href="/order-info" onClick={closeCart} className="text-blue-600 font-bold text-sm hover:underline">
-                        terms and conditions
+                      <Link href="/order-info" onClick={closeCart} className="text-blue-600 font-bold text-sm hover:underline uppercase tracking-wide" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
+                        Terms and Conditions
                       </Link>
                     </div>
                     <button

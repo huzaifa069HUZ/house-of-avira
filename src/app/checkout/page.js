@@ -8,12 +8,9 @@ import { ChevronRight, ArrowLeft, ShieldCheck, MapPin, CreditCard, ChevronDown, 
 import Image from 'next/image';
 import Link from 'next/link';
 import PriceDisplay from '@/components/PriceDisplay';
+import { Country } from 'country-state-city';
 
-const countries = [
-  "India", "United States", "United Kingdom", "Canada", "Australia", 
-  "Germany", "France", "United Arab Emirates", "Singapore", "Japan", 
-  "Saudi Arabia", "South Africa", "New Zealand", "Netherlands", "Italy", "Spain"
-];
+const countries = Country.getAllCountries().map(c => c.name);
 
 const phoneCodes = [
   { code: '+91', country: 'IN' },
