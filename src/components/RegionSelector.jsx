@@ -4,12 +4,14 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, X, Check, Search } from 'lucide-react';
 import { useCurrencyStore } from '@/store/currencyStore';
+import { useCartStore } from '@/store/cartStore';
 import { Country } from 'country-state-city';
 import { usePathname } from 'next/navigation';
 
 export default function RegionSelector() {
   const [searchQuery, setSearchQuery] = useState('');
   const { currency, setCurrency, setLocale, isRegionModalOpen, setRegionModalOpen } = useCurrencyStore();
+  const { isOpen: isCartOpen } = useCartStore();
   const pathname = usePathname();
   const isCatalogue = pathname?.startsWith('/catalogue');
 
@@ -56,20 +58,25 @@ export default function RegionSelector() {
   };
 
   const activeRegion = allCountries.find(c => c.currency === currency) || allCountries.find(c => c.isoCode === 'IN');
+  const shouldBeCompact = isCatalogue || isCartOpen;
 
   return (
     <>
       {/* Floating Button */}
       <motion.button
         onClick={() => setRegionModalOpen(true)}
-        className={`fixed z-[90] flex items-center justify-center bg-white/90 backdrop-blur-md border border-[#000000]/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-white hover:shadow-xl transition-all duration-300 group ${isCatalogue ? 'bottom-6 right-4 w-11 h-11 rounded-full p-0' : 'bottom-6 right-6 gap-2 px-4 py-2.5 rounded-full'}`}
+        className={`fixed z-[90] flex items-center justify-center bg-white/90 backdrop-blur-md border border-[#000000]/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-white hover:shadow-xl transition-all duration-300 group ${shouldBeCompact ? 'bottom-6 right-4 w-11 h-11 rounded-full p-0' : 'bottom-6 right-6 gap-2 px-4 py-2.5 rounded-full'}`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        {isCatalogue ? (
-          <span className="text-[10px] font-bold tracking-widest text-[#000000] uppercase">
-            {currency}
-          </span>
+        {shouldBeCompact ? (
+          isCartOpen ? (
+            <Globe className="w-5 h-5 text-[#000000]" />
+          ) : (
+            <span className="text-[10px] font-bold tracking-widest text-[#000000] uppercase">
+              {currency}
+            </span>
+          )
         ) : (
           <>
             <Globe className="w-4 h-4 text-[#000000] group-hover:rotate-12 transition-transform" />

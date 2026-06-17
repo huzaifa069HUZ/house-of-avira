@@ -278,10 +278,19 @@ export default function CartSlideOver() {
                   </button>
                 </div>
               ) : (
-                <div className="space-y-8">
-                  <div className="flex justify-center mb-2">
-                    <div className="bg-gray-50 p-3 rounded-full border border-gray-200 text-gray-800 shadow-sm flex items-center justify-center">
-                      <Globe className="w-6 h-6 text-gray-600" />
+                <div className="space-y-6">
+                  <div className="bg-gradient-to-r from-[#000000] to-[#2c2c2c] rounded-xl p-4 flex gap-3 items-center shadow-lg mb-6 relative overflow-hidden">
+                    <div className="absolute right-0 top-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+                    <div className="bg-white/10 p-2.5 rounded-full backdrop-blur-md shrink-0 border border-white/10">
+                      <Globe className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="relative z-10">
+                      <p className="text-[10px] font-bold text-white uppercase tracking-[0.2em] mb-0.5 flex items-center gap-2">
+                        Global Sourcing <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                      </p>
+                      <p className="text-[11px] text-gray-300 font-light leading-relaxed pr-2">
+                        Premium imported goods sourced directly from international suppliers.
+                      </p>
                     </div>
                   </div>
 
