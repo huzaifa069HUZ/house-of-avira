@@ -474,15 +474,15 @@ export default function Header() {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="p-6 flex justify-between items-center border-b border-[#000000]/10 sticky top-0 bg-black z-10">
-            <span className="font-cormorant uppercase text-xl md:text-2xl tracking-widest text-[#8A001A]">Menu</span>
+            <span className="font-aston-script capitalize text-3xl md:text-4xl tracking-normal text-[#8A001A]">Menu</span>
             <button onClick={() => setIsMobileMenuOpen(false)} className="text-white/60 hover:text-white p-2 bg-white/10 rounded-full">
               <X className="w-5 h-5" />
             </button>
           </div>
           
-          <div className="py-4 flex flex-col">
+          <div className="flex flex-col">
             {/* Auth / Account Links */}
-            <div className="px-6 py-6 flex gap-6 border-b border-[#000000]/10 mb-2 bg-cover bg-center" style={{ backgroundImage: "url('/images/menu-bg.png')" }}>
+            <div className="px-6 py-8 flex gap-6 border-b border-[#000000]/10 mb-2 bg-cover bg-center" style={{ backgroundImage: "url('/images/menu-bg.png')" }}>
               <button onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm">
                 <User className="w-5 h-5" />
                 <span className="text-[10px] font-dm-sans uppercase tracking-[0.15em] font-bold">Account</span>
