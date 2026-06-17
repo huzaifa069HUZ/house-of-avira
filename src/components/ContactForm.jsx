@@ -75,9 +75,9 @@ export default function ContactForm() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-4xl md:text-5xl lg:text-6xl text-black mb-4 tracking-tight leading-[1.1]"
+                className="text-4xl md:text-5xl lg:text-6xl text-black mb-6 tracking-wide leading-[1.3]"
               >
-                <span className="font-perandory font-bold block mb-1">Behind every great fit</span>
+                <span className="font-perandory font-bold block mb-3">Behind every great fit</span>
                 <span className="font-perandory font-bold block">is a conversation.</span>
               </motion.h2>
 
@@ -86,20 +86,28 @@ export default function ContactForm() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="font-aston-script text-[#4a0000] text-3xl md:text-4xl lg:text-5xl mb-12 leading-relaxed"
+                className="font-aston-script text-[#4a0000] text-2xl md:text-3xl mb-12 leading-relaxed"
               >
                 sizing, shipping, sourcing or ordering updates - we're here for you
               </motion.p>
 
-              <motion.p 
+              <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="font-dm-sans text-gray-600 mb-12 text-lg font-medium"
+                className="font-dm-sans text-gray-600 mb-12 text-base md:text-lg font-medium space-y-3"
               >
-                You can reach us anytime via <a href="mailto:houseofavira@gmail.com" className="text-black border-b border-black hover:border-[#4a0000] hover:text-[#4a0000] transition-colors pb-1">houseofavira@gmail.com</a>
-              </motion.p>
+                <p>
+                  Email: <a href="mailto:houseofavira@gmail.com" className="text-black border-b border-black hover:border-[#4a0000] hover:text-[#4a0000] transition-colors pb-0.5">houseofavira@gmail.com</a>
+                </p>
+                <p>
+                  WhatsApp: <a href="https://wa.me/919986742779" target="_blank" rel="noopener noreferrer" className="text-black border-b border-black hover:border-[#4a0000] hover:text-[#4a0000] transition-colors pb-0.5">+91 9986742779</a>
+                </p>
+                <p>
+                  Instagram: <a href="https://instagram.com/houseof.avira" target="_blank" rel="noopener noreferrer" className="text-black border-b border-black hover:border-[#4a0000] hover:text-[#4a0000] transition-colors pb-0.5">@houseof.avira</a>
+                </p>
+              </motion.div>
 
               <form onSubmit={handleSubmit} className="space-y-12">
                 
