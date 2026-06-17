@@ -15,7 +15,6 @@ export default function ProductPage({ params: paramsPromise }) {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentPricingIndex, setCurrentPricingIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
 
@@ -99,11 +98,6 @@ export default function ProductPage({ params: paramsPromise }) {
   };
 
   const images = product.images || [product.imageUrl];
-  const pricingImages = [
-    '/pricing/product pricing 1.png',
-    '/pricing/product pricing 2.png',
-    '/pricing/product pricing 3.png'
-  ];
 
   const handleScroll = (e) => {
     const scrollPosition = e.target.scrollLeft;
@@ -118,14 +112,6 @@ export default function ProductPage({ params: paramsPromise }) {
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const nextPricingImage = () => {
-    setCurrentPricingIndex((prev) => (prev + 1) % pricingImages.length);
-  };
-
-  const prevPricingImage = () => {
-    setCurrentPricingIndex((prev) => (prev === 0 ? pricingImages.length - 1 : prev - 1));
   };
 
   return (
@@ -222,20 +208,6 @@ export default function ProductPage({ params: paramsPromise }) {
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                {/* Cinematic Video Player */}
-                <div className="col-span-2 rounded-3xl overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] border border-neutral-100 aspect-video relative group bg-black">
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none"></div>
-                  <video 
-                    src="/pricing/product price breakdown.mp4" 
-                    autoPlay loop muted playsInline 
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 scale-105 group-hover:scale-100 transition-all duration-700"
-                  />
-                  <div className="absolute bottom-4 left-4 z-20 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg">
-                    <span className="text-[9px] font-bold tracking-widest uppercase flex items-center gap-1.5">
-                      <Globe className="w-3 h-3" /> Global Transit Process
-                    </span>
-                  </div>
-                </div>
 
                 {/* Animated Timeline */}
                 <div className="col-span-1 flex flex-col justify-center bg-white p-6 xl:p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 relative overflow-hidden">
@@ -281,34 +253,13 @@ export default function ProductPage({ params: paramsPromise }) {
                   </div>
                 </div>
 
-                {/* Info Slider */}
-                <div className="col-span-1 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 relative group bg-white">
+                {/* Info Image */}
+                <div className="col-span-1 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 relative bg-white">
                   <img 
-                    src={pricingImages[currentPricingIndex]} 
-                    alt={`Pricing Step ${currentPricingIndex + 1}`} 
+                    src="/images/visual-breakdown.png" 
+                    alt="Visual Breakdown" 
                     className="w-full h-full object-contain p-4"
                   />
-                  <button 
-                    onClick={prevPricingImage}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105 border border-neutral-100"
-                  >
-                    <ChevronLeft className="w-4 h-4 stroke-[1.5]" />
-                  </button>
-                  <button 
-                    onClick={nextPricingImage}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105 border border-neutral-100"
-                  >
-                    <ChevronRight className="w-4 h-4 stroke-[1.5]" />
-                  </button>
-                  <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
-                    {pricingImages.map((_, idx) => (
-                      <button 
-                        key={idx} 
-                        onClick={() => setCurrentPricingIndex(idx)}
-                        className={`h-1 rounded-full transition-all duration-300 ${currentPricingIndex === idx ? 'w-4 bg-black' : 'w-1 bg-black/20 hover:bg-black/50'}`}
-                      />
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>
@@ -488,19 +439,6 @@ export default function ProductPage({ params: paramsPromise }) {
                   <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
                   How You Pay (3 Phases)
                 </h3>
-
-                <div className="w-full rounded-2xl overflow-hidden bg-neutral-100 mb-8 shadow-sm border border-neutral-200 aspect-video relative">
-                  <video 
-                    src="/pricing/product price breakdown.mp4" 
-                    autoPlay loop muted playsInline 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute bottom-2 left-2 z-20 bg-white/90 backdrop-blur-md px-2 py-1 rounded-md shadow-sm">
-                    <span className="text-[8px] font-bold tracking-widest uppercase flex items-center gap-1">
-                      <Globe className="w-2.5 h-2.5" /> Global Transit
-                    </span>
-                  </div>
-                </div>
                 
                 <div className="flex flex-col gap-0 mb-10 relative">
                   <div className="flex items-start gap-4">
@@ -538,17 +476,10 @@ export default function ProductPage({ params: paramsPromise }) {
                 
                 <div className="relative w-full aspect-square bg-white border border-neutral-100 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                   <img 
-                    src={pricingImages[currentPricingIndex]} 
-                    alt={`Pricing Step ${currentPricingIndex + 1}`} 
+                    src="/images/visual-breakdown.png" 
+                    alt="Visual Breakdown" 
                     className="w-full h-full object-contain p-4"
                   />
-                  <button onClick={prevPricingImage} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center text-black border border-neutral-100"><ChevronLeft className="w-4 h-4 stroke-[1.5]" /></button>
-                  <button onClick={nextPricingImage} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center text-black border border-neutral-100"><ChevronRight className="w-4 h-4 stroke-[1.5]" /></button>
-                  <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
-                    {pricingImages.map((_, idx) => (
-                      <button key={idx} onClick={() => setCurrentPricingIndex(idx)} className={`h-1.5 rounded-full transition-all duration-300 ${currentPricingIndex === idx ? 'w-4 bg-black' : 'w-1.5 bg-black/20'}`} />
-                    ))}
-                  </div>
                 </div>
               </div>
 
