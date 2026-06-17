@@ -100,8 +100,8 @@ export default function AddressManager() {
     return (
       <div className="bg-white border border-black/10 p-8 relative">
         <div className="flex justify-between items-start mb-6 pb-4 border-b border-black/5">
-          <h2 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000] flex items-center gap-2">
-            <MapPin className="w-4 h-4" /> Default Address
+          <h2 className="text-2xl font-perandory tracking-tight text-[#000000] flex items-center gap-2">
+            <MapPin className="w-5 h-5" /> Default Address
           </h2>
           <button 
             onClick={() => setIsEditing(true)}
@@ -110,8 +110,8 @@ export default function AddressManager() {
             <Edit2 className="w-3 h-3" /> Edit
           </button>
         </div>
-        <div className="text-sm text-[#000000] space-y-2">
-          <p className="font-medium">{address.street}</p>
+        <div className="text-xl font-cormorant-garamond text-[#000000] space-y-1 mt-2">
+          <p>{address.street}</p>
           <p className="opacity-80">{address.city}, {address.stateName} {address.zip}</p>
           <p className="opacity-80">{address.countryName}</p>
         </div>
@@ -122,8 +122,8 @@ export default function AddressManager() {
   return (
     <div className="bg-white border border-black/10 p-8">
       <div className="flex justify-between items-start mb-8 pb-4 border-b border-black/5">
-        <h2 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#000000] flex items-center gap-2">
-          <MapPin className="w-4 h-4" /> 
+        <h2 className="text-2xl font-perandory tracking-tight text-[#000000] flex items-center gap-2">
+            <MapPin className="w-5 h-5" /> 
           {address ? 'Edit Address' : 'Add New Address'}
         </h2>
         {address && (
@@ -138,7 +138,7 @@ export default function AddressManager() {
 
       <form onSubmit={handleSave} className="space-y-6">
         <div>
-          <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Street Address</label>
+          <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Street Address</label>
           <input 
             type="text" 
             required
@@ -151,7 +151,7 @@ export default function AddressManager() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Country</label>
+            <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Country</label>
             <div className="relative">
               <select 
                 required
@@ -169,7 +169,7 @@ export default function AddressManager() {
           </div>
 
           <div>
-            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">State / Province</label>
+            <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">State / Province</label>
             <div className="relative">
               <select 
                 required
@@ -190,7 +190,7 @@ export default function AddressManager() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">City</label>
+            <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">City</label>
             {cities.length > 0 ? (
               <div className="relative">
                 <select 
@@ -219,7 +219,7 @@ export default function AddressManager() {
           </div>
 
           <div>
-            <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Postal / Zip Code</label>
+            <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Postal / Zip Code</label>
             <input 
               type="text" 
               required

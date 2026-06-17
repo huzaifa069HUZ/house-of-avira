@@ -52,8 +52,8 @@ export default function AccountPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 pb-6 border-b border-black/10">
         <div>
-          <h1 className="text-4xl md:text-5xl font-cormorant-garamond tracking-tight text-[#000000] mb-2">My Account</h1>
-          <p className="text-xs tracking-widest text-[#000000]/50 uppercase">Manage your profile and orders</p>
+          <h1 className="text-4xl md:text-5xl font-perandory tracking-tight text-[#000000] mb-2">My Account</h1>
+          <p className="text-lg font-gambetta italic font-normal text-[#000000]/60">Manage your profile and orders</p>
         </div>
         <button 
           onClick={handleLogout}
@@ -68,7 +68,7 @@ export default function AccountPage() {
           {/* Profile Section */}
           <div className="bg-white">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-perandory tracking-tight text-[#000000] uppercase">Personal Details</h2>
+              <h2 className="text-2xl font-perandory tracking-tight text-[#000000]">Personal Details</h2>
               {!isEditing ? (
                 <button onClick={() => setIsEditing(true)} className="text-[10px] uppercase tracking-widest text-[#000000]/50 hover:text-[#000000] flex items-center gap-1.5 transition-colors font-bold">
                   <Edit2 className="w-3 h-3" /> Edit
@@ -87,7 +87,7 @@ export default function AccountPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Name</label>
+                <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Name</label>
                 {isEditing ? (
                   <input 
                     type="text" 
@@ -97,17 +97,17 @@ export default function AccountPage() {
                     placeholder="Enter your name"
                   />
                 ) : (
-                  <p className="text-sm text-[#000000] font-medium">{user.name || user.displayName || 'No name set'}</p>
+                  <p className="text-xl font-cormorant-garamond text-[#000000]">{user.name || user.displayName || 'No name set'}</p>
                 )}
               </div>
               
               <div>
-                <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Email</label>
-                <p className="text-sm text-[#000000] opacity-80 font-medium">{user.email}</p>
+                <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Email</label>
+                <p className="text-xl font-cormorant-garamond text-[#000000] opacity-80">{user.email}</p>
               </div>
 
               <div>
-                <label className="block text-[9px] font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Phone Number</label>
+                <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Phone Number</label>
                 {isEditing ? (
                   <input 
                     type="tel" 
@@ -117,7 +117,7 @@ export default function AccountPage() {
                     placeholder="+1 (234) 567-8900"
                   />
                 ) : (
-                  <p className="text-sm text-[#000000] font-medium">{user.phoneNumber || <span className="text-black/30 italic font-normal">No phone added</span>}</p>
+                  <p className="text-xl font-cormorant-garamond text-[#000000]">{user.phoneNumber || <span className="font-gambetta italic text-lg text-black/40">No phone added</span>}</p>
                 )}
               </div>
             </div>
@@ -149,9 +149,9 @@ export default function AccountPage() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-cormorant-garamond tracking-tight text-[#000000] mb-6">Recent Orders</h2>
+            <h2 className="text-2xl font-perandory tracking-tight text-[#000000] mb-6">Recent Orders</h2>
             <div className="bg-[#FAFAFA] border border-black/5 p-16 text-center flex flex-col items-center justify-center">
-              <p className="text-[10px] tracking-[0.2em] text-[#000000]/40 uppercase font-bold mb-6">No orders placed yet</p>
+              <p className="text-lg font-gambetta italic text-[#000000]/60 mb-6">No orders placed yet</p>
               <Link href="/catalogue" className="text-[11px] uppercase tracking-widest font-bold border-b-2 border-black pb-1 hover:text-black/60 hover:border-black/60 transition-colors">
                 Continue Shopping
               </Link>
