@@ -9,6 +9,7 @@ import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight } from 'lucide-react';
+import ProductReviews from '@/components/product/ProductReviews';
 
 export default function ProductPage({ params: paramsPromise }) {
   const params = use(paramsPromise);
@@ -486,6 +487,10 @@ export default function ProductPage({ params: paramsPromise }) {
             </div>
           </div>
         </div>
+
+        {/* Reviews Section */}
+        <ProductReviews productId={product.id} />
+
       </main>
     </div>
   );
