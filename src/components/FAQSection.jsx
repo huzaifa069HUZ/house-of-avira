@@ -5,24 +5,32 @@ import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
   {
-    question: "How does the two-stage pricing work?",
-    answer: "You pay the product price at checkout. Once your item arrives at our local hub from our international warehouses, we will bill you for the exact international freight and customs duties before final delivery."
+    question: "Why can't you tell me the shipping cost upfront?",
+    answer: "We ship in batches. The international cost is split equally among all customers based on the total package weight. Since we collect all orders first and then ship together, the exact per-customer cost is only known when the full batch is packed. This ensures you're charged accurately — never based on a rough estimate."
   },
   {
-    question: "How long will my order take to arrive?",
-    answer: "Since our items are imported directly and operate on a pre-order basis, standard delivery usually takes between 12-20 business days."
+    question: "Is COD (Cash on Delivery) available?",
+    answer: "No, COD is not available at House of Avira. We deal with imported products sourced internationally on your behalf — payment must be received before the order can be placed with our suppliers. We accept GPay, Paytm, UPI, bank transfers, and card payments."
   },
   {
-    question: "Do you accept returns or exchanges?",
-    answer: "Because items are imported specifically for you, we only accept returns or exchanges for defective or incorrect items within 7 days of delivery."
+    question: "How long will my order take?",
+    answer: "It depends on the shipping mode. Air shipping takes approximately 15 days from dispatch. Sea shipping takes 2–3 months. The total timeline includes batch collection time, international transit, customs clearance, and domestic delivery. All timelines are estimates — delays can occur due to customs and logistics."
   },
   {
-    question: "Can I cancel my order?",
-    answer: "You can cancel your order within 24 hours of placing it. After that, the processing with our international partners begins and cancellations are no longer possible."
+    question: "Can I cancel my order if I change my mind?",
+    answer: "No. Once an order is placed, it is submitted to our suppliers immediately and cannot be cancelled, refunded, or exchanged. This applies even if there are delays, even if the shipping cost is higher than expected, and even if the shipping invoice has not yet been paid. Please only order if you are fully committed to the purchase."
   },
   {
-    question: "Where do you ship from?",
-    answer: "Our products are curated globally and shipped directly from our international partners to our local hubs before being dispatched to your doorstep."
+    question: "What if I don't pay the shipping invoice on time?",
+    answer: "If the shipping invoice is not paid by the specified deadline, your parcel will not be shipped. No refund will be issued for your product payment, as the order has already been placed with our suppliers on your behalf. Please pay shipping invoices promptly when they are sent."
+  },
+  {
+    question: "Are customs and duty charges included in the shipping invoice?",
+    answer: "Yes. India's customs duties and GST on imports are calculated and included in your international shipping invoice. You will receive a full itemised breakdown showing the shipping cost, customs duty, and GST before you are required to pay anything."
+  },
+  {
+    question: "My order is delayed — can I get a refund?",
+    answer: "No. Delivery delays are not grounds for a refund or cancellation. International shipping and customs timelines can vary significantly due to factors completely outside our control. We ask that you only place an order if you are patient and comfortable with variable timelines. We will always keep you updated on your order's progress."
   }
 ];
 
@@ -44,10 +52,10 @@ export default function FAQSection() {
       <div className="max-w-3xl mx-auto relative z-10 flex flex-col items-center">
         {/* Title Group */}
         <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-perandory font-bold tracking-tighter uppercase text-[#000000] leading-none mb-2" style={{ textShadow: '2px 2px 0px white' }}>
+          <h2 className="font-perandory text-4xl md:text-5xl lg:text-7xl font-bold tracking-widest uppercase text-black mb-4" style={{ textShadow: '2px 2px 0px white' }}>
             QUESTIONS?
           </h2>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-perandory font-bold tracking-tighter uppercase text-[#e60000] leading-none" style={{ textShadow: '2px 2px 0px white' }}>
+          <h2 className="font-aston-script capitalize text-5xl md:text-6xl lg:text-8xl tracking-normal text-[#8A001A] leading-none" style={{ textShadow: '2px 2px 0px white' }}>
             ANSWERED.
           </h2>
         </div>

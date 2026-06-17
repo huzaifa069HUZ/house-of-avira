@@ -9,7 +9,7 @@ import { UploadCloud, X, Image as ImageIcon, Tag, Loader2, CheckCircle2, Plus, T
 const CATEGORY_DATA = [
   { 
     title: "Women", 
-    children: ["tops", "pants / jeans", "skirts", "dresses", "jackets", "beach wear"]
+    children: ["tops", "pants / jeans", "skirts", "dresses", "jackets", "beach wear", "co-ords", "t-shirts", "denim", "activewear", "homewear"]
   },
   {
     title: "Men",
@@ -175,6 +175,14 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
 
   const removeExistingImage = (index) => {
     setExistingImages(existingImages.filter((_, i) => i !== index));
+  };
+
+  const makeExistingPrimary = (index) => {
+    if (index === 0) return;
+    const newImages = [...existingImages];
+    const [selected] = newImages.splice(index, 1);
+    newImages.unshift(selected);
+    setExistingImages(newImages);
   };
 
 
@@ -511,6 +519,15 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                       <X className="w-3.5 h-3.5" />
                     </button>
                     {idx === 0 && <span className="absolute bottom-1 left-1 text-[9px] font-medium bg-black/70 backdrop-blur-sm text-white px-2 py-0.5 rounded-full shadow-sm">Primary</span>}
+                    {idx !== 0 && (
+                      <button 
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); makeExistingPrimary(idx); }}
+                        className="absolute bottom-1 left-1 text-[9px] font-medium bg-black/60 hover:bg-[#0071e3] backdrop-blur-sm text-white px-2 py-0.5 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-all"
+                      >
+                        Set Primary
+                      </button>
+                    )}
                   </div>
                 ))}
                 {/* New Previews */}
