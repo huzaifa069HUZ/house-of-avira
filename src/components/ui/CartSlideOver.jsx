@@ -81,14 +81,18 @@ export default function CartSlideOver() {
         console.error('Failed to fetch IP', e);
       }
 
-      // Log to Firestore
-      await addDoc(collection(db, 'checkout_consents'), {
-        userId: user?.uid || 'guest',
-        userEmail: user?.email || 'guest',
-        ipAddress: ip,
-        timestamp: serverTimestamp(),
-        agreedToTerms: true,
-      });
+      // Log to Firestore (Best Effort)
+      try {
+        await addDoc(collection(db, 'checkout_consents'), {
+          userId: user?.uid || 'guest',
+          userEmail: user?.email || 'guest',
+          ipAddress: ip,
+          timestamp: serverTimestamp(),
+          agreedToTerms: true,
+        });
+      } catch (firestoreError) {
+        console.error('Failed to log consent to Firestore', firestoreError);
+      }
 
       // Navigate to checkout
       closeCart();
@@ -553,6 +557,11 @@ export default function CartSlideOver() {
                   </div>
 
                   <div className="border-t border-gray-100 px-6 py-6 bg-white shrink-0">
+                    <div className="text-center mb-4">
+                      <Link href="/order-info" onClick={closeCart} className="text-blue-600 font-bold text-sm hover:underline">
+                        terms and conditions
+                      </Link>
+                    </div>
                     <button
                       onClick={handleProceed}
                       disabled={!allConsented || isProcessing}

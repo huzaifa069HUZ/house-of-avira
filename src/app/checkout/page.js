@@ -151,7 +151,7 @@ export default function CheckoutPage() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-black font-sans selection:bg-black selection:text-white pb-20 lg:pb-0">
+    <div className="min-h-screen bg-[#FAFAFA] text-black selection:bg-black selection:text-white pb-20 lg:pb-0" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
       
       {/* Top Navigation */}
       <div className="w-full bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
