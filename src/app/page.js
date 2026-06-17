@@ -8,6 +8,7 @@ import CampaignAndGrid from '@/components/CampaignAndGrid';
 import PinterestFeed from '@/components/PinterestFeed';
 import { ScrollReelTestimonials } from '@/components/ui/scroll-reel-testimonials';
 import FAQSection from '@/components/FAQSection';
+import ContactForm from '@/components/ContactForm';
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
@@ -469,6 +470,9 @@ export default function Home() {
           }
         ]} />
       </section>
+
+      {/* Contact Us Section */}
+      <ContactForm />
 
       {/* Join the Archive Section */}
       <section className="py-32 md:py-48 px-6 bg-[#FFFFFF] flex flex-col items-center justify-center text-center w-full">
