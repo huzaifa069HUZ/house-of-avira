@@ -75,14 +75,10 @@ export default function ContactForm() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-5xl md:text-6xl lg:text-[4.5rem] text-black mb-8 tracking-tight leading-[1.1]"
+                className="text-4xl md:text-5xl lg:text-6xl text-black mb-4 tracking-tight leading-[1.1]"
               >
-                <span className="font-perandory font-bold block mb-1">Let's chat about your</span>
-                <div className="flex items-center gap-3">
-                  <span className="font-perandory font-bold">dreams</span>
-                  <span className="font-aston-script text-6xl md:text-7xl lg:text-[5.5rem] text-[#4a0000] -mt-3">&amp;</span>
-                  <span className="font-perandory font-bold">wild ideas</span>
-                </div>
+                <span className="font-perandory font-bold block mb-1">Behind every great fit</span>
+                <span className="font-perandory font-bold block">is a conversation.</span>
               </motion.h2>
 
               <motion.p 
@@ -90,7 +86,17 @@ export default function ContactForm() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="font-dm-sans text-gray-600 mb-16 text-lg font-medium"
+                className="font-aston-script text-[#4a0000] text-3xl md:text-4xl lg:text-5xl mb-12 leading-relaxed"
+              >
+                sizing, shipping, sourcing or ordering updates - we're here for you
+              </motion.p>
+
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="font-dm-sans text-gray-600 mb-12 text-lg font-medium"
               >
                 You can reach us anytime via <a href="mailto:houseofavira@gmail.com" className="text-black border-b border-black hover:border-[#4a0000] hover:text-[#4a0000] transition-colors pb-1">houseofavira@gmail.com</a>
               </motion.p>
