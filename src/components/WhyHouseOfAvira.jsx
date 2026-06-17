@@ -67,7 +67,7 @@ export default function WhyHouseOfAvira() {
               <div className="bg-[#000000] text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full mb-4">
                 Pay Now
               </div>
-              <h4 className="text-xl font-bold text-[#000000] mb-3">1. Fixed Product Price</h4>
+              <h4 className="text-2xl font-cormorant-garamond font-bold text-[#000000] mb-3">1. Fixed Product Price</h4>
               <p className="text-sm text-[#000000]/70">
                 You pay only the transparent cost of the items at checkout today.
               </p>
@@ -81,7 +81,7 @@ export default function WhyHouseOfAvira() {
               <div className="bg-[#8A001A] text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full mb-4">
                 Billed Later
               </div>
-              <h4 className="text-xl font-bold text-[#8A001A] mb-3">2. Int'l Shipping & Duty</h4>
+              <h4 className="text-2xl font-cormorant-garamond font-bold text-[#8A001A] mb-3">2. Int'l Shipping & Duty</h4>
               <p className="text-sm text-[#000000]/70">
                 Once items arrive at our hub, we calculate the exact customs and international freight to your address.
               </p>
@@ -95,7 +95,7 @@ export default function WhyHouseOfAvira() {
               <div className="bg-gray-200 text-[#000000] text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full mb-4">
                 Delivery
               </div>
-              <h4 className="text-xl font-bold text-[#000000] mb-3">3. Doorstep Arrival</h4>
+              <h4 className="text-2xl font-cormorant-garamond font-bold text-[#000000] mb-3">3. Doorstep Arrival</h4>
               <p className="text-sm text-[#000000]/70">
                 After the final balance is cleared, we dispatch it locally straight to your hands via premium couriers.
               </p>
@@ -118,7 +118,7 @@ export default function WhyHouseOfAvira() {
                 <div className="inline-block bg-[#000000] text-white text-[9px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-full mb-2">
                   Pay Now
                 </div>
-                <h4 className="text-lg font-bold text-[#000000] mb-2">1. Fixed Product Price</h4>
+                <h4 className="text-xl font-cormorant-garamond font-bold text-[#000000] mb-2">1. Fixed Product Price</h4>
                 <p className="text-sm text-[#000000]/70">
                   You pay only the transparent cost of the items at checkout today.
                 </p>
@@ -134,7 +134,7 @@ export default function WhyHouseOfAvira() {
                 <div className="inline-block bg-[#8A001A] text-white text-[9px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-full mb-2">
                   Billed Later
                 </div>
-                <h4 className="text-lg font-bold text-[#8A001A] mb-2">2. Int'l Shipping & Duty</h4>
+                <h4 className="text-xl font-cormorant-garamond font-bold text-[#8A001A] mb-2">2. Int'l Shipping & Duty</h4>
                 <p className="text-sm text-[#000000]/70">
                   Exact customs and international freight billed when it reaches our hub.
                 </p>
@@ -150,7 +150,7 @@ export default function WhyHouseOfAvira() {
                 <div className="inline-block bg-gray-200 text-[#000000] text-[9px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-full mb-2">
                   Delivery
                 </div>
-                <h4 className="text-lg font-bold text-[#000000] mb-2">3. Doorstep Arrival</h4>
+                <h4 className="text-xl font-cormorant-garamond font-bold text-[#000000] mb-2">3. Doorstep Arrival</h4>
                 <p className="text-sm text-[#000000]/70">
                   Locally dispatched straight to your hands via premium couriers.
                 </p>
