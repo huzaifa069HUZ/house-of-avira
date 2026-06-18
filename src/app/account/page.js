@@ -15,6 +15,7 @@ export default function AccountPage() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState('');
+  const [editCountryCode, setEditCountryCode] = useState('+91');
   const [editPhone, setEditPhone] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -23,7 +24,16 @@ export default function AccountPage() {
       router.push('/auth/login');
     } else if (user && !isEditing) {
       setEditName(user.name || user.displayName || '');
-      setEditPhone(user.phoneNumber || '');
+      
+      const phoneRaw = user.phone || user.phoneNumber || '';
+      const parts = phoneRaw.trim().split(' ');
+      if (parts.length > 1 && parts[0].startsWith('+')) {
+        setEditCountryCode(parts[0]);
+        setEditPhone(parts.slice(1).join(' '));
+      } else {
+        setEditCountryCode('+91');
+        setEditPhone(phoneRaw);
+      }
     }
   }, [user, loading, router, isEditing]);
 
@@ -39,7 +49,7 @@ export default function AccountPage() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await updateUser({ name: editName, phoneNumber: editPhone });
+      await updateUser({ name: editName, phone: `${editCountryCode} ${editPhone}`.trim() });
       setIsEditing(false);
     } catch (error) {
       console.error("Failed to update profile", error);
@@ -109,15 +119,29 @@ export default function AccountPage() {
               <div>
                 <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Phone Number</label>
                 {isEditing ? (
-                  <input 
-                    type="tel" 
-                    value={editPhone} 
-                    onChange={(e) => setEditPhone(e.target.value)}
-                    className="w-full border-b border-black/20 pb-2 outline-none focus:border-black text-sm font-dm-sans transition-colors bg-transparent"
-                    placeholder="+1 (234) 567-8900"
-                  />
+                  <div className="flex">
+                    <select
+                      value={editCountryCode}
+                      onChange={(e) => setEditCountryCode(e.target.value)}
+                      className="appearance-none block w-[80px] px-3 py-2 border-b border-black/20 outline-none focus:border-black text-sm font-dm-sans transition-colors bg-transparent text-center"
+                    >
+                      <option value="+91">+91 (IN)</option>
+                      <option value="+1">+1 (US/CA)</option>
+                      <option value="+44">+44 (UK)</option>
+                      <option value="+61">+61 (AU)</option>
+                      <option value="+971">+971 (AE)</option>
+                      <option value="+65">+65 (SG)</option>
+                    </select>
+                    <input 
+                      type="tel" 
+                      value={editPhone} 
+                      onChange={(e) => setEditPhone(e.target.value)}
+                      className="w-full border-b border-black/20 pb-2 pl-3 outline-none focus:border-black text-sm font-dm-sans transition-colors bg-transparent"
+                      placeholder="1234567890"
+                    />
+                  </div>
                 ) : (
-                  <p className="text-lg font-dm-sans text-[#000000]">{user.phoneNumber || <span className="font-gambetta italic text-base text-black/40">No phone added</span>}</p>
+                  <p className="text-lg font-dm-sans text-[#000000]">{user.phone || user.phoneNumber || <span className="font-gambetta italic text-base text-black/40">No phone added</span>}</p>
                 )}
               </div>
             </div>

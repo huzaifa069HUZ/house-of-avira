@@ -19,6 +19,7 @@ export default function Login() {
   const [showGoogleExtraForm, setShowGoogleExtraForm] = useState(false);
   const [googleUser, setGoogleUser] = useState(null);
   const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('+91');
   const [name, setName] = useState('');
 
   const router = useRouter();
@@ -98,7 +99,7 @@ export default function Login() {
           name: name || googleUser.displayName || '',
           email: googleUser.email,
           role,
-          phone,
+          phone: `${countryCode} ${phone}`,
           instagramHandle: '',
           profilePicUrl: googleUser.photoURL || '',
           createdAt: serverTimestamp()
@@ -142,15 +143,30 @@ export default function Login() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Phone Number</label>
+            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Phone Number</label>
+            <div className="flex">
+              <select
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+                className="appearance-none block w-[80px] px-3 py-2 border border-[#000000]/20 border-r-0 bg-transparent rounded-l-sm shadow-sm focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm text-center"
+              >
+                <option value="+91">+91 (IN)</option>
+                <option value="+1">+1 (US/CA)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+61">+61 (AU)</option>
+                <option value="+971">+971 (AE)</option>
+                <option value="+65">+65 (SG)</option>
+              </select>
               <input
                 type="tel"
                 required
-                className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
+                className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-r-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                placeholder="1234567890"
               />
             </div>
+          </div>
           </div>
 
           <div>
