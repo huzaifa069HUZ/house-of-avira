@@ -4,16 +4,23 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { auth, googleProvider } from '@/lib/firebase';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { useAuthStore } from '@/store/authStore';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
+  
+  // States for new Google users missing details
+  const [showGoogleExtraForm, setShowGoogleExtraForm] = useState(false);
+  const [googleUser, setGoogleUser] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+
   const router = useRouter();
 
   const handleLogin = async (e) => {
@@ -25,6 +32,23 @@ export default function Login() {
       router.push('/account');
     } catch (err) {
       setError('Invalid email or password.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    if (!email) {
+      setError("Please enter your email address first.");
+      return;
+    }
+    setLoading(true);
+    setError('');
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setResetEmailSent(true);
+    } catch(err) {
+      setError(err.message || 'Failed to send reset email.');
     } finally {
       setLoading(false);
     }
@@ -42,24 +66,14 @@ export default function Login() {
       const userDocSnap = await getDoc(userDocRef);
       
       if (!userDocSnap.exists()) {
-        let role = 'customer';
-        if (['Orders.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com'].includes(user.email)) {
-          role = 'admin_owner';
-        }
-        
-        await setDoc(userDocRef, {
-          uid: user.uid,
-          name: user.displayName || '',
-          email: user.email,
-          role,
-          phone: '',
-          instagramHandle: '',
-          profilePicUrl: user.photoURL || '',
-          createdAt: serverTimestamp()
-        });
+        // Show the extra details form instead of immediately continuing
+        setGoogleUser(user);
+        setName(user.displayName || '');
+        setShowGoogleExtraForm(true);
+      } else {
+        // Existing user, just login
+        router.push('/account');
       }
-      
-      router.push('/account');
     } catch (err) {
       console.error(err);
       setError('Failed to sign in with Google.');
@@ -67,6 +81,91 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+  const handleGoogleExtraSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+        const userDocRef = doc(db, 'users', googleUser.uid);
+        let role = 'customer';
+        if (['Orders.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com'].includes(googleUser.email)) {
+          role = 'admin_owner';
+        }
+        
+        await setDoc(userDocRef, {
+          uid: googleUser.uid,
+          name: name || googleUser.displayName || '',
+          email: googleUser.email,
+          role,
+          phone,
+          instagramHandle: '',
+          profilePicUrl: googleUser.photoURL || '',
+          createdAt: serverTimestamp()
+        });
+        
+        router.push('/account');
+    } catch(err) {
+        console.error(err);
+        setError('Failed to save profile details.');
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  if (showGoogleExtraForm) {
+    return (
+      <>
+        <div className="text-center">
+          <h2 className="text-2xl font-serif tracking-tight text-[#000000]">Complete your Profile</h2>
+          <p className="mt-2 text-sm text-[#000000]/70">
+            Just a few more details to set up your account.
+          </p>
+        </div>
+
+        <form className="mt-8 space-y-6" onSubmit={handleGoogleExtraSubmit}>
+          {error && (
+            <div className="bg-red-50 text-red-500 p-3 rounded text-sm text-center">
+              {error}
+            </div>
+          )}
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Full Name</label>
+              <input
+                type="text"
+                required
+                className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Phone Number</label>
+              <input
+                type="tel"
+                required
+                className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-[#FFFFFF] bg-[#000000] hover:bg-[#8A001A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000000] disabled:opacity-70 uppercase tracking-widest transition-colors"
+            >
+              {loading ? 'Saving...' : 'Complete Setup'}
+            </button>
+          </div>
+        </form>
+      </>
+    );
+  }
 
   return (
     <>
@@ -86,6 +185,11 @@ export default function Login() {
             {error}
           </div>
         )}
+        {resetEmailSent && (
+          <div className="bg-green-50 text-green-600 p-3 rounded text-sm text-center">
+            Password reset email sent! Please check your inbox.
+          </div>
+        )}
         
         <div className="space-y-4">
           <div>
@@ -99,7 +203,16 @@ export default function Login() {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Password</label>
+            <div className="flex justify-between items-center mb-1">
+              <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest">Password</label>
+              <button
+                type="button"
+                onClick={handleResetPassword}
+                className="text-xs text-[#000000]/60 hover:text-[#000000] underline"
+              >
+                Forgot Password?
+              </button>
+            </div>
             <input
               type="password"
               required
