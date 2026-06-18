@@ -187,7 +187,7 @@ export default function Login() {
         )}
         {resetEmailSent && (
           <div className="bg-green-50 text-green-600 p-3 rounded text-sm text-center">
-            Password reset email sent! Please check your inbox.
+            Password reset email sent! Please check your inbox and spam folder.
           </div>
         )}
         

@@ -8,9 +8,9 @@ if (!getApps().length) {
       credential: cert({
         projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
         clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-        // Handle escaped newline characters in the private key string
+        // Handle escaped newline characters and literal quotes in the private key string
         privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY
-          ? process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n')
+          ? process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n').replace(/^"|"$/g, '')
           : undefined,
       }),
     });
