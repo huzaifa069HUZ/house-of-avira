@@ -10,6 +10,10 @@ export async function POST(request) {
       return NextResponse.json({ success: false, message: "Email is required." }, { status: 400 });
     }
 
+    if (!adminDb) {
+      return NextResponse.json({ success: false, message: "Server configuration error: Database unavailable." }, { status: 500 });
+    }
+
     const sanitizedEmail = email.trim().toLowerCase();
 
     // Basic Rate Limiting
