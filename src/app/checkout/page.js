@@ -4,11 +4,13 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
-import { ChevronRight, ArrowLeft, ShieldCheck, MapPin, CreditCard, ChevronDown, Check, Minus, Plus } from 'lucide-react';
+import { ChevronRight, ArrowLeft, ShieldCheck, CreditCard, ChevronDown, Check, Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import PriceDisplay from '@/components/PriceDisplay';
 import { Country } from 'country-state-city';
+import { db } from '@/lib/firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const countries = Country.getAllCountries().map(c => c.name);
 
@@ -23,7 +25,6 @@ const phoneCodes = [
   { code: '+65', country: 'SG' },
 ];
 
-// Custom Country Select with Type & Select functionality
 const CountryComboBox = ({ value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState(value || '');
@@ -37,8 +38,6 @@ const CountryComboBox = ({ value, onChange }) => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setIsOpen(false);
-        // If they clicked away and it's not a valid exact match, optionally revert or keep custom
-        // We'll let them keep custom as per "manually type" requirement
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -116,7 +115,10 @@ export default function CheckoutPage() {
   const { user } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   
-  // Form State
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [saveNewAddress, setSaveNewAddress] = useState(false);
+
   const [formData, setFormData] = useState({
     fullName: '',
     phoneCode: '+91',
@@ -133,16 +135,58 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     setMounted(true);
-    if (user) {
-      setFormData(prev => ({
-        ...prev,
-        fullName: user.name || '',
-        email: user.email || '',
-        phone: user.phone || '',
-        // If addresses exist in user doc, we could populate them here.
-      }));
-    }
+    const fetchUserAddresses = async () => {
+      if (user?.uid) {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            let userAddresses = data.addresses || [];
+            
+            if (data.address && userAddresses.length === 0) {
+              userAddresses = [{ ...data.address, id: Date.now().toString(), isDefault: true }];
+              await updateDoc(docRef, { addresses: userAddresses });
+            }
+            
+            setSavedAddresses(userAddresses);
+            
+            const defaultAddr = userAddresses.find(a => a.isDefault) || userAddresses[0];
+            if (defaultAddr) {
+               handleSelectSavedAddress(defaultAddr);
+            } else {
+               setFormData(prev => ({
+                 ...prev,
+                 fullName: user.name || '',
+                 email: user.email || '',
+                 phone: user.phoneNumber || '',
+               }));
+            }
+          }
+        } catch (err) {
+          console.error("Failed to fetch addresses:", err);
+        }
+      }
+    };
+    
+    fetchUserAddresses();
   }, [user]);
+
+  const handleSelectSavedAddress = (addr) => {
+    setSelectedAddressId(addr.id);
+    setFormData(prev => ({
+      ...prev,
+      fullName: user?.name || prev.fullName,
+      email: user?.email || prev.email,
+      phone: user?.phoneNumber || prev.phone,
+      addressLine1: addr.street || '',
+      addressLine2: '',
+      city: addr.city || '',
+      state: addr.stateName || addr.stateCode || '',
+      pincode: addr.zip || '',
+      country: addr.countryName || addr.countryCode || 'India',
+    }));
+  };
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -152,7 +196,6 @@ export default function CheckoutPage() {
     const val = e.target.value;
     handleChange('pincode', val);
     
-    // Autofetch logic for India
     if (formData.country === 'India' && val.length === 6) {
       try {
         const res = await fetch(`https://api.postalpincode.in/pincode/${val}`);
@@ -171,9 +214,46 @@ export default function CheckoutPage() {
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   const totalPayable = Math.max(0, subtotal - discountAmount);
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    // In the future: Integrate Razorpay here
+    
+    if (user?.uid) {
+       try {
+         const docRef = doc(db, 'users', user.uid);
+         let newAddresses = [...savedAddresses];
+         
+         if (selectedAddressId) {
+            newAddresses = newAddresses.map(addr => {
+               if (addr.id === selectedAddressId) {
+                 return {
+                   ...addr,
+                   street: formData.addressLine1,
+                   city: formData.city,
+                   zip: formData.pincode,
+                   countryName: formData.country,
+                   stateName: formData.state,
+                 };
+               }
+               return addr;
+            });
+            await updateDoc(docRef, { addresses: newAddresses });
+         } else if (saveNewAddress && savedAddresses.length < 3) {
+            newAddresses.push({
+               id: Date.now().toString(),
+               street: formData.addressLine1,
+               city: formData.city,
+               zip: formData.pincode,
+               countryName: formData.country,
+               stateName: formData.state,
+               isDefault: savedAddresses.length === 0,
+            });
+            await updateDoc(docRef, { addresses: newAddresses });
+         }
+       } catch (err) {
+         console.error("Error updating address on order:", err);
+       }
+    }
+
     alert("Proceeding to Razorpay payment with data: " + JSON.stringify(formData, null, 2));
   };
 
@@ -182,7 +262,6 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-black selection:bg-black selection:text-white pb-20 lg:pb-0" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
       
-      {/* Top Navigation */}
       <div className="w-full bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
         <Link href="/" className="flex items-center gap-2 group">
           <ArrowLeft className="w-4 h-4 text-gray-400 group-hover:text-black transition-colors" />
@@ -196,7 +275,6 @@ export default function CheckoutPage() {
 
       <div className="max-w-[1400px] mx-auto lg:flex lg:h-[calc(100vh-61px)]">
         
-        {/* Left Side: Form */}
         <div className="flex-1 overflow-y-auto px-6 py-10 lg:px-16 lg:py-16 bg-white">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -209,7 +287,6 @@ export default function CheckoutPage() {
 
             <form id="checkout-form" onSubmit={handlePlaceOrder} className="space-y-12">
               
-              {/* Contact Information */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 border-b border-gray-100 pb-3">
                   <span className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">1</span>
@@ -249,13 +326,40 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Delivery Address */}
               <div className="space-y-6">
                 <div className="flex items-center gap-3 border-b border-gray-100 pb-3">
                   <span className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">2</span>
                   <h2 className="text-lg font-bold tracking-tight">Delivery Address</h2>
                 </div>
                 
+                {savedAddresses.length > 0 && (
+                  <div className="mb-6">
+                     <p className="text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-3">Saved Addresses</p>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                       {savedAddresses.map(addr => (
+                          <div 
+                            key={addr.id} 
+                            onClick={() => handleSelectSavedAddress(addr)}
+                            className={`border p-4 rounded-xl cursor-pointer transition-all ${selectedAddressId === addr.id ? 'border-black bg-gray-50' : 'border-gray-200 hover:border-black/50'}`}
+                          >
+                             {addr.isDefault && <span className="text-[9px] bg-black text-white px-2 py-0.5 rounded uppercase font-bold tracking-widest mb-2 inline-block">Default</span>}
+                             <p className="text-sm font-bold text-black">{addr.street}</p>
+                             <p className="text-xs text-gray-500 mt-1">{addr.city}, {addr.stateName} {addr.zip}</p>
+                             <p className="text-xs text-gray-500">{addr.countryName}</p>
+                          </div>
+                       ))}
+                     </div>
+                     {selectedAddressId && (
+                       <button type="button" onClick={() => { 
+                         setSelectedAddressId(null); 
+                         setFormData(prev => ({...prev, addressLine1: '', addressLine2: '', city: '', state: '', pincode: '', country: 'India'})); 
+                       }} className="mt-4 text-[10px] font-bold uppercase tracking-widest text-black border-b border-black pb-0.5 hover:text-gray-600 transition-colors">
+                         Enter a new address instead
+                       </button>
+                     )}
+                  </div>
+                )}
+
                 <div className="space-y-6">
                   <CountryComboBox value={formData.country} onChange={val => handleChange('country', val)} />
                   
@@ -269,6 +373,19 @@ export default function CheckoutPage() {
                   <div className="w-1/2 pr-3">
                     <InputField label="Postal / ZIP Code" value={formData.pincode} onChange={handlePincodeChange} required />
                   </div>
+
+                  {!selectedAddressId && user && savedAddresses.length < 3 && (
+                    <div className="flex items-center gap-2 mt-4">
+                      <input 
+                        type="checkbox" 
+                        id="saveNewAddress" 
+                        checked={saveNewAddress}
+                        onChange={(e) => setSaveNewAddress(e.target.checked)}
+                        className="w-4 h-4 accent-black"
+                      />
+                      <label htmlFor="saveNewAddress" className="text-sm font-dm-sans font-medium text-gray-700">Save this address to my profile</label>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -276,7 +393,6 @@ export default function CheckoutPage() {
           </motion.div>
         </div>
 
-        {/* Right Side: Order Summary */}
         <div className="w-full lg:w-[450px] xl:w-[550px] bg-[#FAFAFA] lg:border-l border-gray-200 overflow-y-auto">
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
@@ -286,7 +402,6 @@ export default function CheckoutPage() {
           >
             <h2 className="text-3xl mb-6 tracking-normal" style={{ fontFamily: 'var(--font-gambetta, "Gambetta", serif)', fontStyle: 'italic', fontWeight: 400 }}>Order Summary</h2>
 
-            {/* Products List */}
             <div className="space-y-6 mb-8 max-h-[40vh] overflow-y-auto pr-2 hide-scrollbar">
               {cart.map((item) => (
                 <div key={item.cartItemId || item.id} className="flex gap-5">
@@ -294,7 +409,6 @@ export default function CheckoutPage() {
                     <div className="w-full h-full bg-gray-100 rounded-xl overflow-hidden border border-gray-200 relative z-0">
                       {item.image && <Image src={item.image} alt={item.title} fill className="object-cover" />}
                     </div>
-                    {/* Quantity Badge perfectly placed above the image container */}
                     <div className="absolute -top-2.5 -right-2.5 w-6 h-6 bg-black text-white text-[11px] font-bold rounded-full flex items-center justify-center z-20 shadow-md border-2 border-white">
                       {item.quantity}
                     </div>
@@ -306,7 +420,6 @@ export default function CheckoutPage() {
                     <div className="flex items-center justify-between mt-3">
                       <p className="text-[15px] font-black text-black"><PriceDisplay basePrice={item.price} /></p>
                       
-                      {/* Quantity Increaser */}
                       <div className="flex items-center bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden h-7">
                         <button type="button" onClick={() => updateQuantity(item.cartItemId || item.id, -1)} className="w-7 h-full flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors">
                           <Minus className="w-3 h-3" />
@@ -322,7 +435,6 @@ export default function CheckoutPage() {
               ))}
             </div>
 
-            {/* Cost Breakdown */}
             <div className="space-y-3 border-t border-gray-200 pt-6 mb-6">
               <div className="flex justify-between text-sm font-medium text-gray-600">
                 <span>Subtotal</span>
@@ -336,7 +448,6 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            {/* Total */}
             <div className="border-t border-gray-200 pt-6 mb-8">
               <div className="flex justify-between items-end mb-2">
                 <span className="text-lg font-bold">Payable Now</span>
@@ -351,7 +462,6 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Action */}
             <button 
               type="submit"
               form="checkout-form"

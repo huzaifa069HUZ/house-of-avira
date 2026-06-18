@@ -9,6 +9,8 @@ import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useQuickAddStore } from '@/store/quickAddStore';
 import PriceDisplay from '@/components/PriceDisplay';
+import { motion, AnimatePresence } from 'framer-motion';
+import DualRangeSlider from '@/components/ui/DualRangeSlider';
 import './catalogue.css';
 
 const CATEGORIES = [
@@ -25,6 +27,46 @@ const CATEGORIES = [
   'PETS'
 ];
 
+const COLOR_MAP = {
+  black: '#000000',
+  white: '#ffffff',
+  red: '#ff0000',
+  blue: '#0000ff',
+  green: '#008000',
+  yellow: '#ffff00',
+  purple: '#800080',
+  orange: '#ffa500',
+  pink: '#ffc0cb',
+  brown: '#a52a2a',
+  grey: '#808080',
+  gray: '#808080',
+  silver: '#c0c0c0',
+  gold: '#ffd700',
+  navy: '#000080',
+  beige: '#f5f5dc',
+  maroon: '#800000',
+  olive: '#808000',
+  teal: '#008080',
+  cyan: '#00ffff',
+  magenta: '#ff00ff',
+  cream: '#fffdd0',
+  mustard: '#ffdb58',
+  burgundy: '#800020',
+  charcoal: '#36454f',
+  peach: '#ffdab9',
+  lavender: '#e6e6fa',
+  mint: '#98ff98',
+  coral: '#ff7f50',
+  rust: '#b7410e',
+};
+
+const getColorHex = (colorName) => {
+  if (!colorName) return '#000000';
+  if (colorName.startsWith('#')) return colorName;
+  const lower = colorName.toLowerCase();
+  return COLOR_MAP[lower] || null;
+};
+
 export default function CatalogueClient() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,10 +77,11 @@ export default function CatalogueClient() {
   const [activeSort, setActiveSort] = useState('newest'); // newest, price_asc, price_desc
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 10000]); // [min, max]
   
   // Mobile UI States
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // 'sort', 'size', 'color'
+  const [activeDropdown, setActiveDropdown] = useState(null); // 'sort', 'size', 'color', 'price'
 
   const { user } = useAuthStore();
   const { wishlist, toggleWishlist } = useWishlistStore();
@@ -102,6 +145,9 @@ export default function CatalogueClient() {
   const displayProducts = useMemo(() => {
     let result = [...categoryFilteredProducts];
 
+    // Filter Price
+    result = result.filter(p => (p.price || 0) >= priceRange[0] && (p.price || 0) <= priceRange[1]);
+
     // Filter Size
     if (selectedSizes.length > 0) {
       result = result.filter(p => p.sizes && p.sizes.some(s => selectedSizes.includes(s)));
@@ -127,7 +173,7 @@ export default function CatalogueClient() {
     }
 
     return result;
-  }, [categoryFilteredProducts, selectedSizes, selectedColors, activeSort]);
+  }, [categoryFilteredProducts, selectedSizes, selectedColors, priceRange, activeSort]);
 
   const toggleSize = (size) => {
     setSelectedSizes(prev => prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]);
@@ -153,10 +199,10 @@ export default function CatalogueClient() {
   };
 
   return (
-    <div className="avira-catalogue-container relative pb-32 md:pb-0">
+    <div className="avira-catalogue-container relative pb-32 md:pb-0" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
       {/* Header */}
       <header className="avira-catalogue-header">
-        <h1 className="avira-catalogue-title">GET THE LOOK</h1>
+        <h1 className="avira-catalogue-title tracking-tight uppercase">GET THE LOOK</h1>
         <p className="avira-catalogue-subtitle">
           Share your looks on socials by mentioning @houseofavira and #AviraStyle.
         </p>
@@ -173,6 +219,7 @@ export default function CatalogueClient() {
                 setActiveCategory(cat);
                 setSelectedSizes([]); // reset filters when category changes
                 setSelectedColors([]);
+                setPriceRange([0, 10000]);
               }}
             >
               {cat}
@@ -182,31 +229,70 @@ export default function CatalogueClient() {
       </nav>
 
       {/* DESKTOP FILTER BAR */}
-      <div className="hidden md:block sticky top-[72px] z-40 w-full backdrop-blur-2xl bg-white/70 border-y border-black/5 shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300 mb-8">
+      <div className="hidden md:block sticky top-[72px] z-40 w-full backdrop-blur-3xl bg-white/70 border-y border-black/5 shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300 mb-8">
         <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             {/* Sort Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => toggleDropdown('desktop_sort')}
-                className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
+                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
               >
                 Sort By <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_sort' ? 'rotate-180' : ''}`} />
               </button>
-              {activeDropdown === 'desktop_sort' && (
-                <div className="absolute top-full left-0 mt-4 w-48 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden py-2 animate-in fade-in slide-in-from-top-2">
-                  <button onClick={() => { setActiveSort('newest'); setActiveDropdown(null); }} className="w-full text-left px-5 py-3 text-xs font-medium hover:bg-black/5 flex items-center justify-between">
-                    Newest {activeSort === 'newest' && <Check className="w-3 h-3" />}
-                  </button>
-                  <button onClick={() => { setActiveSort('price_asc'); setActiveDropdown(null); }} className="w-full text-left px-5 py-3 text-xs font-medium hover:bg-black/5 flex items-center justify-between">
-                    Price: Low to High {activeSort === 'price_asc' && <Check className="w-3 h-3" />}
-                  </button>
-                  <button onClick={() => { setActiveSort('price_desc'); setActiveDropdown(null); }} className="w-full text-left px-5 py-3 text-xs font-medium hover:bg-black/5 flex items-center justify-between">
-                    Price: High to Low {activeSort === 'price_desc' && <Check className="w-3 h-3" />}
-                  </button>
-                </div>
-              )}
+              <AnimatePresence>
+                {activeDropdown === 'desktop_sort' && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full left-0 mt-4 w-48 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden py-2"
+                  >
+                    <button onClick={() => { setActiveSort('newest'); setActiveDropdown(null); }} className="w-full text-left px-5 py-3 text-xs font-semibold hover:bg-black/5 flex items-center justify-between">
+                      Newest {activeSort === 'newest' && <Check className="w-3 h-3" />}
+                    </button>
+                    <button onClick={() => { setActiveSort('price_asc'); setActiveDropdown(null); }} className="w-full text-left px-5 py-3 text-xs font-semibold hover:bg-black/5 flex items-center justify-between">
+                      Price: Low to High {activeSort === 'price_asc' && <Check className="w-3 h-3" />}
+                    </button>
+                    <button onClick={() => { setActiveSort('price_desc'); setActiveDropdown(null); }} className="w-full text-left px-5 py-3 text-xs font-semibold hover:bg-black/5 flex items-center justify-between">
+                      Price: High to Low {activeSort === 'price_desc' && <Check className="w-3 h-3" />}
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Price Dropdown */}
+            <div className="relative">
+              <button 
+                onClick={() => toggleDropdown('desktop_price')}
+                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
+              >
+                Price {(priceRange[0] > 0 || priceRange[1] < 10000) && <span className="bg-black text-white rounded-full w-2 h-2"></span>} <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_price' ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {activeDropdown === 'desktop_price' && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full left-0 mt-4 w-72 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-6"
+                  >
+                    <div className="flex justify-between items-center mb-6 text-sm font-semibold text-black">
+                      <span>₹{priceRange[0]}</span>
+                      <span>₹{priceRange[1]}</span>
+                    </div>
+                    <DualRangeSlider 
+                      min={0} 
+                      max={10000} 
+                      step={100} 
+                      value={priceRange} 
+                      onChange={setPriceRange} 
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Size Dropdown */}
@@ -214,25 +300,32 @@ export default function CatalogueClient() {
               <div className="relative">
                 <button 
                   onClick={() => toggleDropdown('desktop_size')}
-                  className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
+                  className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
                 >
                   Size {selectedSizes.length > 0 && <span className="bg-black text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]">{selectedSizes.length}</span>} <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_size' ? 'rotate-180' : ''}`} />
                 </button>
-                {activeDropdown === 'desktop_size' && (
-                  <div className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-4 animate-in fade-in slide-in-from-top-2">
-                    <div className="grid grid-cols-3 gap-2">
-                      {availableSizes.map(size => (
-                        <button 
-                          key={size}
-                          onClick={() => toggleSize(size)}
-                          className={`py-2 text-[11px] font-bold rounded-lg border transition-colors ${selectedSizes.includes(size) ? 'bg-black text-white border-black' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
-                        >
-                          {size}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <AnimatePresence>
+                  {activeDropdown === 'desktop_size' && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-4"
+                    >
+                      <div className="grid grid-cols-3 gap-2">
+                        {availableSizes.map(size => (
+                          <button 
+                            key={size}
+                            onClick={() => toggleSize(size)}
+                            className={`py-2 text-[11px] font-bold rounded-lg border transition-all active:scale-95 ${selectedSizes.includes(size) ? 'bg-black text-white border-black shadow-md' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             )}
             
@@ -241,36 +334,50 @@ export default function CatalogueClient() {
               <div className="relative">
                 <button 
                   onClick={() => toggleDropdown('desktop_color')}
-                  className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
+                  className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
                 >
                   Color {selectedColors.length > 0 && <span className="bg-black text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]">{selectedColors.length}</span>} <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_color' ? 'rotate-180' : ''}`} />
                 </button>
-                {activeDropdown === 'desktop_color' && (
-                  <div className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-4 animate-in fade-in slide-in-from-top-2">
-                    <div className="flex flex-wrap gap-2">
-                      {availableColors.map(color => (
-                        <button 
-                          key={color}
-                          onClick={() => toggleColor(color)}
-                          className={`px-3 py-2 text-[11px] font-bold rounded-lg border transition-colors flex items-center gap-2 ${selectedColors.includes(color) ? 'bg-black text-white border-black' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
-                        >
-                          {color.startsWith('#') && (
-                            <span className="w-3 h-3 rounded-full border border-black/20" style={{ backgroundColor: color }} />
-                          )}
-                          {color.startsWith('#') ? 'Color' : color}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <AnimatePresence>
+                  {activeDropdown === 'desktop_color' && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-5"
+                    >
+                      <div className="flex flex-wrap gap-3">
+                        {availableColors.map(color => {
+                          const hex = getColorHex(color);
+                          return (
+                            <button 
+                              key={color}
+                              onClick={() => toggleColor(color)}
+                              title={color}
+                              className={`w-8 h-8 rounded-full border border-black/10 transition-all flex items-center justify-center active:scale-95`}
+                              style={{ 
+                                backgroundColor: hex || '#FAFAFA', 
+                                ...(selectedColors.includes(color) ? {boxShadow: `0 0 0 2px white, 0 0 0 4px black`} : {}) 
+                              }}
+                            >
+                              {selectedColors.includes(color) && (
+                                <Check className={`w-4 h-4 ${hex && hex.toLowerCase() === '#ffffff' ? 'text-black' : 'text-white'}`} />
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             )}
           </div>
 
           {/* Active Filters Clear Button */}
-          {(selectedSizes.length > 0 || selectedColors.length > 0 || activeSort !== 'newest') && (
+          {(selectedSizes.length > 0 || selectedColors.length > 0 || activeSort !== 'newest' || priceRange[0] > 0 || priceRange[1] < 10000) && (
             <button 
-              onClick={() => { setSelectedSizes([]); setSelectedColors([]); setActiveSort('newest'); }}
+              onClick={() => { setSelectedSizes([]); setSelectedColors([]); setPriceRange([0, 10000]); setActiveSort('newest'); }}
               className="text-[10px] uppercase font-bold tracking-widest text-neutral-500 hover:text-black transition-colors"
             >
               Clear All
@@ -281,7 +388,7 @@ export default function CatalogueClient() {
       </div>
 
       {/* MOBILE FLUID PILL FILTER BAR (Fixed at bottom) */}
-      <div className="md:hidden fixed bottom-6 left-4 right-4 z-50 flex justify-center pointer-events-none">
+      <div className="md:hidden fixed bottom-6 left-4 right-4 z-40 flex justify-center pointer-events-none">
         <div className="bg-white/80 backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/40 rounded-full px-6 py-3.5 flex justify-between items-center gap-8 pointer-events-auto relative">
           
           {/* Sort Trigger */}
@@ -302,93 +409,152 @@ export default function CatalogueClient() {
             className="flex items-center gap-2 text-black hover:opacity-70 transition-opacity"
           >
             <SlidersHorizontal className="w-4 h-4" />
-            <span className="text-[11px] font-bold uppercase tracking-widest">Filters {(selectedSizes.length + selectedColors.length) > 0 && `(${selectedSizes.length + selectedColors.length})`}</span>
+            <span className="text-[11px] font-bold uppercase tracking-widest">Filters {(selectedSizes.length + selectedColors.length + (priceRange[0]>0||priceRange[1]<10000?1:0)) > 0 && `(${selectedSizes.length + selectedColors.length + (priceRange[0]>0||priceRange[1]<10000?1:0)})`}</span>
           </button>
 
           {/* Mobile Sort Dropdown Popover */}
-          {activeDropdown === 'mobile_sort' && (
-            <div className="absolute bottom-[calc(100%+16px)] left-0 w-48 bg-white/90 backdrop-blur-3xl border border-white/40 shadow-2xl rounded-3xl overflow-hidden py-2 animate-in slide-in-from-bottom-4 fade-in">
-              <button onClick={() => { setActiveSort('newest'); setActiveDropdown(null); }} className={`w-full text-left px-5 py-3 text-xs font-bold ${activeSort === 'newest' ? 'text-black' : 'text-neutral-500'}`}>
-                Newest Arrivals
-              </button>
-              <button onClick={() => { setActiveSort('price_asc'); setActiveDropdown(null); }} className={`w-full text-left px-5 py-3 text-xs font-bold ${activeSort === 'price_asc' ? 'text-black' : 'text-neutral-500'}`}>
-                Price: Low to High
-              </button>
-              <button onClick={() => { setActiveSort('price_desc'); setActiveDropdown(null); }} className={`w-full text-left px-5 py-3 text-xs font-bold ${activeSort === 'price_desc' ? 'text-black' : 'text-neutral-500'}`}>
-                Price: High to Low
-              </button>
-            </div>
-          )}
+          <AnimatePresence>
+            {activeDropdown === 'mobile_sort' && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="absolute bottom-[calc(100%+16px)] left-0 w-48 bg-white/95 backdrop-blur-3xl border border-white/40 shadow-2xl rounded-3xl overflow-hidden py-2"
+              >
+                <button onClick={() => { setActiveSort('newest'); setActiveDropdown(null); }} className={`w-full text-left px-5 py-3 text-xs font-bold ${activeSort === 'newest' ? 'text-black' : 'text-neutral-500'}`}>
+                  Newest Arrivals
+                </button>
+                <button onClick={() => { setActiveSort('price_asc'); setActiveDropdown(null); }} className={`w-full text-left px-5 py-3 text-xs font-bold ${activeSort === 'price_asc' ? 'text-black' : 'text-neutral-500'}`}>
+                  Price: Low to High
+                </button>
+                <button onClick={() => { setActiveSort('price_desc'); setActiveDropdown(null); }} className={`w-full text-left px-5 py-3 text-xs font-bold ${activeSort === 'price_desc' ? 'text-black' : 'text-neutral-500'}`}>
+                  Price: High to Low
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
-      {/* MOBILE FULLSCREEN FILTERS MODAL */}
-      {showMobileFilters && (
-        <div className="md:hidden fixed inset-0 z-[100] bg-white animate-in slide-in-from-bottom flex flex-col">
-          <div className="px-6 py-6 border-b border-black/5 flex justify-between items-center bg-white/80 backdrop-blur-xl sticky top-0 z-10">
-            <h2 className="text-lg font-bold tracking-widest uppercase">Filters</h2>
-            <button onClick={() => setShowMobileFilters(false)} className="text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-black">Done</button>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto px-6 py-8 space-y-10 pb-32">
-            
-            {/* Sizes */}
-            {availableSizes.length > 0 && (
-              <div>
-                <h3 className="text-xs font-bold tracking-widest uppercase text-neutral-500 mb-4">Size</h3>
-                <div className="grid grid-cols-4 gap-3">
-                  {availableSizes.map(size => (
-                    <button 
-                      key={size}
-                      onClick={() => toggleSize(size)}
-                      className={`py-3 text-[11px] font-bold rounded-2xl border transition-colors ${selectedSizes.includes(size) ? 'bg-black text-white border-black' : 'bg-[#FAFAFA] text-black border-transparent'}`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Colors */}
-            {availableColors.length > 0 && (
-              <div>
-                <h3 className="text-xs font-bold tracking-widest uppercase text-neutral-500 mb-4">Color</h3>
-                <div className="flex flex-wrap gap-3">
-                  {availableColors.map(color => (
-                    <button 
-                      key={color}
-                      onClick={() => toggleColor(color)}
-                      className={`px-4 py-3 text-[11px] font-bold rounded-2xl border transition-colors flex items-center gap-2 ${selectedColors.includes(color) ? 'bg-black text-white border-black' : 'bg-[#FAFAFA] text-black border-transparent'}`}
-                    >
-                      {color.startsWith('#') && (
-                        <span className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: color }} />
-                      )}
-                      {color.startsWith('#') ? 'Color' : color}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-          </div>
-
-          <div className="p-6 bg-white border-t border-black/5 mt-auto">
-            <button 
-              onClick={() => { setSelectedSizes([]); setSelectedColors([]); setActiveSort('newest'); setShowMobileFilters(false); }}
-              className="w-full py-4 text-xs font-bold tracking-widest uppercase text-black bg-[#FAFAFA] rounded-2xl mb-3"
-            >
-              Clear All
-            </button>
-            <button 
+      {/* MOBILE PREMIUM FILTERS BOTTOM SHEET */}
+      <AnimatePresence>
+        {showMobileFilters && (
+          <>
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
               onClick={() => setShowMobileFilters(false)}
-              className="w-full py-4 text-xs font-bold tracking-widest uppercase text-white bg-black rounded-2xl"
+              className="md:hidden fixed inset-0 z-[100] bg-black cursor-pointer"
+            />
+            
+            {/* Sheet */}
+            <motion.div 
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="md:hidden fixed inset-x-0 bottom-0 z-[100] bg-white/95 backdrop-blur-3xl rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex flex-col max-h-[85vh] border border-white/50"
+              style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}
             >
-              View {displayProducts.length} Results
-            </button>
-          </div>
-        </div>
-      )}
+              {/* Grab Handle */}
+              <div className="w-full flex justify-center pt-4 pb-2">
+                <div className="w-12 h-1.5 bg-neutral-300 rounded-full" />
+              </div>
+
+              <div className="px-8 pb-4 flex justify-between items-center sticky top-0 z-10">
+                <h2 className="text-xl font-bold tracking-tight text-black">Filters</h2>
+                <button onClick={() => setShowMobileFilters(false)} className="w-8 h-8 flex items-center justify-center bg-neutral-100 rounded-full text-black hover:bg-neutral-200 transition-colors">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto px-8 py-6 space-y-10 pb-10">
+                
+                {/* Price Range */}
+                <div>
+                  <div className="flex justify-between items-end mb-6">
+                    <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-500">Price Range</h3>
+                    <span className="text-sm font-semibold text-black">₹{priceRange[0]} - ₹{priceRange[1]}</span>
+                  </div>
+                  <div className="px-2">
+                    <DualRangeSlider 
+                      min={0} 
+                      max={10000} 
+                      step={100} 
+                      value={priceRange} 
+                      onChange={setPriceRange} 
+                    />
+                  </div>
+                </div>
+
+                {/* Sizes */}
+                {availableSizes.length > 0 && (
+                  <div>
+                    <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-500 mb-4">Size</h3>
+                    <div className="grid grid-cols-4 gap-3">
+                      {availableSizes.map(size => (
+                        <button 
+                          key={size}
+                          onClick={() => toggleSize(size)}
+                          className={`py-3 text-[13px] font-bold rounded-2xl border transition-all active:scale-95 ${selectedSizes.includes(size) ? 'bg-black text-white border-black shadow-md' : 'bg-white text-black border-neutral-200 hover:border-black/30'}`}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Colors */}
+                {availableColors.length > 0 && (
+                  <div>
+                    <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-500 mb-4">Color</h3>
+                    <div className="flex flex-wrap gap-4">
+                      {availableColors.map(color => {
+                        const hex = getColorHex(color);
+                        return (
+                          <button 
+                            key={color}
+                            onClick={() => toggleColor(color)}
+                            title={color}
+                            className={`w-10 h-10 rounded-full border border-black/10 transition-all flex items-center justify-center active:scale-95`}
+                            style={{ 
+                              backgroundColor: hex || '#FAFAFA', 
+                              ...(selectedColors.includes(color) ? {boxShadow: `0 0 0 2px white, 0 0 0 4px black`} : {}) 
+                            }}
+                          >
+                            {selectedColors.includes(color) && (
+                              <Check className={`w-5 h-5 ${hex && hex.toLowerCase() === '#ffffff' ? 'text-black' : 'text-white'}`} />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Bar */}
+              <div className="p-6 bg-white/80 backdrop-blur-xl border-t border-black/5 mt-auto flex gap-4 rounded-b-[2.5rem]">
+                <button 
+                  onClick={() => { setSelectedSizes([]); setSelectedColors([]); setPriceRange([0, 10000]); setActiveSort('newest'); }}
+                  className="w-1/3 py-4 text-xs font-bold tracking-widest uppercase text-black bg-neutral-100 rounded-2xl active:scale-95 transition-transform"
+                >
+                  Clear
+                </button>
+                <button 
+                  onClick={() => setShowMobileFilters(false)}
+                  className="w-2/3 py-4 text-xs font-bold tracking-widest uppercase text-white bg-black rounded-2xl active:scale-95 transition-transform shadow-[0_8px_20px_rgba(0,0,0,0.2)]"
+                >
+                  Show {displayProducts.length} Results
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Masonry Grid */}
       {loading ? (
@@ -405,9 +571,9 @@ export default function CatalogueClient() {
         <div className="avira-empty">
           <h3>No looks available yet</h3>
           <p>Check back soon for curated styles.</p>
-          {(selectedSizes.length > 0 || selectedColors.length > 0) && (
+          {(selectedSizes.length > 0 || selectedColors.length > 0 || priceRange[0] > 0 || priceRange[1] < 10000) && (
             <button 
-              onClick={() => { setSelectedSizes([]); setSelectedColors([]); }}
+              onClick={() => { setSelectedSizes([]); setSelectedColors([]); setPriceRange([0, 10000]); }}
               className="mt-6 px-8 py-3 bg-black text-white text-xs font-bold tracking-widest uppercase hover:bg-[#8A001A] transition-colors rounded-full"
             >
               Clear Filters
