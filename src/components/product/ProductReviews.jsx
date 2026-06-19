@@ -87,8 +87,10 @@ export default function ProductReviews({ productId }) {
   reviews.forEach(r => ratingCounts[r.rating]++);
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 pt-16 pb-24 border-t border-neutral-200 mt-16 font-lato">
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+    <div className="w-full border-t border-neutral-200 mt-16 font-lato relative bg-gradient-to-b from-[#FAFAFA] to-[#EAEAEA]">
+      <div className="absolute inset-0 opacity-[0.04] mix-blend-multiply pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 pt-16 pb-24 relative z-10">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
         
         {/* Left: Summary & CTA */}
         <div className="w-full lg:w-[30%] shrink-0">
@@ -158,7 +160,7 @@ export default function ProductReviews({ productId }) {
           ) : (
             <div className="space-y-6">
               {reviews.map(review => (
-                <div key={review.id} className="border border-neutral-200 p-6 sm:p-8 rounded-xl bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] group">
+                <div key={review.id} className="border border-black p-6 sm:p-8 rounded-xl bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] group">
                   {/* Top Row */}
                   <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-3">
@@ -166,7 +168,7 @@ export default function ProductReviews({ productId }) {
                         {[1, 2, 3, 4, 5].map(star => (
                           <Star 
                             key={star} 
-                            className={`w-4 h-4 ${star <= review.rating ? 'fill-black stroke-black' : 'fill-transparent stroke-gray-300'}`} 
+                            className={`w-4 h-4 ${star <= review.rating ? 'fill-[#8A001A] stroke-[#8A001A]' : 'fill-transparent stroke-gray-300'}`} 
                           />
                         ))}
                       </div>
@@ -250,6 +252,7 @@ export default function ProductReviews({ productId }) {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </div>
   );
 }
