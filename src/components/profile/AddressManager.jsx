@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Country, State, City } from 'country-state-city';
 import { db } from '@/lib/firebase';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { useAuthStore } from '@/store/authStore';
 import { MapPin, Edit2, Check, X, Loader2, ChevronDown, Plus, Trash2, Star } from 'lucide-react';
 
@@ -51,7 +51,7 @@ export default function AddressManager() {
           };
           fetchedAddresses = [migratedAddress];
           // Update db with migrated address
-          await updateDoc(docRef, { addresses: fetchedAddresses });
+          await setDoc(docRef, { addresses: fetchedAddresses }, { merge: true });
         }
 
         setAddresses(fetchedAddresses);
@@ -141,7 +141,7 @@ export default function AddressManager() {
         newAddresses[0].isDefault = true;
       }
 
-      await updateDoc(docRef, { addresses: newAddresses });
+      await setDoc(docRef, { addresses: newAddresses }, { merge: true });
       setAddresses(newAddresses);
       setIsEditing(false);
     } catch (error) {
@@ -165,7 +165,7 @@ export default function AddressManager() {
         newAddresses[0].isDefault = true;
       }
 
-      await updateDoc(docRef, { addresses: newAddresses });
+      await setDoc(docRef, { addresses: newAddresses }, { merge: true });
       setAddresses(newAddresses);
     } catch (error) {
       console.error('Error deleting address:', error);
@@ -183,7 +183,7 @@ export default function AddressManager() {
         isDefault: addr.id === id
       }));
 
-      await updateDoc(docRef, { addresses: newAddresses });
+      await setDoc(docRef, { addresses: newAddresses }, { merge: true });
       setAddresses(newAddresses);
     } catch (error) {
       console.error('Error setting default address:', error);
@@ -196,8 +196,8 @@ export default function AddressManager() {
     return (
       <div className="space-y-6">
         <div className="flex justify-between items-center pb-4 border-b border-black/5">
-          <h2 className="text-2xl font-perandory tracking-tight text-[#000000] flex items-center gap-2">
-            <MapPin className="w-5 h-5" /> Saved Addresses ({addresses.length}/3)
+          <h2 className="text-3xl lg:text-4xl font-perandory tracking-tight text-[#000000] flex items-center gap-3">
+            <MapPin className="w-6 h-6 md:w-8 md:h-8" /> Saved Addresses <span className="text-base text-black/40 font-sans tracking-widest mt-2">({addresses.length}/3)</span>
           </h2>
           {addresses.length < 3 && (
             <button 
@@ -266,8 +266,8 @@ export default function AddressManager() {
   return (
     <div className="bg-white border border-black/10 p-8">
       <div className="flex justify-between items-start mb-8 pb-4 border-b border-black/5">
-        <h2 className="text-2xl font-perandory tracking-tight text-[#000000] flex items-center gap-2">
-          <MapPin className="w-5 h-5" /> 
+        <h2 className="text-3xl lg:text-4xl font-perandory tracking-tight text-[#000000] flex items-center gap-3">
+          <MapPin className="w-6 h-6 md:w-8 md:h-8" /> 
           {isEditing === 'new' ? 'Add New Address' : 'Edit Address'}
         </h2>
         <button 

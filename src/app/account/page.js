@@ -77,8 +77,8 @@ export default function AccountPage() {
         <div className="col-span-1 lg:col-span-4 space-y-12">
           {/* Profile Section */}
           <div className="bg-white">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-perandory tracking-tight text-[#000000]">Personal Details</h2>
+            <div className="flex justify-between items-center mb-8 border-b border-black/5 pb-4">
+              <h2 className="text-3xl lg:text-4xl font-perandory tracking-tight text-[#000000]">Personal Details</h2>
               {!isEditing ? (
                 <button onClick={() => setIsEditing(true)} className="text-[10px] uppercase tracking-widest text-[#000000]/50 hover:text-[#000000] flex items-center gap-1.5 transition-colors font-bold">
                   <Edit2 className="w-3 h-3" /> Edit
@@ -176,7 +176,9 @@ export default function AccountPage() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-perandory tracking-tight text-[#000000] mb-6">Recent Orders</h2>
+            <div className="flex justify-between items-center mb-8 border-b border-black/5 pb-4">
+              <h2 className="text-3xl lg:text-4xl font-perandory tracking-tight text-[#000000]">Recent Orders</h2>
+            </div>
             <div className="bg-[#FAFAFA] border border-black/5 p-16 text-center flex flex-col items-center justify-center">
               <p className="text-lg font-gambetta italic text-[#000000]/60 mb-6">No orders placed yet</p>
               <Link href="/catalogue" className="text-[11px] font-dm-sans uppercase tracking-widest font-bold border-b-2 border-black pb-1 hover:text-black/60 hover:border-black/60 transition-colors">
