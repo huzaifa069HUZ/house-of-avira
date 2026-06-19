@@ -87,28 +87,30 @@ export default function ProductReviews({ productId }) {
   reviews.forEach(r => ratingCounts[r.rating]++);
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 pt-16 pb-24 border-t border-neutral-200 mt-16 font-sans">
+    <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 pt-16 pb-24 border-t border-neutral-200 mt-16 font-lato">
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
         
         {/* Left: Summary & CTA */}
         <div className="w-full lg:w-[30%] shrink-0">
-          <h2 className="mb-10 flex flex-col">
-            <span className="font-perandory text-black text-3xl md:text-4xl uppercase tracking-widest leading-none mb-1">Customer</span>
-            <span className="font-aston-script text-[#4a0000] text-5xl md:text-6xl -mt-2 leading-none">Reviews</span>
-          </h2>
+          <div className="mb-12">
+            <h2 className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
+              <span className="font-perandory text-black text-4xl md:text-5xl uppercase tracking-widest leading-none">CUSTOMER</span>
+              <span className="font-aston-script text-[#8A001A] text-6xl md:text-7xl leading-none -mt-4 sm:mt-0">Reviews</span>
+            </h2>
+          </div>
           
           <div className="flex items-end gap-5 mb-10 border-b border-black/10 pb-8">
-            <h3 className="text-7xl font-light text-black leading-none tracking-tighter" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{avgRating}</h3>
+            <h3 className="text-7xl font-light text-black leading-none tracking-tighter">{avgRating}</h3>
             <div className="flex flex-col pb-1.5">
               <div className="flex gap-1.5 mb-2">
                 {[1, 2, 3, 4, 5].map(star => (
                   <Star 
                     key={star} 
-                    className={`w-4 h-4 ${star <= Math.round(avgRating) ? 'fill-black stroke-black' : 'fill-transparent stroke-gray-300'}`} 
+                    className={`w-5 h-5 ${star <= Math.round(avgRating) ? 'fill-[#8A001A] stroke-[#8A001A]' : 'fill-transparent stroke-gray-300'}`} 
                   />
                 ))}
               </div>
-              <p className="text-[10px] text-black uppercase tracking-[0.2em]">{reviews.length} Reviews</p>
+              <p className="text-[11px] text-black font-bold uppercase tracking-[0.2em]">{reviews.length} Reviews</p>
             </div>
           </div>
 
@@ -116,14 +118,14 @@ export default function ProductReviews({ productId }) {
             {[5, 4, 3, 2, 1].map(star => {
               const percentage = reviews.length > 0 ? (ratingCounts[star] / reviews.length) * 100 : 0;
               return (
-                <div key={star} className="flex items-center gap-4 text-xs tracking-widest text-black/60 uppercase">
+                <div key={star} className="flex items-center gap-4 text-xs font-bold tracking-widest text-black/60 uppercase">
                   <div className="flex items-center gap-1.5 w-12 shrink-0">
-                    {star} <Star className="w-3 h-3 fill-black/40 stroke-black/40" />
+                    {star} <Star className="w-3.5 h-3.5 fill-[#8A001A]/40 stroke-[#8A001A]/40" />
                   </div>
-                  <div className="flex-1 h-[1px] bg-black/10 relative">
-                    <div className="absolute top-0 left-0 h-full bg-black transition-all duration-500" style={{ width: `${percentage}%` }}></div>
+                  <div className="flex-1 h-[2px] bg-black/10 relative">
+                    <div className="absolute top-0 left-0 h-full bg-[#8A001A] transition-all duration-500" style={{ width: `${percentage}%` }}></div>
                   </div>
-                  <div className="w-6 text-right text-[10px] text-black">{ratingCounts[star]}</div>
+                  <div className="w-6 text-right text-[11px] text-black font-bold">{ratingCounts[star]}</div>
                 </div>
               );
             })}
@@ -137,8 +139,7 @@ export default function ProductReviews({ productId }) {
               }
               setIsModalOpen(true);
             }}
-            className="w-full bg-transparent border border-black text-black py-4 text-xl hover:bg-black hover:text-white transition-colors duration-300"
-            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            className="w-full bg-transparent border border-[#8A001A] text-[#8A001A] py-4 text-sm font-bold tracking-widest uppercase hover:bg-[#8A001A] hover:text-white transition-all duration-300"
           >
             {user ? "write a review" : "login to review"}
           </button>
@@ -148,19 +149,19 @@ export default function ProductReviews({ productId }) {
         <div className="flex-1 lg:pl-12 lg:border-l lg:border-black/5">
           {loading ? (
             <div className="flex justify-center items-center h-48">
-              <div className="w-5 h-5 border-[1px] border-black border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-[2px] border-[#8A001A] border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : reviews.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-24">
-              <p className="text-2xl text-black/80 font-light" style={{ fontFamily: "'Cormorant Garamond', serif" }}>no reviews yet, be the first one to share your experience</p>
+              <p className="text-xl text-black/70 font-light">no reviews yet, be the first one to share your experience</p>
             </div>
           ) : (
-            <div className="space-y-12">
+            <div className="space-y-10">
               {reviews.map(review => (
-                <div key={review.id} className="border-b border-black/10 pb-12 last:border-0 group">
+                <div key={review.id} className="border border-black/5 p-8 rounded-lg bg-[#FAFAFA] shadow-sm hover:shadow-md transition-shadow group">
                   <div className="flex justify-between items-start mb-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-neutral-100 overflow-hidden flex items-center justify-center text-black font-light text-xl shrink-0" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      <div className="w-12 h-12 rounded-full bg-white border border-black/10 overflow-hidden flex items-center justify-center text-[#8A001A] font-bold text-lg shrink-0">
                         {review.userAvatar ? (
                           <img src={review.userAvatar} alt={review.userName} className="w-full h-full object-cover" />
                         ) : (
@@ -168,13 +169,13 @@ export default function ProductReviews({ productId }) {
                         )}
                       </div>
                       <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-medium text-black uppercase tracking-wider text-sm">{review.userName}</span>
-                          <span className="flex items-center gap-1 text-[9px] text-black/60 uppercase tracking-[0.2em] border border-black/10 px-2 py-0.5 rounded-none">
-                            <ShieldCheck className="w-2.5 h-2.5" /> Verified
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-bold text-black text-base">{review.userName}</span>
+                          <span className="flex items-center gap-1 text-[10px] text-[#00a86b] font-bold uppercase tracking-[0.1em] bg-[#00a86b]/10 px-2 py-0.5 rounded-sm">
+                            <ShieldCheck className="w-3 h-3" /> Verified
                           </span>
                         </div>
-                        <span className="text-[10px] text-black/40 uppercase tracking-widest">
+                        <span className="text-[11px] text-black/50 font-medium">
                           {review.createdAt?.toDate ? review.createdAt.toDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'}
                         </span>
                       </div>
@@ -183,7 +184,7 @@ export default function ProductReviews({ productId }) {
                     {user && user.uid === review.userId && (
                       <button 
                         onClick={() => handleDeleteReview(review)}
-                        className="text-black/30 hover:text-[#4a0000] p-2 transition-colors"
+                        className="text-black/30 hover:text-[#8A001A] p-2 transition-colors"
                         title="Delete Review"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -195,14 +196,14 @@ export default function ProductReviews({ productId }) {
                     {[1, 2, 3, 4, 5].map(star => (
                       <Star 
                         key={star} 
-                        className={`w-3.5 h-3.5 ${star <= review.rating ? 'fill-black stroke-black' : 'fill-transparent stroke-gray-300'}`} 
+                        className={`w-4 h-4 ${star <= review.rating ? 'fill-[#8A001A] stroke-[#8A001A]' : 'fill-transparent stroke-gray-300'}`} 
                       />
                     ))}
                   </div>
 
                   {review.comment && (
-                    <p className="text-lg text-black/90 leading-relaxed font-light mb-6" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                      "{review.comment}"
+                    <p className="text-base text-black/80 leading-relaxed font-normal mb-6">
+                      {review.comment}
                     </p>
                   )}
 
