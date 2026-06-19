@@ -39,6 +39,21 @@ export default function WhyHouseOfAvira() {
         viewport={{ once: true, margin: "-100px" }}
       >
 
+        {/* Minimalist Image Overlay Section */}
+        <motion.div className="w-full relative mb-32 md:mb-48 pt-10 flex flex-col items-center justify-center" variants={itemVariants}>
+          {/* Centered Image */}
+          <div className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[36rem] md:h-[36rem] z-10 hover:scale-105 transition-transform duration-700 ease-out">
+            <img src="/images/bagbg.png" alt="Featured aesthetic" className="w-full h-full object-contain drop-shadow-2xl" />
+          </div>
+          
+          {/* Huge Typography Behind */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-16 sm:mt-24 md:mt-32 w-full flex items-center justify-center z-0 pointer-events-none">
+            <h2 className="font-perandory text-[#000000] text-[8vw] sm:text-[6vw] md:text-[5vw] lg:text-[4.5vw] leading-none whitespace-nowrap tracking-tighter opacity-90">
+              the heels you've always desired
+            </h2>
+          </div>
+        </motion.div>
+
         {/* Two Stage Pricing Header */}
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-perandory font-bold text-[#000000] mb-4">
