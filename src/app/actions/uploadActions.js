@@ -68,3 +68,38 @@ export async function deleteImageFromCloudinary(imageUrl) {
     return { success: false, error: error.message };
   }
 }
+
+export async function uploadReviewImagesToCloudinary(formData) {
+  try {
+    const files = formData.getAll('images');
+    if (!files || files.length === 0) {
+      throw new Error("No images provided");
+    }
+
+    const uploadPromises = files.map(async (file) => {
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: 'house-of-avira/reviews',
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result.secure_url);
+          }
+        );
+
+        uploadStream.end(buffer);
+      });
+    });
+
+    const urls = await Promise.all(uploadPromises);
+    return { success: true, urls };
+    
+  } catch (error) {
+    console.error("Cloudinary review upload error:", error);
+    return { success: false, error: error.message };
+  }
+}

@@ -3,10 +3,10 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, UploadCloud, Loader2 } from 'lucide-react';
-import { db, storage } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useAuthStore } from '@/store/authStore';
+import { uploadReviewImagesToCloudinary } from '@/app/actions/uploadActions';
 
 export default function ReviewFormModal({ isOpen, onClose, productId, onReviewSubmitted }) {
   const { user } = useAuthStore();
@@ -63,14 +63,18 @@ export default function ReviewFormModal({ isOpen, onClose, productId, onReviewSu
     setError('');
 
     try {
-      const uploadedImageUrls = [];
+      let uploadedImageUrls = [];
 
-      // Upload images
-      for (const image of images) {
-        const storageRef = ref(storage, `reviews/${productId}/${user.uid}_${Date.now()}_${image.name}`);
-        const snapshot = await uploadBytesResumable(storageRef, image);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        uploadedImageUrls.push(downloadURL);
+      // Upload images using Cloudinary via Server Action
+      if (images.length > 0) {
+        const formData = new FormData();
+        images.forEach(img => formData.append('images', img));
+        const uploadResult = await uploadReviewImagesToCloudinary(formData);
+        
+        if (!uploadResult.success) {
+          throw new Error(uploadResult.error || 'Failed to upload images to Cloudinary');
+        }
+        uploadedImageUrls = uploadResult.urls;
       }
 
       // Save to Firestore
