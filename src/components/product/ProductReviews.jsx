@@ -156,70 +156,69 @@ export default function ProductReviews({ productId }) {
               <p className="text-xl text-black/70 font-light">no reviews yet, be the first one to share your experience</p>
             </div>
           ) : (
-            <div className="space-y-10">
+            <div className="space-y-6">
               {reviews.map(review => (
-                <div key={review.id} className="border border-black/10 p-8 sm:p-10 bg-white hover:border-black/30 transition-colors duration-500 group">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-8 gap-4">
-                    <div className="flex items-center gap-5">
-                      <div className="w-14 h-14 bg-neutral-50 border border-black/5 overflow-hidden flex items-center justify-center text-[#8A001A] font-bold text-xl shrink-0">
-                        {review.userAvatar ? (
-                          <img src={review.userAvatar} alt={review.userName} className="w-full h-full object-cover grayscale" />
-                        ) : (
-                          review.userName.charAt(0).toUpperCase()
-                        )}
+                <div key={review.id} className="border border-neutral-200 p-6 sm:p-8 rounded-xl bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] group">
+                  {/* Top Row */}
+                  <div className="flex justify-between items-center mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map(star => (
+                          <Star 
+                            key={star} 
+                            className={`w-4 h-4 ${star <= review.rating ? 'fill-black stroke-black' : 'fill-transparent stroke-gray-300'}`} 
+                          />
+                        ))}
                       </div>
-                      <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-black text-base">{review.userName}</span>
-                          <span className="flex items-center gap-1 text-[10px] text-[#00a86b] font-bold uppercase tracking-[0.1em] bg-[#00a86b]/10 px-2 py-0.5 rounded-sm">
-                            <ShieldCheck className="w-3 h-3" /> Verified
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-black/50 font-medium">
-                          {review.createdAt?.toDate ? review.createdAt.toDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'}
-                        </span>
-                      </div>
+                      <span className="font-medium text-black text-lg">{review.rating}.0</span>
                     </div>
-                    
-                    {user && user.uid === review.userId && (
-                      <button 
-                        onClick={() => handleDeleteReview(review)}
-                        className="text-black/30 hover:text-[#8A001A] p-2 transition-colors"
-                        title="Delete Review"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-neutral-400 font-medium">
+                        {review.createdAt?.toDate ? review.createdAt.toDate().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recently'}
+                      </span>
+                      {user && user.uid === review.userId && (
+                        <button 
+                          onClick={() => handleDeleteReview(review)}
+                          className="text-black/30 hover:text-[#8A001A] transition-colors"
+                          title="Delete Review"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="flex gap-1.5 mb-6">
-                    {[1, 2, 3, 4, 5].map(star => (
-                      <Star 
-                        key={star} 
-                        className={`w-4 h-4 ${star <= review.rating ? 'fill-[#8A001A] stroke-[#8A001A]' : 'fill-transparent stroke-gray-300'}`} 
-                      />
-                    ))}
-                  </div>
-
+                  {/* Comment */}
                   {review.comment && (
-                    <p className="text-base text-black/90 leading-relaxed font-normal mb-8 max-w-3xl">
+                    <p className="text-base sm:text-lg text-black/90 leading-relaxed font-normal mb-8">
                       {review.comment}
                     </p>
                   )}
 
+                  {/* Review Images */}
                   {review.imageUrls && review.imageUrls.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-3 mb-8">
                       {review.imageUrls.map((url, idx) => (
                         <div 
                           key={idx} 
                           onClick={() => setSelectedImage(url)}
-                          className="w-20 h-24 overflow-hidden cursor-pointer bg-neutral-100 hover:opacity-80 transition-opacity"
+                          className="w-20 h-24 sm:w-24 sm:h-28 overflow-hidden cursor-pointer bg-neutral-100 hover:opacity-80 transition-opacity rounded-md border border-neutral-200"
                         >
                           <img src={url} alt={`Review photo ${idx}`} className="w-full h-full object-cover" />
                         </div>
                       ))}
                     </div>
                   )}
+
+                  {/* Bottom Row */}
+                  <div className="flex justify-between items-end">
+                    <span className="font-bold text-black text-base">
+                      {review.userName ? `${review.userName.charAt(0)}***${review.userName.charAt(review.userName.length - 1)}` : 'A***s'}
+                    </span>
+                    <span className="flex items-center gap-1.5 text-sm text-black font-medium">
+                      <ShieldCheck className="w-4 h-4 text-green-600" /> Verified Buyer
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
