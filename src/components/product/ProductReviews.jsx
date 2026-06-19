@@ -92,10 +92,10 @@ export default function ProductReviews({ productId }) {
         
         {/* Left: Summary & CTA */}
         <div className="w-full lg:w-[30%] shrink-0">
-          <div className="mb-12">
-            <h2 className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
-              <span className="font-perandory text-black text-4xl md:text-5xl uppercase tracking-widest leading-none">CUSTOMER</span>
-              <span className="font-aston-script text-[#8A001A] text-6xl md:text-7xl leading-none -mt-4 sm:mt-0">Reviews</span>
+          <div className="mb-10">
+            <h2 className="flex flex-col">
+              <span className="font-perandory text-black text-3xl md:text-4xl uppercase tracking-widest leading-none mb-1">Customer</span>
+              <span className="font-aston-script text-[#8A001A] text-5xl md:text-6xl -mt-2 leading-none">Reviews</span>
             </h2>
           </div>
           
@@ -158,12 +158,12 @@ export default function ProductReviews({ productId }) {
           ) : (
             <div className="space-y-10">
               {reviews.map(review => (
-                <div key={review.id} className="border border-black/5 p-8 rounded-lg bg-[#FAFAFA] shadow-sm hover:shadow-md transition-shadow group">
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-white border border-black/10 overflow-hidden flex items-center justify-center text-[#8A001A] font-bold text-lg shrink-0">
+                <div key={review.id} className="border border-black/10 p-8 sm:p-10 bg-white hover:border-black/30 transition-colors duration-500 group">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-8 gap-4">
+                    <div className="flex items-center gap-5">
+                      <div className="w-14 h-14 bg-neutral-50 border border-black/5 overflow-hidden flex items-center justify-center text-[#8A001A] font-bold text-xl shrink-0">
                         {review.userAvatar ? (
-                          <img src={review.userAvatar} alt={review.userName} className="w-full h-full object-cover" />
+                          <img src={review.userAvatar} alt={review.userName} className="w-full h-full object-cover grayscale" />
                         ) : (
                           review.userName.charAt(0).toUpperCase()
                         )}
@@ -192,7 +192,7 @@ export default function ProductReviews({ productId }) {
                     )}
                   </div>
 
-                  <div className="flex gap-1.5 mb-5">
+                  <div className="flex gap-1.5 mb-6">
                     {[1, 2, 3, 4, 5].map(star => (
                       <Star 
                         key={star} 
@@ -202,7 +202,7 @@ export default function ProductReviews({ productId }) {
                   </div>
 
                   {review.comment && (
-                    <p className="text-base text-black/80 leading-relaxed font-normal mb-6">
+                    <p className="text-base text-black/90 leading-relaxed font-normal mb-8 max-w-3xl">
                       {review.comment}
                     </p>
                   )}
