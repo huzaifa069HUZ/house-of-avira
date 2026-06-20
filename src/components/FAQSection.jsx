@@ -44,7 +44,7 @@ export default function FAQSection() {
   return (
     <section 
       className="w-full relative py-20 px-6 md:px-12 bg-cover bg-center bg-no-repeat overflow-hidden border-t-[3px] border-[#000000]"
-      style={{ backgroundImage: "url('/images/faq-bg-mobile.png')" }}
+      style={{ backgroundImage: "url('/images/faq-bg.png')" }}
     >
       {/* Light overlay to ensure text readability against the busy background */}
       <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
