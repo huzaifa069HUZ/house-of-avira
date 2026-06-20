@@ -48,133 +48,154 @@ export default function Footer() {
     : regions[0];
 
   return (
-    <footer className="bg-[#000000] text-[#FFFFFF] pt-24 pb-12 px-6 md:px-12 w-full mt-auto">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24 max-w-7xl mx-auto">
-        <div className="md:col-span-1">
-          <h4 className="font-serif text-2xl tracking-widest uppercase mb-6">Avira</h4>
-          <p className="text-xs text-gray-400 max-w-xs leading-relaxed">
-            A luxury curation for the modern muse. Expensive minimalism and refined aesthetics.
-          </p>
+    <footer className="bg-[#000000] text-[#FFFFFF] pt-24 pb-0 w-full mt-auto relative overflow-hidden flex flex-col">
+      <div className="px-6 md:px-12 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24 max-w-[1400px] mx-auto relative z-10">
+          
+          {/* Brand & Description (Col Span 5) */}
+          <div className="md:col-span-5 pr-4 md:pr-12">
+            <div className="mb-6 flex flex-col">
+              <span className="font-perandory text-white text-3xl md:text-4xl uppercase tracking-widest leading-none mb-1">House Of</span>
+              <span className="font-aston-script text-[#8A001A] text-5xl md:text-6xl -mt-2 leading-none">Avira</span>
+            </div>
+            <p className="text-sm text-neutral-400 max-w-sm leading-relaxed font-lato">
+              An exclusive curation of luxury aesthetics. Redefining the modern muse with uncompromising elegance, global sourcing, and precision.
+            </p>
+          </div>
+
+          {/* Links Grid (Col Span 7) */}
+          <div className="md:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h5 className="font-perandory text-[10px] md:text-xs uppercase tracking-[0.2em] mb-6 text-neutral-500">Explore</h5>
+              <ul className="space-y-4 text-sm font-lato text-neutral-300">
+                <li><Link href="/catalogue" className="hover:text-white transition-colors">The Archive</Link></li>
+                <li><Link href="/catalogue" className="hover:text-white transition-colors">New Arrivals</Link></li>
+                <li><Link href="/category/women" className="hover:text-white transition-colors">Ready to Wear</Link></li>
+                <li><Link href="/category/accessories" className="hover:text-white transition-colors">Accessories</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h5 className="font-perandory text-[10px] md:text-xs uppercase tracking-[0.2em] mb-6 text-neutral-500">Support</h5>
+              <ul className="space-y-4 text-sm font-lato text-neutral-300">
+                <li><Link href="/order-info" className="hover:text-white transition-colors">Ordering Guide</Link></li>
+                <li><Link href="/order-info/shipping" className="hover:text-white transition-colors">Shipping & Customs</Link></li>
+                <li><Link href="/order-info/policies" className="hover:text-white transition-colors">Policies</Link></li>
+                <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">Contact Studio</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-perandory text-[10px] md:text-xs uppercase tracking-[0.2em] mb-6 text-neutral-500">Connect</h5>
+              <ul className="space-y-4 text-sm font-lato text-neutral-300">
+                <li><a href="https://instagram.com/houseof.avira" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
+                <li><a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Pinterest</a></li>
+                <li><a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">TikTok</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div>
-          <h5 className="text-xs uppercase tracking-widest mb-6 opacity-60">Shop</h5>
-          <ul className="space-y-4 text-sm font-light">
-            <li><Link href="/catalogue" className="hover:opacity-70 transition-opacity">New In</Link></li>
-            <li><Link href="/catalogue" className="hover:opacity-70 transition-opacity">Bestsellers</Link></li>
-            <li><Link href="/category/women" className="hover:opacity-70 transition-opacity">Clothing</Link></li>
-            <li><Link href="/category/accessories" className="hover:opacity-70 transition-opacity">Accessories</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h5 className="text-xs uppercase tracking-widest mb-6 opacity-60">Assistance</h5>
-          <ul className="space-y-4 text-sm font-light">
-            <li><Link href="/order-info" className="hover:opacity-70 transition-opacity">Read Before Ordering</Link></li>
-            <li><Link href="/order-info/order-process" className="hover:opacity-70 transition-opacity">Order Process</Link></li>
-            <li><Link href="/order-info/shipping" className="hover:opacity-70 transition-opacity">Shipping & Delivery</Link></li>
-            <li><Link href="/order-info/policies" className="hover:opacity-70 transition-opacity">Policies & Guidelines</Link></li>
-            <li><Link href="/contact" className="hover:opacity-70 transition-opacity">Contact Us</Link></li>
-            <li><Link href="/faq" className="hover:opacity-70 transition-opacity">FAQ</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h5 className="text-xs uppercase tracking-widest mb-6 opacity-60">Social</h5>
-          <ul className="space-y-4 text-sm font-light">
-            <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity flex items-center gap-2">Instagram</a></li>
-            <li><a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity flex items-center gap-2">Pinterest</a></li>
-            <li><a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity flex items-center gap-2">TikTok</a></li>
-          </ul>
+
+        {/* Copyright & Region */}
+        <div className="flex flex-col md:flex-row justify-between items-center py-8 border-t border-white/10 text-xs text-neutral-500 font-lato max-w-[1400px] mx-auto gap-4 relative z-10">
+          <div className="flex gap-6 order-2 md:order-1">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+          </div>
+          
+          <p className="order-3 md:order-2">© {new Date().getFullYear()} House of Avira. All rights reserved.</p>
+
+          {/* Language & Region Selector */}
+          <div className="relative order-1 md:order-3" ref={dropdownRef}>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-1 hover:text-[#FFFFFF] text-gray-400 transition-colors uppercase tracking-widest text-[10px] py-1 cursor-pointer"
+              aria-label="Select Language and Region"
+            >
+              <span>{activeLanguage.label}</span>
+              <svg
+                className={`w-3 h-3 transition-transform duration-300 opacity-60 ${isOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {isOpen && (
+              <div className="absolute bottom-full right-0 md:left-1/2 md:-translate-x-1/2 mb-4 bg-[#0A0A0A] border border-white/10 p-5 rounded-lg shadow-2xl flex gap-6 z-50 w-72 md:w-80 text-left animate-in fade-in slide-in-from-bottom-2 duration-200">
+                <div className="flex-1">
+                  <span className="block text-[9px] tracking-widest uppercase text-gray-500 mb-3 font-semibold">Language</span>
+                  <ul className="space-y-1">
+                    {languages.map((lang) => (
+                      <li key={lang.code}>
+                        <button
+                          onClick={() => {
+                            setLocale(lang.code);
+                            setIsOpen(false);
+                          }}
+                          className={`w-full text-left text-[11px] hover:text-[#FFFFFF] transition-colors py-1 flex items-center justify-between group cursor-pointer ${
+                            activeLanguage.code === lang.code ? 'text-[#FFFFFF] font-medium' : 'text-gray-400'
+                          }`}
+                        >
+                          <span>{lang.label}</span>
+                          {activeLanguage.code === lang.code && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          )}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="w-[1px] bg-white/10 self-stretch my-1" />
+                
+                <div className="flex-1">
+                  <span className="block text-[9px] tracking-widest uppercase text-gray-500 mb-3 font-semibold">Region</span>
+                  <ul className="space-y-1">
+                    {regions.map((reg) => (
+                      <li key={reg.id}>
+                        <button
+                          onClick={() => {
+                            setCurrency(reg.currency);
+                            const matchRegion = regions.find(r => r.id === reg.id);
+                            if (matchRegion) {
+                              const mapping = {
+                                'IN': 'en',
+                                'US': 'en',
+                                'GB': 'en',
+                                'PH': 'tl'
+                              };
+                              setLocale(mapping[reg.id] || 'en');
+                            }
+                            setIsOpen(false);
+                          }}
+                          className={`w-full text-left text-[11px] hover:text-[#FFFFFF] transition-colors py-1 flex items-center justify-between group cursor-pointer ${
+                            activeRegion.currency === reg.currency ? 'text-[#FFFFFF] font-medium' : 'text-gray-400'
+                          }`}
+                        >
+                          <span>{reg.label}</span>
+                          {activeRegion.currency === reg.currency && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          )}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[#FFFFFF]/10 text-xs text-gray-500 font-light max-w-7xl mx-auto gap-4">
-        <p>© {new Date().getFullYear()} House of Avira. All rights reserved.</p>
-        
-        {/* Language & Region Selector */}
-        <div className="relative" ref={dropdownRef}>
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-1 hover:text-[#FFFFFF] text-gray-400 transition-colors uppercase tracking-widest text-[10px] py-1 cursor-pointer"
-            aria-label="Select Language and Region"
-          >
-            <span>{activeLanguage.label}</span>
-            <svg
-              className={`w-3 h-3 transition-transform duration-300 opacity-60 ${isOpen ? 'rotate-180' : ''}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
 
-          {isOpen && (
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 bg-[#0A0A0A] border border-white/10 p-5 rounded-lg shadow-2xl flex gap-6 z-50 w-72 md:w-80 text-left animate-in fade-in slide-in-from-bottom-2 duration-200">
-              <div className="flex-1">
-                <span className="block text-[9px] tracking-widest uppercase text-gray-500 mb-3 font-semibold">Language</span>
-                <ul className="space-y-1">
-                  {languages.map((lang) => (
-                    <li key={lang.code}>
-                      <button
-                        onClick={() => {
-                          setLocale(lang.code);
-                          setIsOpen(false);
-                        }}
-                        className={`w-full text-left text-[11px] hover:text-[#FFFFFF] transition-colors py-1 flex items-center justify-between group cursor-pointer ${
-                          activeLanguage.code === lang.code ? 'text-[#FFFFFF] font-medium' : 'text-gray-400'
-                        }`}
-                      >
-                        <span>{lang.label}</span>
-                        {activeLanguage.code === lang.code && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                        )}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div className="w-[1px] bg-white/10 self-stretch my-1" />
-              
-              <div className="flex-1">
-                <span className="block text-[9px] tracking-widest uppercase text-gray-500 mb-3 font-semibold">Region</span>
-                <ul className="space-y-1">
-                  {regions.map((reg) => (
-                    <li key={reg.id}>
-                      <button
-                        onClick={() => {
-                          setCurrency(reg.currency);
-                          const matchRegion = regions.find(r => r.id === reg.id);
-                          if (matchRegion) {
-                            const mapping = {
-                              'IN': 'en',
-                              'US': 'en',
-                              'GB': 'en',
-                              'PH': 'tl'
-                            };
-                            setLocale(mapping[reg.id] || 'en');
-                          }
-                          setIsOpen(false);
-                        }}
-                        className={`w-full text-left text-[11px] hover:text-[#FFFFFF] transition-colors py-1 flex items-center justify-between group cursor-pointer ${
-                          activeRegion.currency === reg.currency ? 'text-[#FFFFFF] font-medium' : 'text-gray-400'
-                        }`}
-                      >
-                        <span>{reg.label}</span>
-                        {activeRegion.currency === reg.currency && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                        )}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="flex gap-6 mt-4 md:mt-0">
-          <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-          <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
-        </div>
+      {/* Big Bold Footer Brand Text */}
+      <div className="w-full flex justify-center items-end overflow-hidden pt-4 select-none pointer-events-none relative z-0 bg-[#000000]">
+        <h1 className="font-perandory text-[24vw] leading-[0.75] text-[#FFFFFF] tracking-tighter m-0 p-0 text-center uppercase whitespace-nowrap opacity-95">
+          AVIRA
+        </h1>
       </div>
     </footer>
   );
