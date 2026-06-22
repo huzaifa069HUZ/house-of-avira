@@ -377,24 +377,12 @@ export default function ProductPage({ params: paramsPromise }) {
                 </div>
               </div>
 
-              {/* Warnings / Terms Highlight */}
-              <div className="mt-8 bg-red-50/80 border border-red-200 p-5 rounded-2xl flex gap-4 items-start shadow-sm">
-                <div className="bg-white p-2 rounded-full shadow-sm border border-red-100 shrink-0">
-                  <AlertTriangle className="w-5 h-5 text-red-500" />
-                </div>
-                <div className="flex flex-col gap-1 mt-0.5">
-                  <span className="text-xs font-bold text-red-600 uppercase tracking-widest">
-                    No Refund, No Exchange
-                  </span>
-                  <span className="text-xs text-red-500/80 uppercase tracking-widest font-medium">
-                    * Extra Delivery Charge Applies
-                  </span>
-                </div>
-              </div>
-
               {/* Read Before Ordering Cards */}
               <div className="mt-12 font-chillax">
-                <h3 className="text-3xl md:text-4xl font-aston-script text-black mb-5">Read Before Ordering</h3>
+                <h3 className="text-3xl md:text-4xl mb-6 flex flex-wrap gap-2.5 items-baseline">
+                  <span className="font-perandory text-black tracking-tight">READ BEFORE</span>
+                  <span className="font-aston-script text-[#8A001A]">Ordering</span>
+                </h3>
                 <div className="flex flex-col gap-3">
                   <Link href="/order-info/order-process" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
                     <div className="flex items-center gap-4">
@@ -431,6 +419,31 @@ export default function ProductPage({ params: paramsPromise }) {
                       Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Link>
+                </div>
+              </div>
+
+              {/* Warnings / Terms Highlight (Softened Blinkit UI Style) */}
+              <div className="mt-6 relative overflow-hidden p-5 rounded-[1.5rem] flex gap-4 items-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-[#0A192F]/10 bg-white group">
+                {/* Low opacity navy blue check pattern with red dots */}
+                <div 
+                  className="absolute inset-0 opacity-[0.04] pointer-events-none transition-opacity duration-500 group-hover:opacity-[0.06]" 
+                  style={{ 
+                    backgroundImage: `radial-gradient(#FF0000 1.5px, transparent 1.5px), radial-gradient(#FF0000 1.5px, transparent 1.5px), linear-gradient(#0A192F 1px, transparent 1px), linear-gradient(90deg, #0A192F 1px, transparent 1px)`,
+                    backgroundSize: '20px 20px, 20px 20px, 20px 20px, 20px 20px',
+                    backgroundPosition: '0 0, 10px 10px, 0 0, 0 0'
+                  }}
+                ></div>
+                
+                <div className="bg-[#0A192F]/5 p-2.5 rounded-2xl shrink-0 relative z-10 border border-[#0A192F]/10">
+                  <AlertTriangle className="w-5 h-5 text-[#0A192F]" />
+                </div>
+                <div className="flex flex-col gap-0.5 relative z-10">
+                  <span className="text-sm font-bold text-[#0A192F] uppercase tracking-wide">
+                    No Return • No Exchange
+                  </span>
+                  <span className="text-[11px] text-[#0A192F]/60 uppercase tracking-widest font-semibold">
+                    Extra Delivery Charges Apply
+                  </span>
                 </div>
               </div>
 

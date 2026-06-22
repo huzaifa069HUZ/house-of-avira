@@ -215,7 +215,7 @@ export default function ProductReviews({ productId }) {
                   {/* Bottom Row */}
                   <div className="flex justify-between items-end">
                     <span className="font-bold text-black text-base">
-                      {review.userName ? `${review.userName.charAt(0)}***${review.userName.charAt(review.userName.length - 1)}` : 'A***s'}
+                      {review.userName || 'Anonymous User'}
                     </span>
                     <span className="flex items-center gap-1.5 text-sm text-black font-medium">
                       <ShieldCheck className="w-4 h-4 text-green-600" /> Verified Buyer
@@ -243,7 +243,7 @@ export default function ProductReviews({ productId }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-[110] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4"
           >
             <button className="absolute top-6 right-6 text-white/70 hover:text-white p-2 bg-white/10 rounded-full transition-colors">
               <X className="w-6 h-6" />
