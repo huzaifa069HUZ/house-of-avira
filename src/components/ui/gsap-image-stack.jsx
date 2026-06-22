@@ -56,7 +56,43 @@ export default function GsapImageStack() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="h-[100dvh] w-full bg-[#FFFFFF] flex flex-col items-center justify-center overflow-hidden relative border-y border-[#E5E5E5]/30">
+    <div ref={containerRef} className="h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden relative border-y border-[#E5E5E5]/30 bg-gradient-to-br from-[#F0F6F5] via-[#E8F2F5] to-[#D9EBF1]">
+      <style>{`
+        @keyframes float-bubble {
+          0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+          20% { opacity: 0.6; }
+          80% { opacity: 0.6; }
+          100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+        .bg-bubble {
+          position: absolute;
+          border-radius: 50%;
+          background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1));
+          box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 10px 20px rgba(0,0,0,0.02);
+          backdrop-filter: blur(4px);
+          animation: float-bubble 15s infinite linear;
+        }
+      `}</style>
+      
+      {/* Floating Bubbles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {[...Array(15)].map((_, i) => {
+          const size = Math.random() * 80 + 20;
+          return (
+            <div 
+              key={i} 
+              className="bg-bubble" 
+              style={{ 
+                left: \`\${Math.random() * 100}%\`, 
+                width: \`\${size}px\`, 
+                height: \`\${size}px\`, 
+                animationDuration: \`\${Math.random() * 15 + 15}s\`, 
+                animationDelay: \`-\${Math.random() * 20}s\` 
+              }} 
+            />
+          );
+        })}
+      </div>
       
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
@@ -72,14 +108,14 @@ export default function GsapImageStack() {
           <div
             key={idx}
             ref={(el) => (imagesRef.current[idx] = el)}
-            className="absolute w-[90%] md:w-[75%] lg:w-[65%] h-full rounded-[2rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-[#E5E5E5]/50 bg-white"
+            className="absolute w-[85%] md:w-[60%] lg:w-[45%] h-full rounded-[3rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] border-2 border-white/80 bg-white/40 backdrop-blur-xl"
             style={{ zIndex: idx + 10 }}
           >
             <Image
               src={src}
               alt={`Shipping Flow Step ${idx + 1}`}
               fill
-              className="object-contain p-4 md:p-6"
+              className="object-cover"
               priority={idx === 0}
             />
           </div>
