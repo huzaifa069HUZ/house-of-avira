@@ -250,8 +250,6 @@ export default function ShippingPage() {
               </div>
             </div>
           </FadeIn>
-
-          </FadeIn>
         </section>
       </main>
 
