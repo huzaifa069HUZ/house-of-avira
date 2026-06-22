@@ -83,11 +83,11 @@ export default function GsapImageStack() {
               key={i} 
               className="bg-bubble" 
               style={{ 
-                left: \`\${Math.random() * 100}%\`, 
-                width: \`\${size}px\`, 
-                height: \`\${size}px\`, 
-                animationDuration: \`\${Math.random() * 15 + 15}s\`, 
-                animationDelay: \`-\${Math.random() * 20}s\` 
+                left: `${Math.random() * 100}%`, 
+                width: `${size}px`, 
+                height: `${size}px`, 
+                animationDuration: `${Math.random() * 15 + 15}s`, 
+                animationDelay: `-${Math.random() * 20}s` 
               }} 
             />
           );
