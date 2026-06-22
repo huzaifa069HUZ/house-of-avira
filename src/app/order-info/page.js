@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
+import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline';
+import { DollarSign, ShieldAlert, Clock, AlertTriangle, CreditCard } from 'lucide-react';
 
 const sections = [
   {
@@ -50,12 +52,62 @@ const sections = [
   }
 ];
 
-const checklist = [
-  'Variable shipping costs',
-  'Customs procedures & clearance requirements',
-  'Estimated delivery timelines',
-  'Possible delays from external factors',
-  'Our payment structure & store policies'
+const timelineData = [
+  {
+    id: 1,
+    title: "Variable Shipping Costs",
+    date: "AWARENESS",
+    content: "Shipping costs may vary depending on the destination, weight, and current logistics rates.",
+    category: "Logistics",
+    icon: DollarSign,
+    relatedIds: [2, 3],
+    status: "in-progress",
+    energy: 90,
+  },
+  {
+    id: 2,
+    title: "Customs & Clearance",
+    date: "INTERNATIONAL",
+    content: "Customs procedures and clearance requirements are subject to local government regulations and may incur additional fees.",
+    category: "Legal",
+    icon: ShieldAlert,
+    relatedIds: [1, 4],
+    status: "pending",
+    energy: 70,
+  },
+  {
+    id: 3,
+    title: "Estimated Delivery",
+    date: "TIMELINES",
+    content: "Delivery timelines are estimates and not guarantees, influenced by international transit and local couriers.",
+    category: "Logistics",
+    icon: Clock,
+    relatedIds: [1, 4],
+    status: "in-progress",
+    energy: 85,
+  },
+  {
+    id: 4,
+    title: "Possible Delays",
+    date: "EXTERNAL",
+    content: "Delays can occur due to external factors like weather, global events, or carrier disruptions.",
+    category: "Risk",
+    icon: AlertTriangle,
+    relatedIds: [2, 3],
+    status: "pending",
+    energy: 60,
+  },
+  {
+    id: 5,
+    title: "Store Policies",
+    date: "AGREEMENT",
+    content: "By ordering, you agree to our payment structure, slot fees, and overall store policies.",
+    category: "Policy",
+    icon: CreditCard,
+    relatedIds: [1, 2, 3, 4],
+    status: "completed",
+    energy: 100,
+  }
 ];
 
 export default function OrderInfoPage() {
@@ -202,30 +254,16 @@ export default function OrderInfoPage() {
             </div>
           </div>
 
-          {/* Checklist */}
-          <div className="fade-up mt-24 text-left border-t border-[#1a1a1a]/10 pt-16">
-            <h3 className="text-2xl md:text-3xl font-perandory text-[#1a1a1a] mb-12 tracking-tight fade-up">
+          {/* Orbital Checklist Timeline */}
+          <div className="fade-up mt-24 text-left border-t border-[#1a1a1a]/10 pt-16 relative">
+            <h3 className="text-2xl md:text-3xl font-perandory text-[#1a1a1a] mb-2 tracking-tight fade-up">
               Place an order only if you are comfortable with...
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {checklist.map((item, idx) => (
-                <div 
-                  key={idx} 
-                  className="fade-up flex items-start gap-5 p-6 rounded-2xl bg-[#FFFFFF] border border-gray-100 hover:border-[#E8F3F1] hover:shadow-[0_12px_40px_-10px_rgba(0,0,0,0.06)] transition-all duration-700 group relative overflow-hidden"
-                  style={{ transitionDelay: `${idx * 150}ms` }}
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#FAFAF8] border border-[#1a1a1a]/[0.05] flex items-center justify-center shrink-0 group-hover:bg-[#8A001A] group-hover:scale-110 transition-all duration-500 z-10 shadow-sm">
-                    <svg className="w-4 h-4 text-[#1a1a1a] group-hover:text-white transition-colors duration-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-[#1a1a1a]/70 text-sm md:text-base font-sans font-light leading-relaxed group-hover:text-[#1a1a1a] transition-colors duration-500 pt-1.5 z-10">
-                    {item}
-                  </span>
-                  {/* Subtle hover background sweep */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#F0F6F5]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                </div>
-              ))}
+            <p className="text-[#1a1a1a]/50 text-sm font-sans mb-8">
+              Click on any orbital node to expand its details
+            </p>
+            <div className="-mx-6 md:mx-0">
+              <RadialOrbitalTimeline timelineData={timelineData} />
             </div>
           </div>
         </div>
