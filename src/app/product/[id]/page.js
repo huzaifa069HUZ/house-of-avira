@@ -19,6 +19,10 @@ export default function ProductPage({ params: paramsPromise }) {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
 
+  // Swipe state
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
   const router = useRouter();
   const { user } = useAuthStore();
   const { wishlist, toggleWishlist } = useWishlistStore();
@@ -115,6 +119,31 @@ export default function ProductPage({ params: paramsPromise }) {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
+  // Touch handlers for swipe
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEndEvent = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      nextImage();
+    }
+    if (isRightSwipe) {
+      prevImage();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col font-sans">
       
@@ -133,7 +162,12 @@ export default function ProductPage({ params: paramsPromise }) {
           <div className="w-full lg:w-[45%] flex flex-col relative px-4 sm:px-8 lg:px-4 pt-8 lg:pt-16">
             
             {/* Desktop & Mobile Main Slider */}
-            <div className="relative w-full aspect-[4/5] lg:aspect-auto lg:h-[70vh] rounded-2xl overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] group bg-white">
+            <div 
+              className="relative w-full aspect-[4/5] lg:aspect-auto lg:h-[70vh] rounded-2xl overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] group bg-white touch-pan-y"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEndEvent}
+            >
               <img 
                 src={images[currentImageIndex]} 
                 alt={`${product.name} ${currentImageIndex + 1}`} 
