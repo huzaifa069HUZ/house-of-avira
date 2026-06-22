@@ -125,40 +125,25 @@ export default function OrderInfoPage() {
       `}</style>
 
       {/* ═══════════════════════════ HERO ═══════════════════════════ */}
-      <section ref={heroRef} className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-[#0A0A0A]">
-          <div className="absolute inset-0 animate-gradient" style={{ background: 'linear-gradient(135deg, #0A0A0A 0%, #1a0a0e 25%, #0A0A0A 50%, #0e0a1a 75%, #0A0A0A 100%)' }} />
-          {/* Grid Pattern */}
-          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.1) 60px, rgba(255,255,255,0.1) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.1) 60px, rgba(255,255,255,0.1) 61px)' }} />
-          {/* Radial Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(138,0,26,0.08) 0%, transparent 70%)' }} />
+      <section ref={heroRef} className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24 bg-[#0A0A0A]">
+        {/* Cinematic Globe Background */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
+            style={{ backgroundImage: "url('/images/order_info_globe.png')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-[#FFFFFF]" />
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 text-center">
-          {/* Eyebrow */}
-          <div className="fade-up flex items-center justify-center gap-4 mb-10">
-            <div className="h-px w-12 bg-[#8A001A] line-grow" />
-            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A]">Important Information</span>
-            <div className="h-px w-12 bg-[#8A001A] line-grow" />
-          </div>
-
           {/* Main Title */}
-          <h1 className="fade-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[0.95] mb-8">
-            Read Before<br />
-            Placing <em className="text-[#8A001A] not-italic font-light">Your Order</em>
+          <h1 className="fade-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl flex flex-col items-center justify-center tracking-tight leading-[0.9] mb-8">
+            <span className="font-perandory text-white uppercase mb-2">Read Before</span>
+            <span className="font-aston-script text-[#8A001A] lowercase drop-shadow-md">placing your order</span>
           </h1>
 
           {/* Decorative Line */}
           <div className="fade-up w-20 h-[2px] bg-gradient-to-r from-transparent via-[#8A001A] to-transparent mx-auto mb-10" />
-
-          {/* Subtitle */}
-          <p className="fade-up text-white/50 text-base md:text-lg leading-relaxed max-w-xl mx-auto font-light">
-            Thank you for choosing House of Avira <span className="text-[#8A001A]">♥</span>
-          </p>
-          <p className="fade-up text-white/30 text-sm md:text-base mt-3 font-light">
-            Please read this page carefully before placing an order.
-          </p>
 
           {/* Scroll Indicator */}
           <div className="fade-up mt-16 flex flex-col items-center gap-2">
@@ -171,23 +156,23 @@ export default function OrderInfoPage() {
       </section>
 
       {/* ═══════════════════════════ INTRO ═══════════════════════════ */}
-      <section className="relative py-24 md:py-32 bg-[#FAFAF8]">
-        <div className="max-w-4xl mx-auto px-6 md:px-12">
+      <section className="relative py-24 md:py-32 bg-[#FFFFFF]">
+        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
           <div className="fade-up">
-            <p className="text-lg md:text-xl lg:text-2xl text-[#1a1a1a]/80 leading-[1.8] font-light">
-              House of Avira curates <strong className="font-semibold text-[#1a1a1a]">international trends</strong> and worldwide aesthetics, bringing global styles and creative finds straight to your doorstep through a <strong className="font-semibold text-[#1a1a1a]">pre-order experience</strong>.
+            <p className="text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-[1.6] font-aston-script">
+              House of Avira curates international trends and worldwide aesthetics, bringing global styles and creative finds straight to your doorstep through a pre-order experience.
             </p>
           </div>
 
-          <div className="fade-up mt-10">
-            <p className="text-base md:text-lg text-[#1a1a1a]/50 leading-[1.9] font-light">
+          <div className="fade-up mt-8">
+            <p className="text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-[1.6] font-aston-script">
               Since products are sourced internationally, shipping costs, customs charges, delivery timelines, and logistics fees may vary depending on the product, shipping conditions, customs requirements, and economic factors at the time of shipment.
             </p>
           </div>
 
-          <div className="fade-up mt-10">
-            <p className="text-base md:text-lg text-[#1a1a1a]/50 leading-[1.9] font-light">
-              We believe in <strong className="font-semibold text-[#1a1a1a]">complete transparency</strong> and want every customer to fully understand our ordering process before making a purchase.
+          <div className="fade-up mt-8">
+            <p className="text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-[1.6] font-aston-script">
+              We believe in complete transparency and want every customer to fully understand our ordering process before making a purchase.
             </p>
           </div>
 
