@@ -132,7 +132,19 @@ export default function OrderInfoPage() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
             style={{ backgroundImage: "url('/images/order_info_globe.png')" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-[#FFFFFF]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/60" />
+        </div>
+
+        {/* Curved Bottom Separator */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-20 pointer-events-none">
+          <svg 
+            className="w-full h-[60px] md:h-[120px]" 
+            viewBox="0 0 1440 100" 
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0,100 C480,0 960,0 1440,100 Z" fill="#FFFFFF" />
+          </svg>
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 text-center">
