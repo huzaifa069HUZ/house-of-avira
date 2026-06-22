@@ -128,10 +128,10 @@ export default function HeroCarousel() {
                   </h1>
                   <Link 
                     href={slide.link || '/catalogue'}
-                    className="inline-flex items-center justify-center gap-2 bg-white/95 backdrop-blur-sm text-black px-10 py-3.5 w-full sm:w-auto text-center border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] active:scale-[0.98]"
+                    className="inline-flex items-center justify-center gap-2.5 bg-white/95 backdrop-blur-sm text-black px-10 py-4 w-full sm:w-auto text-center border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] active:scale-[0.98]"
                   >
-                    <span className="font-perandory text-[13px] uppercase tracking-[0.15em] font-bold">SHOP</span>
-                    <span className="font-aston-script text-[28px] lowercase leading-none -mt-1.5">now</span>
+                    <span className="font-perandory text-[14px] uppercase tracking-[0.15em] font-bold translate-y-[3px]">SHOP</span>
+                    <span className="font-aston-script text-[34px] lowercase leading-none -translate-y-[2px]">now</span>
                   </Link>
                 </div>
               </div>
