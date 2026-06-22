@@ -46,7 +46,6 @@ export default function CartSlideOver() {
   
   // Shipping Estimator State
   const [showEstimator, setShowEstimator] = useState(false);
-  const [shippingMode, setShippingMode] = useState('sea');
   const [customWeight, setCustomWeight] = useState(0);
 
   // Consent Modal State
@@ -131,10 +130,9 @@ export default function CartSlideOver() {
   const shippingCosts = useMemo(() => {
     if (cart.length === 0) return null;
 
-    // Rates (per kg)
-    const seaRatePerKg = 450; // ₹450 per kg
-    const airRatePerKg = 1200; // ₹1200 per kg
-    const modeRate = shippingMode === 'air' ? airRatePerKg : seaRatePerKg;
+    // Unified approximate rate (per kg)
+    const unifiedRatePerKg = 850; // unified approximate rate
+    const modeRate = unifiedRatePerKg;
 
     // Total physical weight vs volumetric weight
     // We use the user-modified `customWeight` (in grams) for calculations
@@ -208,7 +206,7 @@ export default function CartSlideOver() {
       totalLow: Math.round(intlLow + customsLow + gstLow + domLow),
       totalHigh: Math.round(intlHigh + customsHigh + gstHigh + domHigh)
     };
-  }, [cart, shippingMode, customWeight, baseCartWeight]);
+  }, [cart, customWeight, baseCartWeight]);
 
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
@@ -419,21 +417,6 @@ export default function CartSlideOver() {
                           className="px-3 py-3 border-t border-gray-100"
                         >
                           <div className="space-y-3 mb-4">
-                            <div className="flex gap-2">
-                              <button 
-                                onClick={() => setShippingMode('sea')}
-                                className={`flex-1 py-1.5 text-xs font-semibold rounded-md border flex justify-center items-center gap-1.5 transition-colors ${shippingMode === 'sea' ? 'bg-[#1E4A72]/10 border-[#1E4A72] text-[#1E4A72]' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'}`}
-                              >
-                                <Ship className="w-3.5 h-3.5" /> Sea
-                              </button>
-                              <button 
-                                onClick={() => setShippingMode('air')}
-                                className={`flex-1 py-1.5 text-xs font-semibold rounded-md border flex justify-center items-center gap-1.5 transition-colors ${shippingMode === 'air' ? 'bg-[#8A001A]/10 border-[#8A001A] text-[#8A001A]' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'}`}
-                              >
-                                <Plane className="w-3.5 h-3.5" /> Air
-                              </button>
-                            </div>
-                            
                             <div className="flex items-center justify-between gap-3 text-xs">
                               <span className="text-gray-600 font-medium whitespace-nowrap">Est. Weight (g)</span>
                               <input 

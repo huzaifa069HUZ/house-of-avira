@@ -253,7 +253,7 @@ API ROUTES:
 
 **Every product page must clearly display all of the following:**
 
-**Product Images:**
+**Product Images:**    
 - Multiple images with gallery/carousel view
 
 **Product Information:**

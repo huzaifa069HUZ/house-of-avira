@@ -96,7 +96,7 @@ export default function ShippingPage() {
     { name: "Meera K.", location: "Bangalore, Karnataka", text: "Got my Hello Kitty merch faster than expected. The packaging was super secure. Will definitely preorder again.", rating: 5, item: "Sanrio Collection" },
     { name: "Sneha M.", location: "Pune, Maharashtra", text: "I've ordered international before and paid crazy surprise duties. Avira's method is so much better. You know what you're paying for.", rating: 5, item: "Nike Dunks" },
     { name: "Riya T.", location: "Hyderabad, Telangana", text: "Beautiful experience! The customer service was so sweet and answered all my 100 questions. Product is 100% authentic.", rating: 5, item: "Dior Saddle" },
-    { name: "Kavya V.", location: "Chennai, Tamil Nadu", text: "Love the transparency! The air shipping for my rare makeup finds was surprisingly fast.", rating: 5, item: "Rare Beauty Blush" },
+    { name: "Kavya V.", location: "Chennai, Tamil Nadu", text: "Love the transparency! The shipping for my rare makeup finds was surprisingly fast.", rating: 5, item: "Rare Beauty Blush" },
   ];
 
   const faqs = [
@@ -110,7 +110,7 @@ export default function ShippingPage() {
     },
     {
       q: "How long will my order take?",
-      a: "Important: the delivery timeline does NOT start from the day you place your order. All orders are pre-orders collected in batches. After your batch closes, we source the products, quality check them, calculate shipping costs, and send you a shipping invoice. Only after you pay that invoice does the shipping clock begin. Air shipping then takes approximately 15–20 days. Sea shipping takes 2–3 months. For example, if you order on October 1st and your batch closes on October 20th, you first wait until October 20th. Processing and invoicing may take another 1–2 weeks after that. The 15–20 day air shipping estimate starts only after your shipping invoice is paid. All timelines are estimates — delays can occur due to customs and logistics."
+      a: "Important: the delivery timeline does NOT start from the day you place your order. All orders are pre-orders collected in batches. After your batch closes, we source the products, quality check them, calculate shipping costs, and send you a shipping invoice. Only after you pay that invoice does the shipping clock begin. Delivery typically takes 2–4 weeks from this point, but may take longer depending on customs, logistics, and the factors mentioned earlier. For example, if you order on October 1st and your batch closes on October 20th, you first wait until October 20th. Processing and invoicing take a few days after that. The 2–4 week shipping estimate starts only after your shipping invoice is paid."
     },
     {
       q: "Can I cancel my order if I change my mind?",
@@ -349,26 +349,30 @@ export default function ShippingPage() {
                 International shipping costs are divided equally based on package weight. Because we ship in batches, the exact cost is calculated only when your batch is packed. This ensures you only pay for exactly what you owe, with no hidden fees or overestimations.
               </div>
 
-              {/* Media Section for Price Breakdown */}
-              <div className="mt-10 border-t border-[#E5E5E5] pt-8">
-                <h4 className="font-perandory text-xl text-center text-[#000000] mb-6">Visual Price Breakdown</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="rounded-xl overflow-hidden border border-[#E5E5E5] shadow-sm bg-[#FFFFFF]">
-                    <video 
-                      src="/pricing/product price breakdown.mp4" 
-                      controls 
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full h-full object-cover"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                  <div className="rounded-xl overflow-hidden border border-[#E5E5E5] shadow-sm bg-white flex items-center justify-center">
-                    <Image src={breakdownImg} alt="Price Breakdown" className="w-full h-auto" />
-                  </div>
+              {/* Modern Price Breakdown UI */}
+              <div className="mt-12 border-t border-[#E5E5E5] pt-10">
+                <div className="text-center mb-10">
+                  <h4 className="font-perandory text-3xl text-[#000000] mb-3">What your shipping covers</h4>
+                  <p className="text-[14px] text-[#666666] max-w-lg mx-auto" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>A transparent look at everything included in your final shipping cost. No hidden fees.</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  {[
+                    { name: 'International Shipping', desc: 'Base cost to move the batch globally.', icon: Plane },
+                    { name: 'Flight Charges', desc: 'Carrier fuel and airline logistics fees.', icon: Tag },
+                    { name: 'Customs Clearance', desc: 'Brokerage fees to clear Indian borders.', icon: Shield },
+                    { name: 'Import Duties', desc: 'Mandatory government tariffs on imports.', icon: Landmark },
+                    { name: 'Government Taxes', desc: 'GST and applicable local taxes.', icon: Calculator },
+                    { name: 'Processing Fees', desc: 'Documentation and compliance handling.', icon: Award },
+                    { name: 'Handling Fees', desc: 'Warehouse packing and material costs.', icon: Box },
+                    { name: 'Domestic Shipping', desc: 'Final mile courier to your doorstep.', icon: Truck }
+                  ].map((item, idx) => (
+                    <div key={idx} className="group bg-white border border-[#E5E5E5] hover:border-[#8A001A] rounded-2xl p-5 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(138,0,26,0.08)] hover:-translate-y-1 relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-16 h-16 bg-[#FAFAFA] rounded-bl-[100%] z-0 group-hover:bg-[#FFF5F5] transition-colors"></div>
+                      <item.icon className="w-6 h-6 text-[#8A001A] mb-4 relative z-10" />
+                      <h5 className="text-[14px] font-bold text-[#000000] mb-2 relative z-10">{item.name}</h5>
+                      <p className="text-[12px] text-[#666666] leading-relaxed relative z-10">{item.desc}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -418,7 +422,7 @@ export default function ShippingPage() {
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                   <div>
                     <div className="text-[13px] font-bold tracking-wide uppercase">The delivery clock starts here</div>
-                    <div className="text-[11px] text-white/70">Air: ~15–20 days · Sea: ~2–3 months from this point</div>
+                    <div className="text-[11px] text-white/70">Estimated delivery: 2–4 weeks from this point</div>
                   </div>
                 </div>
               </div>
@@ -430,7 +434,7 @@ export default function ShippingPage() {
                 <div className="bg-[#8A001A] text-white text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full">Phase 2</div>
                 <div>
                   <h4 className="font-perandory text-xl text-[#8A001A] leading-tight">Shipping & delivery</h4>
-                  <p className="text-[12px] text-[#999999] font-medium">The 2–4 week window begins now</p>
+                  <p className="text-[12px] text-[#999999] font-medium">The delivery window begins now</p>
                 </div>
               </div>
               
@@ -438,7 +442,7 @@ export default function ShippingPage() {
                 <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#8A001A] via-[#8A001A] to-[#E5E5E5]"></div>
                 <div className="space-y-4">
                   {[
-                    { state: 'pending', title: 'Dispatched Internationally', desc: 'Batch dispatched from our international warehouse towards India. Transit time depends on air or sea shipping mode.' },
+                    { state: 'pending', title: 'Dispatched Internationally', desc: 'Batch dispatched from our international warehouse towards India.' },
                     { state: 'pending', title: 'Customs Clearance', desc: 'Shipment clears Indian customs. Customs fees are already included in your international shipping invoice — no surprises.' },
                     { state: 'pending', title: 'Arrived in India', desc: 'Your order has cleared customs and arrived with us in India. Almost there!' },
                     { state: 'pending', title: 'Domestic Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We calculate your courier cost based on your pincode and package weight and send you the final invoice.' },
@@ -474,7 +478,7 @@ export default function ShippingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               { icon: Gem, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#000000', title: 'Branded Items', text: 'Products from brands like Coach, Hello Kitty, Ferrari, LV, Dior, Chanel, Nike, and Stussy carry higher customs duties and a longer customs processing period. Expect higher international shipping costs and a slightly longer timeline.' },
-              { icon: Droplet, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#1E5A72', title: 'Liquids & Beauty Products', text: 'Liquid products such as lip glosses, serums, and skincare can only be shipped by air. Sea shipping is not permitted for liquids. This means a higher shipping cost and a faster delivery window (~15 days).' },
+              { icon: Droplet, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#1E5A72', title: 'Liquids & Beauty Products', text: 'Liquid products such as lip glosses, serums, and skincare require special handling and documentation. This means they typically carry a slightly higher shipping cost.' },
               { icon: Box, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#000000', title: 'Oversized & Bulky Items', text: 'Large or bulky items take a bigger share of the batch weight, which means a higher shipping cost. This also applies domestically — oversized packages may attract higher courier charges based on volumetric weight.' },
               { icon: Footprints, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#000000', title: 'Footwear', text: 'Shoes and footwear ship in their original boxes, which are larger and heavier than standard packaging. This typically results in higher shipping costs compared to smaller items.' },
             ].map((cat, idx) => (
