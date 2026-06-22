@@ -256,7 +256,7 @@ export default function OrderInfoPage() {
 
           {/* Orbital Checklist Timeline */}
           <div className="fade-up mt-24 text-left border-t border-[#1a1a1a]/10 pt-16 relative">
-            <h3 className="text-2xl md:text-3xl font-perandory text-[#1a1a1a] mb-2 tracking-tight fade-up">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-perandory font-bold text-[#1a1a1a] mb-4 tracking-tight fade-up">
               Place an order only if you are comfortable with...
             </h3>
             <p className="text-[#1a1a1a]/50 text-sm font-sans mb-8">

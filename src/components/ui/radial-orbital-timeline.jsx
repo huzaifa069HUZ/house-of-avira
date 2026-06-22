@@ -158,8 +158,8 @@ export default function RadialOrbitalTimeline({ timelineData }) {
           </div>
 
           {/* Orbital path rings */}
-          <div className="absolute w-[440px] h-[440px] rounded-full border border-[#1a1a1a]/5"></div>
-          <div className="absolute w-[300px] h-[300px] rounded-full border border-[#1a1a1a]/[0.02]"></div>
+          <div className="absolute w-[440px] h-[440px] rounded-full border border-[#1a1a1a]/20"></div>
+          <div className="absolute w-[300px] h-[300px] rounded-full border border-[#1a1a1a]/15"></div>
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);
@@ -220,15 +220,15 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                   ${isExpanded ? "scale-[1.3]" : "hover:scale-110"}
                 `}
                 >
-                  <Icon size={20} strokeWidth={1.5} />
+                  <Icon size={24} strokeWidth={2.5} />
                 </div>
 
                 <div
                   className={`
                   absolute top-14 whitespace-nowrap text-center left-1/2 -translate-x-1/2
-                  text-xs font-sans tracking-wide font-medium
+                  text-sm font-sans tracking-wide font-bold
                   transition-all duration-300
-                  ${isExpanded ? "text-[#1a1a1a] scale-110 opacity-0 pointer-events-none" : "text-[#1a1a1a]/70 opacity-100"}
+                  ${isExpanded ? "text-[#1a1a1a] scale-110 opacity-0 pointer-events-none" : "text-[#1a1a1a] opacity-100"}
                 `}
                 >
                   {item.title}
