@@ -286,8 +286,19 @@ export default function OrderInfoPage() {
       </section>
 
       {/* ═══════════════════════════ BOTTOM ═══════════════════════════ */}
-      <section className="py-24 md:py-32 bg-[#FFFFFF]">
-        <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
+      <section className="relative py-24 md:py-32 bg-[#FFFFFF] overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 z-0 opacity-[0.07]" 
+          style={{ 
+            backgroundImage: "url('/real.png')", 
+            backgroundSize: "cover", 
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat" 
+          }} 
+        />
+        
+        <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-12 text-center">
           <div className="fade-up">
             {/* Heart Icon */}
             <div className="w-14 h-14 rounded-full bg-[#FAFAF8] border border-[#1a1a1a]/10 flex items-center justify-center mx-auto mb-8">
