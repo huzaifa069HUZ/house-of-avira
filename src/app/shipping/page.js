@@ -344,21 +344,22 @@ export default function ShippingPage() {
                 </div>
               </div>
 
-              <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-xl p-4 md:p-5 mt-8 text-[13px] text-[#666666] leading-relaxed">
-                <strong className="text-[#8A001A] font-medium block mb-1">Why can't we give you the exact shipping cost upfront?</strong>
-                International shipping costs are divided equally based on package weight. Because we ship in batches, the exact cost is calculated only when your batch is packed. This ensures you only pay for exactly what you owe, with no hidden fees or overestimations.
+              <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-xl p-6 mt-8 shadow-sm">
+                <h4 className="text-[18px] font-perandory font-bold text-[#8A001A] mb-2">Why wait for the batch date?</h4>
+                <p className="text-[14px] text-[#444444] leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  When multiple people place orders, we pack them together into one large international shipment. Once this shipment arrives in India, the total delivery cost is distributed precisely according to the weight and category of your items. This ensures you <strong>only pay the real, un-marked-up shipping price</strong>.
+                </p>
               </div>
 
               {/* Modern Price Breakdown UI */}
               <div className="mt-12 border-t border-[#E5E5E5] pt-10">
                 <div className="text-center mb-10">
-                  <h4 className="font-perandory text-3xl text-[#000000] mb-3">What your shipping covers</h4>
+                  <h4 className="font-perandory text-4xl md:text-5xl font-extrabold text-[#000000] mb-3 whitespace-nowrap overflow-hidden text-ellipsis">What your shipping covers</h4>
                   <p className="text-[14px] text-[#666666] max-w-lg mx-auto" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>A transparent look at everything included in your final shipping cost. No hidden fees.</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                   {[
                     { name: 'International Shipping', desc: 'Base cost to move the batch globally.', icon: Plane },
-                    { name: 'Flight Charges', desc: 'Carrier fuel and airline logistics fees.', icon: Tag },
                     { name: 'Customs Clearance', desc: 'Brokerage fees to clear Indian borders.', icon: Shield },
                     { name: 'Import Duties', desc: 'Mandatory government tariffs on imports.', icon: Landmark },
                     { name: 'Government Taxes', desc: 'GST and applicable local taxes.', icon: Calculator },
@@ -456,16 +457,14 @@ export default function ShippingPage() {
             </div>
 
             {/* Worth the Wait tagline */}
-            <div className="text-center mt-12 mb-4">
+            <div className="text-center mt-6 mb-8">
               <span className="font-aston-script text-4xl md:text-5xl text-[#8A001A] lowercase">worth the wait</span>
               <p className="text-[13px] text-[#999999] mt-3 font-medium tracking-wide uppercase">Every order is hand-sourced, quality checked & shipped with care</p>
             </div>
           </FadeIn>
         </section>
 
-        <div className="h-px bg-gradient-to-r from-transparent via-[#E5E5E5] to-transparent w-full"></div>
-
-        <div className="h-px bg-gradient-to-r from-transparent via-[#E5E5E5] to-transparent w-full"></div>
+        <div className="h-px bg-gradient-to-r from-transparent via-[#E5E5E5] to-transparent w-full my-6"></div>
 
         {/* SECTION 3: SPECIAL CATEGORIES */}
         <section id="special-cats" className="scroll-mt-24">
