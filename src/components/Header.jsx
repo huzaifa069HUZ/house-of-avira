@@ -18,12 +18,12 @@ const menuData = [
     title: "Women", 
     href: "/category/women",
     children: [
-      { title: "tops", href: "/category/women/tops" },
-      { title: "pants / jeans", href: "/category/women/pants-jeans" },
-      { title: "skirts", href: "/category/women/skirts" },
-      { title: "dresses", href: "/category/women/dresses" },
-      { title: "jackets", href: "/category/women/jackets" },
-      { title: "beach wear", href: "/category/women/beach-wear" },
+      { title: "Tops", href: "/category/women/tops" },
+      { title: "Pants", href: "/category/women/pants-jeans" },
+      { title: "Skirts", href: "/category/women/skirts" },
+      { title: "Dresses", href: "/category/women/dresses" },
+      { title: "Jackets", href: "/category/women/jackets" },
+      { title: "Beachwear", href: "/category/women/beach-wear" },
     ]
   },
   {
