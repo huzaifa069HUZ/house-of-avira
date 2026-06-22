@@ -620,20 +620,15 @@ export default function CatalogueClient() {
                 {/* Product Info below image */}
                 <div className="mt-2.5 flex flex-col items-start w-full font-sans">
                   <span className="text-[11px] md:text-xs font-normal text-black uppercase truncate w-full">{product.name}</span>
-                  <span className="text-xs md:text-[13px] text-black font-normal mt-0.5"><PriceDisplay basePrice={product.price || 0} /></span>
+                  <span className="text-xs md:text-[13px] text-black font-semibold mt-0.5"><PriceDisplay basePrice={product.price || 0} /></span>
                   
                   {/* Swatches (Mock) */}
-                  <div className="flex items-center gap-1.5 mt-2">
+                  <div className="flex items-center gap-1.5 mt-2 pl-0.5">
                     <div className="w-3.5 h-3.5 rounded-full bg-[#E5E5E5] border border-gray-300 ring-1 ring-black ring-offset-1"></div>
                     <div className="w-3.5 h-3.5 rounded-full bg-[#111] border border-gray-300"></div>
                     <div className="w-3.5 h-3.5 rounded-full bg-[#7A2A3C] border border-gray-300"></div>
                     <div className="w-3.5 h-3.5 rounded-full bg-[#2A3C30] border border-gray-300"></div>
                   </div>
-                  
-                  {/* HEISS Badge */}
-                  <span className="bg-[#FF0000] text-white text-[9px] px-2 py-0.5 rounded-full font-bold mt-2 tracking-wider">
-                    HEISS
-                  </span>
                 </div>
               </Link>
             );
