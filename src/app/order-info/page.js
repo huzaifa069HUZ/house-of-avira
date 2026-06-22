@@ -230,8 +230,8 @@ export default function OrderInfoPage() {
 
         <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
           <div className="fade-up text-center mb-20">
-            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#1a1a1a]/40 block mb-4">Explore Sections</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#1a1a1a] tracking-tight">
+            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A] block mb-4">Explore Sections</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-perandory text-[#1a1a1a] tracking-tight">
               Everything You<br />Need to Know
             </h2>
           </div>
@@ -244,32 +244,32 @@ export default function OrderInfoPage() {
                 className="fade-up group relative block"
               >
                 {/* Card */}
-                <div className="relative bg-[#FFFFFF] border border-[#1a1a1a]/[0.06] rounded-2xl p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:border-[#1a1a1a]/[0.15] hover:shadow-[0_12px_40px_-10px_rgba(0,0,0,0.06)] overflow-hidden">
+                <div className="relative bg-[#FFFFFF] border border-gray-100 rounded-2xl p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:border-[#E8F3F1] hover:bg-[#F4F9F8] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
                   {/* Background Number */}
-                  <span className="absolute -top-6 -right-4 text-[140px] font-serif font-light text-[#1a1a1a]/[0.02] leading-none select-none group-hover:text-[#1a1a1a]/[0.04] transition-colors duration-700">
+                  <span className="absolute -top-6 -right-4 text-[140px] font-light text-[#1a1a1a]/[0.02] leading-none select-none group-hover:text-[#8A001A]/[0.03] transition-colors duration-700 font-sans">
                     {section.number}
                   </span>
 
                   {/* Icon */}
-                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#FAFAF8] border border-[#1a1a1a]/[0.05] flex items-center justify-center mb-8 text-[#1a1a1a] group-hover:bg-[#1a1a1a] group-hover:text-white transition-all duration-500 float-icon">
+                  <div className="relative z-10 w-16 h-16 rounded-full bg-[#F0F6F5] text-[#1a1a1a] flex items-center justify-center mb-8 group-hover:bg-[#8A001A] group-hover:text-white transition-all duration-500 float-icon shadow-sm">
                     {section.icon}
                   </div>
 
                   {/* Number Tag */}
-                  <span className="relative z-10 text-[10px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/30 mb-3 block">Section {section.number}</span>
+                  <span className="relative z-10 text-[10px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/40 mb-3 block group-hover:text-[#8A001A]/60 transition-colors duration-500">Section {section.number}</span>
 
                   {/* Title */}
-                  <h3 className="relative z-10 text-xl md:text-2xl font-serif text-[#1a1a1a] mb-4 group-hover:text-[#1a1a1a] transition-colors duration-500">
+                  <h3 className="relative z-10 text-xl md:text-2xl font-medium text-[#1a1a1a] mb-4 group-hover:text-[#8A001A] transition-colors duration-500 tracking-wide font-sans">
                     {section.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="relative z-10 text-sm text-[#1a1a1a]/60 leading-[1.8] font-light flex-1 mb-8">
+                  <p className="relative z-10 text-sm text-[#1a1a1a]/60 leading-[1.8] font-light flex-1 mb-8 group-hover:text-[#1a1a1a]/80 transition-colors duration-500">
                     {section.description}
                   </p>
 
                   {/* CTA */}
-                  <div className="relative z-10 flex items-center gap-3 text-[#1a1a1a]/70 group-hover:text-[#1a1a1a] transition-colors duration-300">
+                  <div className="relative z-10 flex items-center gap-3 text-[#1a1a1a]/60 group-hover:text-[#8A001A] transition-colors duration-300">
                     <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Read Section</span>
                     <svg className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -277,7 +277,7 @@ export default function OrderInfoPage() {
                   </div>
 
                   {/* Bottom Accent Line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#1a1a1a] scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#8A001A] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
                 </div>
               </Link>
             ))}
