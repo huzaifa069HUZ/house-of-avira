@@ -4,7 +4,12 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import GsapImageStack from '@/components/ui/gsap-image-stack';
+import dynamic from 'next/dynamic';
+
+const GsapImageStack = dynamic(() => import('@/components/ui/gsap-image-stack'), { 
+  ssr: false,
+  loading: () => <div className="w-full h-screen flex items-center justify-center text-xs tracking-widest uppercase text-neutral-400">Loading Animations...</div>
+});
 import breakdownImg from '../../../15f12b5c-ac29-439c-81bc-14b46ef75005.png';
 import { 
   Route, Plane, Tag, Shield, HelpCircle, 
@@ -151,30 +156,6 @@ export default function ShippingPage() {
           ))}
         </div>
       </div>
-
-      {/* Sticky Nav */}
-      <nav className="sticky top-0 z-50 bg-[#FFFFFF]/90 backdrop-blur-md border-b border-[#E5E5E5] px-6 md:px-8 h-14 flex items-center justify-between">
-        <div className="font-perandory text-lg font-medium text-[#000000]">House of Avira</div>
-        <div className="hidden md:flex gap-8">
-          {[
-            { id: 'how-it-works', label: 'How It Works' },
-            { id: 'policies', label: 'Policies' },
-            { id: 'faq', label: 'FAQ' }
-          ].map(link => (
-            <button 
-              key={link.id}
-              onClick={() => scrollTo(link.id)}
-              className={`text-[13px] font-medium transition-colors border-b-[1.5px] py-1 ${
-                activeSection === link.id ? 'border-[#8A001A] text-[#8A001A]' : 'border-transparent text-[#000000] hover:text-[#8A001A]'
-              }`}
-            >
-              {link.label}
-            </button>
-          ))}
-        </div>
-      </nav>
-
-      {/* Hero */}
       <header ref={heroRef} className="relative pt-24 pb-20 px-6 text-center max-w-5xl mx-auto overflow-hidden rounded-b-[40px] mb-8">
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="absolute inset-0 z-0">
           <Image src="/shipping/hero.png" alt="Shipping Box" fill className="object-cover opacity-50 mix-blend-multiply" />
