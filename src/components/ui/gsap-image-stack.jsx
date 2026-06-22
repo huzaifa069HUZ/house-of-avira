@@ -108,7 +108,7 @@ export default function GsapImageStack() {
           <div
             key={idx}
             ref={(el) => (imagesRef.current[idx] = el)}
-            className="absolute w-[85%] md:w-[60%] lg:w-[45%] h-full rounded-[3rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] border-2 border-white/80 bg-white/40 backdrop-blur-xl"
+            className="absolute w-[95%] md:w-[75%] lg:w-[60%] xl:w-[50%] aspect-[3/2] rounded-[3rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] border-2 border-white/80 bg-white/40 backdrop-blur-xl"
             style={{ zIndex: idx + 10 }}
           >
             <Image
