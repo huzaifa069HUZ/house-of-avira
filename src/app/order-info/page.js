@@ -203,19 +203,27 @@ export default function OrderInfoPage() {
           </div>
 
           {/* Checklist */}
-          <div className="fade-up mt-16 text-left">
-            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/80 mb-8">
-              Place an order only if you are comfortable with
+          <div className="fade-up mt-24 text-left border-t border-[#1a1a1a]/10 pt-16">
+            <h3 className="text-2xl md:text-3xl font-perandory text-[#1a1a1a] mb-12 tracking-tight fade-up">
+              Place an order only if you are comfortable with...
             </h3>
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {checklist.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center shrink-0 group-hover:bg-[#1a1a1a]/5 group-hover:border-[#1a1a1a]/20 transition-all duration-500">
-                    <svg className="w-4 h-4 text-[#1a1a1a]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <div 
+                  key={idx} 
+                  className="fade-up flex items-start gap-5 p-6 rounded-2xl bg-[#FFFFFF] border border-gray-100 hover:border-[#E8F3F1] hover:shadow-[0_12px_40px_-10px_rgba(0,0,0,0.06)] transition-all duration-700 group relative overflow-hidden"
+                  style={{ transitionDelay: `${idx * 150}ms` }}
+                >
+                  <div className="w-10 h-10 rounded-full bg-[#FAFAF8] border border-[#1a1a1a]/[0.05] flex items-center justify-center shrink-0 group-hover:bg-[#8A001A] group-hover:scale-110 transition-all duration-500 z-10 shadow-sm">
+                    <svg className="w-4 h-4 text-[#1a1a1a] group-hover:text-white transition-colors duration-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-[#1a1a1a]/70 text-sm md:text-base font-light group-hover:text-[#1a1a1a] transition-colors duration-300">{item}</span>
+                  <span className="text-[#1a1a1a]/70 text-sm md:text-base font-sans font-light leading-relaxed group-hover:text-[#1a1a1a] transition-colors duration-500 pt-1.5 z-10">
+                    {item}
+                  </span>
+                  {/* Subtle hover background sweep */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#F0F6F5]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 </div>
               ))}
             </div>
