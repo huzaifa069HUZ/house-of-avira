@@ -297,7 +297,7 @@ export default function OrderInfoPage() {
       <section className="relative py-24 md:py-32 bg-[#FFFFFF] overflow-hidden">
         {/* Background Image */}
         <div 
-          className="absolute inset-0 z-0 opacity-[0.07]" 
+          className="absolute inset-0 z-0 opacity-[0.85]" 
           style={{ 
             backgroundImage: "url('/real.png')", 
             backgroundSize: "cover", 
