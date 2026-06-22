@@ -110,7 +110,7 @@ export default function ShippingPage() {
     },
     {
       q: "How long will my order take?",
-      a: "It depends on the shipping mode. Air shipping takes approximately 15 days from dispatch. Sea shipping takes 2–3 months. The total timeline includes batch collection time, international transit, customs clearance, and domestic delivery. All timelines are estimates — delays can occur due to customs and logistics."
+      a: "Important: the delivery timeline does NOT start from the day you place your order. All orders are pre-orders collected in batches. After your batch closes, we source the products, quality check them, calculate shipping costs, and send you a shipping invoice. Only after you pay that invoice does the shipping clock begin. Air shipping then takes approximately 15–20 days. Sea shipping takes 2–3 months. For example, if you order on October 1st and your batch closes on October 20th, you first wait until October 20th. Processing and invoicing may take another 1–2 weeks after that. The 15–20 day air shipping estimate starts only after your shipping invoice is paid. All timelines are estimates — delays can occur due to customs and logistics."
     },
     {
       q: "Can I cancel my order if I change my mind?",
@@ -181,18 +181,22 @@ export default function ShippingPage() {
         </motion.div>
         
         <FadeIn className="relative z-10">
-          <div className="text-[11px] tracking-[0.12em] uppercase text-[#999999] font-medium mb-4">Shipping &amp; Import Information</div>
+          <div className="text-[11px] tracking-[0.12em] uppercase text-[#999999] font-medium mb-4">Shipping Information</div>
           <h1 className="font-perandory text-5xl md:text-6xl font-light text-[#000000] mb-5 leading-tight">
             Everything about<br />
             <em className="font-aston-script text-5xl md:text-7xl lowercase text-[#8A001A]">how your order travels</em>
           </h1>
-          <div className="bg-gradient-to-br from-[#FAFAFA] to-[#FFFFFF] border-2 border-[#E5E5E5] rounded-2xl p-6 md:p-8 max-w-2xl mx-auto mb-12 shadow-sm relative overflow-hidden group hover:border-[#8A001A] transition-colors duration-500">
+          <div className="bg-gradient-to-br from-[#FAFAFA] to-[#FFFFFF] border-2 border-[#E5E5E5] rounded-2xl p-6 md:p-8 max-w-2xl mx-auto mb-6 shadow-sm relative overflow-hidden group hover:border-[#8A001A] transition-colors duration-500">
             <div className="absolute -top-6 -right-6 p-4 opacity-10 group-hover:opacity-20 transition-opacity duration-500 group-hover:rotate-12">
               <Sparkles className="w-32 h-32 text-[#8A001A]" />
             </div>
             <p className="text-lg md:text-xl text-[#8A001A] font-medium leading-relaxed relative z-10 italic">
-              From our suppliers abroad to your doorstep in India here's exactly how our two-tier shipping model works, and what to expect every step of the way.
+              All orders are pre-orders. Your delivery timeline begins only after your batch closes and you pay your shipping invoice — not from the day you place your order.
             </p>
+          </div>
+
+          <div className="mb-12 text-center">
+            <span className="font-aston-script text-3xl md:text-4xl text-[#8A001A] lowercase">worth the wait</span>
           </div>
           
           <div className="flex flex-wrap justify-center gap-3">
@@ -223,7 +227,27 @@ export default function ShippingPage() {
           <FadeIn>
             <div className="text-[11px] tracking-[0.12em] uppercase text-[#8A001A] font-medium mb-3">Section 01</div>
             <h2 className="font-perandory text-4xl text-[#000000] mb-4">Your order's two-tier journey</h2>
-            <p className="text-[15px] text-[#666666] leading-relaxed mb-10">There are two separate shipping charges on every order. Understanding this is key to placing your preorder with confidence.</p>
+            <p className="text-[15px] text-[#666666] leading-relaxed mb-6">There are two separate shipping charges on every order. Understanding this is key to placing your preorder with confidence.</p>
+          </FadeIn>
+
+          {/* Pre-order Warning Callout */}
+          <FadeIn delay={0.05}>
+            <div className="bg-[#FFF5F5] border-2 border-[#8A001A]/20 rounded-2xl p-5 md:p-7 mb-10 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-[#8A001A] rounded-l-2xl" />
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 shrink-0 rounded-full bg-[#8A001A]/10 flex items-center justify-center mt-0.5">
+                  <svg className="w-6 h-6 text-[#8A001A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+                </div>
+                <div>
+                  <h4 className="font-perandory text-xl md:text-2xl text-[#8A001A] mb-2">The delivery timeline does NOT start from the day you order</h4>
+                  <p className="text-[13px] md:text-[14px] text-[#666666] leading-relaxed mb-3">House of Avira operates on a <strong className="text-[#000000]">batch pre-order model</strong>. When you place an order, it joins a batch. Only after the batch closes do we begin sourcing, quality checking, and calculating your shipping costs.</p>
+                  <div className="bg-white border border-[#E5E5E5] rounded-xl p-4 text-[13px] text-[#666666] leading-relaxed">
+                    <strong className="text-[#000000] block mb-1">Example:</strong>
+                    You order on <strong className="text-[#000000]">Oct 1st</strong>. Your batch closes on <strong className="text-[#000000]">Oct 20th</strong>. You wait until Oct 20th. After the batch closes, we source your products, QC them, pack them, and send you a shipping invoice. Only after you <strong className="text-[#000000]">pay that invoice</strong> does the 2–4 week shipping window begin.
+                  </div>
+                </div>
+              </div>
+            </div>
           </FadeIn>
 
           {/* Diagram */}
@@ -352,30 +376,85 @@ export default function ShippingPage() {
 
           <FadeIn delay={0.2}>
             <div className="text-[11px] tracking-[0.12em] uppercase text-[#8A001A] font-medium mb-2 mt-16">Your Order Timeline</div>
-            <h3 className="font-perandory text-3xl text-[#000000] mb-10">13 stages from order to delivery</h3>
+            <h3 className="font-perandory text-3xl text-[#000000] mb-2">From pre-order to doorstep</h3>
+            <p className="text-[14px] text-[#666666] leading-relaxed mb-10">Your journey has two distinct phases. The shipping clock only starts in Phase 2.</p>
             
-            <div className="relative pl-8 md:pl-10">
-              {/* Timeline Line */}
-              <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#E5E5E5] via-[#8A001A] to-[#E5E5E5]"></div>
-              
-              <div className="space-y-4">
-                {[
-                  { state: 'done', title: 'Order Placed & Product Payment Received', desc: 'You pay the product price only. Order confirmed. Your batch assignment begins.' },
-                  { state: 'done', title: 'Batch Being Collected', desc: 'Your order is grouped with other orders into a batch for cost-efficient international shipping.' },
-                  { state: 'done', title: 'Supplier Order Placed', desc: 'We place the order with our international suppliers on your behalf.' },
-                  { state: 'done', title: 'Products at International Warehouse', desc: 'Your product has arrived at our international warehouse. Batch packing begins.' },
-                  { state: 'active', title: 'International Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We send you the calculated international shipping amount. Must be paid by the deadline to proceed.' },
-                  { state: 'pending', title: 'International Shipping Paid', desc: 'Payment confirmed. Batch dispatched from our international warehouse towards India.' },
-                  { state: 'pending', title: 'Dispatched to India & Customs & Clearance', desc: 'Shipment is in transit. Customs clearance happens at this stage. Customs fees are already included in your international shipping invoice.' },
-                  { state: 'pending', title: 'Arrived in India', desc: 'Your order has cleared customs and arrived with us in India.' },
-                  { state: 'pending', title: 'Domestic Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We calculate your courier cost based on your pincode and package weight and send you the invoice.' },
-                  { state: 'pending', title: 'Domestic Shipping Paid', desc: 'Payment confirmed. Your order is being packed for final domestic dispatch.' },
-                  { state: 'pending', title: 'Dispatched Domestically', desc: 'Your order is with the courier. Tracking ID has been shared with you.' },
-                  { state: 'pending', title: 'Delivered', icon: Heart, desc: 'Your order is at your door. Please record your unboxing — we love seeing it!' }
-                ].map((step, idx) => (
-                  <TimelineItem key={idx} step={step} idx={idx} />
-                ))}
+            {/* PHASE 1 */}
+            <div className="mb-4">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="bg-[#000000] text-white text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full">Phase 1</div>
+                <div>
+                  <h4 className="font-perandory text-xl text-[#000000] leading-tight">Pre-shipping</h4>
+                  <p className="text-[12px] text-[#999999] font-medium">Before the delivery clock starts</p>
+                </div>
               </div>
+              
+              <div className="relative pl-8 md:pl-10">
+                <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#E5E5E5] via-[#000000] to-[#E5E5E5]"></div>
+                <div className="space-y-4">
+                  {[
+                    { state: 'done', title: 'Pre-Order Placed & Product Payment', desc: 'You pay the product price only. Your order is confirmed and assigned to the current open batch.' },
+                    { state: 'done', title: 'Waiting for Batch to Close', desc: 'Your order waits alongside other pre-orders until the batch closing date. This could be days or weeks depending on when you ordered.' },
+                    { state: 'done', title: 'Batch Closed — Sourcing Begins', desc: 'The batch closes. We now place bulk orders with our international suppliers on your behalf.' },
+                    { state: 'done', title: 'Products Sourced & Quality Checked', desc: 'Products arrive from suppliers. Each item is quality checked before being cleared for shipping.' },
+                    { state: 'done', title: 'Products at International Warehouse', desc: 'Your product has arrived at our international warehouse. Batch packing and weight calculation begins.' },
+                    { state: 'done', title: 'Shipping Cost Calculated', desc: 'International shipping cost is split equally among all batch customers based on total weight. Your exact amount is now known.' },
+                    { state: 'active', title: 'International Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We send you the calculated international shipping amount with a full breakdown. Must be paid by the deadline to proceed.' },
+                    { state: 'pending', title: 'International Shipping Paid', desc: 'Payment confirmed. Your batch is now cleared for international dispatch.' }
+                  ].map((step, idx) => (
+                    <TimelineItem key={idx} step={step} idx={idx} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* CLOCK STARTS HERE DIVIDER */}
+            <div className="relative my-10">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t-2 border-dashed border-[#8A001A]/30"></div>
+              </div>
+              <div className="relative flex justify-center">
+                <div className="bg-[#8A001A] text-white px-6 py-3 rounded-2xl shadow-lg flex items-center gap-3">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                  <div>
+                    <div className="text-[13px] font-bold tracking-wide uppercase">The delivery clock starts here</div>
+                    <div className="text-[11px] text-white/70">Air: ~15–20 days · Sea: ~2–3 months from this point</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* PHASE 2 */}
+            <div className="mb-4">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="bg-[#8A001A] text-white text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full">Phase 2</div>
+                <div>
+                  <h4 className="font-perandory text-xl text-[#8A001A] leading-tight">Shipping & delivery</h4>
+                  <p className="text-[12px] text-[#999999] font-medium">The 2–4 week window begins now</p>
+                </div>
+              </div>
+              
+              <div className="relative pl-8 md:pl-10">
+                <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#8A001A] via-[#8A001A] to-[#E5E5E5]"></div>
+                <div className="space-y-4">
+                  {[
+                    { state: 'pending', title: 'Dispatched Internationally', desc: 'Batch dispatched from our international warehouse towards India. Transit time depends on air or sea shipping mode.' },
+                    { state: 'pending', title: 'Customs Clearance', desc: 'Shipment clears Indian customs. Customs fees are already included in your international shipping invoice — no surprises.' },
+                    { state: 'pending', title: 'Arrived in India', desc: 'Your order has cleared customs and arrived with us in India. Almost there!' },
+                    { state: 'pending', title: 'Domestic Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We calculate your courier cost based on your pincode and package weight and send you the final invoice.' },
+                    { state: 'pending', title: 'Domestic Shipping Paid & Dispatched', desc: 'Payment confirmed. Your order is packed and handed to the courier. Tracking ID shared with you.' },
+                    { state: 'pending', title: 'Delivered', icon: Heart, desc: 'Your order is at your door. Please record your unboxing — we love seeing it!' }
+                  ].map((step, idx) => (
+                    <TimelineItem key={`p2-${idx}`} step={step} idx={idx} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Worth the Wait tagline */}
+            <div className="text-center mt-12 mb-4">
+              <span className="font-aston-script text-4xl md:text-5xl text-[#8A001A] lowercase">worth the wait</span>
+              <p className="text-[13px] text-[#999999] mt-3 font-medium tracking-wide uppercase">Every order is hand-sourced, quality checked & shipped with care</p>
             </div>
           </FadeIn>
         </section>

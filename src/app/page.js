@@ -18,6 +18,7 @@ import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useCurrencyStore } from '@/store/currencyStore';
+import { Plane } from 'lucide-react';
 import PriceDisplay from '@/components/PriceDisplay';
 
 const categories = [
@@ -195,9 +196,7 @@ export default function Home() {
           </div>
           <span className="text-[#000000]/20 shrink-0">•</span>
           <div className="flex items-center gap-2 shrink-0">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-2-2h-3.5l-7-4-1.5 1 3.5 5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h6.5l-3.5 5 1.5 1 7-4H19a2 2 0 0 0 2-2z" />
-            </svg>
+            <Plane className="w-4 h-4" />
             <span>Imported Directly</span>
           </div>
         </div>

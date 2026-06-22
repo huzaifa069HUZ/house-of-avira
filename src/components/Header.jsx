@@ -473,21 +473,21 @@ export default function Header() {
           className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-[#FFFFFF] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-6 flex justify-between items-center border-b border-[#000000]/10 sticky top-0 bg-black z-10">
+          <div className="p-6 flex justify-between items-center border-b border-[#000000]/10 sticky top-0 bg-white z-10">
             <span className="font-aston-script capitalize text-3xl md:text-4xl tracking-normal text-[#8A001A]">Menu</span>
-            <button onClick={() => setIsMobileMenuOpen(false)} className="text-white/60 hover:text-white p-2 bg-white/10 rounded-full">
+            <button onClick={() => setIsMobileMenuOpen(false)} className="text-black/60 hover:text-black p-2 bg-black/5 rounded-full transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
           
           <div className="flex flex-col">
             {/* Auth / Account Links */}
-            <div className="px-6 py-8 flex gap-6 border-b border-[#000000]/10 mb-2 bg-cover bg-center" style={{ backgroundImage: "url('/images/menu-bg.png')" }}>
-              <button onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm">
+            <div className="px-6 py-8 flex gap-6 border-b border-[#000000]/10 mb-2">
+              <button onClick={() => { setIsMobileMenuOpen(false); handleUserClick(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-3 bg-[#FAFAFA] border border-[#000000]/5 rounded-xl transition-colors">
                 <User className="w-5 h-5" />
                 <span className="text-[10px] font-dm-sans uppercase tracking-[0.15em] font-bold">Account</span>
               </button>
-              <Link href="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
+              <Link href="/wishlist" onClick={() => setIsMobileMenuOpen(false)} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-3 bg-[#FAFAFA] border border-[#000000]/5 rounded-xl relative transition-colors">
                 <Heart className="w-5 h-5" />
                 <span className="text-[10px] font-dm-sans uppercase tracking-[0.15em] font-bold">Wishlist</span>
                 {wishlist.length > 0 && (
@@ -496,7 +496,7 @@ export default function Header() {
                   </span>
                 )}
               </Link>
-              <button onClick={() => { setIsMobileMenuOpen(false); openCart(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-2 bg-white rounded-xl shadow-sm relative">
+              <button onClick={() => { setIsMobileMenuOpen(false); openCart(); }} className="flex flex-col items-center gap-2 text-[#000000]/70 hover:text-[#000000] flex-1 py-3 bg-[#FAFAFA] border border-[#000000]/5 rounded-xl relative transition-colors">
                 <ShoppingBag className="w-5 h-5" />
                 <span className="text-[10px] font-dm-sans uppercase tracking-[0.15em] font-bold">Cart</span>
                 {cart.length > 0 && (
