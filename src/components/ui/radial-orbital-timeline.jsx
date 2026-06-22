@@ -178,7 +178,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
               <div
                 key={item.id}
                 ref={(el) => (nodeRefs.current[item.id] = el)}
-                className="absolute transition-all duration-700 cursor-pointer"
+                className="absolute transition-all duration-700 cursor-pointer transform-gpu"
                 style={nodeStyle}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -235,7 +235,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                 </div>
 
                 {isExpanded && (
-                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-72 bg-white/95 backdrop-blur-xl border-[#1a1a1a]/10 shadow-2xl shadow-[#1a1a1a]/10 overflow-visible z-50">
+                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-72 bg-white/95 backdrop-blur-xl border-[#1a1a1a]/10 shadow-2xl shadow-[#1a1a1a]/10 overflow-visible z-50 font-sans transform-gpu">
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-px h-4 bg-[#1a1a1a]/20"></div>
                     <CardHeader className="pb-3 border-b border-[#1a1a1a]/5">
                       <div className="flex justify-between items-center mb-1">
@@ -248,7 +248,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                           {item.category}
                         </Badge>
                       </div>
-                      <CardTitle className="text-xl font-perandory text-[#1a1a1a] mt-2 leading-tight">
+                      <CardTitle className="text-xl font-sans font-bold text-[#1a1a1a] mt-2 leading-tight tracking-tight">
                         {item.title}
                       </CardTitle>
                     </CardHeader>
@@ -259,7 +259,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                         <div className="mt-5 pt-4 border-t border-[#1a1a1a]/5">
                           <div className="flex items-center mb-2">
                             <Link size={12} className="text-[#1a1a1a]/40 mr-1.5" />
-                            <h4 className="text-[10px] uppercase tracking-widest font-bold text-[#1a1a1a]/40">
+                            <h4 className="text-[10px] uppercase tracking-widest font-sans font-bold text-[#1a1a1a]/40">
                               Related Topics
                             </h4>
                           </div>
