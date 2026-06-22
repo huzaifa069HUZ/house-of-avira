@@ -190,32 +190,32 @@ export default function OrderInfoPage() {
 
           {/* Acknowledgment Box */}
           <div className="fade-up mt-16 relative">
-            <div className="absolute -inset-px bg-gradient-to-r from-[#8A001A]/20 via-[#8A001A]/5 to-[#8A001A]/20 rounded-2xl" />
-            <div className="relative bg-[#0A0A0A] rounded-2xl p-8 md:p-12">
+            <div className="absolute -inset-px bg-gradient-to-r from-[#1a1a1a]/5 via-[#1a1a1a]/0 to-[#1a1a1a]/5 rounded-2xl" />
+            <div className="relative bg-[#FAFAF8] rounded-2xl p-8 md:p-12 border border-[#1a1a1a]/5 shadow-sm text-left">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-2 h-2 rounded-full bg-[#8A001A] relative pulse-ring" />
-                <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#8A001A]">Acknowledgment</span>
+                <div className="w-2 h-2 rounded-full bg-[#1a1a1a] relative" />
+                <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/60">Acknowledgment</span>
               </div>
-              <p className="text-white/60 text-base md:text-lg leading-[1.9] font-light">
-                By placing an order with House of Avira, you acknowledge that you have <span className="text-white font-medium">read, understood, and agreed</span> to all information and policies listed below.
+              <p className="text-[#1a1a1a]/70 text-base md:text-lg leading-[1.9] font-light">
+                By placing an order with House of Avira, you acknowledge that you have <span className="text-[#1a1a1a] font-medium">read, understood, and agreed</span> to all information and policies listed below.
               </p>
             </div>
           </div>
 
           {/* Checklist */}
-          <div className="fade-up mt-16">
-            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a] mb-8">
+          <div className="fade-up mt-16 text-left">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/80 mb-8">
               Place an order only if you are comfortable with
             </h3>
             <div className="space-y-4">
               {checklist.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-full border border-[#8A001A]/20 flex items-center justify-center shrink-0 group-hover:bg-[#8A001A]/5 group-hover:border-[#8A001A]/40 transition-all duration-500">
-                    <svg className="w-4 h-4 text-[#8A001A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <div className="w-10 h-10 rounded-full border border-[#1a1a1a]/10 flex items-center justify-center shrink-0 group-hover:bg-[#1a1a1a]/5 group-hover:border-[#1a1a1a]/20 transition-all duration-500">
+                    <svg className="w-4 h-4 text-[#1a1a1a]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-[#1a1a1a]/60 text-sm md:text-base font-light group-hover:text-[#1a1a1a] transition-colors duration-300">{item}</span>
+                  <span className="text-[#1a1a1a]/70 text-sm md:text-base font-light group-hover:text-[#1a1a1a] transition-colors duration-300">{item}</span>
                 </div>
               ))}
             </div>
@@ -224,14 +224,14 @@ export default function OrderInfoPage() {
       </section>
 
       {/* ═══════════════════════════ SECTION CARDS ═══════════════════════════ */}
-      <section className="py-24 md:py-32 bg-[#0A0A0A] relative overflow-hidden">
+      <section className="py-24 md:py-32 bg-[#FAFAF8] relative overflow-hidden">
         {/* Subtle BG Pattern */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(255,255,255,0.1) 100px, rgba(255,255,255,0.1) 101px)' }} />
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(0,0,0,0.1) 100px, rgba(0,0,0,0.1) 101px)' }} />
 
         <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
           <div className="fade-up text-center mb-20">
-            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A] block mb-4">Explore Sections</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white tracking-tight">
+            <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#1a1a1a]/40 block mb-4">Explore Sections</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#1a1a1a] tracking-tight">
               Everything You<br />Need to Know
             </h2>
           </div>
@@ -244,32 +244,32 @@ export default function OrderInfoPage() {
                 className="fade-up group relative block"
               >
                 {/* Card */}
-                <div className="relative bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:bg-white/[0.06] hover:border-white/[0.12] hover:shadow-[0_0_80px_rgba(138,0,26,0.06)] overflow-hidden">
+                <div className="relative bg-[#FFFFFF] border border-[#1a1a1a]/[0.06] rounded-2xl p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:border-[#1a1a1a]/[0.15] hover:shadow-[0_12px_40px_-10px_rgba(0,0,0,0.06)] overflow-hidden">
                   {/* Background Number */}
-                  <span className="absolute -top-6 -right-4 text-[140px] font-serif font-light text-white/[0.02] leading-none select-none group-hover:text-white/[0.04] transition-colors duration-700">
+                  <span className="absolute -top-6 -right-4 text-[140px] font-serif font-light text-[#1a1a1a]/[0.02] leading-none select-none group-hover:text-[#1a1a1a]/[0.04] transition-colors duration-700">
                     {section.number}
                   </span>
 
                   {/* Icon */}
-                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#8A001A]/[0.08] border border-[#8A001A]/[0.15] flex items-center justify-center mb-8 text-[#8A001A] group-hover:bg-[#8A001A]/[0.12] group-hover:border-[#8A001A]/[0.3] transition-all duration-500 float-icon">
+                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#FAFAF8] border border-[#1a1a1a]/[0.05] flex items-center justify-center mb-8 text-[#1a1a1a] group-hover:bg-[#1a1a1a] group-hover:text-white transition-all duration-500 float-icon">
                     {section.icon}
                   </div>
 
                   {/* Number Tag */}
-                  <span className="relative z-10 text-[10px] font-bold tracking-[0.3em] uppercase text-white/20 mb-3 block">Section {section.number}</span>
+                  <span className="relative z-10 text-[10px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/30 mb-3 block">Section {section.number}</span>
 
                   {/* Title */}
-                  <h3 className="relative z-10 text-xl md:text-2xl font-serif text-white mb-4 group-hover:text-[#8A001A] transition-colors duration-500">
+                  <h3 className="relative z-10 text-xl md:text-2xl font-serif text-[#1a1a1a] mb-4 group-hover:text-[#1a1a1a] transition-colors duration-500">
                     {section.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="relative z-10 text-sm text-white/30 leading-[1.8] font-light flex-1 mb-8">
+                  <p className="relative z-10 text-sm text-[#1a1a1a]/60 leading-[1.8] font-light flex-1 mb-8">
                     {section.description}
                   </p>
 
                   {/* CTA */}
-                  <div className="relative z-10 flex items-center gap-3 text-[#8A001A]">
+                  <div className="relative z-10 flex items-center gap-3 text-[#1a1a1a]/70 group-hover:text-[#1a1a1a] transition-colors duration-300">
                     <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Read Section</span>
                     <svg className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -277,7 +277,7 @@ export default function OrderInfoPage() {
                   </div>
 
                   {/* Bottom Accent Line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#8A001A] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#1a1a1a] scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
                 </div>
               </Link>
             ))}
@@ -286,20 +286,20 @@ export default function OrderInfoPage() {
       </section>
 
       {/* ═══════════════════════════ BOTTOM ═══════════════════════════ */}
-      <section className="py-24 md:py-32 bg-[#FAFAF8]">
+      <section className="py-24 md:py-32 bg-[#FFFFFF]">
         <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
           <div className="fade-up">
             {/* Heart Icon */}
-            <div className="w-14 h-14 rounded-full bg-[#8A001A]/[0.06] border border-[#8A001A]/[0.12] flex items-center justify-center mx-auto mb-8">
-              <svg className="w-5 h-5 text-[#8A001A]" viewBox="0 0 24 24" fill="currentColor">
+            <div className="w-14 h-14 rounded-full bg-[#FAFAF8] border border-[#1a1a1a]/10 flex items-center justify-center mx-auto mb-8">
+              <svg className="w-5 h-5 text-[#1a1a1a]/80" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </div>
 
-            <p className="text-base md:text-lg text-[#1a1a1a]/50 leading-[1.9] font-light max-w-lg mx-auto">
+            <p className="text-base md:text-lg text-[#1a1a1a]/70 leading-[1.9] font-light max-w-lg mx-auto">
               We value transparency and customer trust above everything else. By placing an order, you confirm that you have read and agreed to all policies.
             </p>
-            <p className="text-sm text-[#1a1a1a]/30 mt-6 font-light">
+            <p className="text-sm text-[#1a1a1a]/50 mt-6 font-light">
               Thank you for trusting House of Avira <span className="text-[#8A001A]">♥</span>
             </p>
           </div>
