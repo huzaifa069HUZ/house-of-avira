@@ -15,7 +15,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useCurrencyStore } from '@/store/currencyStore';
 import { Plane } from 'lucide-react';
@@ -53,6 +53,14 @@ export default function Home() {
   const { wishlist, toggleWishlist } = useWishlistStore();
   const { t } = useTranslation();
   const { initSettings } = useCurrencyStore();
+  const scrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = window.innerWidth < 768 ? 200 : 300;
+      scrollRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   const aestheticsTabs = [
     'babydoll / coquette',
@@ -226,17 +234,17 @@ export default function Home() {
             </a>
           </div>
           <div className="flex gap-2 text-[#000000]/40 self-end sm:self-auto">
-            <button className="hover:text-[#000000] transition-colors cursor-pointer" aria-label="Previous">
+            <button onClick={() => scroll('left')} className="hover:text-[#000000] transition-colors cursor-pointer" aria-label="Previous">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
             </button>
-            <button className="hover:text-[#000000] transition-colors cursor-pointer" aria-label="Next">
+            <button onClick={() => scroll('right')} className="hover:text-[#000000] transition-colors cursor-pointer" aria-label="Next">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
             </button>
           </div>
         </div>
 
         {/* Horizontally Scrollable Product List */}
-        <div className="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div ref={scrollRef} className="flex overflow-x-auto gap-4 hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth">
           {newArrivals.map((product, idx) => (
             <div key={product.id || idx} className="w-[calc(50%-8px)] md:w-[calc(25%-12px)] snap-start flex-shrink-0">
               <ProductCard product={product} />
@@ -411,23 +419,6 @@ export default function Home() {
       {/* Soft Silhouettes Campaign & 4-Grid GSAP Section */}
       <CampaignAndGrid />
 
-      {/* Split Categories Section */}
-      <section className="w-full flex flex-col md:flex-row h-[120vh] md:h-screen relative z-20 bg-white">
-        <div className="w-full md:w-1/2 relative group overflow-hidden cursor-pointer h-1/2 md:h-full bg-[#E5E0DA]">
-          <img src="/accesories.png" alt="Pinterest Modern Dress" className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
-          <div className="absolute bottom-12 left-0 w-full text-center z-10 flex justify-center">
-            <span className="text-white text-sm md:text-base tracking-widest uppercase font-medium hover:opacity-70 transition-opacity">{t.categories.accessories}</span>
-          </div>
-        </div>
-        <div className="w-full md:w-1/2 relative group overflow-hidden cursor-pointer h-1/2 md:h-full bg-[#D8D0C8]">
-          <img src="/fashion.png" alt="Trendy Pinterest Accessories" className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
-          <div className="absolute bottom-12 left-0 w-full text-center z-10 flex justify-center">
-            <span className="text-white text-sm md:text-base tracking-widest uppercase font-medium hover:opacity-70 transition-opacity">{t.categories.women}</span>
-          </div>
-        </div>
-      </section>
 
       {/* Why House of Avira Section */}
       <WhyHouseOfAvira />
