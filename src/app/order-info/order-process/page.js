@@ -116,7 +116,7 @@ export default function OrderProcessPage() {
           </div>
 
           {/* Shipping Types Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
             <div className="border border-gray-200 rounded p-6 flex flex-col items-center justify-center text-center hover:border-black transition-colors cursor-pointer bg-white h-40">
               <Plane className="w-8 h-8 mb-4 text-[#8A001A]" />
               <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase">Global Transit<br/>Calculations</span>
@@ -140,7 +140,7 @@ export default function OrderProcessPage() {
           </div>
 
           {/* Steps Progress indicator */}
-          <div className="mb-16">
+          <div className="mb-16" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
             <h5 className="text-xs uppercase mb-6 font-bold tracking-widest text-center">What happens once we calculate the final costs?</h5>
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-80 hover:opacity-100 transition-opacity">
