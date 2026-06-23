@@ -48,7 +48,7 @@ export default function WhyHouseOfAvira() {
           
           {/* Huge Typography Behind */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-16 sm:mt-24 md:mt-32 w-full flex items-center justify-center z-0 pointer-events-none">
-            <h2 className="font-perandory text-[#000000] text-[8vw] sm:text-[6vw] md:text-[5vw] lg:text-[4.5vw] leading-none whitespace-nowrap tracking-tighter opacity-90">
+            <h2 className="font-perandory text-[#000000] text-[9vw] sm:text-[7vw] md:text-[6vw] lg:text-[5.5vw] leading-none whitespace-nowrap tracking-tighter opacity-90 scale-y-[1.5] inline-block origin-center mt-4">
               STRAIGHT FROM PINTEREST 
             </h2>
           </div>
