@@ -55,7 +55,7 @@ export default function OrderProcessPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Product Price Card */}
             <div className="border border-gray-200 rounded p-6 md:p-8 bg-white flex flex-col justify-center">
-              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-cormorant">THE PRODUCT VALUE</h5>
+              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-sans">THE PRODUCT VALUE</h5>
               <p className="text-gray-600 mb-6 font-sans">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
               <div className="space-y-4 font-sans">
                 <p className="text-[#8A001A] font-semibold">What happens next?</p>
@@ -64,7 +64,7 @@ export default function OrderProcessPage() {
             </div>
             {/* Logistics Inclusions Card */}
             <div className="border border-gray-200 rounded p-6 md:p-8 bg-white">
-              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-cormorant">What's Included Now</h5>
+              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-sans">What's Included Now</h5>
               <p className="text-gray-600 mb-6 font-sans">Securing your piece ensures it enters our managed logistics pipeline immediately.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-sans">
                 <div>
@@ -160,14 +160,14 @@ export default function OrderProcessPage() {
 
           {/* Payment Policy Disclaimer */}
           <div className="text-center max-w-3xl mx-auto border-t border-gray-200 pt-10 mb-12">
-            <h5 className="text-xs text-[#8A001A] uppercase mb-4 font-bold tracking-widest">Our Promise on Fees</h5>
+            <h5 className="text-lg md:text-xl text-[#8A001A] uppercase mb-4 tracking-widest font-perandory">Our Promise on Fees</h5>
             <p className="text-sm text-gray-600 italic leading-relaxed">
               We believe in full transparency. Shipping and mandatory fees are calculated precisely based on your order's specific journey. We'll always guide you through the final payment schedule to ensure your piece arrives safely and promptly at your door.
             </p>
           </div>
           
           <div className="flex justify-center mt-12 pb-24">
-            <Link href="/order-info/shipping" className="bg-[#8A001A] text-white text-xs font-bold uppercase py-4 px-12 rounded hover:bg-[#a1001e] transition-colors tracking-widest shadow-lg shadow-[#8A001A]/20">
+            <Link href="/order-info/shipping" className="bg-[#8A001A] text-white text-xs font-bold font-sans uppercase py-4 px-12 rounded hover:bg-[#a1001e] transition-colors tracking-widest shadow-lg shadow-[#8A001A]/20">
               Learn about Delivery
             </Link>
           </div>
