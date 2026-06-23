@@ -17,7 +17,7 @@ export const dictionaries = {
     },
     curated: {
       title: "Shop your aesthetic",
-      subtitle: "OUR CUTEST PICKS, JUST FOR YOU 💕",
+      subtitle: "discover your next favorite piece",
       sellingFast: "Selling Fast",
       selectSize: "Select a Size",
       bestSellers: "Best Sellers",
