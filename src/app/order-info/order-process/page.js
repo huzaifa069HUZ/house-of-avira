@@ -55,18 +55,18 @@ export default function OrderProcessPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Product Price Card */}
             <div className="border border-gray-200 rounded p-6 md:p-8 bg-white flex flex-col justify-center">
-              <h5 className="text-xs uppercase mb-4 font-bold tracking-widest">THE PRODUCT VALUE</h5>
-              <p className="text-gray-600 mb-6">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
-              <div className="space-y-4">
+              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-cormorant">THE PRODUCT VALUE</h5>
+              <p className="text-gray-600 mb-6 font-sans">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
+              <div className="space-y-4 font-sans">
                 <p className="text-[#8A001A] font-semibold">What happens next?</p>
                 <p className="text-gray-600">Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit.</p>
               </div>
             </div>
             {/* Logistics Inclusions Card */}
             <div className="border border-gray-200 rounded p-6 md:p-8 bg-white">
-              <h5 className="text-xs uppercase mb-4 font-bold tracking-widest">What's Included Now</h5>
-              <p className="text-gray-600 mb-6">Securing your piece ensures it enters our managed logistics pipeline immediately.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-cormorant">What's Included Now</h5>
+              <p className="text-gray-600 mb-6 font-sans">Securing your piece ensures it enters our managed logistics pipeline immediately.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-sans">
                 <div>
                   <h6 className="text-xs uppercase mb-4 font-bold tracking-widest">Priority Handling:</h6>
                   <ul className="space-y-3">
@@ -111,8 +111,8 @@ export default function OrderProcessPage() {
           
           {/* Important Policy Box */}
           <div className="bg-black text-white p-6 md:p-8 rounded mb-10 text-center">
-            <h5 className="text-xs text-[#8A001A] uppercase mb-4 font-bold tracking-widest">The Shipping Invoice</h5>
-            <p className="text-sm md:text-base">A detailed cost breakdown for shipping and logistics will be sent directly to your <span className="text-[#8A001A] font-bold underline uppercase tracking-wider">WhatsApp and Email</span>. Payment of this second invoice is required to secure your final delivery.</p>
+            <h5 className="text-3xl md:text-4xl text-[#8A001A] mb-4 font-aston-script capitalize">The Shipping Invoice</h5>
+            <p className="text-sm md:text-base font-sans">A detailed cost breakdown for shipping and logistics will be sent directly to your <span className="text-[#8A001A] font-bold underline uppercase tracking-wider">WhatsApp and Email</span>. Payment of this second invoice is required to secure your final delivery.</p>
           </div>
 
           {/* Shipping Types Grid */}
