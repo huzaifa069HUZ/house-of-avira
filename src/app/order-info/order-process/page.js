@@ -54,19 +54,19 @@ export default function OrderProcessPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Product Price Card */}
-            <div className="border border-gray-200 rounded p-6 md:p-8 bg-white flex flex-col justify-center">
-              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-sans">THE PRODUCT VALUE</h5>
-              <p className="text-gray-600 mb-6 font-sans">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
-              <div className="space-y-4 font-sans">
+            <div className="border border-gray-200 rounded p-6 md:p-8 bg-white flex flex-col justify-center" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-perandory">THE PRODUCT VALUE</h5>
+              <p className="text-gray-600 mb-6">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
+              <div className="space-y-4">
                 <p className="text-[#8A001A] font-semibold">What happens next?</p>
                 <p className="text-gray-600">Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit.</p>
               </div>
             </div>
             {/* Logistics Inclusions Card */}
-            <div className="border border-gray-200 rounded p-6 md:p-8 bg-white">
-              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-sans">What's Included Now</h5>
-              <p className="text-gray-600 mb-6 font-sans">Securing your piece ensures it enters our managed logistics pipeline immediately.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-sans">
+            <div className="border border-gray-200 rounded p-6 md:p-8 bg-white" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-perandory">WHAT'S INCLUDED NOW</h5>
+              <p className="text-gray-600 mb-6">Securing your piece ensures it enters our managed logistics pipeline immediately.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <h6 className="text-xs uppercase mb-4 font-bold tracking-widest">Priority Handling:</h6>
                   <ul className="space-y-3">
