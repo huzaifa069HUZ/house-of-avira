@@ -23,8 +23,8 @@ import PriceDisplay from '@/components/PriceDisplay';
 
 const categories = [
   { title: "Dresses", img: "/images/categories/dress.png", link: "/category/women/dresses" },
-  { title: "Tops", img: "/top.png", link: "/category/women/tops" },
-  { title: "Bottoms", img: "/images/categories/bottoms.png", link: "/category/women/pants-jeans" },
+  { title: "Tops", img: "/top category.png", link: "/category/women/tops" },
+  { title: "Bottoms", img: "/bottoms new.png", link: "/category/women/pants-jeans" },
   { title: "Denim", img: "/images/categories/denim.png", link: "/category/women/denim" },
   { title: "Activewear", img: "/images/categories/gymwear.png", link: "/category/women/activewear" },
   { title: "T-shirts", img: "/images/categories/tshirts.png", link: "/category/women/t-shirts" },
