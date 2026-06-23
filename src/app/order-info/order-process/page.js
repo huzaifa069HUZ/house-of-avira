@@ -141,17 +141,17 @@ export default function OrderProcessPage() {
 
           {/* Steps Progress indicator */}
           <div className="mb-16" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-            <h5 className="text-xs uppercase mb-6 font-bold tracking-widest text-center">What happens once we calculate the final costs?</h5>
+            <h5 className="text-lg md:text-xl uppercase mb-6 font-bold tracking-widest text-center font-perandory">What happens once we calculate the final costs?</h5>
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-80 hover:opacity-100 transition-opacity">
+              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-90 hover:opacity-100 hover:scale-105 hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[#8A001A]/20 cursor-pointer">
                 <span className="font-bold text-[#8A001A] text-lg">01</span>
                 <span className="text-[11px] font-bold tracking-widest uppercase">Your Total</span>
               </div>
-              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-80 hover:opacity-100 transition-opacity">
+              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-90 hover:opacity-100 hover:scale-105 hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[#8A001A]/20 cursor-pointer">
                 <span className="font-bold text-[#8A001A] text-lg">02</span>
                 <span className="text-[11px] font-bold tracking-widest uppercase">The Details</span>
               </div>
-              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-80 hover:opacity-100 transition-opacity">
+              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-90 hover:opacity-100 hover:scale-105 hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[#8A001A]/20 cursor-pointer">
                 <span className="font-bold text-[#8A001A] text-lg">03</span>
                 <span className="text-[11px] font-bold tracking-widest uppercase">The Timeline</span>
               </div>
