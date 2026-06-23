@@ -17,7 +17,7 @@ export default function CampaignAndGrid() {
       <div className="sticky top-0 h-[80vh] md:h-[100vh] w-full z-0 overflow-hidden">
         <section className="w-full h-full relative">
           <div className="w-full h-full origin-bottom">
-            <img src="/new section.png" alt="Campaign" className="w-full h-full object-cover" />
+            <img src="/final section.png" alt="Campaign" className="w-full h-full object-cover" />
           </div>
           <div className="absolute inset-0 bg-black/20" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
