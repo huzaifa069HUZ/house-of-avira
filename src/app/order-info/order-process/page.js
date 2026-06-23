@@ -1,178 +1,507 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package } from 'lucide-react';
-import { useEffect } from 'react';
+import Image from 'next/image';
+import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package, ShieldCheck, Globe, Clock, Heart, Sparkles, ChevronDown } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useInView, useSpring, AnimatePresence } from 'framer-motion';
+
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ target, suffix = '', inView }) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const duration = 2000;
+    const step = Math.ceil(target / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { setCount(target); clearInterval(timer); }
+      else setCount(start);
+    }, 16);
+    return () => clearInterval(timer);
+  }, [inView, target]);
+  return <span>{count}{suffix}</span>;
+}
+
+/* ─── Floating SVG decorations ─── */
+function FloatingIcon({ children, delay = 0, className = '' }) {
+  return (
+    <motion.div
+      className={`absolute pointer-events-none ${className}`}
+      animate={{ y: [0, -20, 0], rotate: [0, 5, -5, 0] }}
+      transition={{ duration: 6, repeat: Infinity, delay, ease: 'easeInOut' }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Reveal on scroll wrapper ─── */
+function RevealSection({ children, className = '', delay = 0 }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 80 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Horizontal reveal line ─── */
+function RevealLine({ className = '' }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  return (
+    <motion.div
+      ref={ref}
+      className={`h-px bg-gradient-to-r from-transparent via-[#8A001A] to-transparent ${className}`}
+      initial={{ scaleX: 0 }}
+      animate={isInView ? { scaleX: 1 } : {}}
+      transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+    />
+  );
+}
+
+/* ─── Stagger children ─── */
+const staggerContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } }
+};
+const staggerItem = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
+};
 
 export default function OrderProcessPage() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('animate-in');
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const containerRef = useRef(null);
+  const heroRef = useRef(null);
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { once: true });
+
+  /* ── Parallax scroll values ── */
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
+  const heroY = useTransform(scrollYProgress, [0, 0.15], [0, -150]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 1.1]);
+
+  /* ── Smooth spring for progress bar ── */
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#1a1c1c] font-sans antialiased flex flex-col pt-24 md:pt-32">
-      <style jsx>{`
-        .fade-up {
-          opacity: 0;
-          transform: translateY(40px);
-          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .fade-up.animate-in { opacity: 1; transform: translateY(0); }
-      `}</style>
-      
-      <main className="flex-grow px-4 md:px-16 max-w-[1440px] mx-auto w-full">
-        {/* Hero Section */}
-        <section className="text-center py-10 md:py-20 fade-up">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <Link href="/order-info" className="flex items-center gap-2 text-gray-600 hover:opacity-70 transition-opacity cursor-pointer">
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-xs font-semibold tracking-widest uppercase">Return to Overview</span>
+    <div ref={containerRef} className="relative bg-[#0a0a0a] text-white overflow-hidden" style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}>
+
+      {/* ═══ PROGRESS BAR ═══ */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#8A001A] via-[#c4002a] to-[#8A001A] z-[9999] origin-left"
+        style={{ scaleX }}
+      />
+
+      {/* ═══ HERO — FULL VIEWPORT CINEMATIC ═══ */}
+      <section ref={heroRef} className="relative h-[100vh] flex items-center justify-center overflow-hidden">
+        {/* Parallax background */}
+        <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
+          <Image
+            src="/images/order-hero-bg.png"
+            alt="Luxury fashion"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0a0a0a]" />
+        </motion.div>
+
+        {/* Floating decorative elements */}
+        <FloatingIcon delay={0} className="top-[15%] left-[8%] opacity-20">
+          <Sparkles className="w-8 h-8 text-[#8A001A]" />
+        </FloatingIcon>
+        <FloatingIcon delay={1.5} className="top-[25%] right-[10%] opacity-15">
+          <Heart className="w-6 h-6 text-[#8A001A]" />
+        </FloatingIcon>
+        <FloatingIcon delay={3} className="bottom-[30%] left-[15%] opacity-10">
+          <Globe className="w-10 h-10 text-white" />
+        </FloatingIcon>
+
+        {/* Hero Content */}
+        <motion.div
+          className="relative z-10 text-center px-4 max-w-5xl"
+          style={{ opacity: heroOpacity }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="mb-6"
+          >
+            <Link href="/order-info" className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm tracking-widest uppercase">
+              <ArrowLeft className="w-4 h-4" />
+              Return to Overview
             </Link>
-          </div>
-          <h2 className="font-perandory text-4xl md:text-6xl lg:text-7xl uppercase mb-2">YOUR JOURNEY WITH US</h2>
-          <p className="font-aston-script text-[#8A001A] text-4xl md:text-5xl lg:text-6xl mb-6">Personal & Transparent</p>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">We want you to feel confident at every stage of your order.</p>
-        </section>
+          </motion.div>
 
-        {/* Payment Step 1 */}
-        <section className="py-10 fade-up">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="font-perandory text-5xl md:text-6xl font-bold">01</span>
-            <div>
-              <h3 className="text-xs text-[#8A001A] font-bold uppercase tracking-widest mb-1">Step One</h3>
-              <h4 className="font-perandory text-2xl md:text-3xl font-bold uppercase">Securing Your Piece</h4>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Product Price Card */}
-            <div className="border border-gray-200 rounded p-6 md:p-8 bg-white flex flex-col justify-center" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-perandory">THE PRODUCT VALUE</h5>
-              <p className="text-gray-600 mb-6">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
-              <div className="space-y-4">
-                <p className="text-[#8A001A] font-semibold">What happens next?</p>
-                <p className="text-gray-600">Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit.</p>
+          <motion.p
+            initial={{ opacity: 0, letterSpacing: '0.5em' }}
+            animate={{ opacity: 1, letterSpacing: '0.3em' }}
+            transition={{ delay: 0.5, duration: 1.2 }}
+            className="text-[#8A001A] text-xs md:text-sm uppercase tracking-[0.3em] mb-4 font-bold"
+          >
+            The House of Avira Experience
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="font-perandory text-5xl md:text-7xl lg:text-[6rem] uppercase leading-[0.95] mb-4"
+          >
+            YOUR JOURNEY
+            <br />
+            <span className="text-[#8A001A]">WITH US</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.8 }}
+            className="font-aston-script text-[#c4a87c] text-3xl md:text-5xl mb-8"
+          >
+            Personal & Transparent
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.3, duration: 1 }}
+            className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+          >
+            We want you to feel confident at every stage of your order. Follow your piece from selection to doorstep.
+          </motion.p>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <span className="text-[10px] uppercase tracking-[0.3em] text-white/40">Scroll to explore</span>
+          <ChevronDown className="w-5 h-5 text-white/40" />
+        </motion.div>
+      </section>
+
+      {/* ═══ TRUST STATS BAR ═══ */}
+      <section ref={statsRef} className="relative py-16 md:py-20 border-y border-white/10 bg-[#0a0a0a]">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { target: 500, suffix: '+', label: 'Happy Customers' },
+            { target: 15, suffix: '+', label: 'Countries Served' },
+            { target: 100, suffix: '%', label: 'Transparency' },
+            { target: 24, suffix: '/7', label: 'Support Available' },
+          ].map((stat, i) => (
+            <RevealSection key={i} delay={i * 0.15}>
+              <div className="text-4xl md:text-5xl font-perandory text-white mb-2">
+                <AnimatedCounter target={stat.target} suffix={stat.suffix} inView={statsInView} />
+              </div>
+              <p className="text-xs uppercase tracking-[0.2em] text-white/40">{stat.label}</p>
+            </RevealSection>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ STEP 01 — SECURING YOUR PIECE ═══ */}
+      <section className="relative py-24 md:py-36">
+        {/* Subtle radial glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#8A001A]/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 md:px-16">
+          {/* Step header */}
+          <RevealSection className="mb-16 md:mb-24">
+            <div className="flex items-end gap-6 md:gap-10">
+              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-white/[0.04] select-none">01</span>
+              <div className="pb-4 md:pb-8">
+                <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Step One</p>
+                <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Securing Your Piece</h2>
               </div>
             </div>
-            {/* Logistics Inclusions Card */}
-            <div className="border border-gray-200 rounded p-6 md:p-8 bg-white" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-              <h5 className="text-lg md:text-xl uppercase mb-4 font-bold tracking-widest font-perandory">WHAT'S INCLUDED NOW</h5>
-              <p className="text-gray-600 mb-6">Securing your piece ensures it enters our managed logistics pipeline immediately.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <h6 className="text-xs uppercase mb-4 font-bold tracking-widest">Priority Handling:</h6>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-[#8A001A]" />
-                      <span>Sourcing & Procurement</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-[#8A001A]" />
-                      <span>Initial Quality Check</span>
-                    </li>
-                  </ul>
+          </RevealSection>
+
+          <RevealLine className="mb-16" />
+
+          {/* Two-column: Image + Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
+            {/* Image with parallax */}
+            <RevealSection delay={0.2}>
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden group">
+                <Image
+                  src="/images/order-hero-bg.png"
+                  alt="Curating your piece"
+                  fill
+                  className="object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-8 left-8 right-8">
+                  <p className="font-aston-script text-[#c4a87c] text-2xl md:text-3xl">Handpicked for you</p>
                 </div>
-                <div>
-                  <h6 className="text-xs uppercase mb-4 font-bold tracking-widest">Peace of Mind:</h6>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-[#8A001A]" />
-                      <span>Reservation Protection</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-[#8A001A]" />
-                      <span>Dedicated Order Support</span>
-                    </li>
-                  </ul>
+              </div>
+            </RevealSection>
+
+            {/* Content cards */}
+            <div className="space-y-8">
+              <RevealSection delay={0.3}>
+                <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
+                  <h3 className="font-perandory text-xl md:text-2xl uppercase tracking-wider mb-5 group-hover:text-[#8A001A] transition-colors">THE PRODUCT VALUE</h3>
+                  <p className="text-white/60 leading-relaxed mb-6">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
+                  <div className="flex items-center gap-3 text-[#8A001A]">
+                    <div className="w-8 h-px bg-[#8A001A]" />
+                    <p className="font-semibold text-sm uppercase tracking-wider">What happens next?</p>
+                  </div>
+                  <p className="text-white/40 mt-3 text-sm leading-relaxed">Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit.</p>
                 </div>
+              </RevealSection>
+
+              <RevealSection delay={0.45}>
+                <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
+                  <h3 className="font-perandory text-xl md:text-2xl uppercase tracking-wider mb-5 group-hover:text-[#8A001A] transition-colors">WHAT&apos;S INCLUDED NOW</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/30 mb-4">Priority Handling</p>
+                      <ul className="space-y-3">
+                        {['Sourcing & Procurement', 'Initial Quality Check'].map((item, i) => (
+                          <motion.li
+                            key={i}
+                            className="flex items-center gap-3"
+                            whileHover={{ x: 5 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <Check className="w-4 h-4 text-[#8A001A] flex-shrink-0" />
+                            <span className="text-white/60 text-sm">{item}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/30 mb-4">Peace of Mind</p>
+                      <ul className="space-y-3">
+                        {['Reservation Protection', 'Dedicated Order Support'].map((item, i) => (
+                          <motion.li
+                            key={i}
+                            className="flex items-center gap-3"
+                            whileHover={{ x: 5 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <Check className="w-4 h-4 text-[#8A001A] flex-shrink-0" />
+                            <span className="text-white/60 text-sm">{item}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </RevealSection>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CINEMATIC DIVIDER — PARALLAX IMAGE ═══ */}
+      <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          style={{ y: useTransform(scrollYProgress, [0.25, 0.45], [0, -80]) }}
+        >
+          <Image
+            src="/images/order-shipping-bg.png"
+            alt="Global shipping"
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </motion.div>
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <RevealSection>
+            <p className="text-xs uppercase tracking-[0.4em] text-white/50 mb-4">Your piece is on its way</p>
+            <h2 className="font-perandory text-4xl md:text-6xl lg:text-7xl uppercase mb-4">ACROSS THE GLOBE</h2>
+            <p className="font-aston-script text-[#c4a87c] text-2xl md:text-4xl">Directly to your doorstep</p>
+          </RevealSection>
+        </div>
+      </section>
+
+      {/* ═══ STEP 02 — BRINGING IT HOME ═══ */}
+      <section className="relative py-24 md:py-36 bg-[#0a0a0a]">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#8A001A]/3 rounded-full blur-[200px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 md:px-16">
+          {/* Step header */}
+          <RevealSection className="mb-16 md:mb-24">
+            <div className="flex items-end gap-6 md:gap-10">
+              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-white/[0.04] select-none">02</span>
+              <div className="pb-4 md:pb-8">
+                <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Step Two</p>
+                <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Bringing It Home</h2>
               </div>
             </div>
-          </div>
-        </section>
+          </RevealSection>
 
-        {/* Payment Step 2 */}
-        <section className="py-10 border-t border-gray-200 mt-10 pt-10 fade-up">
-          <div className="flex items-center gap-4 mb-8">
-            <span className="font-perandory text-5xl md:text-6xl font-bold">02</span>
-            <div>
-              <h3 className="text-xs text-[#8A001A] font-bold uppercase tracking-widest mb-1">Step Two</h3>
-              <h4 className="font-perandory text-2xl md:text-3xl font-bold uppercase">Bringing It Home</h4>
-            </div>
-          </div>
-          <p className="text-lg text-gray-600 mb-8 max-w-3xl">Once your curated piece arrives at our international warehouse, we calculate the final logistics and delivery costs specifically for your order.</p>
-          
-          {/* Important Policy Box */}
-          <div className="bg-black text-white p-6 md:p-8 rounded mb-10 text-center">
-            <h5 className="text-3xl md:text-4xl text-[#8A001A] mb-4 font-aston-script capitalize">The Shipping Invoice</h5>
-            <p className="text-sm md:text-base font-sans">A detailed cost breakdown for shipping and logistics will be sent directly to your <span className="text-[#8A001A] font-bold underline uppercase tracking-wider">WhatsApp and Email</span>. Payment of this second invoice is required to secure your final delivery.</p>
-          </div>
+          <RevealLine className="mb-16" />
 
-          {/* Shipping Types Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-            <div className="border border-gray-200 rounded p-6 flex flex-col items-center justify-center text-center hover:border-black transition-colors cursor-pointer bg-white h-40">
-              <Plane className="w-8 h-8 mb-4 text-[#8A001A]" />
-              <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase">Global Transit<br/>Calculations</span>
-            </div>
-            <div className="border border-gray-200 rounded p-6 flex flex-col items-center justify-center text-center hover:border-black transition-colors cursor-pointer bg-white h-40">
-              <Receipt className="w-8 h-8 mb-4 text-[#8A001A]" />
-              <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase">Customs &<br/>Clearance Services</span>
-            </div>
-            <div className="border border-gray-200 rounded p-6 flex flex-col items-center justify-center text-center hover:border-black transition-colors cursor-pointer bg-white h-40">
-              <FileText className="w-8 h-8 mb-4 text-[#8A001A]" />
-              <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase">Statutory Import<br/>Charges</span>
-            </div>
-            <div className="border border-gray-200 rounded p-6 flex flex-col items-center justify-center text-center hover:border-black transition-colors cursor-pointer bg-white h-40 col-span-2 md:col-span-1 md:col-start-2">
-              <Truck className="w-8 h-8 mb-4 text-[#8A001A]" />
-              <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase">Final Mile<br/>Delivery</span>
-            </div>
-            <div className="border border-gray-200 rounded p-6 flex flex-col items-center justify-center text-center hover:border-black transition-colors cursor-pointer bg-white h-40 col-span-2 md:col-span-1">
-              <Package className="w-8 h-8 mb-4 text-[#8A001A]" />
-              <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase">Careful Handling<br/>& Logistics</span>
-            </div>
-          </div>
-
-          {/* Steps Progress indicator */}
-          <div className="mb-16" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-            <h5 className="text-lg md:text-xl uppercase mb-6 font-bold tracking-widest text-center font-perandory">What happens once we calculate the final costs?</h5>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-90 hover:opacity-100 hover:scale-105 hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[#8A001A]/20 cursor-pointer">
-                <span className="font-bold text-[#8A001A] text-lg">01</span>
-                <span className="text-[11px] font-bold tracking-widest uppercase">Your Total</span>
-              </div>
-              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-90 hover:opacity-100 hover:scale-105 hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[#8A001A]/20 cursor-pointer">
-                <span className="font-bold text-[#8A001A] text-lg">02</span>
-                <span className="text-[11px] font-bold tracking-widest uppercase">The Details</span>
-              </div>
-              <div className="bg-black text-white py-4 px-6 rounded-full flex items-center gap-3 flex-1 justify-center opacity-90 hover:opacity-100 hover:scale-105 hover:-translate-y-2 transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[#8A001A]/20 cursor-pointer">
-                <span className="font-bold text-[#8A001A] text-lg">03</span>
-                <span className="text-[11px] font-bold tracking-widest uppercase">The Timeline</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Payment Policy Disclaimer */}
-          <div className="text-center max-w-3xl mx-auto border-t border-gray-200 pt-10 mb-12">
-            <h5 className="text-lg md:text-xl text-[#8A001A] uppercase mb-4 tracking-widest font-perandory">Our Promise on Fees</h5>
-            <p className="text-sm text-gray-600 italic leading-relaxed">
-              We believe in full transparency. Shipping and mandatory fees are calculated precisely based on your order's specific journey. We'll always guide you through the final payment schedule to ensure your piece arrives safely and promptly at your door.
+          <RevealSection>
+            <p className="text-lg md:text-xl text-white/50 max-w-3xl leading-relaxed mb-16">
+              Once your curated piece arrives at our international warehouse, we calculate the final logistics and delivery costs specifically for your order.
             </p>
+          </RevealSection>
+
+          {/* The Shipping Invoice - cinematic card */}
+          <RevealSection delay={0.2} className="mb-20">
+            <div className="relative rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/20 via-black to-[#8A001A]/10" />
+              <div className="relative p-10 md:p-16 text-center border border-[#8A001A]/20 rounded-2xl">
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                  className="absolute top-6 right-6 opacity-10"
+                >
+                  <Globe className="w-16 h-16 text-[#8A001A]" />
+                </motion.div>
+                <h3 className="font-aston-script text-4xl md:text-6xl text-[#8A001A] mb-6 capitalize">The Shipping Invoice</h3>
+                <p className="text-white/60 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
+                  A detailed cost breakdown for shipping and logistics will be sent directly to your{' '}
+                  <span className="text-[#8A001A] font-bold uppercase tracking-wider">WhatsApp and Email</span>.
+                  Payment of this second invoice is required to secure your final delivery.
+                </p>
+              </div>
+            </div>
+          </RevealSection>
+
+          {/* Shipping Types Grid — animated icons */}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mb-20"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-50px' }}
+          >
+            {[
+              { icon: Plane, title: 'Global Transit', subtitle: 'Calculations' },
+              { icon: Receipt, title: 'Customs &', subtitle: 'Clearance Services' },
+              { icon: FileText, title: 'Statutory Import', subtitle: 'Charges' },
+              { icon: Truck, title: 'Final Mile', subtitle: 'Delivery' },
+              { icon: Package, title: 'Careful Handling', subtitle: '& Logistics' },
+            ].map(({ icon: Icon, title, subtitle }, i) => (
+              <motion.div
+                key={i}
+                variants={staggerItem}
+                whileHover={{ y: -8, borderColor: 'rgba(138, 0, 26, 0.4)' }}
+                className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-500 group h-44 md:h-52"
+              >
+                <motion.div
+                  whileHover={{ rotate: 15, scale: 1.2 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <Icon className="w-8 h-8 md:w-10 md:h-10 mb-4 text-[#8A001A] group-hover:text-[#c4002a] transition-colors" />
+                </motion.div>
+                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-white/70 group-hover:text-white transition-colors">
+                  {title}<br />{subtitle}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* What happens next — timeline style */}
+          <RevealSection className="mb-16">
+            <h3 className="font-perandory text-2xl md:text-3xl uppercase tracking-wider text-center mb-12">
+              What happens once we calculate the final costs?
+            </h3>
+          </RevealSection>
+
+          <div className="relative max-w-4xl mx-auto">
+            {/* Vertical timeline line */}
+            <div className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#8A001A]/40 to-transparent hidden md:block" />
+
+            {[
+              { num: '01', title: 'Your Total', desc: 'We compile the exact shipping, customs, and delivery charges specific to your order and destination.' },
+              { num: '02', title: 'The Details', desc: 'A transparent breakdown is sent to your WhatsApp and email — every line item clearly explained.' },
+              { num: '03', title: 'The Timeline', desc: 'Estimated delivery windows are shared, so you know exactly when to expect your curated piece.' },
+            ].map((step, i) => (
+              <RevealSection key={i} delay={i * 0.2} className="mb-12 last:mb-0">
+                <div className={`flex items-start gap-8 md:gap-12 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+                  <div className={`flex-1 ${i % 2 === 1 ? 'md:text-right' : ''}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="bg-white/[0.03] border border-white/10 rounded-2xl p-8 hover:border-[#8A001A]/30 transition-all duration-500"
+                    >
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className="font-perandory text-3xl md:text-4xl text-[#8A001A]">{step.num}</span>
+                        <h4 className="font-perandory text-lg md:text-xl uppercase tracking-wider">{step.title}</h4>
+                      </div>
+                      <p className="text-white/50 leading-relaxed">{step.desc}</p>
+                    </motion.div>
+                  </div>
+                  <div className="hidden md:flex items-center justify-center w-4 h-4 rounded-full bg-[#8A001A] ring-4 ring-[#8A001A]/20 flex-shrink-0 mt-10" />
+                  <div className="flex-1 hidden md:block" />
+                </div>
+              </RevealSection>
+            ))}
           </div>
-          
-          <div className="flex justify-center mt-12 pb-24">
-            <Link href="/order-info/shipping" className="bg-[#8A001A] text-white text-xs font-bold font-sans uppercase py-4 px-12 rounded hover:bg-[#a1001e] transition-colors tracking-widest shadow-lg shadow-[#8A001A]/20">
-              Learn about Delivery
-            </Link>
-          </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* ═══ CINEMATIC DELIVERY IMAGE DIVIDER ═══ */}
+      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          style={{ y: useTransform(scrollYProgress, [0.6, 0.8], [0, -60]) }}
+        >
+          <Image
+            src="/images/order-delivery-bg.png"
+            alt="Premium delivery"
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </motion.div>
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <RevealSection>
+            <ShieldCheck className="w-12 h-12 text-[#8A001A] mx-auto mb-4" />
+            <h2 className="font-perandory text-3xl md:text-5xl uppercase mb-3">Delivered With Care</h2>
+            <p className="text-white/50 text-lg max-w-lg">Every piece arrives exactly as intended — inspected, packaged, and delivered to perfection.</p>
+          </RevealSection>
+        </div>
+      </section>
+
+      {/* ═══ PROMISE + CTA ═══ */}
+      <section className="relative py-24 md:py-36 bg-[#0a0a0a]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(138,0,26,0.05)_0%,_transparent_70%)]" />
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <RevealSection>
+            <p className="text-xs uppercase tracking-[0.4em] text-[#8A001A] mb-6">A Commitment To You</p>
+            <h2 className="font-perandory text-3xl md:text-5xl uppercase mb-8">Our Promise on Fees</h2>
+            <p className="text-white/40 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-16">
+              We believe in full transparency. Shipping and mandatory fees are calculated precisely based on your order&apos;s specific journey. We&apos;ll always guide you through the final payment schedule to ensure your piece arrives safely and promptly at your door.
+            </p>
+          </RevealSection>
+
+          <RevealSection delay={0.3}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                href="/order-info/shipping"
+                className="inline-block bg-[#8A001A] text-white text-xs font-bold uppercase py-5 px-16 rounded-full hover:bg-[#a1001e] transition-all duration-300 tracking-[0.2em] shadow-2xl shadow-[#8A001A]/30 hover:shadow-[#8A001A]/50"
+              >
+                Learn about Delivery
+              </Link>
+            </motion.div>
+          </RevealSection>
+        </div>
+      </section>
     </div>
   );
 }
