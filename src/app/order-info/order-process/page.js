@@ -485,7 +485,7 @@ export default function OrderProcessPage() {
           <RevealSection>
             <p className="text-xs uppercase tracking-[0.4em] text-[#8A001A] mb-6">A Commitment To You</p>
             <h2 className="font-perandory text-3xl md:text-5xl uppercase mb-8">Our Promise on Fees</h2>
-            <p className="text-white/40 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-16">
+            <p className="text-white/40 text-lg md:text-2xl leading-relaxed max-w-2xl mx-auto mb-16 font-aston-script">
               We believe in full transparency. Shipping and mandatory fees are calculated precisely based on your order&apos;s specific journey. We&apos;ll always guide you through the final payment schedule to ensure your piece arrives safely and promptly at your door.
             </p>
           </RevealSection>
