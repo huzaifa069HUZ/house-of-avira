@@ -38,7 +38,7 @@ export default function OrderProcessPage() {
               <span className="text-xs font-semibold tracking-widest uppercase">Return to Overview</span>
             </Link>
           </div>
-          <h2 className="font-perandory text-4xl md:text-6xl lg:text-7xl uppercase mb-2">YOUR JOURNEY WITH US</h2>
+          <h2 className="font-sans text-4xl md:text-6xl lg:text-7xl uppercase mb-2">YOUR JOURNEY WITH US</h2>
           <p className="font-aston-script text-[#8A001A] text-4xl md:text-5xl lg:text-6xl mb-6">Personal & Transparent</p>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">We want you to feel confident at every stage of your order.</p>
         </section>
@@ -46,10 +46,10 @@ export default function OrderProcessPage() {
         {/* Payment Step 1 */}
         <section className="py-10 fade-up">
           <div className="flex items-center gap-4 mb-8">
-            <span className="font-perandory text-5xl md:text-6xl font-bold">01</span>
+            <span className="font-sans text-5xl md:text-6xl font-bold">01</span>
             <div>
               <h3 className="text-xs text-[#8A001A] font-bold uppercase tracking-widest mb-1">Step One</h3>
-              <h4 className="font-perandory text-2xl md:text-3xl font-bold uppercase">Securing Your Piece</h4>
+              <h4 className="font-sans text-2xl md:text-3xl font-bold uppercase">Securing Your Piece</h4>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -101,10 +101,10 @@ export default function OrderProcessPage() {
         {/* Payment Step 2 */}
         <section className="py-10 border-t border-gray-200 mt-10 pt-10 fade-up">
           <div className="flex items-center gap-4 mb-8">
-            <span className="font-perandory text-5xl md:text-6xl font-bold">02</span>
+            <span className="font-sans text-5xl md:text-6xl font-bold">02</span>
             <div>
               <h3 className="text-xs text-[#8A001A] font-bold uppercase tracking-widest mb-1">Step Two</h3>
-              <h4 className="font-perandory text-2xl md:text-3xl font-bold uppercase">Bringing It Home</h4>
+              <h4 className="font-sans text-2xl md:text-3xl font-bold uppercase">Bringing It Home</h4>
             </div>
           </div>
           <p className="text-lg text-gray-600 mb-8 max-w-3xl">Once your curated piece arrives at our international warehouse, we calculate the final logistics and delivery costs specifically for your order.</p>
