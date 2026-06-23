@@ -37,8 +37,9 @@ export default function WishlistPage() {
   return (
     <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 min-h-screen">
       <div className="flex flex-col items-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-cormorant uppercase tracking-widest text-[#000000] mb-4">
-          Personal Wishlist
+        <h1 className="text-center mb-4 flex items-center justify-center gap-1.5 flex-wrap md:flex-nowrap">
+          <span className="font-perandory text-[18px] md:text-[24px] uppercase tracking-[0.15em] font-bold translate-y-[3px]">PERSONAL</span>
+          <span className="font-aston-script text-[42px] md:text-[56px] lowercase leading-none -translate-y-[2px]">wishlist</span>
         </h1>
         <p className="text-sm text-neutral-500 uppercase tracking-widest">
           {wishlist.length} {wishlist.length === 1 ? 'Item' : 'Items'} Saved

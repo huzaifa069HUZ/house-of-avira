@@ -125,6 +125,11 @@ const menuData = [
     title: "Read Before Ordering",
     href: "/order-info",
     customClass: "text-[#8A001A] font-symphony text-[22px] md:text-2xl capitalize tracking-normal leading-none pt-1"
+  },
+  {
+    title: "Policies",
+    href: "/policy",
+    hideOnDesktop: true
   }
 ];
 
@@ -418,7 +423,7 @@ export default function Header() {
 
           {/* Navigation Links - Desktop Only */}
           <nav className="hidden lg:flex justify-center gap-8 h-12">
-            {menuData.map((item) => (
+            {menuData.filter(item => !item.hideOnDesktop).map((item) => (
               <div key={item.title} className="relative group flex items-center h-full">
                 <Link 
                   href={item.href} 

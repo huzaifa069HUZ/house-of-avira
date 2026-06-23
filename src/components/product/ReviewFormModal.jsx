@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, UploadCloud, Loader2 } from 'lucide-react';
 import { db } from '@/lib/firebase';
@@ -16,8 +17,13 @@ export default function ReviewFormModal({ isOpen, onClose, productId, onReviewSu
   const [images, setImages] = useState([]); // Array of File objects
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [mounted, setMounted] = useState(false);
   
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const MAX_IMAGES = 5;
   const MAX_SIZE_MB = 15;
@@ -81,8 +87,8 @@ export default function ReviewFormModal({ isOpen, onClose, productId, onReviewSu
       const newReview = {
         productId,
         userId: user.uid,
-        userName: user.displayName || 'Anonymous User',
-        userAvatar: user.photoURL || null,
+        userName: user.name || user.displayName || 'Anonymous User',
+        userAvatar: user.photoURL || user.profilePicUrl || null,
         rating,
         comment,
         imageUrls: uploadedImageUrls,
@@ -107,7 +113,9 @@ export default function ReviewFormModal({ isOpen, onClose, productId, onReviewSu
     }
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -241,6 +249,7 @@ export default function ReviewFormModal({ isOpen, onClose, productId, onReviewSu
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

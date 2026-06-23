@@ -80,7 +80,7 @@ export default function Footer() {
               <ul className="space-y-4 text-sm font-lato text-neutral-300">
                 <li><Link href="/order-info" className="hover:text-white transition-colors">Ordering Guide</Link></li>
                 <li><Link href="/order-info/shipping" className="hover:text-white transition-colors">Shipping & Customs</Link></li>
-                <li><Link href="/order-info/policies" className="hover:text-white transition-colors">Policies</Link></li>
+                <li><Link href="/policy" className="hover:text-white transition-colors">Policies</Link></li>
                 <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
                 <li><Link href="/contact" className="hover:text-white transition-colors">Contact Studio</Link></li>
               </ul>

@@ -8,7 +8,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight } from 'lucide-react';
+import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight, Share2 } from 'lucide-react';
 import ProductReviews from '@/components/product/ProductReviews';
 
 export default function ProductPage({ params: paramsPromise }) {
@@ -85,7 +85,7 @@ export default function ProductPage({ params: paramsPromise }) {
     return (
       <div className="min-h-screen bg-white flex flex-col">
         <div className="flex-1 flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-serif text-[#000000] mb-4">Product Not Found</h1>
+          <h1 className="text-2xl font-sans text-[#000000] mb-4">Product Not Found</h1>
           <button onClick={() => router.push('/')} className="text-xs border-b border-[#000000] uppercase tracking-widest pb-1">Return Home</button>
         </div>
       </div>
@@ -173,6 +173,26 @@ export default function ProductPage({ params: paramsPromise }) {
                 alt={`${product.name} ${currentImageIndex + 1}`} 
                 className="w-full h-full object-cover lg:object-contain bg-neutral-50 transition-opacity duration-300" 
               />
+
+              {/* Share Icon */}
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (navigator.share) {
+                    navigator.share({
+                      title: product.name,
+                      url: window.location.href,
+                    }).catch(console.error);
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied to clipboard!");
+                  }
+                }}
+                className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-black shadow-sm hover:bg-white hover:scale-105 transition-all duration-300 group/share"
+                aria-label="Share product"
+              >
+                <Share2 className="w-4 h-4 stroke-[2px] group-hover/share:text-[#8A001A] transition-colors" />
+              </button>
               
               {/* Slider Arrows */}
               {images.length > 1 && (
@@ -358,14 +378,14 @@ export default function ProductPage({ params: paramsPromise }) {
               <div className="flex flex-col gap-3 mb-10">
                 {product.inStock !== false ? (
                   <>
-                    <button onClick={handleAddToCart} className="w-full bg-black text-white uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center min-h-[56px] shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                      Buy Now
+                    <button onClick={handleAddToCart} className="w-full bg-black text-white uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center min-h-[56px] shadow-lg hover:shadow-xl hover:-translate-y-0.5" style={{ fontFamily: '"Mona Sans", sans-serif' }}>
+                      BUY NOW
                     </button>
                     <div className="flex gap-3">
                       <button 
                         onClick={handleAddToCart}
-                        className="flex-1 bg-white border border-neutral-200 text-black uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all min-h-[56px] shadow-sm">
-                        Add to Bag
+                        className="flex-1 bg-white border border-neutral-200 text-black uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all min-h-[56px] shadow-sm" style={{ fontFamily: '"Mona Sans", sans-serif' }}>
+                        ADD TO CART
                       </button>
                       <button 
                         onClick={handleWishlist}
@@ -398,15 +418,15 @@ export default function ProductPage({ params: paramsPromise }) {
 
               {/* Accordion Details */}
               <div className="border-t border-neutral-200 pt-8 mt-6">
-                <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4">Product Details</h3>
+                <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Product Details</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed whitespace-pre-wrap font-light">
                   {product.description || "No description available for this item."}
                 </p>
                 
                 <div className="mt-8 pt-8 border-t border-neutral-200">
-                  <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4">Shipping & Returns</h3>
+                  <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Shipping & Returns</h3>
                   <p className="text-sm text-neutral-600 leading-relaxed font-light">
-                    SHIPPING CHARGES ARE SEPERATE AS PRODUCTS ARE IMPORT BASED. Returns are accepted within 14 days of delivery for unworn items in perfect condition with original tags.
+                    SHIPPING CHARGES ARE SEPERATE AS PRODUCTS ARE IMPORT BASED. Please note that returns or exchanges are not available because our products are globally sourced and imported specifically for your order, which involves clearing custom duties and international transit. We ensure the highest quality before dispatch.
                   </p>
                 </div>
               </div>
