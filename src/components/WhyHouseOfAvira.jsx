@@ -49,7 +49,7 @@ export default function WhyHouseOfAvira() {
           {/* Huge Typography Behind */}
           <div className="absolute top-[35%] sm:top-[35%] left-1/2 -translate-x-1/2 w-full flex items-center justify-center z-0 pointer-events-none">
             <h2 className="font-perandory text-[#000000] text-[9vw] sm:text-[7vw] md:text-[6vw] lg:text-[5.5vw] leading-none whitespace-nowrap tracking-tighter opacity-90 scale-y-[1.5] inline-block origin-center">
-              STRAIGHT FROM PINTEREST 
+              STRAIGHT FROM <span className="text-[#8A001A]">PINTEREST</span>
             </h2>
           </div>
         </motion.div>
