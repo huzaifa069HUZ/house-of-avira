@@ -479,8 +479,16 @@ export default function OrderProcessPage() {
       </section>
 
       {/* ═══ PROMISE + CTA ═══ */}
-      <section className="relative py-24 md:py-36 bg-[#0a0a0a]">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(138,0,26,0.05)_0%,_transparent_70%)]" />
+      <section className="relative py-24 md:py-36 overflow-hidden">
+        <Image
+          src="/images/our-promise-bg.png"
+          alt="Our promise background"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(138,0,26,0.1)_0%,_transparent_70%)]" />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <RevealSection>
             <p className="text-xs uppercase tracking-[0.4em] text-[#8A001A] mb-6">A Commitment To You</p>
