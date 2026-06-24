@@ -216,7 +216,7 @@ export default function OrderProcessPage() {
       </section>
 
       {/* ═══ STEP 01 — SECURING YOUR PIECE ═══ */}
-      <section className="relative py-24 md:py-36">
+      <section className="relative py-24 md:py-36 bg-[#FAFAFA] text-[#1a1a1a]">
         {/* Subtle radial glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#8A001A]/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -224,7 +224,7 @@ export default function OrderProcessPage() {
           {/* Step header */}
           <RevealSection className="mb-16 md:mb-24">
             <div className="flex items-end gap-6 md:gap-10">
-              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-white/[0.04] select-none">01</span>
+              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-black/[0.04] select-none">01</span>
               <div className="pb-4 md:pb-8">
                 <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Step One</p>
                 <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Securing Your Piece</h2>
@@ -256,23 +256,23 @@ export default function OrderProcessPage() {
             {/* Content cards */}
             <div className="space-y-8">
               <RevealSection delay={0.3}>
-                <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
+                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
                   <h3 className="font-perandory text-xl md:text-2xl uppercase tracking-wider mb-5 group-hover:text-[#8A001A] transition-colors">THE PRODUCT VALUE</h3>
-                  <p className="text-white/60 leading-relaxed mb-6">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
+                  <p className="text-gray-600 leading-relaxed mb-6">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
                   <div className="flex items-center gap-3 text-[#8A001A]">
                     <div className="w-8 h-px bg-[#8A001A]" />
                     <p className="font-semibold text-sm uppercase tracking-wider">What happens next?</p>
                   </div>
-                  <p className="text-white/40 mt-3 text-sm leading-relaxed">Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit.</p>
+                  <p className="text-gray-500 mt-3 text-sm leading-relaxed">Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit.</p>
                 </div>
               </RevealSection>
 
               <RevealSection delay={0.45}>
-                <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
+                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
                   <h3 className="font-perandory text-xl md:text-2xl uppercase tracking-wider mb-5 group-hover:text-[#8A001A] transition-colors">WHAT&apos;S INCLUDED NOW</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-white/30 mb-4">Priority Handling</p>
+                      <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">Priority Handling</p>
                       <ul className="space-y-3">
                         {['Sourcing & Procurement', 'Initial Quality Check'].map((item, i) => (
                           <motion.li
@@ -282,13 +282,13 @@ export default function OrderProcessPage() {
                             transition={{ duration: 0.2 }}
                           >
                             <Check className="w-4 h-4 text-[#8A001A] flex-shrink-0" />
-                            <span className="text-white/60 text-sm">{item}</span>
+                            <span className="text-gray-600 text-sm">{item}</span>
                           </motion.li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-white/30 mb-4">Peace of Mind</p>
+                      <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">Peace of Mind</p>
                       <ul className="space-y-3">
                         {['Reservation Protection', 'Dedicated Order Support'].map((item, i) => (
                           <motion.li
@@ -298,7 +298,7 @@ export default function OrderProcessPage() {
                             transition={{ duration: 0.2 }}
                           >
                             <Check className="w-4 h-4 text-[#8A001A] flex-shrink-0" />
-                            <span className="text-white/60 text-sm">{item}</span>
+                            <span className="text-gray-600 text-sm">{item}</span>
                           </motion.li>
                         ))}
                       </ul>
