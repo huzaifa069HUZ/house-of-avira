@@ -50,6 +50,7 @@ export default function GsapImageStack() {
         scale: 1 - ((images.length - 1 - i) * 0.015), // depth effect
         duration: 1.5,
         ease: "power2.out",
+        force3D: true,
       }, i * 0.8); // stagger
     });
 
@@ -69,8 +70,8 @@ export default function GsapImageStack() {
           border-radius: 50%;
           background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1));
           box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 10px 20px rgba(0,0,0,0.02);
-          backdrop-filter: blur(4px);
           animation: float-bubble 15s infinite linear;
+          will-change: transform, opacity;
         }
       `}</style>
       
@@ -108,7 +109,7 @@ export default function GsapImageStack() {
           <div
             key={idx}
             ref={(el) => (imagesRef.current[idx] = el)}
-            className="absolute w-[95%] md:w-[75%] lg:w-[60%] xl:w-[50%] aspect-[3/2] rounded-[3rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] border-2 border-white/80 bg-white/40 backdrop-blur-xl"
+            className="absolute w-[95%] md:w-[75%] lg:w-[60%] xl:w-[50%] aspect-[3/2] rounded-[3rem] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.15)] border-2 border-white/80 bg-white/40 will-change-transform"
             style={{ zIndex: idx + 10 }}
           >
             <Image
