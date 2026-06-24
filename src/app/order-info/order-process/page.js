@@ -429,7 +429,24 @@ export default function OrderProcessPage() {
 
           <div className="relative max-w-4xl mx-auto">
             {/* Vertical timeline line */}
-            <div className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#8A001A]/40 to-transparent hidden md:block" />
+            <div className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#8A001A]/40 to-transparent hidden md:block overflow-hidden">
+              {/* Animated glowing beam */}
+              <motion.div
+                className="absolute left-0 top-0 w-full h-32 bg-gradient-to-b from-transparent via-[#ff0033] to-transparent"
+                style={{
+                  boxShadow: "0 0 15px 2px rgba(255, 0, 51, 0.8)",
+                  filter: "blur(1px)"
+                }}
+                animate={{
+                  top: ['-10%', '110%']
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+            </div>
 
             {[
               { num: '01', title: 'Your Total', desc: 'We compile the exact shipping, customs, and delivery charges specific to your order and destination.' },
@@ -490,7 +507,14 @@ export default function OrderProcessPage() {
           src="/images/our-promise-bg.png"
           alt="Our promise background"
           fill
-          className="object-cover"
+          className="object-cover hidden md:block"
+          sizes="100vw"
+        />
+        <Image
+          src="/images/our-promise-bg-mobile.png"
+          alt="Our promise background"
+          fill
+          className="object-cover block md:hidden"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/60" />
