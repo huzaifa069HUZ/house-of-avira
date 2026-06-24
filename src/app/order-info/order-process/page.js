@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package, ShieldCheck, Globe, Clock, Heart, Sparkles, ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring, AnimatePresence } from 'framer-motion';
-
+import { GradientBackground } from '@/components/ui/gradient-background';
 /* ─── Animated Counter ─── */
 function AnimatedCounter({ target, suffix = '', inView }) {
   const [count, setCount] = useState(0);
@@ -415,7 +415,12 @@ export default function OrderProcessPage() {
             ))}
           </motion.div>
 
-          {/* What happens next — timeline style */}
+        </div>
+      </section>
+
+      {/* ═══ TIMELINE WITH SHADER BACKGROUND ═══ */}
+      <GradientBackground className="py-24 md:py-36" overlay={true} overlayOpacity={0.6}>
+        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full relative z-10">
           <RevealSection className="mb-16">
             <h3 className="font-perandory text-2xl md:text-3xl uppercase tracking-wider text-center mb-12">
               What happens once we calculate the final costs?
@@ -436,7 +441,7 @@ export default function OrderProcessPage() {
                   <div className={`flex-1 ${i % 2 === 1 ? 'md:text-right' : ''}`}>
                     <motion.div
                       whileHover={{ scale: 1.02 }}
-                      className="bg-white/[0.03] border border-white/10 rounded-2xl p-8 hover:border-[#8A001A]/30 transition-all duration-500"
+                      className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:border-[#8A001A]/30 transition-all duration-500"
                     >
                       <div className="flex items-center gap-4 mb-4">
                         <span className="font-perandory text-3xl md:text-4xl text-[#8A001A]">{step.num}</span>
@@ -451,8 +456,9 @@ export default function OrderProcessPage() {
               </RevealSection>
             ))}
           </div>
+
         </div>
-      </section>
+      </GradientBackground>
 
       {/* ═══ CINEMATIC DELIVERY IMAGE DIVIDER ═══ */}
       <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
