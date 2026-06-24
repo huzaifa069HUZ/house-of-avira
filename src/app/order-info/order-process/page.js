@@ -361,18 +361,18 @@ export default function OrderProcessPage() {
 
           {/* The Shipping Invoice - cinematic card */}
           <RevealSection delay={0.2} className="mb-20">
-            <div className="relative rounded-2xl overflow-hidden bg-white shadow-[0_8px_40px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_50px_rgba(138,0,26,0.08)] transition-shadow duration-500">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/[0.03] via-transparent to-[#8A001A]/[0.05]" />
-              <div className="relative p-10 md:p-16 text-center border border-gray-100 rounded-2xl">
+            <div className="relative rounded-2xl overflow-hidden bg-[#111] shadow-[0_8px_40px_rgb(0,0,0,0.08)] hover:shadow-[0_12px_50px_rgba(138,0,26,0.15)] transition-shadow duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/10 via-transparent to-[#8A001A]/5" />
+              <div className="relative p-10 md:p-16 text-center border border-white/10 rounded-2xl">
                 <motion.div
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                  className="absolute top-6 right-6 opacity-[0.03]"
+                  className="absolute top-6 right-6 opacity-10"
                 >
                   <Globe className="w-16 h-16 text-[#8A001A]" />
                 </motion.div>
                 <h3 className="font-aston-script text-4xl md:text-6xl text-[#8A001A] mb-6 capitalize">The Shipping Invoice</h3>
-                <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
+                <p className="text-white/70 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
                   A detailed cost breakdown for shipping and logistics will be sent directly to your{' '}
                   <span className="text-[#8A001A] font-bold uppercase tracking-wider">WhatsApp and Email</span>.
                   Payment of this second invoice is required to secure your final delivery.
@@ -399,8 +399,8 @@ export default function OrderProcessPage() {
               <motion.div
                 key={i}
                 variants={staggerItem}
-                whileHover={{ y: -8, borderColor: 'rgba(138, 0, 26, 0.2)' }}
-                className="bg-white border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(138,0,26,0.06)] rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-500 group h-44 md:h-52"
+                whileHover={{ y: -8, borderColor: 'rgba(138, 0, 26, 0.4)' }}
+                className="bg-[#111] border border-white/5 shadow-[0_4px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(138,0,26,0.15)] rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-500 group h-44 md:h-52"
               >
                 <motion.div
                   whileHover={{ rotate: 15, scale: 1.2 }}
@@ -408,7 +408,7 @@ export default function OrderProcessPage() {
                 >
                   <Icon className="w-8 h-8 md:w-10 md:h-10 mb-4 text-[#8A001A] group-hover:text-[#c4002a] transition-colors" />
                 </motion.div>
-                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-gray-500 group-hover:text-[#1a1a1a] transition-colors">
+                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-white/50 group-hover:text-white transition-colors">
                   {title}<br />{subtitle}
                 </span>
               </motion.div>
