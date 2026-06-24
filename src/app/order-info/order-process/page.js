@@ -95,7 +95,7 @@ export default function OrderProcessPage() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div ref={containerRef} className="relative bg-[#0a0a0a] text-white overflow-hidden" style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}>
+    <div ref={containerRef} className="relative bg-[#161616] text-white overflow-hidden" style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}>
 
       {/* ═══ PROGRESS BAR ═══ */}
       <motion.div
@@ -115,7 +115,7 @@ export default function OrderProcessPage() {
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0a0a0a]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#161616]" />
         </motion.div>
 
         {/* Floating decorative elements */}
@@ -197,7 +197,7 @@ export default function OrderProcessPage() {
       </section>
 
       {/* ═══ TRUST STATS BAR ═══ */}
-      <section ref={statsRef} className="relative py-16 md:py-20 border-y border-white/10 bg-[#0a0a0a]">
+      <section ref={statsRef} className="relative py-16 md:py-20 border-y border-white/10 bg-[#161616]">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             { target: 500, suffix: '+', label: 'Happy Customers' },
@@ -336,7 +336,7 @@ export default function OrderProcessPage() {
       </section>
 
       {/* ═══ STEP 02 — BRINGING IT HOME ═══ */}
-      <section className="relative py-24 md:py-36 bg-[#0a0a0a]">
+      <section className="relative py-24 md:py-36 bg-[#161616]">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#8A001A]/3 rounded-full blur-[200px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-16">
