@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap } from 'lucide-react';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 
@@ -96,7 +96,15 @@ export default function ShippingPage() {
             src="/images/shipping-hero-bg.png"
             alt="Shipping and delivery"
             fill
-            className="object-cover"
+            className="hidden md:block object-cover"
+            priority
+            sizes="100vw"
+          />
+          <Image
+            src="/images/mob-hero-ship.png"
+            alt="Shipping and delivery mobile"
+            fill
+            className="block md:hidden object-cover"
             priority
             sizes="100vw"
           />
@@ -407,6 +415,20 @@ export default function ShippingPage() {
                   </motion.div>
                 ))}
               </motion.div>
+
+              <RevealSection delay={0.4}>
+                <div className="mt-8">
+                  <a
+                    href="https://www.instagram.com/channel/Aba8mUXowU29ORRh/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#1a1a1a] text-white rounded-xl transition-all duration-300 hover:bg-[#8A001A] hover:shadow-lg hover:shadow-[#8A001A]/20 hover:-translate-y-1 w-full sm:w-auto"
+                  >
+                    <span className="font-perandory text-xs sm:text-sm uppercase tracking-widest text-center">Join our group to get updated about shipments</span>
+                    <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+              </RevealSection>
             </div>
           </div>
         </div>
