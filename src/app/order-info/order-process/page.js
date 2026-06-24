@@ -238,18 +238,14 @@ export default function OrderProcessPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
             {/* Image with parallax */}
             <RevealSection delay={0.2}>
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden group">
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden group bg-transparent">
                 <Image
                   src="/images/order-process.png"
                   alt="Curating your piece"
                   fill
-                  className="object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                  className="object-contain transition-transform duration-[1.5s] group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-8 left-8 right-8">
-                  <p className="font-aston-script text-[#c4a87c] text-2xl md:text-3xl">Handpicked for you</p>
-                </div>
               </div>
             </RevealSection>
 

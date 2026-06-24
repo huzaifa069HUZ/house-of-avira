@@ -78,8 +78,8 @@ export default function PoliciesPage() {
             <div className="w-2 h-2 rounded-full bg-[#8A001A] animate-pulse" />
             <span className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#8A001A]">Section 03</span>
           </motion.div>
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-5xl sm:text-6xl md:text-7xl lg:text-[7rem] font-perandory text-white uppercase tracking-tight leading-[0.95]">
-            Policies <br/><span className="text-[#8A001A] font-aston-script lowercase text-6xl md:text-8xl tracking-normal">& Guidelines</span>
+          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-4xl sm:text-5xl md:text-7xl lg:text-[7rem] font-perandory text-white uppercase tracking-tight leading-[1.1] md:leading-[0.95]">
+            Policies <br/><span className="text-[#8A001A] font-aston-script lowercase text-5xl sm:text-6xl md:text-8xl tracking-normal">& Guidelines</span>
           </motion.h1>
         </div>
       </section>
