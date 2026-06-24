@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useCurrencyStore } from '@/store/currencyStore';
+import { Instagram, MessageCircle, Mail } from 'lucide-react';
 
 const languages = [
   { code: 'en', label: 'ENGLISH' },
@@ -89,9 +90,24 @@ export default function Footer() {
             <div>
               <h5 className="font-perandory text-[10px] md:text-xs uppercase tracking-[0.2em] mb-6 text-neutral-500">Connect</h5>
               <ul className="space-y-4 text-sm font-lato text-neutral-300">
-                <li><a href="https://instagram.com/houseof.avira" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a></li>
-                <li><a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Pinterest</a></li>
-                <li><a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">TikTok</a></li>
+                <li>
+                  <a href="https://www.instagram.com/houseof.avira/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2 group">
+                    <Instagram className="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" />
+                    <span>Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://wa.me/919986742779" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2 group">
+                    <MessageCircle className="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" />
+                    <span>WhatsApp</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:houseofavira@gmail.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2 group">
+                    <Mail className="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" />
+                    <span>Gmail</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

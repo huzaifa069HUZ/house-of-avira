@@ -441,12 +441,18 @@ export default function Home() {
       {/* Join the Archive Section */}
       <section className="py-32 md:py-48 px-6 bg-[#FFFFFF] flex flex-col items-center justify-center text-center w-full">
         <div className="w-full max-w-xl">
-          <h3 className="font-serif text-3xl md:text-5xl mb-6 text-[#000000]">{t.archive.title}</h3>
-          <p className="text-sm text-gray-500 mb-12">{t.archive.subtitle}</p>
+          <h3 className="font-perandory text-3xl md:text-5xl mb-6 text-[#000000] tracking-wider uppercase">{t.archive.title}</h3>
+          <p className="font-sans text-sm md:text-base text-gray-600 mb-12">Sign up to receive early access to new collections, exclusive events, and editorial features.</p>
           <form className="flex flex-col md:flex-row w-full gap-4 border-b border-[#000000]/30 pb-4">
-            <input type="email" placeholder={t.archive.placeholder} className="bg-transparent w-full outline-none text-[#000000] placeholder:text-gray-400 text-sm" />
-            <button type="button" className="text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">{t.archive.subscribe}</button>
+            <input type="email" placeholder={t.archive.placeholder} className="bg-transparent font-sans w-full outline-none text-[#000000] placeholder:text-gray-400 text-sm" />
+            <button type="button" className="font-sans text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">{t.archive.subscribe}</button>
           </form>
+          
+          <a href="https://chat.whatsapp.com/CHEwNJz4QXQJ9RiDQ7OxD3" target="_blank" rel="noopener noreferrer" className="block mt-10">
+            <span className="inline-block text-[#8A001A] font-sans font-bold text-sm md:text-base uppercase tracking-widest animate-pulse hover:opacity-80 transition-opacity">
+              Join our WhatsApp community for order updates
+            </span>
+          </a>
         </div>
       </section>
 
