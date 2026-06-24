@@ -629,6 +629,13 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                         <option value="summer">Summer</option>
                         <option value="festivals / concerts">Festivals / Concerts</option>
                         <option value="trendy">Trendy</option>
+                        <option value="babydoll / coquette">Babydoll / Coquette</option>
+                        <option value="dark feminine">Dark Feminine</option>
+                        <option value="office siren">Office Siren</option>
+                        <option value="y2k">Y2K</option>
+                        <option value="streetwear">Streetwear</option>
+                        <option value="elegant chic">Elegant Chic</option>
+                        <option value="opiúm">Opiúm</option>
                       </select>
                     </div>
                   )}

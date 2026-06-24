@@ -11,6 +11,10 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 const aestheticsTabs = [
+  'casual',
+  'summer',
+  'festivals / concerts',
+  'trendy',
   'babydoll / coquette',
   'dark feminine',
   'office siren',
@@ -100,7 +104,12 @@ function ShopAestheticContent() {
     await toggleWishlist(product);
   };
 
-  const curatedAestheticsRaw = products.filter(p => p.sections?.includes('Shop your aesthetic') || p.section === 'Shop your aesthetic');
+  const curatedAestheticsRaw = products.filter(p => 
+    p.sections?.includes('Shop Your Look') || 
+    p.sections?.includes('Shop your aesthetic') || 
+    p.section === 'Shop your aesthetic' || 
+    p.section === 'Shop Your Look'
+  );
   const curatedAesthetics = curatedAestheticsRaw.filter(p => p.aesthetic === activeAesthetic);
   const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts.slice(0, 5);
 
