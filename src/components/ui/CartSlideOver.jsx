@@ -148,8 +148,6 @@ export default function CartSlideOver() {
 
     let customsLow = 0;
     let customsHigh = 0;
-    let gstLow = 0;
-    let gstHigh = 0;
 
     cart.forEach(item => {
       const productVal = item.price ? Number(item.price) : 2000;
@@ -177,34 +175,30 @@ export default function CartSlideOver() {
       const totalDutyLow = bcdLow + swsLow;
       const totalDutyHigh = bcdHigh + swsHigh;
 
-      customsLow += totalDutyLow;
-      customsHigh += totalDutyHigh;
-
-      // IGST applied on (Assessable Value + Total Duty)
+      // Combine BCD, SWS, and IGST into a single Customs, Duties & Taxes category
       const valueForIgstLow = assessableLow + totalDutyLow;
       const valueForIgstHigh = assessableHigh + totalDutyHigh;
 
-      gstLow += valueForIgstLow * igstRate;
-      gstHigh += valueForIgstHigh * igstRate;
+      const itemGstLow = valueForIgstLow * igstRate;
+      const itemGstHigh = valueForIgstHigh * igstRate;
+
+      customsLow += totalDutyLow + itemGstLow;
+      customsHigh += totalDutyHigh + itemGstHigh;
     });
 
-    // Domestic shipping (e.g., Delhivery / BlueDart)
-    // ~₹80 base for first 500g + ₹50 for every additional 500g
-    const domesticBase = 80 + Math.max(0, Math.ceil((customWeight - 500) / 500)) * 50;
-    const domLow = domesticBase * 0.9;
-    const domHigh = domesticBase * 1.2;
+    // Domestic shipping fixed to 100-500 INR
+    const domLow = 100;
+    const domHigh = 500;
 
     return {
       intlLow: Math.round(intlLow),
       intlHigh: Math.round(intlHigh),
       customsLow: Math.round(customsLow),
       customsHigh: Math.round(customsHigh),
-      gstLow: Math.round(gstLow),
-      gstHigh: Math.round(gstHigh),
       domLow: Math.round(domLow),
       domHigh: Math.round(domHigh),
-      totalLow: Math.round(intlLow + customsLow + gstLow + domLow),
-      totalHigh: Math.round(intlHigh + customsHigh + gstHigh + domHigh)
+      totalLow: Math.round(intlLow + customsLow + domLow),
+      totalHigh: Math.round(intlHigh + customsHigh + domHigh)
     };
   }, [cart, customWeight, baseCartWeight]);
 
@@ -431,19 +425,15 @@ export default function CartSlideOver() {
                           {shippingCosts && (
                             <div className="space-y-1.5 text-[11px] mb-3 border-t border-gray-100 pt-3">
                               <div className="flex justify-between text-gray-500">
-                                <span>Intl. Shipping</span>
+                                <span>Intl. Shipping & Handling</span>
                                 <span><PriceDisplay basePrice={shippingCosts.intlLow} /> - <PriceDisplay basePrice={shippingCosts.intlHigh} /></span>
                               </div>
                               <div className="flex justify-between text-gray-500">
-                                <span>Customs & Duty</span>
+                                <span>Customs, Duties & Taxes</span>
                                 <span><PriceDisplay basePrice={shippingCosts.customsLow} /> - <PriceDisplay basePrice={shippingCosts.customsHigh} /></span>
                               </div>
                               <div className="flex justify-between text-gray-500">
-                                <span>Import GST</span>
-                                <span><PriceDisplay basePrice={shippingCosts.gstLow} /> - <PriceDisplay basePrice={shippingCosts.gstHigh} /></span>
-                              </div>
-                              <div className="flex justify-between text-gray-500">
-                                <span>Domestic</span>
+                                <span>Domestic Shipping</span>
                                 <span><PriceDisplay basePrice={shippingCosts.domLow} /> - <PriceDisplay basePrice={shippingCosts.domHigh} /></span>
                               </div>
                               <div className="flex justify-between font-bold text-black border-t border-gray-100 pt-1.5 mt-1.5">
