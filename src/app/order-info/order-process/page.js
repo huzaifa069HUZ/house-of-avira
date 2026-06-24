@@ -240,7 +240,7 @@ export default function OrderProcessPage() {
             <RevealSection delay={0.2}>
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden group">
                 <Image
-                  src="/images/order-hero-bg.png"
+                  src="/images/order-process.png"
                   alt="Curating your piece"
                   fill
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-110"
