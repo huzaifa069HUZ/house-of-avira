@@ -282,7 +282,7 @@ export default function Home() {
             { img: '/images/looks/festival-concerts.png', title: 'FESTIVALS / CONCERTS' },
             { img: '/images/looks/trendy.png', title: 'TRENDY' }
           ].map((look, idx) => (
-            <Link href={`/catalogue?look=${encodeURIComponent(look.title.toLowerCase())}`} key={idx} className="relative group overflow-hidden block w-full h-[60vh] md:h-full cursor-pointer">
+            <Link href={`/category/shop-your-look/${encodeURIComponent(look.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}`} key={idx} className="relative group overflow-hidden block w-full h-[60vh] md:h-full cursor-pointer">
               <img src={look.img} alt={look.title} className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:from-black/60 md:via-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">

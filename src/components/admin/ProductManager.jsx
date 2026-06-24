@@ -60,8 +60,9 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   
   const [colors, setColors] = useState([]);
 
-  // State for Inventory
+  // State for Inventory & Best Seller
   const [inStock, setInStock] = useState(true);
+  const [bestSeller, setBestSeller] = useState(false);
 
   // State for Images
   const [existingImages, setExistingImages] = useState([]);
@@ -91,6 +92,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         imageFile: null
       })) || []);
       setInStock(initialProduct.inStock !== false);
+      setBestSeller(initialProduct.bestSeller || false);
       setExistingImages(initialProduct.images || [initialProduct.imageUrl].filter(Boolean));
     }
   }, [initialProduct]);
@@ -272,7 +274,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         sections,
         category,
         subcategory,
-        aesthetic: sections.includes('Shop your aesthetic') ? aesthetic : '',
+        aesthetic: sections.includes('Shop Your Look') || sections.includes('Shop your aesthetic') ? aesthetic : '',
         badge,
         imageUrl: finalImageUrls[0] || '', // Primary image
         images: finalImageUrls, // All images
@@ -280,6 +282,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         swatches: swatchesArray,
         extraColors: swatchesArray.length > 3 ? swatchesArray.length - 3 : 0,
         inStock,
+        bestSeller,
       };
 
       if (initialProduct) {
@@ -297,7 +300,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         setName(''); setPrice(''); setDescription(''); setSections(['New Arrivals']); setBadge('');
         setCategory(CATEGORY_DATA[0].title); setSubcategory(CATEGORY_DATA[0].children[0] || ''); setAesthetic('');
         setSizes([]); setColors([]); setFiles([]); setPreviews([]); setExistingImages([]);
-        setInStock(true);
+        setInStock(true); setBestSeller(false);
       }
 
       if (onSuccess) {
@@ -385,6 +388,22 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                   className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${inStock ? 'bg-[#34c759]' : 'bg-[#d2d2d7]'}`}
                 >
                   <div className={`bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform ${inStock ? 'translate-x-6' : 'translate-x-0'}`} />
+                </div>
+              </div>
+              <div className="flex-1 flex flex-col justify-center">
+                <label className="block text-sm font-medium text-black mb-2 flex items-center justify-between">
+                  <span>Best Seller</span>
+                  {bestSeller ? (
+                    <span className="text-[10px] font-bold tracking-widest uppercase bg-[#f0fdf4] text-[#34c759] px-2 py-0.5 rounded-full border border-[#34c759]/20">Yes</span>
+                  ) : (
+                    <span className="text-[10px] font-bold tracking-widest uppercase bg-[#F5F5F7] text-[#86868b] px-2 py-0.5 rounded-full border border-[#d2d2d7]">No</span>
+                  )}
+                </label>
+                <div 
+                  onClick={() => setBestSeller(!bestSeller)}
+                  className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${bestSeller ? 'bg-[#34c759]' : 'bg-[#d2d2d7]'}`}
+                >
+                  <div className={`bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform ${bestSeller ? 'translate-x-6' : 'translate-x-0'}`} />
                 </div>
               </div>
             </div>
@@ -593,26 +612,23 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                     }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> New Arrivals
                   </label>
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
-                    <input type="checkbox" checked={sections.includes('Shop your aesthetic')} onChange={(e) => {
-                      if (e.target.checked) setSections([...sections, 'Shop your aesthetic']);
-                      else setSections(sections.filter(s => s !== 'Shop your aesthetic'));
-                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Shop your aesthetic
+                    <input type="checkbox" checked={sections.includes('Shop Your Look')} onChange={(e) => {
+                      if (e.target.checked) setSections([...sections, 'Shop Your Look']);
+                      else setSections(sections.filter(s => s !== 'Shop Your Look'));
+                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Shop Your Look
                   </label>
-                  {sections.includes('Shop your aesthetic') && (
+                  {sections.includes('Shop Your Look') && (
                     <div className="pl-6 mt-1">
                       <select 
                         value={aesthetic}
                         onChange={(e) => setAesthetic(e.target.value)}
                         className="w-full px-3 py-2 bg-white border border-[#d2d2d7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none"
                       >
-                        <option value="">Select Aesthetic</option>
-                        <option value="babydoll / coquette">babydoll / coquette</option>
-                        <option value="dark feminine">dark feminine</option>
-                        <option value="office siren">office siren</option>
-                        <option value="y2k">y2k</option>
-                        <option value="streetwear">streetwear</option>
-                        <option value="elegant chic">elegant chic</option>
-                        <option value="opiúm">opiúm</option>
+                        <option value="">Select Look</option>
+                        <option value="casual">Casual</option>
+                        <option value="summer">Summer</option>
+                        <option value="festivals / concerts">Festivals / Concerts</option>
+                        <option value="trendy">Trendy</option>
                       </select>
                     </div>
                   )}

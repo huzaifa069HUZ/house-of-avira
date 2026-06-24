@@ -52,7 +52,12 @@ export default function CategoryClient({ slug = [] }) {
         if (dbMain === urlMain) return true;
         const cleanDb = dbMain.replace(/[^a-z0-9]/g, '');
         const cleanUrl = urlMain.replace(/[^a-z0-9]/g, '');
-        return cleanDb === cleanUrl;
+        if (cleanDb === cleanUrl) return true;
+        
+        // Custom logic for Shop Your Look
+        if (cleanUrl === 'shopyourlook' && p.sections?.includes('Shop Your Look')) return true;
+        
+        return false;
       })();
 
       const dbSub = p.subcategory?.toLowerCase().trim() || '';
@@ -60,6 +65,14 @@ export default function CategoryClient({ slug = [] }) {
 
       const matchSub = !urlSub || (() => {
         if (dbSub === urlSub) return true;
+        
+        // Custom logic for Shop Your Look
+        const urlMainClean = mainCategory.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (urlMainClean === 'shopyourlook') {
+            const cleanAesthetic = (p.aesthetic || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            const cleanUrl = urlSub.replace(/[^a-z0-9]/g, '');
+            if (cleanAesthetic === cleanUrl) return true;
+        }
         
         // Normalize spaces/dashes/slashes
         const cleanDb = dbSub.replace(/[^a-z0-9]/g, '');
