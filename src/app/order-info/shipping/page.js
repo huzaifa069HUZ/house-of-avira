@@ -272,13 +272,13 @@ export default function ShippingPage() {
           style={{ y: useTransform(scrollYProgress, [0.2, 0.35], [0, -60]) }}
         >
           <Image
-            src="/images/order-shipping-bg.png"
-            alt="Global shipping"
+            src="/images/branded-items-bg.png"
+            alt="Branded products and logistics"
             fill
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/40" />
         </motion.div>
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
           <RevealSection>
@@ -338,49 +338,62 @@ export default function ShippingPage() {
       </section>
 
       {/* ═══════ SHIPPING UPDATES ═══════ */}
-      <section className="relative py-24 md:py-36 bg-[#FAFAFA]">
+      <section className="relative py-24 md:py-36 bg-[#FAFAFA] overflow-hidden">
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#8A001A]/5 rounded-full blur-[180px] pointer-events-none" />
+
         <div className="max-w-7xl mx-auto px-4 md:px-16">
-          <RevealSection className="mb-16">
-            <div className="flex items-end gap-6 md:gap-10">
-              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-black/[0.04] select-none">—</span>
-              <div className="pb-4 md:pb-8">
-                <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Stay Informed</p>
-                <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Shipping Updates</h2>
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            {/* Left — accent card */}
+            <RevealSection>
+              <div className="relative rounded-2xl overflow-hidden bg-[#111] shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/10 via-transparent to-[#8A001A]/5" />
+                <div className="relative p-10 md:p-14 border border-white/10 rounded-2xl">
+                  <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-4">Stay Informed</p>
+                  <h2 className="font-perandory text-3xl md:text-4xl uppercase text-white mb-6">Shipping Updates</h2>
+                  <p className="font-aston-script text-[#c4a87c] text-2xl md:text-3xl mb-6">Real-time tracking</p>
+                  <p className="text-white/50 text-sm leading-relaxed">
+                    We keep you in the loop at every stage. From dispatch to doorstep, you&apos;ll receive timely updates through your preferred channel so you always know where your piece is.
+                  </p>
+                </div>
               </div>
-            </div>
-          </RevealSection>
+            </RevealSection>
 
-          <RevealLine className="mb-16" />
-
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-50px' }}
-          >
-            {[
-              { icon: MessageCircle, label: 'WhatsApp' },
-              { icon: Smartphone, label: 'SMS' },
-              { icon: Mail, label: 'Email' },
-              { icon: Megaphone, label: 'Official Channels' }
-            ].map((item, idx) => (
+            {/* Right — channel cards */}
+            <div>
               <motion.div
-                key={idx}
-                variants={staggerItem}
-                whileHover={{ y: -8 }}
-                className="bg-white border border-gray-100 shadow-sm rounded-2xl p-8 text-center hover:shadow-lg hover:border-[#8A001A]/20 transition-all duration-500 group cursor-pointer"
+                className="grid grid-cols-2 gap-5"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: '-50px' }}
               >
-                <motion.div
-                  whileHover={{ rotate: 10, scale: 1.15 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <item.icon className="w-8 h-8 md:w-10 md:h-10 text-[#8A001A] mx-auto mb-4 group-hover:text-[#c4002a] transition-colors" />
-                </motion.div>
-                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 group-hover:text-[#1a1a1a] transition-colors">{item.label}</span>
+                {[
+                  { icon: MessageCircle, label: 'WhatsApp', desc: 'Instant order updates' },
+                  { icon: Smartphone, label: 'SMS', desc: 'Delivery notifications' },
+                  { icon: Mail, label: 'Email', desc: 'Detailed breakdowns' },
+                  { icon: Megaphone, label: 'Official Channels', desc: 'Tracking & support' }
+                ].map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    variants={staggerItem}
+                    whileHover={{ y: -6, scale: 1.02 }}
+                    className="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 hover:shadow-lg hover:border-[#8A001A]/20 transition-all duration-500 group cursor-pointer"
+                  >
+                    <motion.div
+                      whileHover={{ rotate: 10, scale: 1.15 }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      <item.icon className="w-8 h-8 text-[#8A001A] mb-4 group-hover:text-[#c4002a] transition-colors" />
+                    </motion.div>
+                    <h4 className="font-perandory text-sm uppercase tracking-wider text-[#1a1a1a] mb-1">{item.label}</h4>
+                    <p className="text-[11px] text-gray-400 group-hover:text-gray-600 transition-colors">{item.desc}</p>
+                  </motion.div>
+                ))}
               </motion.div>
-            ))}
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
