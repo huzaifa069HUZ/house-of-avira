@@ -11,14 +11,10 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 const aestheticsTabs = [
-  'babydoll / coquette',
-  'dark feminine',
-  'office siren',
-  'y2k',
-  'streetwear',
-  'elegant chic',
-  'opiúm',
-  'Summer vacation'
+  'casual',
+  'summer',
+  'festivals / concerts',
+  'trendy'
 ];
 
 function ShopAestheticContent() {
@@ -100,7 +96,10 @@ function ShopAestheticContent() {
     await toggleWishlist(product);
   };
 
-  const curatedAestheticsRaw = products.filter(p => p.sections?.includes('Shop your aesthetic') || p.section === 'Shop your aesthetic');
+  const curatedAestheticsRaw = products.filter(p => 
+    p.sections?.includes('Shop Your Look') || 
+    p.section === 'Shop Your Look'
+  );
   const curatedAesthetics = curatedAestheticsRaw.filter(p => p.aesthetic === activeAesthetic);
   const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts.slice(0, 5);
 
@@ -108,7 +107,7 @@ function ShopAestheticContent() {
     <div className="pt-24 min-h-screen bg-white">
       <section className="py-10 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans font-black tracking-tight text-[#000000] mb-4">Shop Your Aesthetic</h1>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-sans font-black tracking-tight text-[#000000] mb-4">Shop Your Look</h1>
           
           {/* Pills / Filters */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full mt-8">
