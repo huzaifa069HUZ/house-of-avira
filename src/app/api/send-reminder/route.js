@@ -46,7 +46,7 @@ export async function POST(request) {
               Our pieces are highly curated and often sell out fast. 
             </p>
             
-            <a href="https://house-of-avira.vercel.app/checkout" 
+            <a href="https://houseofavira.shop/checkout" 
                style="display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 28px; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; border-radius: 4px; margin-bottom: 30px;">
               Return to Your Cart
             </a>
@@ -66,6 +66,8 @@ export async function POST(request) {
         </body>
         </html>
       `,
+      text: `HOUSE OF AVIRA\n\nHi ${name},\n\nWe noticed you were browsing our collections and left ${itemCount} item(s) waiting in your cart. Our pieces are highly curated and often sell out fast.\n\nReturn to your cart to complete your order here: https://houseofavira.shop/checkout\n\nIf you have any questions or need styling advice, simply reply to this email. We're here to help.\n\nStay inspired,\nThe House of Avira Team\n\n© ${new Date().getFullYear()} House of Avira. All rights reserved.`,
+      replyTo: process.env.EMAIL_USER || 'houseofavira@gmail.com',
     };
 
     await transporter.sendMail(mailOptions);
