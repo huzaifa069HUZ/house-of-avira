@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { auth, db } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, onSnapshot, updateDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
 export const useCartStore = create((set, get) => ({
   cart: [],
@@ -92,7 +92,11 @@ export const useCartStore = create((set, get) => ({
     // Persist to Firestore
     try {
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { cart: newCart });
+      await setDoc(userRef, { 
+        cart: newCart,
+        email: user.email || '',
+        name: user.displayName || 'Unknown User'
+      }, { merge: true });
     } catch (error) {
       console.error("Error updating cart:", error);
     }
@@ -125,7 +129,7 @@ export const useCartStore = create((set, get) => ({
 
     try {
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { cart: newCart });
+      await setDoc(userRef, { cart: newCart }, { merge: true });
     } catch (error) {
       console.error("Error updating cart quantity:", error);
     }
@@ -166,7 +170,7 @@ export const useCartStore = create((set, get) => ({
 
     try {
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { cart: newCart });
+      await setDoc(userRef, { cart: newCart }, { merge: true });
     } catch (error) {
       console.error("Error updating cart size:", error);
     }
@@ -185,7 +189,7 @@ export const useCartStore = create((set, get) => ({
 
     try {
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { cart: newCart });
+      await setDoc(userRef, { cart: newCart }, { merge: true });
     } catch (error) {
       console.error("Error removing from cart:", error);
     }
@@ -201,7 +205,7 @@ export const useCartStore = create((set, get) => ({
 
     try {
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { cart: [] });
+      await setDoc(userRef, { cart: [] }, { merge: true });
     } catch (error) {
       console.error("Error clearing cart:", error);
     }
