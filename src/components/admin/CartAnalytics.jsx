@@ -66,7 +66,7 @@ export default function CartAnalytics() {
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 font-dm-sans">
       {/* Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 flex items-center gap-4 transition-transform hover:scale-[1.02]">
@@ -95,7 +95,7 @@ export default function CartAnalytics() {
           </div>
           <div>
             <p className="text-xs text-[#86868b] font-bold uppercase tracking-wider mb-1">Potential Revenue</p>
-            <h3 className="text-3xl font-bold text-black">${totalPotentialRevenue.toFixed(2)}</h3>
+            <h3 className="text-3xl font-bold text-black">₹{totalPotentialRevenue.toFixed(2)}</h3>
           </div>
         </div>
       </div>
@@ -152,6 +152,13 @@ export default function CartAnalytics() {
                               {cart.phone}
                             </div>
                           )}
+                          <a 
+                            href={`mailto:${cart.email}?subject=${encodeURIComponent("Complete your purchase at House of Avira")}&body=${encodeURIComponent(`Hi ${cart.name},\n\nWe noticed you left some items in your cart at House of Avira. You have ${cart.itemCount} item(s) waiting for you.\n\nClick here to return to your cart and complete your order: https://house-of-avira.vercel.app/checkout\n\nBest,\nHouse of Avira`)}`}
+                            className="mt-2 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-md hover:bg-gray-800 transition-colors w-fit"
+                          >
+                            <Mail className="w-3 h-3" />
+                            Send Reminder
+                          </a>
                         </div>
                       </td>
                       <td className="px-6 py-4 align-top">
@@ -173,7 +180,7 @@ export default function CartAnalytics() {
                       </td>
                       <td className="px-6 py-4 align-top text-right">
                         <div className="text-sm font-bold text-black bg-gray-100 inline-block px-3 py-1 rounded-full">
-                          ${cart.total.toFixed(2)}
+                          ₹{cart.total.toFixed(2)}
                         </div>
                       </td>
                     </tr>
