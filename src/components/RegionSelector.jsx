@@ -73,14 +73,14 @@ export default function RegionSelector() {
           isCartOpen ? (
             <Globe className="w-5 h-5 text-[#000000]" />
           ) : (
-            <span className="text-[10px] font-bold tracking-widest text-[#000000] uppercase">
+            <span className="text-[10px] font-bold tracking-widest text-[#000000] uppercase md:font-perandory">
               {currency}
             </span>
           )
         ) : (
           <>
             <Globe className="w-4 h-4 text-[#000000] group-hover:rotate-12 transition-transform" />
-            <span className="text-xs font-bold tracking-widest text-[#000000] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#000000] uppercase md:font-perandory">
               {activeRegion?.flag} {currency}
             </span>
           </>
