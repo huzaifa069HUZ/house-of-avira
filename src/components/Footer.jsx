@@ -48,7 +48,7 @@ export default function Footer() {
     : regions[0];
 
   return (
-    <footer className="bg-[#000000] text-[#FFFFFF] pt-24 pb-0 w-full mt-auto relative overflow-hidden flex flex-col">
+    <footer className="bg-[#000000] text-[#FFFFFF] pt-24 pb-0 w-full mt-auto relative flex flex-col">
       <div className="px-6 md:px-12 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24 max-w-[1400px] mx-auto relative z-10">
           

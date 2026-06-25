@@ -74,5 +74,119 @@ export const dictionaries = {
       placeholder: "Email Address",
       subscribe: "Mag-subscribe"
     }
+  },
+  es: {
+    hero: {
+      newArrivals: "NUEVAS LLEGADAS",
+      shopAll: "Ver Todo",
+    },
+    topPicks: {
+      title: "NUESTRAS SELECCIONES",
+      subtitle: "directamente de tu tablero de pinterest",
+    },
+    categories: {
+      dress: "VESTIDOS",
+      swim: "BAÑO",
+      sets: "CONJUNTOS",
+      women: "mujer",
+      accessories: "Ir a Accesorios"
+    },
+    curated: {
+      title: "Compra tu estética",
+      subtitle: "descubre tu próxima pieza favorita",
+      sellingFast: "Vendiéndose Rápido",
+      selectSize: "Selecciona una Talla",
+      bestSellers: "Más Vendidos",
+      newArrivals: "Nuevas Llegadas",
+      dresses: "Vestidos",
+      tops: "Tops",
+      outerwear: "Ropa de Abrigo"
+    },
+    marquee: {
+      line1: "TODO TIENE ENVÍO INTERNACIONAL Y ES PREMIUM ✦",
+      line2: "PRODUCTOS IMPORTADOS PREMIUM / GASTOS DE ENVÍO INTERNACIONAL POR SEPARADO /"
+    },
+    archive: {
+      title: "Únete al Archivo",
+      subtitle: "Regístrate para recibir acceso anticipado a nuevas colecciones, eventos exclusivos y editoriales.",
+      placeholder: "Correo Electrónico",
+      subscribe: "Suscribirse"
+    }
+  },
+  fr: {
+    hero: {
+      newArrivals: "NOUVEAUTÉS",
+      shopAll: "Tout Voir",
+    },
+    topPicks: {
+      title: "NOS COUPS DE CŒUR",
+      subtitle: "directement de votre tableau pinterest",
+    },
+    categories: {
+      dress: "ROBES",
+      swim: "MAILLOTS",
+      sets: "ENSEMBLES",
+      women: "femme",
+      accessories: "Voir les Accessoires"
+    },
+    curated: {
+      title: "Achetez votre esthétique",
+      subtitle: "découvrez votre prochaine pièce préférée",
+      sellingFast: "Ventes Rapides",
+      selectSize: "Sélectionnez une Taille",
+      bestSellers: "Meilleures Ventes",
+      newArrivals: "Nouveautés",
+      dresses: "Robes",
+      tops: "Hauts",
+      outerwear: "Vêtements d'Extérieur"
+    },
+    marquee: {
+      line1: "TOUT EST EXPÉDIÉ À L'INTERNATIONAL ET TOUT EST PREMIUM ✦",
+      line2: "PRODUITS IMPORTÉS PREMIUM / FRAIS DE PORT INTERNATIONAUX SÉPARÉS /"
+    },
+    archive: {
+      title: "Rejoignez l'Archive",
+      subtitle: "Inscrivez-vous pour un accès anticipé aux nouvelles collections, événements exclusifs et éditoriaux.",
+      placeholder: "Adresse E-mail",
+      subscribe: "S'abonner"
+    }
+  },
+  de: {
+    hero: {
+      newArrivals: "NEUZUGÄNGE",
+      shopAll: "Alles ansehen",
+    },
+    topPicks: {
+      title: "UNSERE FAVORITEN",
+      subtitle: "direkt von deinem pinterest-board",
+    },
+    categories: {
+      dress: "KLEIDER",
+      swim: "BADEMODE",
+      sets: "SETS",
+      women: "damen",
+      accessories: "Zu den Accessoires"
+    },
+    curated: {
+      title: "Shoppe deine Ästhetik",
+      subtitle: "entdecke dein nächstes lieblingsteil",
+      sellingFast: "Schnell ausverkauft",
+      selectSize: "Größe wählen",
+      bestSellers: "Bestseller",
+      newArrivals: "Neuzugänge",
+      dresses: "Kleider",
+      tops: "Oberteile",
+      outerwear: "Oberbekleidung"
+    },
+    marquee: {
+      line1: "ALLES WIRD INTERNATIONAL VERSENDET UND IST PREMIUM ✦",
+      line2: "IMPORTIERTE PREMIUMWAREN / INTERNATIONALE VERSANDKOSTEN SEPARAT /"
+    },
+    archive: {
+      title: "Tritt dem Archiv bei",
+      subtitle: "Melde dich an für frühen Zugang zu neuen Kollektionen, exklusiven Events und Editorials.",
+      placeholder: "E-Mail-Adresse",
+      subscribe: "Abonnieren"
+    }
   }
 };

@@ -442,7 +442,7 @@ export default function Home() {
       <section className="py-32 md:py-48 px-6 bg-[#FFFFFF] flex flex-col items-center justify-center text-center w-full">
         <div className="w-full max-w-xl">
           <h3 className="font-perandory text-3xl md:text-5xl mb-6 text-[#000000] tracking-wider uppercase">{t.archive.title}</h3>
-          <p className="font-sans text-sm md:text-base text-gray-600 mb-12">Sign up to receive early access to new collections, exclusive events, and editorial features.</p>
+          <p className="font-sans text-sm md:text-base text-gray-600 mb-12">{t.archive.subtitle}</p>
           <form className="flex flex-col md:flex-row w-full gap-4 border-b border-[#000000]/30 pb-4">
             <input type="email" placeholder={t.archive.placeholder} className="bg-transparent font-sans w-full outline-none text-[#000000] placeholder:text-gray-400 text-sm" />
             <button type="button" className="font-sans text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">{t.archive.subscribe}</button>

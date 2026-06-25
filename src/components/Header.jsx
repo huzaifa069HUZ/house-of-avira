@@ -226,7 +226,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full flex flex-col">
       {/* Top Banner */}
-      <div className={`w-full py-2 px-4 text-[10px] md:text-xs tracking-widest font-medium relative transition-colors ${topBannerClass}`}>
+      <div className={`w-full py-2 px-4 text-[10px] md:text-xs tracking-widest font-[family-name:var(--font-playfair)] relative transition-colors ${topBannerClass}`}>
         
         {/* Desktop: Static Text */}
         <div className="hidden md:block text-center uppercase">
