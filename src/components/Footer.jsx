@@ -149,7 +149,7 @@ export default function Footer() {
             </button>
 
             {isOpen && (
-              <div className="absolute bottom-full right-0 md:left-1/2 md:-translate-x-1/2 mb-4 bg-[#0A0A0A] border border-white/10 p-5 rounded-lg shadow-2xl flex gap-6 z-50 w-72 md:w-80 text-left animate-in fade-in slide-in-from-bottom-2 duration-200">
+              <div className="absolute bottom-full right-0 mb-4 bg-[#0A0A0A] border border-white/10 p-5 rounded-lg shadow-2xl flex gap-6 z-50 w-72 md:w-80 text-left animate-in fade-in slide-in-from-bottom-2 duration-200">
                 <div className="flex-1">
                   <span className="block text-[9px] tracking-widest uppercase text-gray-500 mb-3 font-semibold">Language</span>
                   <ul className="space-y-1">
