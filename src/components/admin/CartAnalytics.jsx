@@ -23,6 +23,7 @@ export default function CartAnalytics() {
               id: doc.id,
               email: userData.email || 'Unknown Email',
               name: userData.name || 'Unknown User',
+              phone: userData.phone ? `${userData.countryCode || ''} ${userData.phone}`.trim() : 'No Phone Number',
               cart: userData.cart,
               total: cartTotal,
               itemCount: userData.cart.reduce((count, item) => count + item.quantity, 0)
@@ -107,6 +108,9 @@ export default function CartAnalytics() {
                         <div>
                           <div className="font-medium text-black">{cart.name}</div>
                           <div className="text-xs text-[#86868b]">{cart.email}</div>
+                          {cart.phone !== 'No Phone Number' && (
+                            <div className="text-[10px] mt-0.5 text-gray-500 font-medium">{cart.phone}</div>
+                          )}
                         </div>
                       </div>
                     </td>
