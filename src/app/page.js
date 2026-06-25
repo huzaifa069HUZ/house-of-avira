@@ -286,7 +286,7 @@ export default function Home() {
               <img src={look.img} alt={look.title} className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:from-black/60 md:via-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
-                <span className="text-white text-lg md:text-xl font-bold tracking-widest uppercase">{look.title}</span>
+                <span className="text-white text-lg md:text-xl font-perandory font-bold tracking-widest uppercase">{look.title}</span>
               </div>
             </Link>
           ))}
@@ -382,14 +382,14 @@ export default function Home() {
           <div className="flex whitespace-nowrap">
             <div className="flex animate-marquee-full shrink-0">
               {[...Array(4)].map((_, i) => (
-                <span key={`mqa1-${i}`} className="text-6xl md:text-8xl lg:text-[7rem] font-sans font-black tracking-tighter uppercase mx-10 whitespace-nowrap scale-y-[1.25] inline-block origin-center pb-2">
+                <span key={`mqa1-${i}`} className="text-6xl md:text-8xl lg:text-[7rem] font-perandory tracking-tighter uppercase mx-10 whitespace-nowrap scale-y-[1.25] inline-block origin-center pb-2">
                   {t.marquee.line1}
                 </span>
               ))}
             </div>
             <div className="flex animate-marquee-full shrink-0" aria-hidden="true">
               {[...Array(4)].map((_, i) => (
-                <span key={`mqb1-${i}`} className="text-6xl md:text-8xl lg:text-[7rem] font-sans font-black tracking-tighter uppercase mx-10 whitespace-nowrap scale-y-[1.25] inline-block origin-center pb-2">
+                <span key={`mqb1-${i}`} className="text-6xl md:text-8xl lg:text-[7rem] font-perandory tracking-tighter uppercase mx-10 whitespace-nowrap scale-y-[1.25] inline-block origin-center pb-2">
                   {t.marquee.line1}
                 </span>
               ))}
@@ -400,14 +400,14 @@ export default function Home() {
           <div className="flex whitespace-nowrap">
             <div className="flex animate-marquee-full-reverse shrink-0">
               {[...Array(6)].map((_, i) => (
-                <span key={`mqa2-${i}`} className="text-xl md:text-3xl font-sans font-black tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
+                <span key={`mqa2-${i}`} className="text-xl md:text-3xl font-perandory tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
                   {t.marquee.line2}
                 </span>
               ))}
             </div>
             <div className="flex animate-marquee-full-reverse shrink-0" aria-hidden="true">
               {[...Array(6)].map((_, i) => (
-                <span key={`mqb2-${i}`} className="text-xl md:text-3xl font-sans font-black tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
+                <span key={`mqb2-${i}`} className="text-xl md:text-3xl font-perandory tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
                   {t.marquee.line2}
                 </span>
               ))}
