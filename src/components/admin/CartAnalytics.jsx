@@ -3,13 +3,45 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { BarChart3, ShoppingBag, Users, User, Phone, Mail } from 'lucide-react';
+import { BarChart3, ShoppingBag, Users, User, Phone, Mail, Loader2, CheckCircle2 } from 'lucide-react';
 
 export default function CartAnalytics() {
   const [allUsers, setAllUsers] = useState([]);
   const [abandonedCarts, setAbandonedCarts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('carts'); // 'carts' or 'users'
+  const [sendingIds, setSendingIds] = useState(new Set());
+  const [sentIds, setSentIds] = useState(new Set());
+
+  const handleSendReminder = async (cart) => {
+    setSendingIds(prev => new Set(prev).add(cart.id));
+    
+    try {
+      const response = await fetch('/api/send-reminder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: cart.email,
+          name: cart.name,
+          itemCount: cart.itemCount
+        }),
+      });
+      
+      if (response.ok) {
+        setSentIds(prev => new Set(prev).add(cart.id));
+      } else {
+        console.error("Failed to send email");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+    } finally {
+      setSendingIds(prev => {
+        const next = new Set(prev);
+        next.delete(cart.id);
+        return next;
+      });
+    }
+  };
 
   useEffect(() => {
     async function fetchUsersAndCarts() {
@@ -152,13 +184,25 @@ export default function CartAnalytics() {
                               {cart.phone}
                             </div>
                           )}
-                          <a 
-                            href={`mailto:${cart.email}?subject=${encodeURIComponent("Complete your purchase at House of Avira")}&body=${encodeURIComponent(`Hi ${cart.name},\n\nWe noticed you left some items in your cart at House of Avira. You have ${cart.itemCount} item(s) waiting for you.\n\nClick here to return to your cart and complete your order: https://house-of-avira.vercel.app/checkout\n\nBest,\nHouse of Avira`)}`}
-                            className="mt-2 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-md hover:bg-gray-800 transition-colors w-fit"
-                          >
-                            <Mail className="w-3 h-3" />
-                            Send Reminder
-                          </a>
+                          {sentIds.has(cart.id) ? (
+                            <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 text-green-600 bg-green-50 text-[10px] font-bold uppercase tracking-widest rounded-md w-fit animate-in zoom-in duration-300">
+                              <CheckCircle2 className="w-3 h-3" />
+                              Sent Successfully
+                            </div>
+                          ) : (
+                            <button 
+                              onClick={() => handleSendReminder(cart)}
+                              disabled={sendingIds.has(cart.id)}
+                              className="mt-2 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-md hover:bg-gray-800 transition-colors w-fit disabled:opacity-70 disabled:cursor-not-allowed"
+                            >
+                              {sendingIds.has(cart.id) ? (
+                                <Loader2 className="w-3 h-3 animate-spin" />
+                              ) : (
+                                <Mail className="w-3 h-3" />
+                              )}
+                              {sendingIds.has(cart.id) ? 'Sending...' : 'Send Reminder'}
+                            </button>
+                          )}
                         </div>
                       </td>
                       <td className="px-6 py-4 align-top">
