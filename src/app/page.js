@@ -294,10 +294,8 @@ export default function Home() {
 
         {/* Footer */}
         <div className="w-full flex justify-center items-center py-10 md:py-16">
-          <Link href="/catalogue">
-            <button className="border border-white/40 text-white px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-colors backdrop-blur-md font-perandory">
-              SEE ALL STYLES
-            </button>
+          <Link href="/catalogue" className="border border-white text-white px-8 py-3 text-sm md:text-base font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300 font-perandory">
+            SEE ALL STYLES
           </Link>
         </div>
       </section>
