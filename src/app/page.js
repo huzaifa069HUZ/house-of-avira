@@ -294,8 +294,10 @@ export default function Home() {
 
         {/* Footer */}
         <div className="w-full flex justify-center items-center py-10 md:py-16">
-          <Link href="/catalogue" className="border border-white text-white px-8 py-3 text-sm md:text-base font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
-            SEE ALL STYLES
+          <Link href="/catalogue">
+            <button className="border border-white/40 text-white px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-colors backdrop-blur-md font-perandory">
+              SEE ALL STYLES
+            </button>
           </Link>
         </div>
       </section>
@@ -343,7 +345,7 @@ export default function Home() {
       <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-sans font-black tracking-tight text-[#000000] mb-4">{t.curated.title}</h2>
-          <p className="text-xs md:text-sm text-[#000000]/60 tracking-widest uppercase mb-12">{t.curated.subtitle}</p>
+          <p className="font-aston-script text-3xl md:text-4xl text-[#000000]/80 mb-12 capitalize">{t.curated.subtitle}</p>
 
           {/* Aesthetic Cards Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-left">
@@ -442,17 +444,19 @@ export default function Home() {
       <section className="py-32 md:py-48 px-6 bg-[#FFFFFF] flex flex-col items-center justify-center text-center w-full">
         <div className="w-full max-w-xl">
           <h3 className="font-perandory text-3xl md:text-5xl mb-6 text-[#000000] tracking-wider uppercase">{t.archive.title}</h3>
-          <p className="font-sans text-sm md:text-base text-gray-600 mb-12">{t.archive.subtitle}</p>
+          <p className="font-[family-name:var(--font-dm-sans)] text-sm md:text-base text-gray-600 mb-12">{t.archive.subtitle}</p>
           <form className="flex flex-col md:flex-row w-full gap-4 border-b border-[#000000]/30 pb-4">
-            <input type="email" placeholder={t.archive.placeholder} className="bg-transparent font-sans w-full outline-none text-[#000000] placeholder:text-gray-400 text-sm" />
-            <button type="button" className="font-sans text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">{t.archive.subscribe}</button>
+            <input type="email" placeholder={t.archive.placeholder} className="bg-transparent font-[family-name:var(--font-dm-sans)] w-full outline-none text-[#000000] placeholder:text-gray-400 text-sm" />
+            <button type="button" className="font-[family-name:var(--font-dm-sans)] text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">{t.archive.subscribe}</button>
           </form>
           
-          <a href="https://chat.whatsapp.com/CHEwNJz4QXQJ9RiDQ7OxD3" target="_blank" rel="noopener noreferrer" className="block mt-10">
-            <span className="inline-block text-[#8A001A] font-sans font-bold text-sm md:text-base uppercase tracking-widest animate-pulse hover:opacity-80 transition-opacity">
-              Join our WhatsApp community for order updates
-            </span>
-          </a>
+          <div className="mt-8">
+            <Link href="https://chat.whatsapp.com/CHEwNJz4QXQJ9RiDQ7OxD3" target="_blank" rel="noopener noreferrer">
+              <span className="inline-block text-[#8A001A] font-[family-name:var(--font-dm-sans)] font-bold text-sm md:text-base uppercase tracking-widest animate-pulse hover:opacity-80 transition-opacity">
+                Join our WhatsApp community for order updates
+              </span>
+            </Link>
+          </div>
         </div>
       </section>
 
