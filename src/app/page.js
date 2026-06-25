@@ -345,7 +345,7 @@ export default function Home() {
       <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-sans font-black tracking-tight text-[#000000] mb-4">{t.curated.title}</h2>
-          <p className="font-aston-script text-3xl md:text-4xl text-[#000000]/80 mb-12 capitalize">{t.curated.subtitle}</p>
+          <p className="font-aston-script text-xl md:text-2xl text-[#000000]/80 mb-12 capitalize">{t.curated.subtitle}</p>
 
           {/* Aesthetic Cards Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-left">
