@@ -369,23 +369,68 @@ export default function ShippingPage() {
             <p className="text-[15px] text-[#666666] leading-relaxed mb-10">Some product types require extra attention. Please read the relevant notice before placing your order.</p>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { icon: Gem, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#000000', title: 'Branded Items', text: 'Products from brands like Coach, Hello Kitty, Ferrari, LV, Dior, Chanel, Nike, and Stussy carry higher customs duties and a longer customs processing period. Expect higher international shipping costs and a slightly longer timeline.' },
-              { icon: Droplet, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#1E5A72', title: 'Liquids & Beauty Products', text: 'Liquid products such as lip glosses, serums, and skincare require special handling and documentation. This means they typically carry a slightly higher shipping cost.' },
-              { icon: Box, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#000000', title: 'Oversized & Bulky Items', text: 'Large or bulky items take a bigger share of the batch weight, which means a higher shipping cost. This also applies domestically — oversized packages may attract higher courier charges based on volumetric weight.' },
-              { icon: Footprints, bg: 'bg-[#FAFAFA]', border: 'border-[#E5E5E5]', iconColor: '#000000', title: 'Footwear', text: 'Shoes and footwear ship in their original boxes, which are larger and heavier than standard packaging. This typically results in higher shipping costs compared to smaller items.' },
-            ].map((cat, idx) => (
-              <FadeIn key={idx} delay={idx * 0.1}>
-                <div className={`${cat.bg} border ${cat.border} rounded-2xl p-5 md:p-6 flex items-start gap-4 h-full shadow-sm hover:shadow-md transition-shadow`}>
-                  <cat.icon className="w-8 h-8 shrink-0" style={{ color: cat.iconColor }} strokeWidth={1.5} />
-                  <div>
-                    <h3 className="text-[16px] md:text-[18px] font-perandory font-bold text-[#000000] mb-1.5">{cat.title}</h3>
-                    <p className="text-[12px] text-[#666666] leading-relaxed">{cat.text}</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4">
+            
+            {/* 1. Branded Items - Red - Large Square */}
+            <FadeIn delay={0.1} className="md:col-span-2 md:row-span-2">
+              <div className="bg-[#FF3B30] rounded-[32px] p-8 md:p-10 flex flex-col h-full shadow-lg relative overflow-hidden group">
+                <div className="relative z-10 flex-1">
+                  <h3 className="text-[24px] md:text-[32px] font-perandory font-bold text-white mb-3">Branded Items</h3>
+                  <p className="text-[14px] md:text-[15px] text-white/90 leading-relaxed max-w-md">
+                    Products from brands like Coach, Hello Kitty, Ferrari, LV, Dior, Chanel, Nike, and Stussy carry higher customs duties and a longer customs processing period. Expect higher shipping costs and a slightly longer timeline.
+                  </p>
                 </div>
-              </FadeIn>
-            ))}
+                <div className="absolute -bottom-8 -right-8 w-64 h-64 md:w-80 md:h-80 transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-3">
+                  <Image src="/shipping/branded_item_bento.png" alt="Branded Item" fill className="object-contain drop-shadow-2xl" />
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* 2. Beauty Products - Pink - Wide Rectangle */}
+            <FadeIn delay={0.2} className="md:col-span-2 md:row-span-1">
+              <div className="bg-[#FF2D55] rounded-[32px] p-8 flex flex-col md:flex-row h-full shadow-lg relative overflow-hidden group items-center">
+                <div className="relative z-10 flex-1 md:pr-8 mb-6 md:mb-0">
+                  <h3 className="text-[20px] md:text-[24px] font-perandory font-bold text-white mb-2">Liquids & Beauty</h3>
+                  <p className="text-[13px] md:text-[14px] text-white/90 leading-relaxed">
+                    Liquid products such as lip glosses, serums, and skincare require special handling and documentation. This means they typically carry a slightly higher shipping cost.
+                  </p>
+                </div>
+                <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6">
+                  <Image src="/shipping/beauty_product_bento.png" alt="Beauty Product" fill className="object-contain drop-shadow-xl" />
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* 3. Oversized Items - Yellow - Small Square */}
+            <FadeIn delay={0.3} className="md:col-span-1 md:row-span-1">
+              <div className="bg-[#FFCC00] rounded-[32px] p-8 flex flex-col h-full shadow-lg relative overflow-hidden group">
+                <div className="relative z-10">
+                  <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-[#000000] mb-2">Oversized Items</h3>
+                  <p className="text-[12px] md:text-[13px] text-black/80 leading-relaxed">
+                    Large or bulky items take a bigger share of the batch weight, meaning a higher shipping cost.
+                  </p>
+                </div>
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 md:w-40 md:h-40 transition-transform duration-700 group-hover:scale-110">
+                  <Image src="/shipping/oversized_item_bento.png" alt="Oversized Item" fill className="object-contain drop-shadow-xl" />
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* 4. Footwear - Blue - Small Square */}
+            <FadeIn delay={0.4} className="md:col-span-1 md:row-span-1">
+              <div className="bg-[#007AFF] rounded-[32px] p-8 flex flex-col h-full shadow-lg relative overflow-hidden group">
+                <div className="relative z-10">
+                  <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-white mb-2">Footwear</h3>
+                  <p className="text-[12px] md:text-[13px] text-white/90 leading-relaxed">
+                    Shoes ship in original boxes, which are larger and heavier. This typically results in higher costs.
+                  </p>
+                </div>
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 md:w-40 md:h-40 transition-transform duration-700 group-hover:scale-110 -rotate-12 group-hover:-rotate-0">
+                  <Image src="/shipping/footwear_bento.png" alt="Footwear" fill className="object-contain drop-shadow-xl" />
+                </div>
+              </div>
+            </FadeIn>
+
           </div>
         </section>
 
