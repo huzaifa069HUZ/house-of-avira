@@ -128,7 +128,7 @@ export default function ShippingPage() {
     },
     {
       q: "Are customs and duty charges included in the shipping invoice?",
-      a: "Yes. India's customs duties and GST on imports are calculated and included in your international shipping invoice. You will receive a full itemised breakdown showing the shipping cost, customs duty, and GST before you are required to pay anything."
+      a: "Yes. India's customs duties and GST on imports are calculated and included in your final shipping invoice. You will receive a full itemised breakdown showing the shipping cost, customs duty, and GST before you are required to pay anything."
     },
     {
       q: "My order is delayed — can I get a refund?",
@@ -208,8 +208,8 @@ export default function ShippingPage() {
         <section id="how-it-works" className="scroll-mt-24">
           <FadeIn>
             <div className="text-[11px] tracking-[0.12em] uppercase text-[#8A001A] font-medium mb-3">Section 01</div>
-            <h2 className="font-perandory text-4xl text-[#000000] mb-4">Your order's two-tier journey</h2>
-            <p className="text-[15px] text-[#666666] leading-relaxed mb-6">There are two separate shipping charges on every order. Understanding this is key to placing your preorder with confidence.</p>
+            <h2 className="font-perandory text-4xl text-[#000000] mb-4">Your order's two-step journey</h2>
+            <p className="text-[15px] text-[#666666] leading-relaxed mb-6">You only pay twice: first for the products when placing your order, and second for a single comprehensive shipping invoice before your batch is dispatched.</p>
           </FadeIn>
 
           {/* Pre-order Warning Callout */}
@@ -299,9 +299,9 @@ export default function ShippingPage() {
                     { state: 'done', title: 'Batch Closed — Sourcing Begins', desc: 'The batch closes. We now place bulk orders with our international suppliers on your behalf.' },
                     { state: 'done', title: 'Products Sourced & Quality Checked', desc: 'Products arrive from suppliers. Each item is quality checked before being cleared for shipping.' },
                     { state: 'done', title: 'Products at International Warehouse', desc: 'Your product has arrived at our international warehouse. Batch packing and weight calculation begins.' },
-                    { state: 'done', title: 'Shipping Cost Calculated', desc: 'International shipping cost is split equally among all batch customers based on total weight. Your exact amount is now known.' },
-                    { state: 'active', title: 'International Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We send you the calculated international shipping amount with a full breakdown. Must be paid by the deadline to proceed.' },
-                    { state: 'pending', title: 'International Shipping Paid', desc: 'Payment confirmed. Your batch is now cleared for international dispatch.' }
+                    { state: 'done', title: 'Shipping Cost Calculated', desc: 'Comprehensive shipping cost (International, Customs, Domestic) is calculated precisely based on weight.' },
+                    { state: 'active', title: 'Final Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We send you a single, transparent shipping invoice covering all logistics to your doorstep. Must be paid to proceed.' },
+                    { state: 'pending', title: 'Shipping Invoice Paid', desc: 'Payment confirmed. Your batch is now fully cleared for international dispatch.' }
                   ].map((step, idx) => (
                     <TimelineItem key={idx} step={step} idx={idx} />
                   ))}
@@ -340,10 +340,9 @@ export default function ShippingPage() {
                 <div className="space-y-4">
                   {[
                     { state: 'pending', title: 'Dispatched Internationally', desc: 'Batch dispatched from our international warehouse towards India.' },
-                    { state: 'pending', title: 'Customs Clearance', desc: 'Shipment clears Indian customs. Customs fees are already included in your international shipping invoice — no surprises.' },
-                    { state: 'pending', title: 'Arrived in India', desc: 'Your order has cleared customs and arrived with us in India. Almost there!' },
-                    { state: 'pending', title: 'Domestic Shipping Invoice Sent', badge: 'ACTION REQUIRED', desc: 'We calculate your courier cost based on your pincode and package weight and send you the final invoice.' },
-                    { state: 'pending', title: 'Domestic Shipping Paid & Dispatched', desc: 'Payment confirmed. Your order is packed and handed to the courier. Tracking ID shared with you.' },
+                    { state: 'pending', title: 'Customs Clearance', desc: 'Shipment clears Indian customs seamlessly. All duties were pre-paid in your shipping invoice.' },
+                    { state: 'pending', title: 'Arrived in India', desc: 'Your order has successfully cleared customs and arrived with us in India. Almost there!' },
+                    { state: 'pending', title: 'Domestic Dispatch', desc: 'Your order is carefully packed for its final leg. A local tracking ID is generated and shared with you.' },
                     { state: 'pending', title: 'Delivered', icon: Heart, desc: 'Your order is at your door. Please record your unboxing — we love seeing it!' }
                   ].map((step, idx) => (
                     <TimelineItem key={`p2-${idx}`} step={step} idx={idx} />
@@ -402,12 +401,12 @@ export default function ShippingPage() {
 
           <div className="space-y-3">
             {[
-              { id: 'P-01', color: '#8A001A', title: 'Payment deadline is mandatory', text: 'Once your shipping invoice is sent, it must be paid by the specified deadline. If the international shipping fee remains unpaid, your parcel will not be shipped and no refund will be issued. Your order is placed with suppliers immediately after you submit it — it cannot be reversed.' },
+              { id: 'P-01', color: '#8A001A', title: 'Payment deadline is mandatory', text: 'Once your shipping invoice is sent, it must be paid by the specified deadline. If the shipping fee remains unpaid, your parcel will not be shipped and no refund will be issued. Your order is placed with suppliers immediately after you submit it — it cannot be reversed.' },
               { id: 'P-02', color: '#8A001A', title: 'No cancellations or refunds after ordering', text: 'Once an order is submitted, we forward it to our suppliers immediately. Cancellations, refunds, and exchanges cannot be accommodated under any circumstances after this point — including if shipping costs are higher than expected or if there are delivery delays.' },
-              { id: 'P-03', color: '#000000', title: 'Shipping prices may change', text: 'International shipping prices may fluctuate due to carrier rates, customs regulations, and the nature of the product. The exact cost is calculated only when your parcel is packed and ready to ship. We recommend placing an order only if you\'re comfortable with this variable.' },
+              { id: 'P-03', color: '#000000', title: 'Shipping prices may change', text: 'Shipping prices may fluctuate due to carrier rates, customs regulations, and the nature of the product. The exact cost is calculated only when your parcel is packed and ready to ship. We recommend placing an order only if you\'re comfortable with this variable.' },
               { id: 'P-04', color: '#000000', title: 'Our responsibility ends at the courier', text: 'Once your domestic package is handed over to the courier and a tracking ID is provided, delivery delays, transit issues, or rare mishaps are beyond our control. We will always support you with tracking information, but we cannot take responsibility for courier-side delays or losses.' },
               { id: 'P-05', color: '#000000', title: 'Delays are not grounds for cancellation', text: 'We do not accept cancellations or offer refunds for delayed deliveries, particularly for imported goods. Delivery times may vary due to customs, logistics, and factors completely beyond our control. Please only order if you are patient and comfortable waiting.' },
-              { id: 'P-06', color: '#8A001A', title: 'Customs fees are included in your invoice', text: 'India\'s basic customs duty on imported goods varies by product type (bags ~10%, apparel ~20%, beauty ~18%, footwear ~25%). These charges are calculated and included in your international shipping invoice — you will receive a full cost breakdown before payment is required.' },
+              { id: 'P-06', color: '#8A001A', title: 'Customs fees are included in your invoice', text: 'India\'s basic customs duty on imported goods varies by product type (bags ~10%, apparel ~20%, beauty ~18%, footwear ~25%). These charges are calculated and included in your final shipping invoice — you will receive a full cost breakdown before payment is required.' },
             ].map((policy, idx) => (
               <FadeIn key={idx} delay={idx * 0.05}>
                 <div className="bg-white border-y border-r border-[#E5E5E5] border-l-4 rounded-xl p-5 md:p-6 flex flex-col md:flex-row gap-2 md:gap-5 shadow-sm hover:shadow-md transition-shadow" style={{ borderLeftColor: policy.color }}>
