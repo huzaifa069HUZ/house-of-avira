@@ -122,16 +122,15 @@ export default function HeroCarousel() {
               <div className="absolute inset-0 flex flex-col justify-end items-center p-8 pb-16">
                 <div className="text-center flex flex-col items-center w-full mt-auto">
                   <h1 className="flex flex-col items-center justify-center mb-8 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-center text-white/95">
-                    <span className="font-perandory text-[11px] font-medium tracking-[0.2em] uppercase mb-1">✨ IMPORTED</span>
-                    <span className="font-aston-script text-[48px] text-white leading-none lowercase px-1.5 drop-shadow-md">pinterest</span>
-                    <span className="font-perandory text-[11px] font-medium tracking-[0.2em] uppercase mt-2">FINDS ✨</span>
+                    <span className="font-perandory text-[14px] font-medium tracking-[0.15em] mb-1">✨ Imported</span>
+                    <span className="font-aston-script text-[48px] text-white leading-none px-1.5 drop-shadow-md">Pinterest</span>
+                    <span className="font-perandory text-[14px] font-medium tracking-[0.15em] mt-2">Find ✨</span>
                   </h1>
                   <Link 
                     href={slide.link || '/catalogue'}
                     className="inline-flex items-center justify-center gap-2.5 bg-white/95 backdrop-blur-sm text-black px-10 py-4 w-full sm:w-auto text-center border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] active:scale-[0.98]"
                   >
-                    <span className="font-perandory text-[14px] uppercase tracking-[0.15em] font-bold translate-y-[3px]">SHOP</span>
-                    <span className="font-aston-script text-[34px] lowercase leading-none -translate-y-[2px]">now</span>
+                    <span className="font-perandory text-[16px] tracking-[0.1em] font-bold">Shop Now</span>
                   </Link>
                 </div>
               </div>

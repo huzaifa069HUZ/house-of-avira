@@ -22,7 +22,7 @@ export default function CampaignAndGrid() {
           <div className="absolute inset-0 bg-black/20" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
             <h2 className="font-serif text-4xl md:text-7xl mb-6 drop-shadow-md">
-              Soft silhouettes.<br />Bold presence.
+              Curated For The Unforgettable
             </h2>
             <a href="#" className="border-b border-white pb-1 text-xs uppercase tracking-widest hover:opacity-70 transition-opacity drop-shadow-md">
               explore the unmatched imported collection

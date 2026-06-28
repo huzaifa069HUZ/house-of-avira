@@ -1,9 +1,25 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Plane, Truck, Package, CreditCard, Globe, ShieldCheck } from 'lucide-react';
+import { useState } from 'react';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plane, Truck, Package, CreditCard, Globe, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function WhyHouseOfAvira() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselImages = [
+    '/images/bagbg.png',
+    '/images/bag1.png',
+    '/images/bag2.png'
+  ];
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -41,9 +57,57 @@ export default function WhyHouseOfAvira() {
 
         {/* Minimalist Image Overlay Section */}
         <motion.div className="w-full relative mb-32 md:mb-48 pt-10 flex flex-col items-center justify-center" variants={itemVariants}>
-          {/* Centered Image */}
-          <div className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[36rem] md:h-[36rem] z-10 hover:scale-105 transition-transform duration-700 ease-out">
-            <img src="/images/bagbg.png" alt="Featured aesthetic" className="w-full h-full object-contain drop-shadow-2xl" />
+          {/* 3D Swipable Carousel */}
+          <div className="relative w-full max-w-5xl mx-auto h-[400px] sm:h-[500px] md:h-[600px] z-10 flex items-center justify-center">
+            {carouselImages.map((src, index) => {
+              const isCenter = index === currentIndex;
+              const isLeft = index === (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+              const isRight = index === (currentIndex + 1) % carouselImages.length;
+              
+              if (!isCenter && !isLeft && !isRight) return null;
+
+              return (
+                <motion.div
+                  key={index}
+                  className="absolute w-64 h-64 sm:w-80 sm:h-80 md:w-[36rem] md:h-[36rem] cursor-pointer"
+                  initial={false}
+                  animate={{
+                    x: isCenter ? 0 : isLeft ? '-40%' : '40%',
+                    scale: isCenter ? 1 : 0.65,
+                    opacity: isCenter ? 1 : 0.5,
+                    zIndex: isCenter ? 30 : 10,
+                    rotateY: isCenter ? 0 : isLeft ? 15 : -15,
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30, mass: 1 }}
+                  style={{ perspective: 1200 }}
+                  onClick={() => {
+                    if (isLeft) handlePrev();
+                    if (isRight) handleNext();
+                  }}
+                >
+                  {isCenter ? (
+                    <Link href="/product/7DzypF64LEWkBY1yruXe" className="block w-full h-full relative group outline-none">
+                      <img src={src} alt="Featured aesthetic" className="w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <span className="bg-white/95 text-black px-8 py-3 rounded-full font-bold text-sm tracking-[0.2em] uppercase shadow-xl backdrop-blur-sm translate-y-4 group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">Shop Now</span>
+                      </div>
+                    </Link>
+                  ) : (
+                    <img src={src} alt="Featured aesthetic" className="w-full h-full object-contain drop-shadow-xl" />
+                  )}
+                </motion.div>
+              );
+            })}
+
+            {/* Navigation Arrows */}
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-2 sm:px-8 md:px-12 z-40 pointer-events-none">
+              <button onClick={handlePrev} className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-black/5 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all text-black hover:text-[#8A001A]">
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button onClick={handleNext} className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-black/5 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all text-black hover:text-[#8A001A]">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
           </div>
           
           {/* Huge Typography Behind */}

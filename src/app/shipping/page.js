@@ -376,7 +376,7 @@ export default function ShippingPage() {
               <div className="bg-[#FF3B30] rounded-[32px] p-8 md:p-10 flex flex-col h-full shadow-lg relative overflow-hidden group">
                 <div className="relative z-10 flex-1">
                   <h3 className="text-[24px] md:text-[32px] font-perandory font-bold text-white mb-3">Branded Items</h3>
-                  <p className="text-[14px] md:text-[15px] text-white/90 leading-relaxed max-w-md">
+                  <p className="text-[14px] md:text-[15px] text-white/90 leading-relaxed max-w-md font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Products from brands like Coach, Hello Kitty, Ferrari, LV, Dior, Chanel, Nike, and Stussy carry higher customs duties and a longer customs processing period. Expect higher shipping costs and a slightly longer timeline.
                   </p>
                 </div>
@@ -391,7 +391,7 @@ export default function ShippingPage() {
               <div className="bg-[#FF2D55] rounded-[32px] p-8 flex flex-col md:flex-row h-full shadow-lg relative overflow-hidden group items-center">
                 <div className="relative z-10 flex-1 md:pr-8 mb-6 md:mb-0">
                   <h3 className="text-[20px] md:text-[24px] font-perandory font-bold text-white mb-2">Liquids & Beauty</h3>
-                  <p className="text-[13px] md:text-[14px] text-white/90 leading-relaxed">
+                  <p className="text-[13px] md:text-[14px] text-white/90 leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Liquid products such as lip glosses, serums, and skincare require special handling and documentation. This means they typically carry a slightly higher shipping cost.
                   </p>
                 </div>
@@ -406,7 +406,7 @@ export default function ShippingPage() {
               <div className="bg-[#FFCC00] rounded-[32px] p-8 flex flex-col h-full shadow-lg relative overflow-hidden group">
                 <div className="relative z-10">
                   <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-[#000000] mb-2">Oversized Items</h3>
-                  <p className="text-[12px] md:text-[13px] text-black/80 leading-relaxed">
+                  <p className="text-[12px] md:text-[13px] text-black/80 leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Large or bulky items take a bigger share of the batch weight, meaning a higher shipping cost.
                   </p>
                 </div>
@@ -421,7 +421,7 @@ export default function ShippingPage() {
               <div className="bg-[#007AFF] rounded-[32px] p-8 flex flex-col h-full shadow-lg relative overflow-hidden group">
                 <div className="relative z-10">
                   <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-white mb-2">Footwear</h3>
-                  <p className="text-[12px] md:text-[13px] text-white/90 leading-relaxed">
+                  <p className="text-[12px] md:text-[13px] text-white/90 leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Shoes ship in original boxes, which are larger and heavier. This typically results in higher costs.
                   </p>
                 </div>

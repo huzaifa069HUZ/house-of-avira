@@ -271,7 +271,7 @@ export default function Home() {
       <section className="w-full bg-[#000000] flex flex-col">
         {/* Header */}
         <div className="w-full px-6 md:px-12 py-8 md:py-12 flex items-center">
-          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-sans font-bold tracking-tight uppercase">Shop your look</h2>
+          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-perandory font-bold uppercase">Shop your look</h2>
         </div>
 
         {/* Images Grid */}
@@ -342,7 +342,7 @@ export default function Home() {
       {/* Curated Aesthetics Section */}
       <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-white w-full">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 text-center">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-sans font-black tracking-tight text-[#000000] mb-4">{t.curated.title}</h2>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-perandory font-bold text-[#000000] mb-4">{t.curated.title}</h2>
           <p className="font-aston-script text-xl md:text-2xl text-[#000000]/80 mb-12 capitalize">{t.curated.subtitle}</p>
 
           {/* Aesthetic Cards Grid */}
