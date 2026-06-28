@@ -88,9 +88,6 @@ export default function WhyHouseOfAvira() {
                   {isCenter ? (
                     <Link href="/product/7DzypF64LEWkBY1yruXe" className="block w-full h-full relative group outline-none">
                       <img src={src} alt="Featured aesthetic" className="w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105" />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                        <span className="bg-white/95 text-black px-8 py-3 rounded-full font-bold text-sm tracking-[0.2em] uppercase shadow-xl backdrop-blur-sm translate-y-4 group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">Shop Now</span>
-                      </div>
                     </Link>
                   ) : (
                     <img src={src} alt="Featured aesthetic" className="w-full h-full object-contain drop-shadow-xl" />
@@ -101,11 +98,11 @@ export default function WhyHouseOfAvira() {
 
             {/* Navigation Arrows */}
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-2 sm:px-8 md:px-12 z-40 pointer-events-none">
-              <button onClick={handlePrev} className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-black/5 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all text-black hover:text-[#8A001A]">
-                <ChevronLeft className="w-6 h-6" />
+              <button onClick={handlePrev} className="pointer-events-auto w-10 h-10 rounded-full bg-white/90 backdrop-blur-md border border-black/5 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all text-black hover:text-[#8A001A]">
+                <ChevronLeft className="w-5 h-5" />
               </button>
-              <button onClick={handleNext} className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-black/5 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all text-black hover:text-[#8A001A]">
-                <ChevronRight className="w-6 h-6" />
+              <button onClick={handleNext} className="pointer-events-auto w-10 h-10 rounded-full bg-white/90 backdrop-blur-md border border-black/5 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all text-black hover:text-[#8A001A]">
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>

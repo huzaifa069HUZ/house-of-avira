@@ -122,9 +122,9 @@ export default function HeroCarousel() {
               <div className="absolute inset-0 flex flex-col justify-end items-center p-8 pb-16">
                 <div className="text-center flex flex-col items-center w-full mt-auto">
                   <h1 className="flex flex-col items-center justify-center mb-8 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] text-center text-white/95">
-                    <span className="font-perandory text-[14px] font-medium tracking-[0.15em] mb-1">✨ Imported</span>
+                    <span className="font-perandory text-[14px] font-bold tracking-[0.15em] mb-1">Imported</span>
                     <span className="font-aston-script text-[48px] text-white leading-none px-1.5 drop-shadow-md">Pinterest</span>
-                    <span className="font-perandory text-[14px] font-medium tracking-[0.15em] mt-2">Find ✨</span>
+                    <span className="font-perandory text-[14px] font-bold tracking-[0.15em] mt-2">Find</span>
                   </h1>
                   <Link 
                     href={slide.link || '/catalogue'}

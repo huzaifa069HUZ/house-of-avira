@@ -271,7 +271,7 @@ export default function Home() {
       <section className="w-full bg-[#000000] flex flex-col">
         {/* Header */}
         <div className="w-full px-6 md:px-12 py-8 md:py-12 flex items-center">
-          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-perandory font-bold uppercase">Shop your look</h2>
+          <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-perandory font-bold tracking-widest uppercase">Shop your look</h2>
         </div>
 
         {/* Images Grid */}
