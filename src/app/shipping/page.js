@@ -120,7 +120,7 @@ export default function ShippingPage() {
     },
     {
       q: "Can I cancel my order if I change my mind?",
-      a: "No. Once an order is placed, it is submitted to our Overseas Team immediately and cannot be cancelled, refunded, or exchanged. This applies even if there are delays, even if the shipping cost is higher than expected, and even if the shipping payment has not yet been paid. Please only order if you are fully committed to the purchase."
+      a: "You can cancel your order within 2-3 days of placing it (e.g., if you order on October 1st, you can cancel until October 3rd). After this window, your order is submitted to our Overseas Team. Once submitted, cancellations, refunds, or exchanges are no longer possible under any circumstances."
     },
     {
       q: "What if I don't pay the shipping payment on time?",
@@ -144,14 +144,14 @@ export default function ShippingPage() {
         <div className="animate-marquee-full flex shrink-0 items-center">
           {[...Array(4)].map((_, i) => (
             <span key={i} className="mx-4 uppercase">
-              House of Avira: All orders are prepaid pre-orders &middot; Products are sourced internationally &middot; Shipping is charged separately &middot; No cancellations or refunds after ordering &middot; Delivery timelines are estimates only &middot;
+              House of Avira: All orders are prepaid pre-orders &middot; Products are sourced internationally &middot; Shipping is charged separately &middot; Cancellations allowed within 2-3 days &middot; Delivery timelines are estimates only &middot;
             </span>
           ))}
         </div>
         <div className="animate-marquee-full flex shrink-0 items-center" aria-hidden="true">
           {[...Array(4)].map((_, i) => (
             <span key={i} className="mx-4 uppercase">
-              House of Avira: All orders are prepaid pre-orders &middot; Products are sourced internationally &middot; Shipping is charged separately &middot; No cancellations or refunds after ordering &middot; Delivery timelines are estimates only &middot;
+              House of Avira: All orders are prepaid pre-orders &middot; Products are sourced internationally &middot; Shipping is charged separately &middot; Cancellations allowed within 2-3 days &middot; Delivery timelines are estimates only &middot;
             </span>
           ))}
         </div>
@@ -536,11 +536,11 @@ export default function ShippingPage() {
           <div className="space-y-3">
             {[
               { id: 'P-01', color: '#8A001A', title: 'Payment deadline is mandatory', text: 'Once your shipping payment is sent, it must be paid by the specified deadline. If the shipping fee remains unpaid, your parcel will not be shipped and no refund will be issued. Your order is placed with our Overseas Team immediately after you submit it — it cannot be reversed.' },
-              { id: 'P-02', color: '#8A001A', title: 'No cancellations or refunds after ordering', text: 'Once an order is submitted, we forward it to our Overseas Team immediately. Cancellations, refunds, and exchanges cannot be accommodated under any circumstances after this point — including if shipping costs are higher than expected or if there are delivery delays.' },
+              { id: 'P-02', color: '#8A001A', title: 'Cancellations allowed within 2-3 days only', text: 'You may cancel your order within 2-3 days of placing it (e.g., if you order on Oct 1st, you can cancel until Oct 3rd). After this window, the batch is submitted to our Overseas Team. Once submitted, cancellations, refunds, and exchanges cannot be accommodated under any circumstances.' },
               { id: 'P-03', color: '#000000', title: 'Shipping prices may change', text: 'Shipping prices may fluctuate due to carrier rates, customs regulations, and the nature of the product. The exact cost is calculated only when your parcel is packed and ready to ship. We recommend placing an order only if you\'re comfortable with this variable.' },
               { id: 'P-04', color: '#000000', title: 'Our responsibility ends at the courier', text: 'Once your domestic package is handed over to the courier and a tracking ID is provided, delivery delays, transit issues, or rare mishaps are beyond our control. We will always support you with tracking information, but we cannot take responsibility for courier-side delays or losses.' },
               { id: 'P-05', color: '#000000', title: 'Delays are not grounds for cancellation', text: 'We do not accept cancellations or offer refunds for delayed deliveries, particularly for imported goods. Delivery times may vary due to customs, logistics, and factors completely beyond our control. Please only order if you are patient and comfortable waiting.' },
-              { id: 'P-06', color: '#8A001A', title: 'Customs fees are included in your payment', text: 'India\'s basic customs duty on imported goods varies by product type (bags ~10%, apparel ~20%, beauty ~18%, footwear ~25%). These charges are calculated and included in your final shipping payment — you will receive a full cost breakdown before payment is required.' },
+              { id: 'P-06', color: '#8A001A', title: 'Customs fees are included in your payment', text: 'India\'s basic customs duty on imported goods varies depending on the shipment and product type. These charges are calculated and included in your final shipping payment — you will receive a full cost breakdown before payment is required.' },
             ].map((policy, idx) => (
               <FadeIn key={idx} delay={idx * 0.05}>
                 <div className="bg-white border-y border-r border-[#E5E5E5] border-l-4 rounded-xl p-5 md:p-6 flex flex-col md:flex-row gap-2 md:gap-5 shadow-sm hover:shadow-md transition-shadow" style={{ borderLeftColor: policy.color }}>
