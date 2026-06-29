@@ -234,23 +234,8 @@ export default function OrderProcessPage() {
 
           <RevealLine className="mb-16" />
 
-          {/* Two-column: Image + Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
-            {/* Image with parallax */}
-            <RevealSection delay={0.2}>
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden group bg-transparent">
-                <Image
-                  src="/images/order-process.png"
-                  alt="Curating your piece"
-                  fill
-                  className="object-contain transition-transform duration-[1.5s] group-hover:scale-105"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-            </RevealSection>
-
-            {/* Content cards */}
-            <div className="space-y-8">
+          {/* Content cards */}
+          <div className="grid grid-cols-1 max-w-4xl mx-auto gap-8 mb-20">
               <RevealSection delay={0.3}>
                 <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
                   <h3 className="font-perandory text-xl md:text-2xl uppercase tracking-wider mb-5 group-hover:text-[#8A001A] transition-colors">THE PRODUCT VALUE</h3>
@@ -303,7 +288,6 @@ export default function OrderProcessPage() {
                 </div>
               </RevealSection>
             </div>
-          </div>
         </div>
       </section>
 
