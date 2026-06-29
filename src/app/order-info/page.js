@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline';
 import { DollarSign, ShieldAlert, Clock, AlertTriangle, CreditCard } from 'lucide-react';
+import { TextRevealByWord } from '@/components/ui/text-reveal';
 
 const sections = [
   {
@@ -180,7 +181,7 @@ export default function OrderInfoPage() {
       <section ref={heroRef} className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24 bg-[#0A0A0A]">
         {/* Cinematic Globe Background */}
         <div className="absolute inset-0">
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
             style={{ backgroundImage: "url('/images/order_info_globe.png')" }}
           />
@@ -189,9 +190,9 @@ export default function OrderInfoPage() {
 
         {/* Curved Bottom Separator */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-20 pointer-events-none">
-          <svg 
-            className="w-full h-[60px] md:h-[120px]" 
-            viewBox="0 0 1440 100" 
+          <svg
+            className="w-full h-[60px] md:h-[120px]"
+            viewBox="0 0 1440 100"
             preserveAspectRatio="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -203,7 +204,7 @@ export default function OrderInfoPage() {
           {/* Main Title */}
           <h1 className="fade-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl flex flex-col items-center justify-center tracking-tight leading-[0.9] mb-8">
             <span className="font-perandory text-white uppercase mb-2">Read Before</span>
-            <span className="font-aston-script text-[#8A001A] lowercase drop-shadow-md">placing your order</span>
+            <span className="font-aston-script text-[#8A001A] lowercase drop-shadow-md">Placing Your Order</span>
           </h1>
 
           {/* Decorative Line */}
@@ -228,16 +229,8 @@ export default function OrderInfoPage() {
             </p>
           </div>
 
-          <div className="fade-up mt-8">
-            <p className="text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-[1.6] font-aston-script">
-              Since products are sourced internationally, shipping costs, customs charges, delivery timelines, and logistics fees may vary depending on the product, shipping conditions, customs requirements, and economic factors at the time of shipment.
-            </p>
-          </div>
-
-          <div className="fade-up mt-8">
-            <p className="text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-[1.6] font-aston-script">
-              We believe in complete transparency and want every customer to fully understand our ordering process before making a purchase.
-            </p>
+          <div className="mt-8">
+            <TextRevealByWord text="Since products are sourced internationally, shipping costs, customs charges, delivery timelines, and logistics fees may vary depending on the product, shipping conditions, customs requirements, and economic factors at the time of shipment. We believe in complete transparency and want every customer to fully understand our ordering process before making a purchase." />
           </div>
 
           {/* Acknowledgment Box */}
@@ -249,7 +242,7 @@ export default function OrderInfoPage() {
                 <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/60">Acknowledgment</span>
               </div>
               <p className="text-[#1a1a1a]/70 text-base md:text-lg leading-[1.9] font-light">
-                By placing an order with House of Avira, you acknowledge that you have <span className="text-[#1a1a1a] font-medium">read, understood, and agreed</span> to all information and policies listed below.
+                By placing an order with House of Avira, you acknowledge that you have <span className="text-[#1a1a1a] font-medium">read, understood, and agreed</span> to all information and policies listed.
               </p>
             </div>
           </div>
@@ -335,16 +328,16 @@ export default function OrderInfoPage() {
       {/* ═══════════════════════════ BOTTOM ═══════════════════════════ */}
       <section className="relative py-24 md:py-32 bg-[#FFFFFF] overflow-hidden">
         {/* Background Image */}
-        <div 
-          className="absolute inset-0 z-0 opacity-[0.85]" 
-          style={{ 
-            backgroundImage: "url('/real.png')", 
-            backgroundSize: "cover", 
+        <div
+          className="absolute inset-0 z-0 opacity-[0.85]"
+          style={{
+            backgroundImage: "url('/real.png')",
+            backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundRepeat: "no-repeat" 
-          }} 
+            backgroundRepeat: "no-repeat"
+          }}
         />
-        
+
         <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-12 text-center">
           <div className="fade-up">
             {/* Heart Icon */}
