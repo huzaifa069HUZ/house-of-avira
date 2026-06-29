@@ -322,14 +322,7 @@ export default function ProductPage({ params: paramsPromise }) {
                   </div>
                 </div>
 
-                {/* Info Image */}
-                <div className="col-span-1 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 relative bg-white">
-                  <img 
-                    src="/images/visual-breakdown.png" 
-                    alt="Visual Breakdown" 
-                    className="w-full h-full object-contain p-4"
-                  />
-                </div>
+
               </div>
             </div>
           </div>
@@ -576,13 +569,7 @@ export default function ProductPage({ params: paramsPromise }) {
                   </div>
                 </div>
                 
-                <div className="relative w-full aspect-square bg-white border border-neutral-100 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                  <img 
-                    src="/images/visual-breakdown.png" 
-                    alt="Visual Breakdown" 
-                    className="w-full h-full object-contain p-4"
-                  />
-                </div>
+
               </div>
 
             </div>

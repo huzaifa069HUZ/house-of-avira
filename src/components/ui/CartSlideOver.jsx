@@ -14,7 +14,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const getCategoryMetrics = (item) => {
   const catStr = (item.subcategory || item.category || item.title || '').toLowerCase();
-  
+
   if (catStr.includes('shoe') || catStr.includes('sneaker') || catStr.includes('footwear') || catStr.includes('boot')) {
     return { weight: 1200, duty: 0.35, igst: 0.18 };
   } else if (catStr.includes('bag') || catStr.includes('purse') || catStr.includes('wallet')) {
@@ -43,7 +43,7 @@ export default function CartSlideOver() {
   const { cart, isOpen, closeCart, updateQuantity, updateItemSize, removeFromCart, appliedCoupon, discountAmount, applyCoupon, removeCoupon } = useCartStore();
   const [couponCode, setCouponCode] = useState('');
   const [couponMsg, setCouponMsg] = useState({ text: '', type: '' });
-  
+
   // Shipping Estimator State
   const [showEstimator, setShowEstimator] = useState(false);
   const [customWeight, setCustomWeight] = useState(0);
@@ -79,7 +79,7 @@ export default function CartSlideOver() {
   const handleProceed = async () => {
     if (!allConsented) return;
     setIsProcessing(true);
-    
+
     try {
       // Fetch IP
       let ip = 'Unknown';
@@ -139,7 +139,7 @@ export default function CartSlideOver() {
     let intlShippingBase = (customWeight / 1000) * modeRate;
 
     // We add a base fixed cost for handling/packaging per package
-    const handlingFee = 500; 
+    const handlingFee = 500;
     intlShippingBase += handlingFee;
 
     // We still give a range (e.g. +/- 15%) since rates fluctuate based on dimensional weight and fuel surcharges
@@ -152,11 +152,11 @@ export default function CartSlideOver() {
     cart.forEach(item => {
       const productVal = item.price ? Number(item.price) : 2000;
       const metrics = getCategoryMetrics(item);
-      
+
       const bcdRate = metrics.duty; // Basic Custom Duty
       const swsRate = 0.10; // Social Welfare Surcharge (10% of BCD)
       const igstRate = metrics.igst;
-      
+
       // Proportion of international shipping for this item based on base weights
       const itemWeightProp = baseCartWeight > 0 ? (metrics.weight * item.quantity) / baseCartWeight : (1 / cart.length);
       const itemIntlLow = intlLow * itemWeightProp;
@@ -281,7 +281,7 @@ export default function CartSlideOver() {
                         Global Sourcing <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
                       </p>
                       <p className="text-[11px] text-gray-300 font-light leading-relaxed pr-2">
-                        Premium imported goods sourced directly from international suppliers.
+                        Premium imported goods sourced directly from team abroad.
                       </p>
                     </div>
                   </div>
@@ -326,9 +326,7 @@ export default function CartSlideOver() {
                             </div>
 
                             <div className="flex flex-col items-end text-right shrink-0">
-                              <p className="text-[12px] text-gray-400 line-through font-semibold tracking-tight"><PriceDisplay basePrice={item.price / 0.81} /></p>
                               <p className="text-[16px] font-black text-gray-900 leading-none mt-1 tracking-tight"><PriceDisplay basePrice={item.price || 0} /></p>
-                              <p className="text-[10px] font-black text-[#00a86b] mt-1.5 tracking-widest">(19% OFF)</p>
                             </div>
                           </div>
 
@@ -391,8 +389,8 @@ export default function CartSlideOver() {
                 <div className="space-y-3 mb-6">
                   {/* Shipping Estimator */}
                   <div className="bg-[#FAFAFA] border border-gray-200 rounded-xl overflow-hidden mb-4">
-                    <button 
-                      onClick={() => setShowEstimator(!showEstimator)} 
+                    <button
+                      onClick={() => setShowEstimator(!showEstimator)}
                       className="w-full px-3 py-2.5 flex items-center justify-between text-sm font-bold bg-white hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-center gap-2">
@@ -401,7 +399,7 @@ export default function CartSlideOver() {
                       </div>
                       <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${showEstimator ? 'rotate-180' : ''}`} />
                     </button>
-                    
+
                     <AnimatePresence>
                       {showEstimator && (
                         <motion.div
@@ -413,9 +411,9 @@ export default function CartSlideOver() {
                           <div className="space-y-3 mb-4">
                             <div className="flex items-center justify-between gap-3 text-xs">
                               <span className="text-gray-600 font-medium whitespace-nowrap">Est. Weight (g)</span>
-                              <input 
-                                type="number" 
-                                value={customWeight} 
+                              <input
+                                type="number"
+                                value={customWeight}
                                 onChange={(e) => setCustomWeight(parseInt(e.target.value) || 0)}
                                 className="w-20 text-right border border-gray-200 rounded px-2 py-1 outline-none focus:border-[#8A001A]"
                               />
@@ -513,7 +511,7 @@ export default function CartSlideOver() {
                       <X className="w-5 h-5" />
                     </button>
                   </div>
-                  
+
                   <div className="flex-1 overflow-y-auto px-6 py-6 bg-[#FAFAFA] space-y-5">
                     <p className="text-sm font-semibold text-red-600 bg-red-50 p-3 rounded-lg border border-red-100">
                       Please read and acknowledge the following terms before proceeding. All fields are mandatory.
