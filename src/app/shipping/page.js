@@ -166,7 +166,7 @@ export default function ShippingPage() {
           <div className="text-[11px] tracking-[0.12em] uppercase text-[#999999] font-medium mb-4">Shipping Information</div>
           <h1 className="font-perandory text-5xl md:text-6xl font-light text-[#000000] mb-5 leading-tight">
             Everything about<br />
-            <em className="font-aston-script text-5xl md:text-7xl lowercase text-[#8A001A]">how your order travels</em>
+            <em className="font-aston-script text-5xl md:text-7xl text-[#8A001A]">How Your Order Travels</em>
           </h1>
           <p className="text-[15px] md:text-[16px] text-[#8A001A] font-medium leading-relaxed max-w-2xl mx-auto mb-6">
               All orders are pre-orders. Your delivery timeline begins only after your batch closes and you pay your shipping payment — not from the day you place your order.
@@ -215,8 +215,8 @@ export default function ShippingPage() {
                 </div>
                 <div>
                   <h4 className="text-xl md:text-2xl text-[#000000] mb-2" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '24px', lineHeight: '32px' }}>The delivery timeline does NOT start from the day you order</h4>
-                  <p className="text-[13px] md:text-[14px] text-[#666666] leading-relaxed mb-3">House of Avira operates on a <strong className="text-[#000000]">batch pre-order model</strong>. When you place an order, it joins a batch. Only after the batch closes do we begin sourcing, quality checking, and calculating your shipping costs.</p>
-                  <div className="bg-white border border-[#E5E5E5] rounded-xl p-4 text-[13px] text-[#666666] leading-relaxed">
+                  <p className="mb-3" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '24px', lineHeight: '32px', color: '#000000' }}>House of Avira operates on a <strong className="text-[#000000]">batch pre-order model</strong>. When you place an order, it joins a batch. Only after the batch closes do we begin sourcing, quality checking, and calculating your shipping costs.</p>
+                  <div className="bg-white border border-[#E5E5E5] rounded-xl p-4" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '24px', lineHeight: '32px', color: '#000000' }}>
                     <strong className="text-[#000000] block mb-1">Example:</strong>
                     You order on <strong className="text-[#000000]">Oct 1st</strong>. Your batch closes on <strong className="text-[#000000]">Oct 20th</strong>. You wait until Oct 20th. After the batch closes, we source your products, QC them, pack them, and send you a shipping payment. Only after you <strong className="text-[#000000]">pay that payment</strong> does the 2–4 week shipping window begin.
                   </div>
@@ -326,17 +326,12 @@ export default function ShippingPage() {
               <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-xl p-6 mt-8 shadow-sm">
                 <h4 className="text-[18px] font-perandory font-bold text-[#8A001A] mb-2">Why wait for the batch date?</h4>
                 <p className="text-[14px] text-[#444444] leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                  When multiple people place orders, we pack them together into one large international shipment. Once this shipment arrives in India, the total delivery cost is distributed precisely according to the weight and category of your items. This ensures you <strong>only pay the real, un-marked-up shipping price</strong>.
+                  You can place an order whenever you like! We simply combine all orders received during the month into one large international batch before processing. Once this shipment arrives in India, the total delivery cost is distributed precisely according to the weight and category of your items. This ensures you <strong>only pay the real, un-marked-up shipping price</strong>.
                 </p>
               </div>
 
               
-              <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-xl p-6 mt-8 shadow-sm">
-                <h4 className="text-[18px] font-perandory font-bold text-[#8A001A] mb-2">Why wait for the batch date?</h4>
-                <p className="text-[14px] text-[#444444] leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                  When multiple people place orders, we pack them together into one large international shipment. Once this shipment arrives in India, the total delivery cost is distributed precisely according to the weight and category of your items. This ensures you <strong>only pay the real, un-marked-up shipping price</strong>.
-                </p>
-              </div>
+              
 
               {/* Modern Price Breakdown UI */}
               <div className="mt-12 border-t border-[#E5E5E5] pt-10">
@@ -362,6 +357,9 @@ export default function ShippingPage() {
                     </div>
                   ))}
                 </div>
+                  <p className="mt-8 text-[12px] md:text-[13px] text-[#666666] text-center" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                    (These are the primary components of the shipping cost. Additional minor operational charges may also be included where applicable.)
+                  </p>
               </div>
             </div>
           </FadeIn>
