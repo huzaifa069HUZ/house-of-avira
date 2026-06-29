@@ -7,7 +7,7 @@ import WhyHouseOfAvira from '@/components/WhyHouseOfAvira';
 import CampaignAndGrid from '@/components/CampaignAndGrid';
 import PinterestFeed from '@/components/PinterestFeed';
 import TestimonialV2 from '@/components/ui/testimonial-v2';
-import FAQSection from '@/components/FAQSection';
+
 import ContactForm from '@/components/ContactForm';
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/wishlistStore';
@@ -400,14 +400,14 @@ export default function Home() {
           <div className="flex whitespace-nowrap">
             <div className="flex animate-marquee-full-reverse shrink-0">
               {[...Array(6)].map((_, i) => (
-                <span key={`mqa2-${i}`} className="text-xl md:text-3xl font-perandory tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
+                <span key={`mqa2-${i}`} className="text-xl md:text-3xl tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700 }}>
                   {t.marquee.line2}
                 </span>
               ))}
             </div>
             <div className="flex animate-marquee-full-reverse shrink-0" aria-hidden="true">
               {[...Array(6)].map((_, i) => (
-                <span key={`mqb2-${i}`} className="text-xl md:text-3xl font-perandory tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2">
+                <span key={`mqb2-${i}`} className="text-xl md:text-3xl tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700 }}>
                   {t.marquee.line2}
                 </span>
               ))}
@@ -429,8 +429,7 @@ export default function Home() {
       </div>
 
 
-      {/* FAQ Section */}
-      <FAQSection />
+
 
       {/* Testimonials Section */}
       <TestimonialV2 />

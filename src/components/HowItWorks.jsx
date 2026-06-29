@@ -12,11 +12,11 @@ export default function HowItWorks() {
           <h2 className="text-sm md:text-base font-gambetta italic tracking-[0.3em] uppercase text-[#8A001A] mb-6">
             How It Works
           </h2>
-          <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] mb-2 leading-tight">
+          <p className="text-4xl md:text-5xl font-perandory font-bold text-[#000000] mb-2 leading-tight">
             Internationally Sourced &
           </p>
-          <p className="text-4xl md:text-5xl font-perandory italic text-[#000000] leading-tight">
-            <span className="font-aston-script text-5xl md:text-6xl text-[#8A001A] mr-3 tracking-normal">Delivered</span> 
+          <p className="text-4xl md:text-5xl font-perandory font-bold text-[#000000] leading-tight">
+            <span className="font-aston-script text-5xl md:text-6xl font-normal text-[#8A001A] mr-3 tracking-normal">Delivered</span> 
             to Your Doorstep.
           </p>
           
