@@ -584,7 +584,7 @@ export default function CatalogueClient() {
             return (
               <Link 
                 key={product.id} 
-                href={`/product/${product.id}`}
+                href={`/product/`}
                 className="avira-masonry-item group"
               >
                 <div className="avira-item-img-wrapper">

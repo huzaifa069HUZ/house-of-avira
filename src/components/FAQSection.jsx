@@ -18,15 +18,15 @@ const faqs = [
   },
   {
     question: "Can I cancel my order if I change my mind?",
-    answer: "No. Once an order is placed, it is submitted to our suppliers immediately and cannot be cancelled, refunded, or exchanged. This applies even if there are delays, even if the shipping cost is higher than expected, and even if the shipping invoice has not yet been paid. Please only order if you are fully committed to the purchase."
+    answer: "No. Once an order is placed, it is submitted to our suppliers immediately and cannot be cancelled, refunded, or exchanged. This applies even if there are delays, even if the shipping cost is higher than expected, and even if the shipping payment has not yet been paid. Please only order if you are fully committed to the purchase."
   },
   {
-    question: "What if I don't pay the shipping invoice on time?",
-    answer: "If the shipping invoice is not paid by the specified deadline, your parcel will not be shipped. No refund will be issued for your product payment, as the order has already been placed with our suppliers on your behalf. Please pay shipping invoices promptly when they are sent."
+    question: "What if I don't pay the shipping payment on time?",
+    answer: "If the shipping payment is not paid by the specified deadline, your parcel will not be shipped. No refund will be issued for your product payment, as the order has already been placed with our suppliers on your behalf. Please pay shipping payments promptly when they are sent."
   },
   {
-    question: "Are customs and duty charges included in the shipping invoice?",
-    answer: "Yes. India's customs duties and GST on imports are calculated and included in your international shipping invoice. You will receive a full itemised breakdown showing the shipping cost, customs duty, and GST before you are required to pay anything."
+    question: "Are customs and duty charges included in the shipping payment?",
+    answer: "Yes. India's customs duties and GST on imports are calculated and included in your international shipping payment. You will receive a full itemised breakdown showing the shipping cost, customs duty, and GST before you are required to pay anything."
   },
   {
     question: "My order is delayed — can I get a refund?",

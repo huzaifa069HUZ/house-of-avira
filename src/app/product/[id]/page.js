@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use } from 'react';
 import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
@@ -50,16 +50,30 @@ export default function ProductPage({ params: paramsPromise }) {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const docRef = doc(db, 'products', params.id);
-        const docSnap = await getDoc(docRef);
+        let productData = null;
         
-        if (docSnap.exists()) {
-          const data = { id: docSnap.id, ...docSnap.data() };
-          setProduct(data);
-          if (data.sizes && data.sizes.length > 0) setSelectedSize(data.sizes[0]);
-          if (data.swatches && data.swatches.length > 0) setSelectedColor(data.swatches[0].color);
+        // 1. Try fetching by slug first
+        const productsRef = collection(db, 'products');
+        const q = query(productsRef, where('slug', '==', params.id));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const docSnap = querySnapshot.docs[0];
+          productData = { id: docSnap.id, ...docSnap.data() };
         } else {
-          // Fallback logic could go here if it's a dummy product id
+          // 2. Fallback to raw ID lookup for backward compatibility
+          const docRef = doc(db, 'products', params.id);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            productData = { id: docSnap.id, ...docSnap.data() };
+          }
+        }
+
+        if (productData) {
+          setProduct(productData);
+          if (productData.sizes && productData.sizes.length > 0) setSelectedSize(productData.sizes[0]);
+          if (productData.swatches && productData.swatches.length > 0) setSelectedColor(productData.swatches[0].color);
+        } else {
           console.error("Product not found");
         }
       } catch (err) {
@@ -414,6 +428,16 @@ export default function ProductPage({ params: paramsPromise }) {
                     </button>
                   </div>
                 )}
+              </div>
+
+              {/* Shipping Warning Box */}
+              <div className="mt-2 mb-6 border border-neutral-200 rounded-xl p-6 bg-neutral-50 flex flex-col items-center justify-center text-center gap-5">
+                <p className="text-xs tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-sm" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  * Please place an order only if you are comfortable with the international shipping process and charges.
+                </p>
+                <Link href="/shipping" className="bg-black text-white px-8 py-3.5 rounded-full text-[10px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm">
+                  READ FULL SHIPPING DETAILS
+                </Link>
               </div>
 
               {/* Accordion Details */}

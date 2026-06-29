@@ -351,7 +351,7 @@ export default function Header() {
                       <div className="flex flex-col gap-2">
                         {(searchQuery ? filteredProducts : allProducts.slice(0, 4)).map(product => (
                           <Link 
-                            href={`/product/${product.id}`} 
+                            href={`/product/`} 
                             key={product.id}
                             onClick={() => {
                               setShowSearchDropdown(false);

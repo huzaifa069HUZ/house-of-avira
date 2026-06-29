@@ -457,7 +457,7 @@ export default function CheckoutPage() {
                 <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 rounded-bl-full pointer-events-none"></div>
                 <h4 className="text-xs font-bold text-blue-900 uppercase tracking-widest mb-1">Important Notice</h4>
                 <p className="text-[13px] text-blue-800/80 leading-relaxed font-medium">
-                  You are paying the <strong className="text-blue-900">product price only</strong> right now. International and domestic shipping charges will be invoiced separately at a later stage.
+                  You are paying the <strong className="text-blue-900">product price only</strong> right now. International and domestic shipping charges will be billed separately at a later stage.
                 </p>
               </div>
             </div>

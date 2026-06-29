@@ -362,7 +362,7 @@ export default function OrderProcessPage() {
             </p>
           </RevealSection>
 
-          {/* The Shipping Invoice - cinematic card */}
+          {/* The shipping payment - cinematic card */}
           <RevealSection delay={0.2} className="mb-20">
             <div className="relative rounded-2xl overflow-hidden bg-[#111] shadow-[0_8px_40px_rgb(0,0,0,0.08)] hover:shadow-[0_12px_50px_rgba(138,0,26,0.15)] transition-shadow duration-500">
               <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/10 via-transparent to-[#8A001A]/5" />
@@ -374,11 +374,11 @@ export default function OrderProcessPage() {
                 >
                   <Globe className="w-16 h-16 text-[#8A001A]" />
                 </motion.div>
-                <h3 className="font-aston-script text-4xl md:text-6xl text-[#8A001A] mb-6 capitalize">The Shipping Invoice</h3>
+                <h3 className="font-aston-script text-4xl md:text-6xl text-[#8A001A] mb-6 capitalize">The shipping payment</h3>
                 <p className="text-white/70 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
                   A detailed cost breakdown for shipping and logistics will be sent directly to your{' '}
                   <span className="text-[#8A001A] font-bold uppercase tracking-wider">WhatsApp and Email</span>.
-                  Payment of this second invoice is required to secure your final delivery.
+                  Payment of this second payment is required to secure your final delivery.
                 </p>
               </div>
             </div>

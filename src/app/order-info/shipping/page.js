@@ -486,7 +486,7 @@ export default function ShippingPage() {
           <RevealSection delay={0.2}>
             <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 md:p-10 space-y-4">
               <p className="text-white/50 text-sm leading-[1.9]">
-                Domestic shipping charges are not collected during checkout. They are included in the final shipping invoice together with your international shipping charges. A complete breakdown will always be provided before payment is requested.
+                Domestic shipping charges are not collected during checkout. They are included in the final shipping payment together with your international shipping charges. A complete breakdown will always be provided before payment is requested.
               </p>
               <p className="text-white/30 text-xs">Tracking information will be shared once the parcel has been dispatched. We currently ship across India.</p>
             </div>

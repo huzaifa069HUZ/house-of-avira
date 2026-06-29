@@ -13,12 +13,10 @@ export default function ContactForm() {
   const [status, setStatus] = useState('idle'); // idle, submitting, success, error
 
   const categoriesList = [
-    'General inquiry',
-    'Product detail',
-    'Shipping rates',
-    'Shipping process',
-    'Import',
-    'B2B wholesale (for business)'
+    'General Inquiry',
+    'Product Details',
+    'Shipping Rate',
+    'Shipping Process'
   ];
 
   const handleCheckboxChange = (category) => {
@@ -88,7 +86,7 @@ export default function ContactForm() {
                 transition={{ delay: 0.1 }}
                 className="font-aston-script text-[#4a0000] text-2xl md:text-3xl mb-12 leading-relaxed"
               >
-                sizing, shipping, sourcing or ordering updates - we're here for you
+                Sizing, shipping, sourcing or ordering updates - we're here for you
               </motion.p>
 
               <motion.div 
@@ -201,7 +199,7 @@ export default function ContactForm() {
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                   ) : (
-                    "Let's get started"
+                    "Get in Touch"
                   )}
                 </button>
 

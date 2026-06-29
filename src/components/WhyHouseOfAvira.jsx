@@ -39,7 +39,7 @@ export default function WhyHouseOfAvira() {
     hidden: { scaleX: 0, originX: 0 },
     visible: { scaleX: 1, transition: { duration: 1.5, ease: 'easeInOut' } }
   };
-  
+
   const lineVerticalVariants = {
     hidden: { scaleY: 0, originY: 0 },
     visible: { scaleY: 1, transition: { duration: 1.5, ease: 'easeInOut' } }
@@ -47,7 +47,7 @@ export default function WhyHouseOfAvira() {
 
   return (
     <section className="w-full bg-[#FAFAFA] py-24 md:py-32 overflow-hidden border-t border-[#000000]/10">
-      <motion.div 
+      <motion.div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         variants={containerVariants}
         initial="hidden"
@@ -63,7 +63,7 @@ export default function WhyHouseOfAvira() {
               const isCenter = index === currentIndex;
               const isLeft = index === (currentIndex - 1 + carouselImages.length) % carouselImages.length;
               const isRight = index === (currentIndex + 1) % carouselImages.length;
-              
+
               if (!isCenter && !isLeft && !isRight) return null;
 
               return (
@@ -106,7 +106,7 @@ export default function WhyHouseOfAvira() {
               </button>
             </div>
           </div>
-          
+
           {/* Huge Typography Behind */}
           <div className="absolute top-[35%] sm:top-[35%] left-1/2 -translate-x-1/2 w-full flex items-center justify-center z-0 pointer-events-none">
             <h2 className="font-perandory text-[#000000] text-[9vw] sm:text-[7vw] md:text-[6vw] lg:text-[5.5vw] leading-none whitespace-nowrap tracking-tighter opacity-90 scale-y-[1.5] inline-block origin-center">
@@ -120,19 +120,19 @@ export default function WhyHouseOfAvira() {
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-perandory font-bold text-[#000000] mb-4">
             Two-Stage <span className="font-aston-script text-5xl md:text-6xl lg:text-7xl text-[#8A001A] tracking-normal font-normal">Pricing</span>
           </h3>
-          <p className="max-w-3xl mx-auto text-[#000000] text-xl md:text-2xl font-medium tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+          <p className="max-w-3xl mx-auto text-[#000000] text-[24px] leading-[32px] font-bold tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "normal" }}>
             We only take two payments: one is the product price which you pay on the website while ordering, and the other is the SHIPPING + DELIVERY CHARGES.
           </p>
         </motion.div>
 
         {/* Three Stage Pricing Graph */}
         <motion.div className="relative" variants={containerVariants}>
-          
+
           {/* Desktop Layout (Horizontal) */}
           <div className="hidden md:flex justify-between relative">
             {/* Connecting Line */}
             <div className="absolute top-12 left-[10%] right-[10%] h-0.5 bg-gray-200 -z-10">
-               <motion.div className="h-full bg-[#8A001A]" variants={lineVariants} />
+              <motion.div className="h-full bg-[#8A001A]" variants={lineVariants} />
             </div>
 
             {/* Stage 1 */}
@@ -173,7 +173,7 @@ export default function WhyHouseOfAvira() {
               </div>
               <h4 className="text-2xl font-cormorant-garamond font-bold text-[#000000] mb-3">3. Doorstep Arrival</h4>
               <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                After the final balance is cleared, we dispatch it locally straight to your hands via premium couriers.
+                After the final balance is cleared, we dispatch it locally straight to your doorstep.
               </p>
             </motion.div>
           </div>
