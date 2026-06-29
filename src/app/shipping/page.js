@@ -207,16 +207,16 @@ export default function ShippingPage() {
 
           {/* Pre-order Warning Callout */}
           <FadeIn delay={0.05}>
-            <div className="bg-[#FFF5F5] border-2 border-[#8A001A]/20 rounded-2xl p-5 md:p-7 mb-10 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-[#8A001A] rounded-l-2xl" />
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-[#8A001A]/10 flex items-center justify-center mt-0.5">
-                  <svg className="w-6 h-6 text-[#8A001A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+            <div className="bg-[#FFF5F5] border-2 border-[#8A001A]/20 rounded-xl p-4 md:p-5 mb-8 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-[#8A001A] rounded-l-xl" />
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-[#8A001A]/10 flex items-center justify-center mt-0.5">
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-[#8A001A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
                 </div>
                 <div>
-                  <h4 className="text-xl md:text-2xl text-[#000000] mb-2" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '24px', lineHeight: '32px' }}>The delivery timeline does NOT start from the day you order</h4>
-                  <p className="mb-3" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '24px', lineHeight: '32px', color: '#000000' }}>House of Avira operates on a <strong className="text-[#000000]">batch pre-order model</strong>. When you place an order, it joins a batch. Only after the batch closes do we begin sourcing, quality checking, and calculating your shipping costs.</p>
-                  <div className="bg-white border border-[#E5E5E5] rounded-xl p-4" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '24px', lineHeight: '32px', color: '#000000' }}>
+                  <h4 className="text-lg md:text-xl text-[#000000] mb-2" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '22px', lineHeight: '28px' }}>The delivery timeline does NOT start from the day you order</h4>
+                  <p className="mb-3" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '18px', lineHeight: '26px', color: '#000000' }}>House of Avira operates on a <strong className="text-[#000000]">batch pre-order model</strong>. When you place an order, it joins a batch. Only after the batch closes do we begin sourcing, quality checking, and calculating your shipping costs.</p>
+                  <div className="bg-white border border-[#E5E5E5] rounded-lg p-3 md:p-4" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700, fontSize: '18px', lineHeight: '26px', color: '#000000' }}>
                     <strong className="text-[#000000] block mb-1">Example:</strong>
                     You order on <strong className="text-[#000000]">Oct 1st</strong>. Your batch closes on <strong className="text-[#000000]">Oct 20th</strong>. You wait until Oct 20th. After the batch closes, we source your products, QC them, pack them, and send you a shipping payment. Only after you <strong className="text-[#000000]">pay that payment</strong> does the 2–4 week shipping window begin.
                   </div>
