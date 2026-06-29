@@ -166,7 +166,7 @@ export default function ShippingPage() {
           <div className="text-[11px] tracking-[0.12em] uppercase text-[#999999] font-medium mb-4">Shipping Information</div>
           <h1 className="font-perandory text-5xl md:text-6xl font-light text-[#000000] mb-5 leading-tight">
             Everything about<br />
-            <em className="font-aston-script text-5xl md:text-7xl text-[#8A001A]">How Your Order Travels</em>
+            <em className="font-aston-script text-4xl md:text-6xl text-[#8A001A]">How Your Order Travels</em>
           </h1>
           <p className="text-[15px] md:text-[16px] text-[#8A001A] font-medium leading-relaxed max-w-2xl mx-auto mb-6">
               All orders are pre-orders. Your delivery timeline begins only after your batch closes and you pay your shipping payment — not from the day you place your order.
@@ -240,7 +240,7 @@ export default function ShippingPage() {
             <div className="bg-white border border-[#E5E5E5]/50 rounded-[32px] p-6 md:p-12 mb-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#FAFAFA] rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
               
-              <h3 className="font-sans font-black tracking-tight text-2xl md:text-3xl text-center text-[#000000] mb-12 relative z-10">
+              <h3 className="font-perandory text-3xl md:text-5xl text-center text-[#000000] mb-12 relative z-10">
                 International + Domestic Flow
               </h3>
               
@@ -336,7 +336,7 @@ export default function ShippingPage() {
               {/* Modern Price Breakdown UI */}
               <div className="mt-12 border-t border-[#E5E5E5] pt-10">
                 <div className="text-center mb-10">
-                  <h4 className="font-perandory text-4xl md:text-5xl font-extrabold text-[#000000] mb-3 whitespace-nowrap overflow-hidden text-ellipsis">What your shipping covers</h4>
+                  <h4 className="font-perandory text-3xl md:text-5xl font-extrabold text-[#000000] mb-3">What your shipping covers</h4>
                   <p className="text-[14px] text-[#666666] max-w-lg mx-auto" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>A transparent look at everything included in your final shipping cost. No hidden fees.</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
@@ -366,15 +366,15 @@ export default function ShippingPage() {
 
           <FadeIn delay={0.2}>
             <div className="text-[11px] tracking-[0.12em] uppercase text-[#8A001A] font-medium mb-2 mt-16">Your Order Timeline</div>
-            <h3 className="font-perandory text-3xl text-[#000000] mb-2">From pre-order to doorstep</h3>
+            <h3 className="font-perandory text-4xl md:text-5xl font-extrabold text-[#000000] mb-2">From pre-order to doorstep</h3>
             <p className="text-[14px] text-[#666666] leading-relaxed mb-10">Your journey has two distinct phases. The shipping clock only starts in Phase 2.</p>
             
             {/* PHASE 1 */}
             <div className="mb-4">
               <div className="flex items-center gap-3 mb-6">
-                <div className="bg-[#000000] text-white text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-2 rounded-full">Phase 1</div>
+                <div className="bg-[#000000] text-white text-[10px] tracking-[0.2em] uppercase px-4 py-2 rounded-full" style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 700 }}>Phase 1</div>
                 <div>
-                  <h4 className="font-perandory text-xl text-[#000000] leading-tight">Pre-shipping</h4>
+                  <h4 className="font-aston-script text-3xl text-[#000000] leading-tight">Pre-shipping</h4>
                   <p className="text-[12px] text-[#999999] font-medium">Before the delivery clock starts</p>
                 </div>
               </div>
