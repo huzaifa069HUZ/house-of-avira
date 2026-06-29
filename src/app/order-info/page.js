@@ -239,7 +239,7 @@ export default function OrderInfoPage() {
             <div className="relative bg-[#FAFAF8] rounded-2xl p-8 md:p-12 border border-[#1a1a1a]/5 shadow-sm text-left">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-2 h-2 rounded-full bg-[#1a1a1a] relative" />
-                <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/60">Acknowledgment</span>
+                <span className="text-[16px] md:text-[18px] font-perandory font-bold uppercase text-[#1a1a1a]">ACKNOWLEDGMENT</span>
               </div>
               <p className="text-[#1a1a1a]/70 text-base md:text-lg leading-[1.9] font-light">
                 By placing an order with House of Avira, you acknowledge that you have <span className="text-[#1a1a1a] font-medium">read, understood, and agreed</span> to all information and policies listed.
