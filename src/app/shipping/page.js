@@ -112,7 +112,7 @@ export default function ShippingPage() {
     },
     {
       q: "Is COD (Cash on Delivery) available?",
-      a: "No, COD is not available at House of Avira. We deal with imported products sourced internationally on your behalf — payment must be received before the order can be placed with our suppliers. We accept GPay, Paytm, UPI, bank transfers, and card payments."
+      a: "No, COD is not available at House of Avira. We deal with imported products sourced internationally on your behalf — payment must be received before the order can be placed with our Overseas Team. We accept GPay, Paytm, UPI, bank transfers, and card payments."
     },
     {
       q: "How long will my order take?",
@@ -120,11 +120,11 @@ export default function ShippingPage() {
     },
     {
       q: "Can I cancel my order if I change my mind?",
-      a: "No. Once an order is placed, it is submitted to our suppliers immediately and cannot be cancelled, refunded, or exchanged. This applies even if there are delays, even if the shipping cost is higher than expected, and even if the shipping payment has not yet been paid. Please only order if you are fully committed to the purchase."
+      a: "No. Once an order is placed, it is submitted to our Overseas Team immediately and cannot be cancelled, refunded, or exchanged. This applies even if there are delays, even if the shipping cost is higher than expected, and even if the shipping payment has not yet been paid. Please only order if you are fully committed to the purchase."
     },
     {
       q: "What if I don't pay the shipping payment on time?",
-      a: "If the shipping payment is not paid by the specified deadline, your parcel will not be shipped. No refund will be issued for your product payment, as the order has already been placed with our suppliers on your behalf. Please pay shipping payments promptly when they are sent."
+      a: "If the shipping payment is not paid by the specified deadline, your parcel will not be shipped. No refund will be issued for your product payment, as the order has already been placed with our Overseas Team on your behalf. Please pay shipping payments promptly when they are sent."
     },
     {
       q: "Are customs and duty charges included in the shipping payment?",
@@ -251,7 +251,7 @@ export default function ShippingPage() {
                   <div className="w-full h-[120px] rounded-xl overflow-hidden mb-5 relative ring-1 ring-black/5">
                     <Image src="/shipping/international.png" alt="International Shipping" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                   </div>
-                  <div className="text-[15px] font-extrabold tracking-tight text-[#000000] leading-snug">Suppliers &amp; Manufacturers</div>
+                  <div className="text-[15px] font-extrabold tracking-tight text-[#000000] leading-snug">Overseas Team &amp; Manufacturers</div>
                   <div className="text-[11px] text-[#999999] mt-1.5 font-bold tracking-[0.2em] uppercase">Abroad</div>
                 </div>
                 
@@ -385,8 +385,8 @@ export default function ShippingPage() {
                   {[
                     { state: 'done', title: 'Pre-Order Placed & Product Payment', desc: 'You pay the product price only. Your order is confirmed and assigned to the current open batch.' },
                     { state: 'done', title: 'Waiting for Batch to Close', desc: 'Your order waits alongside other pre-orders until the batch closing date. This could be days or weeks depending on when you ordered.' },
-                    { state: 'done', title: 'Batch Closed — Sourcing Begins', desc: 'The batch closes. We now place bulk orders with our international suppliers on your behalf.' },
-                    { state: 'done', title: 'Products Sourced & Quality Checked', desc: 'Products arrive from suppliers. Each item is quality checked before being cleared for shipping.' },
+                    { state: 'done', title: 'Batch Closed — Sourcing Begins', desc: 'The batch closes. We now place bulk orders with our Overseas Team on your behalf.' },
+                    { state: 'done', title: 'Products Sourced & Quality Checked', desc: 'Products arrive from our Overseas Team. Each item is quality checked before being cleared for shipping.' },
                     { state: 'done', title: 'Products at International Warehouse', desc: 'Your product has arrived at our international warehouse. Batch packing and weight calculation begins.' },
                     { state: 'done', title: 'Shipping Cost Calculated', desc: 'Comprehensive shipping cost (International, Customs, Domestic) is calculated precisely based on weight.' },
                     { state: 'active', title: 'Final shipping payment Sent', badge: 'ACTION REQUIRED', desc: 'We send you a single, transparent shipping payment covering all logistics to your doorstep. Must be paid to proceed.' },
@@ -455,67 +455,67 @@ export default function ShippingPage() {
           <FadeIn>
             <div className="text-[11px] tracking-[0.12em] uppercase text-[#8A001A] font-medium mb-3">Section 02</div>
             <h2 className="font-perandory text-4xl text-[#000000] mb-4">Special category notices</h2>
-            <p className="text-[15px] text-[#666666] leading-relaxed mb-10">Some product types require extra attention. Please read the relevant notice before placing your order.</p>
+            <p className="text-[15px] text-[#666666] leading-relaxed mb-10 font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>Some product types require extra attention. Please read the relevant notice before placing your order.</p>
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4">
             
             {/* 1. Branded Items - Red - Large Square */}
             <FadeIn delay={0.1} className="md:col-span-2 md:row-span-2">
-              <div className="bg-[#FF3B30] rounded-[32px] p-8 md:p-10 flex flex-col h-full shadow-lg relative overflow-hidden group">
+              <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-[32px] p-8 md:p-10 flex flex-col h-full shadow-sm relative overflow-hidden group">
                 <div className="relative z-10 flex-1">
-                  <h3 className="text-[24px] md:text-[32px] font-perandory font-bold text-white mb-3">Branded Items</h3>
-                  <p className="text-[14px] md:text-[15px] text-white/90 leading-relaxed max-w-md font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  <h3 className="text-[24px] md:text-[32px] font-perandory font-bold text-[#8A001A] mb-3">Branded Items</h3>
+                  <p className="text-[14px] md:text-[15px] text-[#444444] leading-relaxed max-w-md font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Products from brands like Coach, Hello Kitty, Ferrari, LV, Dior, Chanel, Nike, and Stussy carry higher customs duties and a longer customs processing period. Expect higher shipping costs and a slightly longer timeline.
                   </p>
                 </div>
-                <div className="absolute -bottom-8 -right-8 w-64 h-64 md:w-80 md:h-80 transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-3">
-                  <Image src="/shipping/branded_item_bento.png" alt="Branded Item" fill className="object-contain drop-shadow-2xl" />
+                <div className="absolute -bottom-4 -right-4 md:-bottom-8 md:-right-8 w-48 h-48 md:w-80 md:h-80 transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-3">
+                  <Image src="/shipping/branded-item-first.png" alt="Branded Item" fill className="object-contain drop-shadow-xl" />
                 </div>
               </div>
             </FadeIn>
 
             {/* 2. Beauty Products - Pink - Wide Rectangle */}
             <FadeIn delay={0.2} className="md:col-span-2 md:row-span-1">
-              <div className="bg-[#FF2D55] rounded-[32px] p-8 flex flex-col md:flex-row h-full shadow-lg relative overflow-hidden group items-center">
+              <div className="bg-white border border-[#E5E5E5] rounded-[32px] p-8 flex flex-col md:flex-row h-full shadow-sm relative overflow-hidden group items-center">
                 <div className="relative z-10 flex-1 md:pr-8 mb-6 md:mb-0">
-                  <h3 className="text-[20px] md:text-[24px] font-perandory font-bold text-white mb-2">Liquids & Beauty</h3>
-                  <p className="text-[13px] md:text-[14px] text-white/90 leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  <h3 className="text-[20px] md:text-[24px] font-perandory font-bold text-[#8A001A] mb-2">Liquids & Beauty</h3>
+                  <p className="text-[13px] md:text-[14px] text-[#444444] leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Liquid products such as lip glosses, serums, and skincare require special handling and documentation. This means they typically carry a slightly higher shipping cost.
                   </p>
                 </div>
                 <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6">
-                  <Image src="/shipping/beauty_product_bento.png" alt="Beauty Product" fill className="object-contain drop-shadow-xl" />
+                  <Image src="/shipping/beauty_product_bento.png" alt="Beauty Product" fill className="object-contain drop-shadow-md" />
                 </div>
               </div>
             </FadeIn>
 
             {/* 3. Oversized Items - Yellow - Small Square */}
             <FadeIn delay={0.3} className="md:col-span-1 md:row-span-1">
-              <div className="bg-[#FFCC00] rounded-[32px] p-8 flex flex-col h-full shadow-lg relative overflow-hidden group">
+              <div className="bg-white border border-[#E5E5E5] rounded-[32px] p-8 flex flex-col h-full shadow-sm relative overflow-hidden group">
                 <div className="relative z-10">
-                  <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-[#000000] mb-2">Oversized Items</h3>
-                  <p className="text-[12px] md:text-[13px] text-black/80 leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-[#8A001A] mb-2">Oversized Items</h3>
+                  <p className="text-[12px] md:text-[13px] text-[#444444] leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Large or bulky items take a bigger share of the batch weight, meaning a higher shipping cost.
                   </p>
                 </div>
                 <div className="absolute -bottom-6 -right-6 w-32 h-32 md:w-40 md:h-40 transition-transform duration-700 group-hover:scale-110">
-                  <Image src="/shipping/oversized_item_bento.png" alt="Oversized Item" fill className="object-contain drop-shadow-xl" />
+                  <Image src="/shipping/oversized_item_bento.png" alt="Oversized Item" fill className="object-contain drop-shadow-md" />
                 </div>
               </div>
             </FadeIn>
 
             {/* 4. Footwear - Blue - Small Square */}
             <FadeIn delay={0.4} className="md:col-span-1 md:row-span-1">
-              <div className="bg-[#007AFF] rounded-[32px] p-8 flex flex-col h-full shadow-lg relative overflow-hidden group">
+              <div className="bg-[#FAFAFA] border border-[#E5E5E5] rounded-[32px] p-8 flex flex-col h-full shadow-sm relative overflow-hidden group">
                 <div className="relative z-10">
-                  <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-white mb-2">Footwear</h3>
-                  <p className="text-[12px] md:text-[13px] text-white/90 leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  <h3 className="text-[18px] md:text-[20px] font-perandory font-bold text-[#8A001A] mb-2">Footwear</h3>
+                  <p className="text-[12px] md:text-[13px] text-[#444444] leading-relaxed font-dm-sans" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                     Shoes ship in original boxes, which are larger and heavier. This typically results in higher costs.
                   </p>
                 </div>
                 <div className="absolute -bottom-6 -right-6 w-32 h-32 md:w-40 md:h-40 transition-transform duration-700 group-hover:scale-110 -rotate-12 group-hover:-rotate-0">
-                  <Image src="/shipping/footwear_bento.png" alt="Footwear" fill className="object-contain drop-shadow-xl" />
+                  <Image src="/shipping/footwear_bento.png" alt="Footwear" fill className="object-contain drop-shadow-md" />
                 </div>
               </div>
             </FadeIn>
@@ -535,8 +535,8 @@ export default function ShippingPage() {
 
           <div className="space-y-3">
             {[
-              { id: 'P-01', color: '#8A001A', title: 'Payment deadline is mandatory', text: 'Once your shipping payment is sent, it must be paid by the specified deadline. If the shipping fee remains unpaid, your parcel will not be shipped and no refund will be issued. Your order is placed with suppliers immediately after you submit it — it cannot be reversed.' },
-              { id: 'P-02', color: '#8A001A', title: 'No cancellations or refunds after ordering', text: 'Once an order is submitted, we forward it to our suppliers immediately. Cancellations, refunds, and exchanges cannot be accommodated under any circumstances after this point — including if shipping costs are higher than expected or if there are delivery delays.' },
+              { id: 'P-01', color: '#8A001A', title: 'Payment deadline is mandatory', text: 'Once your shipping payment is sent, it must be paid by the specified deadline. If the shipping fee remains unpaid, your parcel will not be shipped and no refund will be issued. Your order is placed with our Overseas Team immediately after you submit it — it cannot be reversed.' },
+              { id: 'P-02', color: '#8A001A', title: 'No cancellations or refunds after ordering', text: 'Once an order is submitted, we forward it to our Overseas Team immediately. Cancellations, refunds, and exchanges cannot be accommodated under any circumstances after this point — including if shipping costs are higher than expected or if there are delivery delays.' },
               { id: 'P-03', color: '#000000', title: 'Shipping prices may change', text: 'Shipping prices may fluctuate due to carrier rates, customs regulations, and the nature of the product. The exact cost is calculated only when your parcel is packed and ready to ship. We recommend placing an order only if you\'re comfortable with this variable.' },
               { id: 'P-04', color: '#000000', title: 'Our responsibility ends at the courier', text: 'Once your domestic package is handed over to the courier and a tracking ID is provided, delivery delays, transit issues, or rare mishaps are beyond our control. We will always support you with tracking information, but we cannot take responsibility for courier-side delays or losses.' },
               { id: 'P-05', color: '#000000', title: 'Delays are not grounds for cancellation', text: 'We do not accept cancellations or offer refunds for delayed deliveries, particularly for imported goods. Delivery times may vary due to customs, logistics, and factors completely beyond our control. Please only order if you are patient and comfortable waiting.' },
