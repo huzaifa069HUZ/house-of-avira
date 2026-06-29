@@ -546,7 +546,7 @@ export default function ShippingPage() {
                 <div className="bg-white border-y border-r border-[#E5E5E5] border-l-4 rounded-xl p-5 md:p-6 flex flex-col md:flex-row gap-2 md:gap-5 shadow-sm hover:shadow-md transition-shadow" style={{ borderLeftColor: policy.color }}>
                   <div className="font-mono text-[11px] font-semibold mt-1 shrink-0" style={{ color: policy.color }}>{policy.id}</div>
                   <div>
-                    <h3 className="text-[14px] font-medium text-[#000000] mb-1.5">{policy.title}</h3>
+                    <h3 className="text-[18px] md:text-[20px] text-[#000000] mb-1.5" style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'normal', fontWeight: 700 }}>{policy.title}</h3>
                     <p className="text-[13px] text-[#666666] leading-relaxed">{policy.text}</p>
                   </div>
                 </div>
