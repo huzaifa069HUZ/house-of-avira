@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
-import { ArrowLeft, RotateCcw, DollarSign, Clock, ShieldAlert, XCircle, UserX, AlertTriangle, FileText, CheckCircle2, PackageX, Scale, Box, Truck, ShieldCheck, Heart, Plane, Globe, Search, Camera, Video, Package } from 'lucide-react';
+import { ArrowLeft, RotateCcw, DollarSign, Clock, ShieldAlert, XCircle, UserX, AlertTriangle, FileText, CheckCircle2, PackageX, Scale, Box, Truck, ShieldCheck, Heart, Plane, Globe, Search, Camera, Video, Package, Info, Mail, MessageCircle } from 'lucide-react';
 
 /* ─── Reveal on scroll wrapper ─── */
 function RevealSection({ children, className = '', delay = 0 }) {
@@ -341,6 +341,73 @@ export default function PoliciesPage() {
           </RevealSection>
         </div>
       </section>
+      {/* ═══════ COPYRIGHT & IMAGE USAGE ═══════ */}
+      <RevealSection>
+        <section className="py-24 md:py-32 bg-[#FAFAF8] relative z-10">
+          <div className="max-w-3xl mx-auto px-6 md:px-12">
+            
+            <div className="mb-16 text-center">
+              <Info className="w-8 h-8 text-[#8A001A] mx-auto mb-6 opacity-80" />
+              <h2 className="text-3xl md:text-4xl font-perandory text-[#1a1a1a] tracking-tight mb-6">Copyright & Image Usage Notice</h2>
+              <p className="text-[#1a1a1a]/60 text-base md:text-lg leading-[1.9] font-light">
+                We love sharing beautiful aesthetics, fashion inspiration, and curated finds with our community. To maintain transparency, we want to be clear about where our visual content comes from.
+              </p>
+            </div>
+
+            <div className="space-y-8">
+              {/* Sourcing */}
+              <div className="bg-white border border-neutral-200 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group hover:border-[#8A001A]/30 transition-colors">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-neutral-50 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none group-hover:bg-[#8A001A]/5 transition-colors"></div>
+                <h3 className="text-sm font-bold tracking-[0.2em] uppercase text-[#8A001A] mb-4">Content Sourcing</h3>
+                <p className="text-[#1a1a1a]/70 text-base leading-[1.8] font-light">
+                  The images, product photos, references, and other visual content displayed on our website may be sourced from our suppliers, manufacturers, customers, publicly available references, or third-party sources. They are not necessarily our own original product shoots unless explicitly stated.
+                </p>
+              </div>
+
+              {/* Original Content */}
+              <div className="bg-white border border-neutral-200 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group hover:border-[#8A001A]/30 transition-colors">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-neutral-50 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none group-hover:bg-[#8A001A]/5 transition-colors"></div>
+                <h3 className="text-sm font-bold tracking-[0.2em] uppercase text-[#8A001A] mb-4">Our Original Content</h3>
+                <p className="text-[#1a1a1a]/70 text-base leading-[1.8] font-light">
+                  When an image has been created, styled, or photographed originally by the House of Avira team, it will be clearly identified, credited, or watermarked accordingly to show it as our own authentic work.
+                </p>
+              </div>
+
+              {/* Removal/Credit Requests */}
+              <div className="bg-[#0A0A0A] border border-[#1a1a1a] rounded-2xl p-8 md:p-10 shadow-lg relative overflow-hidden text-white mt-12">
+                <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 11px)' }} />
+                
+                <h3 className="text-lg md:text-xl font-perandory text-white mb-4 relative z-10">Content Removal & Credit Requests</h3>
+                <p className="text-white/70 text-base leading-[1.8] font-light mb-8 relative z-10">
+                  We deeply respect the creative work of photographers, brands, and creators. If any individual, copyright owner, or creator finds their image or content on our website and would like it to be appropriately credited, modified, or removed entirely, please reach out to us directly. 
+                  <br/><br/>
+                  Upon receiving a valid request, we will review it promptly and take the appropriate action without any hassle.
+                </p>
+
+                <div className="relative z-10 flex flex-col sm:flex-row gap-4 pt-6 border-t border-white/10">
+                  <a href="mailto:houseofavira@gmail.com" className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-5 py-3 rounded-xl transition-colors">
+                    <Mail className="w-5 h-5 text-white/60" />
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-white/50 uppercase tracking-widest font-bold">Email Us</span>
+                      <span className="text-sm text-white">houseofavira@gmail.com</span>
+                    </div>
+                  </a>
+                  
+                  <a href="https://wa.me/919986742779" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-[#8A001A]/20 hover:bg-[#8A001A]/30 border border-[#8A001A]/30 px-5 py-3 rounded-xl transition-colors">
+                    <MessageCircle className="w-5 h-5 text-[#8A001A]" />
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-[#8A001A]/70 uppercase tracking-widest font-bold">WhatsApp</span>
+                      <span className="text-sm text-white">+91 9986742779</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+      </RevealSection>
+
 
       {/* ═══════ FINAL NOTE ═══════ */}
       <section className="relative py-24 md:py-36 bg-black text-white text-center overflow-hidden">
