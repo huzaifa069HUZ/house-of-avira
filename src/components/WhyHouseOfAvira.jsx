@@ -9,7 +9,7 @@ export default function WhyHouseOfAvira() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselImages = [
     '/images/bagbg.png',
-    '/images/bag1.png',
+    '/silver bag.png',
     '/images/bag2.png'
   ];
 
@@ -73,7 +73,7 @@ export default function WhyHouseOfAvira() {
                   initial={false}
                   animate={{
                     x: isCenter ? 0 : isLeft ? '-40%' : '40%',
-                    scale: isCenter ? 1 : 0.65,
+                    scale: isCenter ? 1.25 : 0.65,
                     opacity: isCenter ? 1 : 0.5,
                     zIndex: isCenter ? 30 : 10,
                     rotateY: isCenter ? 0 : isLeft ? 15 : -15,
@@ -118,9 +118,9 @@ export default function WhyHouseOfAvira() {
         {/* Two Stage Pricing Header */}
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-perandory font-bold text-[#000000] mb-4">
-            Two-Stage <span className="font-aston-script text-5xl md:text-6xl lg:text-7xl text-[#8A001A] lowercase tracking-normal font-normal">Pricing</span>
+            Two-Stage <span className="font-aston-script text-5xl md:text-6xl lg:text-7xl text-[#8A001A] tracking-normal font-normal">Pricing</span>
           </h3>
-          <p className="max-w-3xl mx-auto text-[#000000] text-lg md:text-xl font-medium tracking-wide" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+          <p className="max-w-3xl mx-auto text-[#000000] text-xl md:text-2xl font-medium tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
             We only take two payments: one is the product price which you pay on the website while ordering, and the other is the SHIPPING + DELIVERY CHARGES.
           </p>
         </motion.div>
@@ -144,7 +144,7 @@ export default function WhyHouseOfAvira() {
                 Pay Now
               </div>
               <h4 className="text-2xl font-cormorant-garamond font-bold text-[#000000] mb-3">1. Fixed Product Price</h4>
-              <p className="text-sm text-[#000000]/70">
+              <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 You pay only the transparent cost of the items at checkout today.
               </p>
             </motion.div>
@@ -158,7 +158,7 @@ export default function WhyHouseOfAvira() {
                 Billed Later
               </div>
               <h4 className="text-2xl font-cormorant-garamond font-bold text-[#8A001A] mb-3">2. Int'l Shipping & Duty</h4>
-              <p className="text-sm text-[#000000]/70">
+              <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 Once items arrive at our hub, we calculate the exact customs and international freight to your address.
               </p>
             </motion.div>
@@ -172,7 +172,7 @@ export default function WhyHouseOfAvira() {
                 Delivery
               </div>
               <h4 className="text-2xl font-cormorant-garamond font-bold text-[#000000] mb-3">3. Doorstep Arrival</h4>
-              <p className="text-sm text-[#000000]/70">
+              <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 After the final balance is cleared, we dispatch it locally straight to your hands via premium couriers.
               </p>
             </motion.div>
@@ -195,7 +195,7 @@ export default function WhyHouseOfAvira() {
                   Pay Now
                 </div>
                 <h4 className="text-xl font-cormorant-garamond font-bold text-[#000000] mb-2">1. Fixed Product Price</h4>
-                <p className="text-sm text-[#000000]/70">
+                <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                   You pay only the transparent cost of the items at checkout today.
                 </p>
               </div>
@@ -211,7 +211,7 @@ export default function WhyHouseOfAvira() {
                   Billed Later
                 </div>
                 <h4 className="text-xl font-cormorant-garamond font-bold text-[#8A001A] mb-2">2. Int'l Shipping & Duty</h4>
-                <p className="text-sm text-[#000000]/70">
+                <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                   Exact customs and international freight billed when it reaches our hub.
                 </p>
               </div>
@@ -227,7 +227,7 @@ export default function WhyHouseOfAvira() {
                   Delivery
                 </div>
                 <h4 className="text-xl font-cormorant-garamond font-bold text-[#000000] mb-2">3. Doorstep Arrival</h4>
-                <p className="text-sm text-[#000000]/70">
+                <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                   Locally dispatched straight to your hands via premium couriers.
                 </p>
               </div>
