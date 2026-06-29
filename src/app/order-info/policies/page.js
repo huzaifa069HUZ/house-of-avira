@@ -162,13 +162,13 @@ export default function PoliciesPage() {
               <div className="relative p-12 md:p-20 border border-[#8A001A]/20 rounded-2xl">
                 <AlertTriangle className="w-12 h-12 text-[#8A001A] mx-auto mb-6" />
                 <p className="text-3xl md:text-5xl font-perandory text-white uppercase leading-tight tracking-wide">
-                  Cancellations are <span className="text-[#8A001A]">not allowed</span> once an order has been placed.
+                  Cancellations are <span className="text-[#8A001A]">allowed within 2-3 days</span> of ordering.
                 </p>
               </div>
             </div>
             
             <p className="text-gray-600 text-lg font-light leading-relaxed">
-              Orders are immediately forwarded into processing and cannot be stopped, modified, or cancelled once confirmed. We kindly request customers to be fully certain before placing an order.
+              Customers can request a cancellation or modification within 2-3 days of placing their order. Once this window has passed, orders are forwarded into processing and cannot be stopped or modified.
             </p>
           </RevealSection>
         </div>
