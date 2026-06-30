@@ -265,66 +265,7 @@ export default function ProductPage({ params: paramsPromise }) {
               </div>
             )}
 
-            {/* Desktop Only: Extreme Modern How You Pay Section */}
-            <div className="hidden lg:block mt-24 pb-16">
-              <div className="flex items-center gap-4 mb-10">
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-neutral-200"></div>
-                <h3 className="text-xs uppercase tracking-widest font-bold text-black flex items-center gap-2">
-                  <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
-                  How You Pay (3 Phases)
-                </h3>
-                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-neutral-200"></div>
-              </div>
 
-              <div className="grid grid-cols-2 gap-6">
-
-                {/* Animated Timeline */}
-                <div className="col-span-1 flex flex-col justify-center bg-white p-6 xl:p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-                  <div className="flex flex-col gap-0 relative z-10">
-                    <div className="flex items-start gap-4 group">
-                      <div className="flex flex-col items-center">
-                        <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-md">
-                          <Tag className="w-3.5 h-3.5" />
-                        </div>
-                        <div className="w-px h-8 bg-neutral-200 group-hover:bg-black transition-colors duration-500"></div>
-                      </div>
-                      <div className="pt-1.5">
-                        <p className="text-[10px] font-bold text-black uppercase tracking-wider mb-0.5">Phase 1: Product</p>
-                        <p className="text-[10px] text-neutral-500 font-light leading-relaxed">Pay fixed item price.</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4 group">
-                      <div className="flex flex-col items-center">
-                        <div className="w-8 h-8 rounded-full border-2 border-black bg-white text-black flex items-center justify-center shrink-0 group-hover:bg-black group-hover:text-white transition-all duration-300 shadow-sm">
-                          <Globe className="w-3.5 h-3.5" />
-                        </div>
-                        <div className="w-px h-8 bg-neutral-200 group-hover:bg-black transition-colors duration-500"></div>
-                      </div>
-                      <div className="pt-1.5">
-                        <p className="text-[10px] font-bold text-black uppercase tracking-wider mb-0.5">Phase 2: Transit</p>
-                        <p className="text-[10px] text-neutral-500 font-light leading-relaxed">Shipping + Duties.</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4 group">
-                      <div className="flex flex-col items-center">
-                        <div className="w-8 h-8 rounded-full border-2 border-neutral-300 bg-white text-neutral-500 flex items-center justify-center shrink-0 group-hover:border-black group-hover:text-black transition-all duration-300">
-                          <Truck className="w-3.5 h-3.5" />
-                        </div>
-                      </div>
-                      <div className="pt-1.5">
-                        <p className="text-[10px] font-bold text-black uppercase tracking-wider mb-0.5">Phase 3: Delivery</p>
-                        <p className="text-[10px] text-neutral-500 font-light leading-relaxed">Final local delivery fee.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-            </div>
           </div>
 
           {/* Right: Sticky Product Info */}
@@ -529,7 +470,7 @@ export default function ProductPage({ params: paramsPromise }) {
               </div>
 
               {/* Mobile Only: Payment Steps */}
-              <div className="lg:hidden mt-12 border-t border-neutral-200 pt-10">
+              <div className="lg:hidden mt-12 border-t border-neutral-200 pt-10" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-6 flex items-center gap-2">
                   <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
                   How You Pay (3 Phases)
@@ -542,8 +483,8 @@ export default function ProductPage({ params: paramsPromise }) {
                       <div className="w-px h-10 bg-neutral-200"></div>
                     </div>
                     <div className="pt-2">
-                      <p className="text-xs font-bold text-black uppercase tracking-wider mb-1">Phase 1: Product Price</p>
-                      <p className="text-xs text-neutral-500 font-light leading-relaxed">Pay the fixed item price to secure your order.</p>
+                      <p className="text-[13px] font-bold text-black uppercase tracking-wider mb-1">Phase 1: Product Price</p>
+                      <p className="text-[13px] text-neutral-500 font-normal leading-relaxed">Pay the fixed item price to secure your order.</p>
                     </div>
                   </div>
 
@@ -553,8 +494,8 @@ export default function ProductPage({ params: paramsPromise }) {
                       <div className="w-px h-10 bg-neutral-200"></div>
                     </div>
                     <div className="pt-2">
-                      <p className="text-xs font-bold text-black uppercase tracking-wider mb-1">Phase 2: International Transit</p>
-                      <p className="text-xs text-neutral-500 font-light leading-relaxed">Pay for shipping based on weight + custom duties.</p>
+                      <p className="text-[13px] font-bold text-black uppercase tracking-wider mb-1">Phase 2: International Transit</p>
+                      <p className="text-[13px] text-neutral-500 font-normal leading-relaxed">Pay for shipping based on weight + custom duties.</p>
                     </div>
                   </div>
 
@@ -563,8 +504,8 @@ export default function ProductPage({ params: paramsPromise }) {
                       <div className="w-10 h-10 rounded-full border-2 border-neutral-300 bg-white text-neutral-500 flex items-center justify-center shrink-0"><Truck className="w-4 h-4" /></div>
                     </div>
                     <div className="pt-2">
-                      <p className="text-xs font-bold text-black uppercase tracking-wider mb-1">Phase 3: Domestic Delivery</p>
-                      <p className="text-xs text-neutral-500 font-light leading-relaxed">Final payment for local shipment.</p>
+                      <p className="text-[13px] font-bold text-black uppercase tracking-wider mb-1">Phase 3: Delivery</p>
+                      <p className="text-[13px] text-neutral-500 font-normal leading-relaxed">Just wait for local delivery! Domestic shipping charges are already included and taken in Phase 2.</p>
                     </div>
                   </div>
                 </div>
@@ -573,6 +514,65 @@ export default function ProductPage({ params: paramsPromise }) {
               </div>
 
             </div>
+          </div>
+        </div>
+
+        {/* Desktop Parallax 3 Phases Section */}
+        <div className="hidden lg:flex w-full max-w-[1200px] mx-auto px-8 py-24 items-start gap-16 relative" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+          
+          {/* Left: Sticky Title */}
+          <div className="w-[40%] sticky top-40 pt-4">
+            <h3 className="text-sm uppercase tracking-widest font-bold text-black flex items-center gap-3 mb-6">
+              <span className="w-2.5 h-2.5 bg-black rounded-full animate-pulse"></span>
+              Payment Process
+            </h3>
+            <h2 className="text-4xl lg:text-5xl font-extrabold text-black uppercase tracking-tight leading-none mb-6">
+              How You Pay <br/> (3 Phases)
+            </h2>
+            <p className="text-lg text-neutral-500 font-normal max-w-sm">
+              We break down the payment into three simple phases so you only pay for exactly what you need, when you need it.
+            </p>
+          </div>
+
+          {/* Right: Scrolling Cards */}
+          <div className="w-[60%] flex flex-col gap-8">
+            
+            {/* Phase 1 */}
+            <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 flex flex-col gap-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                <Tag className="w-7 h-7" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-black uppercase tracking-wide mb-2">Phase 1: Product Price</p>
+                <p className="text-[17px] text-neutral-500 font-normal leading-relaxed">Pay the fixed item price on our website to instantly secure your order.</p>
+              </div>
+            </div>
+
+            {/* Phase 2 */}
+            <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 flex flex-col gap-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="w-16 h-16 rounded-full border-[3px] border-black bg-white text-black flex items-center justify-center shrink-0 shadow-md group-hover:bg-black group-hover:text-white transition-all duration-500">
+                <Globe className="w-7 h-7" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-black uppercase tracking-wide mb-2">Phase 2: International Transit</p>
+                <p className="text-[17px] text-neutral-500 font-normal leading-relaxed">Once the item is ready to ship, pay for shipping based on weight + custom duties.</p>
+              </div>
+            </div>
+
+            {/* Phase 3 */}
+            <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 flex flex-col gap-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="w-16 h-16 rounded-full border-[3px] border-neutral-300 bg-white text-neutral-500 flex items-center justify-center shrink-0 group-hover:border-black group-hover:text-black transition-all duration-500">
+                <Truck className="w-7 h-7" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-black uppercase tracking-wide mb-2">Phase 3: Delivery</p>
+                <p className="text-[17px] text-neutral-500 font-normal leading-relaxed">Just wait for local delivery! Domestic shipping charges are already included and taken in Phase 2.</p>
+              </div>
+            </div>
+
           </div>
         </div>
 
