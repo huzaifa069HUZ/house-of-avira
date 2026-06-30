@@ -27,8 +27,8 @@ export const dictionaries = {
       outerwear: "Outerwear"
     },
     marquee: {
-      line1: "EVERYTHING IS INTERNATIONALLY SHIPPED AND EVERYTHING IS PREMIUM ✦",
-      line2: "IMPORTED PREMIUM GOODS / INTERNATIONAL SHIPPING CHARGES SEPERATE /"
+      line1: "INTERNATIONAL AESTHETICS ✦ PREMIUM IMPORTED FINDS ✦",
+      line2: "EXQUISITE IMPORTED PIECES / SHIPPING CHARGES BILLED SEPARATELY /"
     },
     archive: {
       title: "Join the Archive",

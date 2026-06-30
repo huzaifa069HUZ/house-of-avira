@@ -400,14 +400,14 @@ export default function Home() {
           <div className="flex whitespace-nowrap">
             <div className="flex animate-marquee-full-reverse shrink-0">
               {[...Array(6)].map((_, i) => (
-                <span key={`mqa2-${i}`} className="text-xl md:text-3xl tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700 }}>
+                <span key={`mqa2-${i}`} className="text-lg md:text-2xl tracking-[0.4em] uppercase mx-16 whitespace-nowrap opacity-80 inline-block origin-center pt-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 500 }}>
                   {t.marquee.line2}
                 </span>
               ))}
             </div>
             <div className="flex animate-marquee-full-reverse shrink-0" aria-hidden="true">
               {[...Array(6)].map((_, i) => (
-                <span key={`mqb2-${i}`} className="text-xl md:text-3xl tracking-[0.5em] uppercase mx-16 whitespace-nowrap opacity-90 scale-y-[1.15] inline-block origin-center pt-2" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700 }}>
+                <span key={`mqb2-${i}`} className="text-lg md:text-2xl tracking-[0.4em] uppercase mx-16 whitespace-nowrap opacity-80 inline-block origin-center pt-2" style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 500 }}>
                   {t.marquee.line2}
                 </span>
               ))}
