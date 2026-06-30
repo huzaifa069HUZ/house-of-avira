@@ -5,6 +5,24 @@ import { useEffect, useRef } from 'react';
 import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline';
 import { DollarSign, ShieldAlert, Clock, AlertTriangle, CreditCard } from 'lucide-react';
 import { TextRevealByWord } from '@/components/ui/text-reveal';
+import { Globe } from '@/components/ui/cobe-globe';
+
+const markers = [
+  { id: "sf", location: [37.7595, -122.4367], label: "San Francisco" },
+  { id: "nyc", location: [40.7128, -74.006], label: "New York" },
+  { id: "tokyo", location: [35.6762, 139.6503], label: "Tokyo" },
+  { id: "london", location: [51.5074, -0.1278], label: "London" },
+  { id: "sydney", location: [-33.8688, 151.2093], label: "Sydney" },
+  { id: "capetown", location: [-33.9249, 18.4241], label: "Cape Town" },
+  { id: "dubai", location: [25.2048, 55.2708], label: "Dubai" },
+  { id: "paris", location: [48.8566, 2.3522], label: "Paris" },
+  { id: "saopaulo", location: [-23.5505, -46.6333], label: "São Paulo" },
+];
+
+const arcs = [
+  { id: "sf-tokyo", from: [37.7595, -122.4367], to: [35.6762, 139.6503], label: "SF → Tokyo" },
+  { id: "nyc-london", from: [40.7128, -74.006], to: [51.5074, -0.1278], label: "NYC → London" },
+];
 
 const sections = [
   {
@@ -222,15 +240,42 @@ export default function OrderInfoPage() {
 
       {/* ═══════════════════════════ INTRO ═══════════════════════════ */}
       <section className="relative py-24 md:py-32 bg-[#FFFFFF]">
-        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
-          <div className="fade-up">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          <div className="fade-up text-center mb-16 max-w-4xl mx-auto">
             <p className="text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-[1.6] font-aston-script">
               House of Avira curates international trends and worldwide aesthetics, bringing global styles and creative finds straight to your doorstep through a pre-order experience.
             </p>
           </div>
 
-          <div className="mt-8">
-            <TextRevealByWord text="Since products are sourced internationally, shipping costs, customs charges, delivery timelines, and logistics fees may vary depending on the product, shipping conditions, customs requirements, and economic factors at the time of shipment. We believe in complete transparency and want every customer to fully understand our ordering process before making a purchase." />
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 mt-16 max-w-6xl mx-auto">
+            <div className="flex-1 text-left space-y-8 fade-up">
+              <div>
+                <span className="text-[12px] font-bold tracking-[0.2em] uppercase text-[#1a1a1a]/40 mb-2 block">Transparency First</span>
+                <div className="w-12 h-[2px] bg-[#8A001A]" />
+              </div>
+              <p className="text-2xl md:text-3xl leading-[1.4] text-[#1a1a1a]/80 font-perandory">
+                Since products are sourced internationally, shipping costs, customs charges, delivery timelines, and logistics fees may vary depending on the product, shipping conditions, customs requirements, and economic factors at the time of shipment.
+              </p>
+              <p className="text-xl md:text-2xl text-[#8A001A] leading-[1.5] font-perandory">
+                We believe in complete transparency and want every customer to fully understand our ordering process before making a purchase.
+              </p>
+            </div>
+            
+            <div className="flex-1 w-full max-w-[400px] lg:max-w-[500px] mx-auto fade-up mt-8 lg:mt-0 relative aspect-square">
+              <Globe
+                markers={markers}
+                arcs={arcs}
+                markerColor={[0.54, 0, 0.1]}
+                baseColor={[0.98, 0.98, 0.98]}
+                arcColor={[0.54, 0, 0.1]}
+                glowColor={[0.98, 0.98, 0.98]}
+                dark={0}
+                mapBrightness={3}
+                markerSize={0.025}
+                markerElevation={0.01}
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
           </div>
 
           {/* Acknowledgment Box */}
