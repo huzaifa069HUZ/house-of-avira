@@ -256,9 +256,11 @@ export default function ShippingPage() {
 
           {/* Factors */}
           <RevealSection delay={0.2} className="mb-16">
-            <h3 className="font-perandory text-lg uppercase tracking-[0.2em] text-[#1a1a1a] mb-8">Final Amount Depends On</h3>
+            <div className="max-w-3xl mx-auto mb-8 text-center md:text-left pl-0 md:pl-2">
+              <h3 className="font-perandory text-3xl md:text-5xl font-bold uppercase tracking-wide text-[#1a1a1a]">Final Amount Depends On</h3>
+            </div>
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto"
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
