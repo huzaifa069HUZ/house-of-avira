@@ -364,16 +364,6 @@ export default function ProductPage({ params: paramsPromise }) {
                 )}
               </div>
 
-              {/* Shipping Warning Box */}
-              <div className="mt-2 mb-6 border border-neutral-200 rounded-xl p-6 bg-neutral-50 flex flex-col items-center justify-center text-center gap-5">
-                <p className="text-xs tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-sm" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                  * Please place an order only if you are comfortable with the international shipping process and charges.
-                </p>
-                <Link href="/shipping" className="bg-black text-white px-8 py-3.5 rounded-full text-[10px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm">
-                  READ FULL SHIPPING DETAILS
-                </Link>
-              </div>
-
               <div className="lg:hidden">
               {/* Accordion Details */}
               <div className="border-t border-neutral-200 pt-8 mt-6">
@@ -433,6 +423,16 @@ export default function ProductPage({ params: paramsPromise }) {
                     </span>
                   </Link>
                 </div>
+              </div>
+
+              {/* Shipping Warning Box */}
+              <div className="mt-6 border border-neutral-200 rounded-xl p-6 bg-neutral-50 flex flex-col items-center justify-center text-center gap-5">
+                <p className="text-xs tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-sm" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  * Please place an order only if you are comfortable with the international shipping process and charges.
+                </p>
+                <Link href="/shipping" className="bg-black text-white px-8 py-3.5 rounded-full text-[10px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm">
+                  READ FULL SHIPPING DETAILS
+                </Link>
               </div>
 
               {/* Warnings / Terms Highlight (Custom Visual Design) */}
@@ -639,6 +639,16 @@ export default function ProductPage({ params: paramsPromise }) {
                   </span>
                 </Link>
               </div>
+            </div>
+
+            {/* Shipping Warning Box */}
+            <div className="border border-neutral-200 rounded-[2rem] p-8 bg-neutral-50 flex flex-col items-center justify-center text-center gap-5">
+              <p className="text-sm tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-md" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                * Please place an order only if you are comfortable with the international shipping process and charges.
+              </p>
+              <Link href="/shipping" className="bg-black text-white px-10 py-4 rounded-full text-[11px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm">
+                READ FULL SHIPPING DETAILS
+              </Link>
             </div>
 
             {/* Warnings / Terms Highlight */}
