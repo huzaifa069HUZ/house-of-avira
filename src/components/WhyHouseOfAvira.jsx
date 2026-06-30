@@ -1,17 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plane, Truck, Package, CreditCard, Globe, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { db } from '@/lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function WhyHouseOfAvira() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const featuredProductId = '7DzypF64LEWkBY1yruXe';
+  const [featuredSlug, setFeaturedSlug] = useState(featuredProductId);
   const carouselImages = [
     '/images/bagbg.png',
     '/silver bag.png',
     '/images/bag2.png'
   ];
+
+  useEffect(() => {
+    async function fetchSlug() {
+      try {
+        const docSnap = await getDoc(doc(db, 'products', featuredProductId));
+        if (docSnap.exists() && docSnap.data().slug) {
+          setFeaturedSlug(docSnap.data().slug);
+        }
+      } catch (err) {
+        // Keep fallback ID
+      }
+    }
+    fetchSlug();
+  }, []);
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
@@ -86,7 +104,7 @@ export default function WhyHouseOfAvira() {
                   }}
                 >
                   {isCenter ? (
-                    <Link href="/product/7DzypF64LEWkBY1yruXe" className="block w-full h-full relative group outline-none">
+                    <Link href={`/product/${featuredSlug}`} className="block w-full h-full relative group outline-none">
                       <img src={src} alt="Featured aesthetic" className="w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105" />
                     </Link>
                   ) : (
@@ -120,7 +138,7 @@ export default function WhyHouseOfAvira() {
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-perandory font-bold text-[#000000] mb-4">
             Two-Stage <span className="font-aston-script text-5xl md:text-6xl lg:text-7xl text-[#8A001A] tracking-normal font-normal">Pricing</span>
           </h3>
-          <p className="max-w-3xl mx-auto" style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontStyle: "normal", fontWeight: 700, color: "rgb(0, 0, 0)", fontSize: "24px", lineHeight: "32px" }}>
+          <p className="max-w-3xl mx-auto" style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontStyle: "normal", fontWeight: 500, color: "rgb(0, 0, 0)", fontSize: "16px", lineHeight: "24px" }}>
             We only take two payments: one is the product price which you pay on the website while ordering, and the other is the SHIPPING + DELIVERY CHARGES.
           </p>
         </motion.div>
@@ -228,7 +246,7 @@ export default function WhyHouseOfAvira() {
                 </div>
                 <h4 className="text-xl font-cormorant-garamond font-bold text-[#000000] mb-2">3. Doorstep Arrival</h4>
                 <p className="text-sm text-[#000000]/70" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                  Locally dispatched straight to your hands via premium couriers.
+                  Locally dispatched straight to your doorstep.
                 </p>
               </div>
             </motion.div>

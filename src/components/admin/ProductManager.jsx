@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { uploadImagesToCloudinary, deleteImageFromCloudinary } from '@/app/actions/uploadActions';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { generateUniqueSlug } from '@/lib/slugify';
 import { UploadCloud, X, Image as ImageIcon, Tag, Loader2, CheckCircle2, Plus, Trash2 } from 'lucide-react';
 
 const CATEGORY_DATA = [
@@ -286,12 +287,16 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       };
 
       if (initialProduct) {
-        // Edit Mode
+        // Edit Mode — regenerate slug only if name changed
+        if (name !== initialProduct.name) {
+          productData.slug = await generateUniqueSlug(name, db, initialProduct.id);
+        }
         const docRef = doc(db, 'products', initialProduct.id);
         await updateDoc(docRef, productData);
         setSuccess('Product successfully updated!');
       } else {
-        // Add Mode
+        // Add Mode — always generate a slug
+        productData.slug = await generateUniqueSlug(name, db);
         productData.createdAt = serverTimestamp();
         await addDoc(collection(db, 'products'), productData);
         setSuccess('Product successfully added!');

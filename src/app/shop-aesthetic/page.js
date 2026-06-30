@@ -131,7 +131,7 @@ function ShopAestheticContent() {
         <div className="w-full border-t border-b border-[#000000]/20">
           <div className="grid grid-cols-2 md:grid-cols-5 w-full">
             {curatedItems.map((item, idx) => (
-              <Link href={`/product/${item.id}`} key={item.id || idx} className="border-r border-[#000000]/20 group cursor-pointer flex flex-col relative bg-white block">
+              <Link href={`/product/${item.slug || item.id}`} key={item.id || idx} className="border-r border-[#000000]/20 group cursor-pointer flex flex-col relative bg-white block">
                 {/* Image Block */}
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#FFFFFF]">
                   <img src={item.imageUrl || item.img} alt={item.name || item.title} className="w-full h-full object-cover" />

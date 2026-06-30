@@ -62,7 +62,7 @@ export default function ProductCard({ product }) {
             `}</style>
             {product.images.map((img, idx) => (
               <div key={idx} className="w-full h-full flex-shrink-0 snap-center relative">
-                <Link href={`/product/${product.id}`} className="absolute inset-0 z-10">
+                <Link href={`/product/${product.slug || product.id}`} className="absolute inset-0 z-10">
                   <span className="sr-only">View {name} {idx + 1}</span>
                 </Link>
                 <img
@@ -75,7 +75,7 @@ export default function ProductCard({ product }) {
           </div>
         ) : (
           <>
-            <Link href={`/product/${product.id}`} className="absolute inset-0 z-10">
+            <Link href={`/product/${product.slug || product.id}`} className="absolute inset-0 z-10">
               <span className="sr-only">View {name}</span>
             </Link>
             <img

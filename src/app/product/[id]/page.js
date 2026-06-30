@@ -280,7 +280,7 @@ export default function ProductPage({ params: paramsPromise }) {
               </div>
 
               <h1 className="text-2xl md:text-3xl font-medium text-black tracking-wide uppercase mb-3 leading-tight">{product.name}</h1>
-              <p className="text-lg text-neutral-600 mb-10">₹{product.price.toFixed(2)}</p>
+              <p className="text-lg text-[#8A001A] mb-10">₹{product.price.toFixed(2)}</p>
 
               {/* Colors */}
               {product.swatches && product.swatches.length > 0 && (
