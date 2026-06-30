@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap, Weight, Maximize, LayoutGrid, FileCheck, BarChart2 } from 'lucide-react';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 
@@ -258,20 +258,36 @@ export default function ShippingPage() {
           <RevealSection delay={0.2} className="mb-16">
             <h3 className="font-perandory text-lg uppercase tracking-[0.2em] text-[#1a1a1a] mb-8">Final Amount Depends On</h3>
             <motion.div
-              className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl"
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '-50px' }}
             >
-              {['Product weight', 'Volumetric weight', 'Parcel dimensions', 'Product category', 'Logistics rates', 'Customs requirements', 'Carrier rates', 'Economic conditions', 'Market conditions'].map((item, idx) => (
+              {[
+                { label: "Product\nweight", icon: Weight },
+                { label: "Volumetric\nweight", icon: Box },
+                { label: "Parcel\ndimensions", icon: Maximize },
+                { label: "Product\ncategory", icon: LayoutGrid },
+                { label: "Logistics\nrates", icon: Truck },
+                { label: "Customs\nrequirements", icon: FileCheck },
+                { label: "Carrier\nrates", icon: Plane },
+                { label: "Economic\nconditions", icon: BarChart2 },
+                { label: "Market\nconditions", icon: Globe }
+              ].map((item, idx) => (
                 <motion.div
                   key={idx}
                   variants={staggerItem}
                   whileHover={{ y: -4 }}
-                  className="bg-[#111] rounded-xl p-4 text-center text-xs text-white/50 hover:text-white/80 hover:bg-[#1a1a1a] transition-all duration-300 cursor-default"
+                  className="bg-white rounded-3xl p-4 md:p-5 flex items-center gap-4 md:gap-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] cursor-default transition-all duration-300"
                 >
-                  {item}
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#f8f8f8] flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#1a1a1a] stroke-[1.5]" />
+                  </div>
+                  <div className="h-10 w-[1px] bg-gray-200 flex-shrink-0" />
+                  <div className="text-[#1a1a1a] font-medium text-[14px] md:text-[15px] leading-snug text-left whitespace-pre-line" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                    {item.label}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
