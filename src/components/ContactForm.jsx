@@ -86,7 +86,7 @@ export default function ContactForm() {
                 transition={{ delay: 0.1 }}
                 className="font-aston-script text-[#4a0000] text-2xl md:text-3xl mb-12 leading-relaxed"
               >
-                Sizing, shipping, sourcing or ordering updates - we're here for you
+                Sizing, Shipping, Sourcing Or Ordering Updates - We're Here For You
               </motion.p>
 
               <motion.div 
