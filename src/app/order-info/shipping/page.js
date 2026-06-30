@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap, Weight, Maximize, LayoutGrid, FileCheck, BarChart2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap, Weight, Maximize, LayoutGrid, FileCheck, BarChart2, Calendar, CloudLightning, Map, Flame } from 'lucide-react';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 
@@ -224,9 +224,9 @@ export default function ShippingPage() {
 
           {/* What it includes */}
           <RevealSection delay={0.15} className="mb-16">
-            <h3 className="font-perandory text-lg uppercase tracking-[0.2em] text-[#1a1a1a] mb-8">May Include</h3>
+            <h3 className="font-perandory text-3xl md:text-5xl font-bold uppercase tracking-wide text-[#1a1a1a] mb-8">May Include</h3>
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
@@ -244,11 +244,16 @@ export default function ShippingPage() {
                 <motion.div
                   key={idx}
                   variants={staggerItem}
-                  whileHover={{ y: -4, borderColor: 'rgba(138, 0, 26, 0.2)' }}
-                  className="flex items-center gap-4 bg-white border border-gray-100 shadow-sm rounded-xl p-5 hover:shadow-md transition-all duration-500 group cursor-pointer"
+                  whileHover={{ y: -4 }}
+                  className="bg-white rounded-3xl p-4 md:p-5 flex items-center gap-4 md:gap-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] cursor-default transition-all duration-300 group"
                 >
-                  <item.icon className="w-5 h-5 text-[#8A001A] group-hover:scale-110 transition-transform duration-300 flex-shrink-0" />
-                  <span className="text-sm text-gray-500 group-hover:text-[#1a1a1a] transition-colors">{item.label}</span>
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#f8f8f8] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#1a1a1a] stroke-[1.5]" />
+                  </div>
+                  <div className="h-10 w-[1px] bg-gray-200 flex-shrink-0" />
+                  <div className="text-[#1a1a1a] font-medium text-[14px] md:text-[15px] leading-snug text-left whitespace-pre-line" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                    {item.label}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
@@ -558,22 +563,43 @@ export default function ShippingPage() {
 
           {/* Delay Factors */}
           <RevealSection delay={0.25} className="mb-16">
-            <h3 className="font-perandory text-lg uppercase tracking-[0.2em] text-[#1a1a1a] mb-8">Delays May Occur Due To</h3>
+            <h3 className="font-perandory text-3xl md:text-5xl font-bold uppercase tracking-wide text-[#1a1a1a] mb-8">Delays May Occur Due To</h3>
             <motion.div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '-50px' }}
             >
-              {['Customs inspections', 'Customs clearance', 'Logistics disruptions', 'Weather conditions', 'Public holidays', 'Transportation delays', 'Political situations', 'War-related disruptions', 'Economic conditions', 'Carrier delays', 'Supplier delays', 'Government regulations', 'Port congestion', 'Route disruptions'].map((item, idx) => (
+              {[
+                { label: 'Customs inspections', icon: ShieldCheck },
+                { label: 'Customs clearance', icon: FileCheck },
+                { label: 'Logistics disruptions', icon: Truck },
+                { label: 'Weather conditions', icon: CloudLightning },
+                { label: 'Public holidays', icon: Calendar },
+                { label: 'Transportation delays', icon: Truck },
+                { label: 'Political situations', icon: Globe },
+                { label: 'War-related disruptions', icon: AlertTriangle },
+                { label: 'Economic conditions', icon: BarChart2 },
+                { label: 'Carrier delays', icon: Plane },
+                { label: 'Supplier delays', icon: Package },
+                { label: 'Government regulations', icon: FileText },
+                { label: 'Port congestion', icon: AlertTriangle },
+                { label: 'Route disruptions', icon: Map }
+              ].map((item, idx) => (
                 <motion.div
                   key={idx}
                   variants={staggerItem}
                   whileHover={{ y: -4 }}
-                  className="bg-[#111] rounded-xl p-4 text-center text-xs text-white/50 hover:text-white/80 hover:bg-[#1a1a1a] transition-all duration-300 cursor-default"
+                  className="bg-white rounded-3xl p-4 md:p-5 flex items-center gap-4 md:gap-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] cursor-default transition-all duration-300 group"
                 >
-                  {item}
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#f8f8f8] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#1a1a1a] stroke-[1.5]" />
+                  </div>
+                  <div className="h-10 w-[1px] bg-gray-200 flex-shrink-0" />
+                  <div className="text-[#1a1a1a] font-medium text-[14px] md:text-[15px] leading-snug text-left whitespace-pre-line" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                    {item.label}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
@@ -581,22 +607,35 @@ export default function ShippingPage() {
 
           {/* Price Fluctuation */}
           <RevealSection delay={0.3} className="mb-16">
-            <h3 className="font-perandory text-lg uppercase tracking-[0.2em] text-[#1a1a1a] mb-8">Shipping Prices May Fluctuate Due To</h3>
+            <h3 className="font-perandory text-3xl md:text-5xl font-bold uppercase tracking-wide text-[#1a1a1a] mb-8">Shipping Prices May Fluctuate Due To</h3>
             <motion.div
-              className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '-50px' }}
             >
-              {['Fuel costs', 'Logistics rates', 'Customs requirements', 'Carrier pricing', 'Economic conditions', 'Market fluctuations'].map((item, idx) => (
+              {[
+                { label: 'Fuel costs', icon: Flame },
+                { label: 'Logistics rates', icon: Truck },
+                { label: 'Customs requirements', icon: FileCheck },
+                { label: 'Carrier pricing', icon: Plane },
+                { label: 'Economic conditions', icon: BarChart2 },
+                { label: 'Market fluctuations', icon: Globe }
+              ].map((item, idx) => (
                 <motion.div
                   key={idx}
                   variants={staggerItem}
                   whileHover={{ y: -4 }}
-                  className="bg-white border border-gray-100 shadow-sm rounded-xl p-4 text-center text-xs text-gray-400 hover:text-[#1a1a1a] hover:border-[#8A001A]/20 hover:shadow-md transition-all duration-300"
+                  className="bg-white rounded-3xl p-4 md:p-5 flex items-center gap-4 md:gap-5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] cursor-default transition-all duration-300 group"
                 >
-                  {item}
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#f8f8f8] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#1a1a1a] stroke-[1.5]" />
+                  </div>
+                  <div className="h-10 w-[1px] bg-gray-200 flex-shrink-0" />
+                  <div className="text-[#1a1a1a] font-medium text-[14px] md:text-[15px] leading-snug text-left whitespace-pre-line" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                    {item.label}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
