@@ -374,6 +374,7 @@ export default function ProductPage({ params: paramsPromise }) {
                 </Link>
               </div>
 
+              <div className="lg:hidden">
               {/* Accordion Details */}
               <div className="border-t border-neutral-200 pt-8 mt-6">
                 <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Product Details</h3>
@@ -468,6 +469,7 @@ export default function ProductPage({ params: paramsPromise }) {
                   </span>
                 </div>
               </div>
+              </div>
 
               {/* Mobile Only: Payment Steps */}
               <div className="lg:hidden mt-12 border-t border-neutral-200 pt-10" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
@@ -517,59 +519,143 @@ export default function ProductPage({ params: paramsPromise }) {
           </div>
         </div>
 
-        {/* Desktop Parallax 3 Phases Section */}
-        <div className="hidden lg:flex w-full max-w-[1200px] mx-auto px-8 py-24 items-start gap-16 relative" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+        {/* Desktop Split Section (Sticky 3 Phases + Scrolling Details) */}
+        <div className="hidden lg:flex w-full max-w-[1400px] mx-auto px-8 py-24 items-start gap-16 relative">
           
-          {/* Left: Sticky Title */}
-          <div className="w-[40%] sticky top-40 pt-4">
-            <h3 className="text-sm uppercase tracking-widest font-bold text-black flex items-center gap-3 mb-6">
-              <span className="w-2.5 h-2.5 bg-black rounded-full animate-pulse"></span>
-              Payment Process
-            </h3>
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-black uppercase tracking-tight leading-none mb-6">
-              How You Pay <br/> (3 Phases)
-            </h2>
-            <p className="text-lg text-neutral-500 font-normal max-w-sm">
-              We break down the payment into three simple phases so you only pay for exactly what you need, when you need it.
-            </p>
-          </div>
-
-          {/* Right: Scrolling Cards */}
-          <div className="w-[60%] flex flex-col gap-8">
+          {/* Left: Sticky 3 Phases */}
+          <div className="w-[45%] sticky top-32 flex flex-col gap-5" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+            <div className="mb-4">
+              <h3 className="text-xs uppercase tracking-widest font-bold text-black flex items-center gap-3 mb-4">
+                <span className="w-2.5 h-2.5 bg-black rounded-full animate-pulse"></span>
+                Payment Process
+              </h3>
+              <h2 className="text-4xl font-extrabold text-black uppercase tracking-tight leading-none">
+                How You Pay (3 Phases)
+              </h2>
+            </div>
             
             {/* Phase 1 */}
-            <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 flex flex-col gap-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-              <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                <Tag className="w-7 h-7" />
+            <div className="bg-white rounded-[1.5rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col gap-5 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="w-14 h-14 rounded-full bg-black text-white flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                <Tag className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-black uppercase tracking-wide mb-2">Phase 1: Product Price</p>
-                <p className="text-[17px] text-neutral-500 font-normal leading-relaxed">Pay the fixed item price on our website to instantly secure your order.</p>
+                <p className="text-xl font-bold text-black uppercase tracking-wide mb-2">Phase 1: Product Price</p>
+                <p className="text-[15px] text-neutral-500 font-normal leading-relaxed">Pay the fixed item price on our website to instantly secure your order.</p>
               </div>
             </div>
 
             {/* Phase 2 */}
-            <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 flex flex-col gap-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-              <div className="w-16 h-16 rounded-full border-[3px] border-black bg-white text-black flex items-center justify-center shrink-0 shadow-md group-hover:bg-black group-hover:text-white transition-all duration-500">
-                <Globe className="w-7 h-7" />
+            <div className="bg-white rounded-[1.5rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col gap-5 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="w-14 h-14 rounded-full border-[3px] border-black bg-white text-black flex items-center justify-center shrink-0 shadow-md group-hover:bg-black group-hover:text-white transition-all duration-500">
+                <Globe className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-black uppercase tracking-wide mb-2">Phase 2: International Transit</p>
-                <p className="text-[17px] text-neutral-500 font-normal leading-relaxed">Once the item is ready to ship, pay for shipping based on weight + custom duties.</p>
+                <p className="text-xl font-bold text-black uppercase tracking-wide mb-2">Phase 2: International Transit</p>
+                <p className="text-[15px] text-neutral-500 font-normal leading-relaxed">Once the item is ready to ship, pay for shipping based on weight + custom duties.</p>
               </div>
             </div>
 
             {/* Phase 3 */}
-            <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-neutral-100 flex flex-col gap-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-              <div className="w-16 h-16 rounded-full border-[3px] border-neutral-300 bg-white text-neutral-500 flex items-center justify-center shrink-0 group-hover:border-black group-hover:text-black transition-all duration-500">
-                <Truck className="w-7 h-7" />
+            <div className="bg-white rounded-[1.5rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100 flex flex-col gap-5 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-500">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-neutral-50 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="w-14 h-14 rounded-full border-[3px] border-neutral-300 bg-white text-neutral-500 flex items-center justify-center shrink-0 group-hover:border-black group-hover:text-black transition-all duration-500">
+                <Truck className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-black uppercase tracking-wide mb-2">Phase 3: Delivery</p>
-                <p className="text-[17px] text-neutral-500 font-normal leading-relaxed">Just wait for local delivery! Domestic shipping charges are already included and taken in Phase 2.</p>
+                <p className="text-xl font-bold text-black uppercase tracking-wide mb-2">Phase 3: Delivery</p>
+                <p className="text-[15px] text-neutral-500 font-normal leading-relaxed">Just wait for local delivery! Domestic shipping charges are already included and taken in Phase 2.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Scrolling Details */}
+          <div className="w-[55%] flex flex-col gap-12 pt-4">
+            
+            {/* Accordion Details */}
+            <div className="bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
+              <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Product Details</h3>
+              <p className="text-sm text-neutral-600 leading-relaxed whitespace-pre-wrap font-light">
+                {product.description || "No description available for this item."}
+              </p>
+              
+              <div className="mt-8 pt-8 border-t border-neutral-200">
+                <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Shipping & Returns</h3>
+                <p className="text-sm text-neutral-600 leading-relaxed font-light">
+                  SHIPPING CHARGES ARE SEPERATE AS PRODUCTS ARE IMPORT BASED. Please note that returns or exchanges are not available because our products are globally sourced and imported specifically for your order, which involves clearing custom duties and international transit. We ensure the highest quality before dispatch.
+                </p>
+              </div>
+            </div>
+
+            {/* Read Before Ordering Cards */}
+            <div className="font-chillax">
+              <h3 className="text-3xl md:text-4xl mb-6 flex flex-wrap gap-2.5 items-baseline">
+                <span className="font-perandory text-black tracking-tight">READ BEFORE</span>
+                <span className="font-aston-script text-[#8A001A]">Ordering</span>
+              </h3>
+              <div className="flex flex-col gap-3">
+                <Link href="/order-info/order-process" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                      <Package className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-bold tracking-widest uppercase text-black">Order Process</span>
+                  </div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
+                    Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+
+                <Link href="/order-info/shipping" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                      <Truck className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-bold tracking-widest uppercase text-black">Shipping</span>
+                  </div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
+                    Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+
+                <Link href="/order-info/policies" className="group flex justify-between items-center p-5 rounded-2xl border border-neutral-200 bg-white hover:border-black hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-bold tracking-widest uppercase text-black">Policies</span>
+                  </div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1.5">
+                    Learn More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Warnings / Terms Highlight */}
+            <div className="relative overflow-hidden p-6 md:p-8 rounded-[2rem] flex gap-5 items-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-neutral-100 bg-white">
+              <div className="absolute top-0 left-0 w-16 h-16 bg-[#FCD34D] rounded-br-full -translate-x-2 -translate-y-2 pointer-events-none"></div>
+              <div className="absolute bottom-5 left-5 w-2 h-2 bg-[#84CC16] rounded-full pointer-events-none"></div>
+              <div className="absolute top-5 right-6 grid grid-cols-3 gap-1 opacity-80 pointer-events-none">
+                {[...Array(9)].map((_, i) => (
+                  <div key={i} className="w-1 h-1 bg-[#84CC16] rounded-full"></div>
+                ))}
+              </div>
+              <div className="absolute -bottom-16 -right-12 w-48 h-48 bg-[#ECFCCB] rounded-tl-full pointer-events-none"></div>
+              <div className="absolute -bottom-12 -right-20 w-48 h-48 bg-[#84CC16] rounded-tl-full pointer-events-none"></div>
+
+              <div className="bg-[#FEF3C7] w-16 h-16 rounded-full flex items-center justify-center shrink-0 relative z-10 ml-2">
+                <AlertTriangle className="w-7 h-7 text-[#111827]" strokeWidth={1.5} />
+              </div>
+              <div className="flex flex-col gap-1 relative z-10">
+                <span className="text-[17px] font-extrabold text-[#111827] uppercase tracking-wide">
+                  NO RETURN • NO EXCHANGE
+                </span>
+                <span className="text-[13px] text-neutral-500 uppercase tracking-wide font-medium">
+                  EXTRA DELIVERY CHARGES APPLY
+                </span>
               </div>
             </div>
 
