@@ -34,10 +34,10 @@ export default function HowItWorks() {
           {/* Step 1 */}
           <div className="relative flex items-start gap-8 group">
             {/* Dotted Line connecting to next step */}
-            <div className="absolute left-[2.25rem] md:left-[2.75rem] top-24 bottom-[-2rem] w-px border-l-2 border-dotted border-black/15"></div>
+            <div className="absolute left-[2.25rem] md:left-[2.75rem] top-[5.5rem] md:top-[6.5rem] bottom-[-2rem] w-px border-l-2 border-dotted border-black/15"></div>
             
             {/* Icon Circle */}
-            <div className="relative z-10 w-[4.5rem] h-[4.5rem] md:w-[5.5rem] md:h-[5.5rem] shrink-0 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-black/5 group-hover:-translate-y-1 transition-transform duration-500">
+            <div className="relative z-10 mt-6 md:mt-7 w-[4.5rem] h-[4.5rem] md:w-[5.5rem] md:h-[5.5rem] shrink-0 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-black/5 group-hover:-translate-y-1 transition-transform duration-500">
               <ShoppingBag className="w-6 h-6 md:w-8 md:h-8 text-[#000000] stroke-[1.2]" />
             </div>
             
@@ -61,10 +61,10 @@ export default function HowItWorks() {
           {/* Step 2 */}
           <div className="relative flex items-start gap-8 group">
             {/* Dotted Line connecting to next step */}
-            <div className="absolute left-[2.25rem] md:left-[2.75rem] top-24 bottom-[-2rem] w-px border-l-2 border-dotted border-black/15"></div>
+            <div className="absolute left-[2.25rem] md:left-[2.75rem] top-[5.5rem] md:top-[6.5rem] bottom-[-2rem] w-px border-l-2 border-dotted border-black/15"></div>
             
             {/* Icon Circle */}
-            <div className="relative z-10 w-[4.5rem] h-[4.5rem] md:w-[5.5rem] md:h-[5.5rem] shrink-0 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-black/5 group-hover:-translate-y-1 transition-transform duration-500">
+            <div className="relative z-10 mt-6 md:mt-7 w-[4.5rem] h-[4.5rem] md:w-[5.5rem] md:h-[5.5rem] shrink-0 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-black/5 group-hover:-translate-y-1 transition-transform duration-500">
               <Plane className="w-6 h-6 md:w-8 md:h-8 text-[#000000] stroke-[1.2]" />
             </div>
             
@@ -90,7 +90,7 @@ export default function HowItWorks() {
           {/* Step 3 */}
           <div className="relative flex items-start gap-8 group">
             {/* Icon Circle */}
-            <div className="relative z-10 w-[4.5rem] h-[4.5rem] md:w-[5.5rem] md:h-[5.5rem] shrink-0 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-black/5 group-hover:-translate-y-1 transition-transform duration-500">
+            <div className="relative z-10 mt-6 md:mt-7 w-[4.5rem] h-[4.5rem] md:w-[5.5rem] md:h-[5.5rem] shrink-0 bg-white rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-black/5 group-hover:-translate-y-1 transition-transform duration-500">
               <PackageCheck className="w-6 h-6 md:w-8 md:h-8 text-[#000000] stroke-[1.2]" />
             </div>
             
