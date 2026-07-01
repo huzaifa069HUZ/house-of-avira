@@ -30,6 +30,8 @@ export async function uploadImagesToCloudinary(formData) {
             aspect_ratio: '3:4',
             crop: 'fill', 
             gravity: 'auto',
+            format: 'webp',
+            quality: 'auto',
           },
           (error, result) => {
             if (error) reject(error);
@@ -84,6 +86,8 @@ export async function uploadReviewImagesToCloudinary(formData) {
         const uploadStream = cloudinary.uploader.upload_stream(
           {
             folder: 'house-of-avira/reviews',
+            format: 'webp',
+            quality: 'auto',
           },
           (error, result) => {
             if (error) reject(error);
