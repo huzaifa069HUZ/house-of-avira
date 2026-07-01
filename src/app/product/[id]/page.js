@@ -372,12 +372,6 @@ export default function ProductPage({ params: paramsPromise }) {
                   {product.description || "No description available for this item."}
                 </p>
                 
-                <div className="mt-8 pt-8 border-t border-neutral-200">
-                  <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Shipping & Returns</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed font-light">
-                    SHIPPING CHARGES ARE SEPERATE AS PRODUCTS ARE IMPORT BASED. Please note that returns or exchanges are not available because our products are globally sourced and imported specifically for your order, which involves clearing custom duties and international transit. We ensure the highest quality before dispatch.
-                  </p>
-                </div>
               </div>
 
               {/* Read Before Ordering Cards */}
@@ -435,47 +429,13 @@ export default function ProductPage({ params: paramsPromise }) {
                 </Link>
               </div>
 
-              {/* Warnings / Terms Highlight (Custom Visual Design) */}
-              <div className="mt-6 relative overflow-hidden p-5 md:p-6 rounded-2xl md:rounded-[2rem] flex gap-5 items-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-neutral-100 bg-white">
-                
-                {/* Decorative Shapes */}
-                {/* Top Left Yellow Blob */}
-                <div className="absolute top-0 left-0 w-16 h-16 bg-[#FCD34D] rounded-br-full -translate-x-2 -translate-y-2 pointer-events-none"></div>
-                
-                {/* Bottom Left Green Dot */}
-                <div className="absolute bottom-5 left-5 w-2 h-2 bg-[#84CC16] rounded-full pointer-events-none"></div>
-                
-                {/* Top Right Dot Grid */}
-                <div className="absolute top-5 right-6 grid grid-cols-3 gap-1 opacity-80 pointer-events-none">
-                  {[...Array(9)].map((_, i) => (
-                    <div key={i} className="w-1 h-1 bg-[#84CC16] rounded-full"></div>
-                  ))}
-                </div>
-                
-                {/* Bottom Right Green Waves/Blobs */}
-                <div className="absolute -bottom-16 -right-12 w-48 h-48 bg-[#ECFCCB] rounded-tl-full pointer-events-none"></div>
-                <div className="absolute -bottom-12 -right-20 w-48 h-48 bg-[#84CC16] rounded-tl-full pointer-events-none"></div>
-
-                {/* Content */}
-                <div className="bg-[#FEF3C7] w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shrink-0 relative z-10 ml-2 md:ml-4">
-                  <AlertTriangle className="w-6 h-6 md:w-7 md:h-7 text-[#111827]" strokeWidth={1.5} />
-                </div>
-                <div className="flex flex-col gap-0.5 relative z-10">
-                  <span className="text-[15px] md:text-[17px] font-extrabold text-[#111827] uppercase tracking-wide">
-                    NO RETURN • NO EXCHANGE
-                  </span>
-                  <span className="text-xs md:text-[13px] text-neutral-500 uppercase tracking-wide font-medium mt-0.5">
-                    EXTRA DELIVERY CHARGES APPLY
-                  </span>
-                </div>
-              </div>
               </div>
 
               {/* Mobile Only: Payment Steps */}
               <div className="lg:hidden mt-12 border-t border-neutral-200 pt-10" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-6 flex items-center gap-2">
                   <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
-                  How You Pay (3 Phases)
+                  How You Pay (2 Phases)
                 </h3>
                 
                 <div className="flex flex-col gap-0 mb-10 relative">
@@ -506,7 +466,10 @@ export default function ProductPage({ params: paramsPromise }) {
                       <div className="w-10 h-10 rounded-full border-2 border-neutral-300 bg-white text-neutral-500 flex items-center justify-center shrink-0"><Truck className="w-4 h-4" /></div>
                     </div>
                     <div className="pt-2">
-                      <p className="text-xs font-bold text-black uppercase tracking-wider mb-1">Phase 3: Delivery</p>
+                      <p className="text-xs font-bold text-black uppercase tracking-wider mb-1 flex items-center gap-2">
+                        Phase 3: Delivery
+                        <span className="bg-[#e63946] text-white text-[9px] px-2 py-0.5 rounded-full normal-case tracking-normal font-medium">no payment just waiting</span>
+                      </p>
                       <p className="text-[11px] text-neutral-500 font-light leading-relaxed">Just wait for local delivery! Domestic shipping charges are already included and taken in Phase 2.</p>
                     </div>
                   </div>
@@ -528,7 +491,7 @@ export default function ProductPage({ params: paramsPromise }) {
                 <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-neutral-200"></div>
                 <h3 className="text-xs uppercase tracking-widest font-bold text-black flex items-center gap-2">
                   <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
-                  How You Pay (3 Phases)
+                  How You Pay (2 Phases)
                 </h3>
                 <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-neutral-200"></div>
               </div>
@@ -570,7 +533,10 @@ export default function ProductPage({ params: paramsPromise }) {
                       </div>
                     </div>
                     <div className="pt-2">
-                      <p className="text-sm font-bold text-black uppercase tracking-wider mb-1">Phase 3: Delivery</p>
+                      <p className="text-sm font-bold text-black uppercase tracking-wider mb-1 flex items-center gap-2">
+                        Phase 3: Delivery
+                        <span className="bg-[#e63946] text-white text-[10px] px-2 py-0.5 rounded-full normal-case tracking-normal font-medium">no payment just waiting</span>
+                      </p>
                       <p className="text-sm text-neutral-500 font-light leading-relaxed">Just wait for local delivery! Domestic shipping charges are already included and taken in Phase 2.</p>
                     </div>
                   </div>
@@ -588,12 +554,6 @@ export default function ProductPage({ params: paramsPromise }) {
                 {product.description || "No description available for this item."}
               </p>
               
-              <div className="mt-8 pt-8 border-t border-neutral-200">
-                <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Shipping & Returns</h3>
-                <p className="text-sm text-neutral-600 leading-relaxed font-light">
-                  SHIPPING CHARGES ARE SEPERATE AS PRODUCTS ARE IMPORT BASED. Please note that returns or exchanges are not available because our products are globally sourced and imported specifically for your order, which involves clearing custom duties and international transit. We ensure the highest quality before dispatch.
-                </p>
-              </div>
             </div>
 
             {/* Read Before Ordering Cards */}
@@ -651,30 +611,7 @@ export default function ProductPage({ params: paramsPromise }) {
               </Link>
             </div>
 
-            {/* Warnings / Terms Highlight */}
-            <div className="relative overflow-hidden p-6 md:p-8 rounded-[2rem] flex gap-5 items-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-neutral-100 bg-white">
-              <div className="absolute top-0 left-0 w-16 h-16 bg-[#FCD34D] rounded-br-full -translate-x-2 -translate-y-2 pointer-events-none"></div>
-              <div className="absolute bottom-5 left-5 w-2 h-2 bg-[#84CC16] rounded-full pointer-events-none"></div>
-              <div className="absolute top-5 right-6 grid grid-cols-3 gap-1 opacity-80 pointer-events-none">
-                {[...Array(9)].map((_, i) => (
-                  <div key={i} className="w-1 h-1 bg-[#84CC16] rounded-full"></div>
-                ))}
-              </div>
-              <div className="absolute -bottom-16 -right-12 w-48 h-48 bg-[#ECFCCB] rounded-tl-full pointer-events-none"></div>
-              <div className="absolute -bottom-12 -right-20 w-48 h-48 bg-[#84CC16] rounded-tl-full pointer-events-none"></div>
 
-              <div className="bg-[#FEF3C7] w-16 h-16 rounded-full flex items-center justify-center shrink-0 relative z-10 ml-2">
-                <AlertTriangle className="w-7 h-7 text-[#111827]" strokeWidth={1.5} />
-              </div>
-              <div className="flex flex-col gap-1 relative z-10">
-                <span className="text-[17px] font-extrabold text-[#111827] uppercase tracking-wide">
-                  NO RETURN • NO EXCHANGE
-                </span>
-                <span className="text-[13px] text-neutral-500 uppercase tracking-wide font-medium">
-                  EXTRA DELIVERY CHARGES APPLY
-                </span>
-              </div>
-            </div>
 
           </div>
         </div>
