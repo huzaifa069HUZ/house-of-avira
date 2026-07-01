@@ -136,7 +136,15 @@ export default function CatalogueClient() {
   const availableColors = useMemo(() => {
     const colors = new Set();
     categoryFilteredProducts.forEach(p => {
-      if (p.swatches) p.swatches.forEach(s => colors.add(s.name || s.color));
+      if (p.swatches) {
+        p.swatches.forEach(s => {
+          const colorVal = s.name || s.color;
+          if (colorVal) {
+            const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+            colors.add(formatted);
+          }
+        });
+      }
     });
     return Array.from(colors);
   }, [categoryFilteredProducts]);
@@ -155,7 +163,12 @@ export default function CatalogueClient() {
 
     // Filter Color (Match by swatch name or hex code loosely)
     if (selectedColors.length > 0) {
-      result = result.filter(p => p.swatches && p.swatches.some(s => selectedColors.includes(s.name || s.color)));
+      result = result.filter(p => p.swatches && p.swatches.some(s => {
+        const colorVal = s.name || s.color;
+        if (!colorVal) return false;
+        const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        return selectedColors.includes(formatted);
+      }));
     }
 
     // Sort

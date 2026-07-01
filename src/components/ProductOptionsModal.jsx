@@ -224,9 +224,7 @@ export default function ProductOptionsModal() {
                     +
                   </button>
                 </div>
-                <div className="text-[13px] font-medium" style={{ color: brandRed }}>
-                  Low stock: 7 left
-                </div>
+
              </div>
           </div>
 

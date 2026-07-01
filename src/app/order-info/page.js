@@ -328,14 +328,14 @@ export default function OrderInfoPage() {
                 className="fade-up group relative block"
               >
                 {/* Card */}
-                <div className="relative bg-[#B2D5E5] border border-white/40 rounded-[32px] p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:-translate-y-3 hover:shadow-[0_30px_60px_-15px_rgba(178,213,229,0.6)] overflow-hidden group-hover:border-white/80">
+                <div className="relative bg-[#FFFFFF] border border-[#1a1a1a]/10 rounded-[32px] p-8 md:p-10 h-full flex flex-col transition-all duration-700 hover:-translate-y-3 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden group-hover:border-[#1a1a1a]/20">
                   {/* Background Number */}
-                  <span className="absolute -top-6 -right-4 text-[140px] font-bold text-white/30 leading-none select-none transition-transform duration-700 font-sans group-hover:scale-110 group-hover:rotate-6">
+                  <span className="absolute -top-6 -right-4 text-[140px] font-bold text-[#1a1a1a]/5 leading-none select-none transition-transform duration-700 font-sans group-hover:scale-110 group-hover:rotate-6">
                     {section.number}
                   </span>
 
                   {/* Icon */}
-                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-white/60 backdrop-blur-md text-[#1a1a1a] flex items-center justify-center mb-10 group-hover:bg-white group-hover:text-[#8A001A] group-hover:shadow-xl transition-all duration-500 group-hover:-translate-y-2">
+                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#1a1a1a]/5 backdrop-blur-md text-[#1a1a1a] flex items-center justify-center mb-10 group-hover:bg-white group-hover:text-[#8A001A] group-hover:shadow-xl transition-all duration-500 group-hover:-translate-y-2">
                     {section.icon}
                   </div>
 
@@ -353,11 +353,11 @@ export default function OrderInfoPage() {
                   </p>
 
                   {/* CTA */}
-                  <div className="relative z-10 flex items-center gap-4 text-[#1a1a1a] font-bold">
-                    <span className="text-[11px] tracking-[0.2em] uppercase relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#1a1a1a] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left pb-1">
+                  <div className="relative z-10 flex items-center gap-4 text-[#1a1a1a]">
+                    <span className="font-aston-script text-3xl relative after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-px after:bg-[#1a1a1a] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left pb-1">
                       Read Section
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-white/40 flex items-center justify-center group-hover:bg-white group-hover:shadow-lg transition-all duration-500 group-hover:translate-x-3">
+                    <div className="w-8 h-8 rounded-full bg-[#1a1a1a]/5 flex items-center justify-center group-hover:bg-white group-hover:shadow-lg transition-all duration-500 group-hover:translate-x-3">
                       <svg className="w-4 h-4 transition-transform duration-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>

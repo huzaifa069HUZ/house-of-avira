@@ -500,7 +500,7 @@ export default function ShippingPage() {
                   </p>
                 </div>
                 <div className="absolute -bottom-6 -right-6 w-32 h-32 md:w-40 md:h-40 transition-transform duration-700 group-hover:scale-110">
-                  <Image src="/shipping/oversized_item_bento.png" alt="Oversized Item" fill className="object-contain drop-shadow-md" />
+                  <Image src="/bulky.png" alt="Oversized Item" fill className="object-contain drop-shadow-md" />
                 </div>
               </div>
             </FadeIn>
