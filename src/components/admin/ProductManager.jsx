@@ -52,7 +52,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   
   // Categories state
   const [category, setCategory] = useState(CATEGORY_DATA[0].title);
-  const [subcategory, setSubcategory] = useState(CATEGORY_DATA[0].children[0] || '');
+  const [subcategories, setSubcategories] = useState([]);
   const [aesthetic, setAesthetic] = useState('');
   
   // State for interactive tags (Sizes and Colors)
@@ -82,7 +82,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       setSections(initialProduct.sections || [initialProduct.section || 'New Arrivals']);
       setBadge(initialProduct.badge || '');
       setCategory(initialProduct.category || CATEGORY_DATA[0].title);
-      setSubcategory(initialProduct.subcategory || '');
+      setSubcategories(initialProduct.subcategories || (initialProduct.subcategory ? [initialProduct.subcategory] : []));
       setAesthetic(initialProduct.aesthetic || '');
       setSizes(initialProduct.sizes || []);
       setColors(initialProduct.swatches?.map((s, idx) => ({
@@ -274,7 +274,8 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         section: sections[0] || '', // backward compatibility
         sections,
         category,
-        subcategory,
+        subcategories,
+        subcategory: subcategories[0] || '', // backward compatibility
         aesthetic: sections.includes('Shop Your Look') || sections.includes('Shop your aesthetic') ? aesthetic : '',
         badge,
         imageUrl: finalImageUrls[0] || '', // Primary image
@@ -303,7 +304,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         
         // Reset form only on add
         setName(''); setPrice(''); setDescription(''); setSections(['New Arrivals']); setBadge('');
-        setCategory(CATEGORY_DATA[0].title); setSubcategory(CATEGORY_DATA[0].children[0] || ''); setAesthetic('');
+        setCategory(CATEGORY_DATA[0].title); setSubcategories([]); setAesthetic('');
         setSizes([]); setColors([]); setFiles([]); setPreviews([]); setExistingImages([]);
         setInStock(true); setBestSeller(false);
       }
@@ -393,22 +394,6 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                   className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${inStock ? 'bg-[#34c759]' : 'bg-[#d2d2d7]'}`}
                 >
                   <div className={`bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform ${inStock ? 'translate-x-6' : 'translate-x-0'}`} />
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col justify-center">
-                <label className="block text-sm font-medium text-black mb-2 flex items-center justify-between">
-                  <span>Best Seller</span>
-                  {bestSeller ? (
-                    <span className="text-[10px] font-bold tracking-widest uppercase bg-[#f0fdf4] text-[#34c759] px-2 py-0.5 rounded-full border border-[#34c759]/20">Yes</span>
-                  ) : (
-                    <span className="text-[10px] font-bold tracking-widest uppercase bg-[#F5F5F7] text-[#86868b] px-2 py-0.5 rounded-full border border-[#d2d2d7]">No</span>
-                  )}
-                </label>
-                <div 
-                  onClick={() => setBestSeller(!bestSeller)}
-                  className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${bestSeller ? 'bg-[#34c759]' : 'bg-[#d2d2d7]'}`}
-                >
-                  <div className={`bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform ${bestSeller ? 'translate-x-6' : 'translate-x-0'}`} />
                 </div>
               </div>
             </div>
@@ -603,18 +588,24 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
           </div>
 
           {/* Organization Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
+          <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)]" style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}>
             <h3 className="text-base font-semibold text-black mb-4">Organization</h3>
             
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-black mb-1">Website Section</label>
+                <p className="text-xs text-[#86868b] mb-2">By default, products appear in their respective Category and Subcategory pages. Select the options below to also feature them on the homepage sections.</p>
                 <div className="flex flex-col gap-3 mt-2">
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
                     <input type="checkbox" checked={sections.includes('New Arrivals')} onChange={(e) => {
                       if (e.target.checked) setSections([...sections, 'New Arrivals']);
                       else setSections(sections.filter(s => s !== 'New Arrivals'));
                     }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> New Arrivals
+                  </label>
+                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" checked={bestSeller} onChange={(e) => {
+                      setBestSeller(e.target.checked);
+                    }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Best Seller
                   </label>
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
                     <input type="checkbox" checked={sections.includes('Shop Your Look')} onChange={(e) => {
@@ -653,8 +644,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                   value={category} 
                   onChange={e => {
                     setCategory(e.target.value);
-                    const newSubcats = CATEGORY_DATA.find(c => c.title === e.target.value)?.children || [];
-                    setSubcategory(newSubcats[0] || '');
+                    setSubcategories([]);
                   }} 
                   className="w-full px-4 py-2.5 bg-white border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none"
                 >
@@ -666,15 +656,21 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
 
               <div>
                 <label className="block text-sm font-medium text-black mb-1">Subcategory</label>
-                <select 
-                  value={subcategory} 
-                  onChange={e => setSubcategory(e.target.value)} 
-                  className="w-full px-4 py-2.5 bg-white border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none"
-                >
+                <div className="flex flex-col gap-2 mt-2 max-h-48 overflow-y-auto p-3 bg-white border border-[#d2d2d7] rounded-xl">
                   {(CATEGORY_DATA.find(c => c.title === category)?.children || []).map(sub => (
-                    <option key={sub} value={sub}>{sub}</option>
+                    <label key={sub} className="flex items-center gap-2 text-sm cursor-pointer">
+                      <input 
+                        type="checkbox" 
+                        checked={subcategories.includes(sub)} 
+                        onChange={(e) => {
+                          if (e.target.checked) setSubcategories([...subcategories, sub]);
+                          else setSubcategories(subcategories.filter(s => s !== sub));
+                        }} 
+                        className="accent-[#0071e3] w-4 h-4 cursor-pointer" 
+                      /> {sub}
+                    </label>
                   ))}
-                </select>
+                </div>
               </div>
               
               <div>
