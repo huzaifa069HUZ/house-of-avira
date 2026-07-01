@@ -408,17 +408,9 @@ export default function ShippingPage() {
           </motion.div>
 
           <RevealSection delay={0.3}>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-start gap-3 opacity-80 max-w-sm">
-                <Info className="w-5 h-5 text-[#666666] shrink-0 mt-0.5" />
-                <p className="text-[#666666] text-[13px] italic leading-relaxed">These additional costs are generally included within your final shipping calculation.</p>
-              </div>
-              <div className="flex items-center gap-2 bg-white rounded-full px-5 py-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-[#E5E5E5] text-[13px] font-bold text-[#1a1a1a] hover:bg-neutral-50 transition-colors cursor-pointer">
-                <Globe className="w-4 h-4 opacity-70" />
-                <span className="text-[15px]">🇮🇳</span>
-                <span>INR</span>
-                <ChevronDown className="w-4 h-4 opacity-50 ml-1" />
-              </div>
+            <div className="mt-10 flex items-start justify-center md:justify-start gap-3 opacity-80">
+              <Info className="w-5 h-5 text-[#666666] shrink-0 mt-0.5" />
+              <p className="text-[#666666] text-[13px] italic leading-relaxed">These additional costs are generally included within your final shipping calculation.</p>
             </div>
           </RevealSection>
         </div>

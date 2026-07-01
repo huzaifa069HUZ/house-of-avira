@@ -271,7 +271,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         name,
         price: parseFloat(price),
         description,
-        section: sections[0], // backward compatibility
+        section: sections[0] || '', // backward compatibility
         sections,
         category,
         subcategory,
