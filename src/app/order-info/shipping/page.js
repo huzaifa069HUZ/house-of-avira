@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap, Weight, Maximize, LayoutGrid, FileCheck, BarChart2, Calendar, CloudLightning, Map, Flame } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap, Weight, Maximize, LayoutGrid, FileCheck, BarChart2, Calendar, CloudLightning, Map, Flame, ChevronRight, Info } from 'lucide-react';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 
@@ -327,58 +327,99 @@ export default function ShippingPage() {
       </section>
 
       {/* ═══════ BRANDED PRODUCTS ═══════ */}
-      <section className="relative py-24 md:py-36 bg-[#111] text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 120px, rgba(255,255,255,0.1) 120px, rgba(255,255,255,0.1) 121px)' }} />
-        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#8A001A]/5 rounded-full blur-[200px] pointer-events-none" />
+      <section className="relative py-20 md:py-28 bg-[#FAFAF8] text-[#1a1a1a] overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(0,0,0,0.1) 100px, rgba(0,0,0,0.1) 101px)' }} />
 
-        <div className="max-w-7xl mx-auto px-4 md:px-16 relative z-10">
-          <RevealSection className="mb-12">
-            <div className="relative p-8 md:p-10 rounded-2xl bg-[#8A001A]/[0.03] border border-[#8A001A]/10 max-w-4xl overflow-hidden group hover:border-[#8A001A]/30 transition-colors duration-500">
-              <div className="absolute top-0 left-0 w-1 h-full bg-[#8A001A]" />
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#8A001A]/10 rounded-full blur-[50px] pointer-events-none group-hover:bg-[#8A001A]/20 transition-colors duration-500" />
-              <div className="flex flex-col md:flex-row gap-6 items-start relative z-10">
-                <div className="w-12 h-12 shrink-0 rounded-full bg-[#8A001A]/10 flex items-center justify-center">
-                  <AlertTriangle className="w-6 h-6 text-[#8A001A]" />
+        <div className="max-w-4xl mx-auto px-4 md:px-8 relative z-10">
+          <RevealSection className="mb-14">
+            <div className="relative p-8 md:p-10 rounded-[28px] bg-gradient-to-r from-[#FFF5F5]/90 to-white/90 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col md:flex-row items-center md:items-start gap-8">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[#ff7a7a] to-[#c62828]" />
+              {/* Box Graphic on the right */}
+              <div className="absolute -right-16 -bottom-16 w-64 h-64 opacity-80 rotate-12 pointer-events-none hidden md:block">
+                <div className="w-full h-full bg-gradient-to-tr from-[#F5F5F5] to-[#FFFFFF] shadow-2xl rounded-sm border border-[#E5E5E5] relative">
+                   <div className="absolute bottom-4 right-4 w-10 h-14 bg-[#c62828] flex flex-col items-center justify-end pb-1.5 rounded-sm shadow-md">
+                     <span className="font-aston-script text-white/90 text-lg leading-none">A</span>
+                   </div>
+                   <div className="absolute inset-0 border-t-[2px] border-l-[2px] border-white" />
+                   <div className="absolute left-1/2 -top-4 bottom-0 w-[2px] bg-[#E5E5E5]" />
+                   <div className="absolute top-1/2 -left-4 right-0 h-[2px] bg-[#E5E5E5]" />
                 </div>
-                <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light pt-1">
-                  <strong className="text-white font-medium">Certain products may attract higher customs and shipping costs</strong> due to additional inspections, clearance requirements, restrictions, or documentation.
+              </div>
+
+              <div className="w-20 h-20 shrink-0 rounded-full bg-[#FFEFEF] flex items-center justify-center shadow-inner relative z-10">
+                <AlertTriangle className="w-10 h-10 text-[#c62828]" />
+              </div>
+              <div className="relative z-10 md:pt-3">
+                <h3 className="text-xl md:text-[22px] font-bold text-[#1a1a1a] mb-2 tracking-tight">Additional charges may apply.</h3>
+                <p className="text-[14px] text-[#666666] leading-relaxed max-w-md font-medium">
+                  Certain products may attract higher customs and shipping costs due to additional inspections, clearance requirements, restrictions, or documentation.
                 </p>
               </div>
             </div>
           </RevealSection>
 
-          <RevealLine className="mb-12" />
+          <RevealSection className="mb-10 text-center md:text-left">
+            <div className="flex items-center gap-2 justify-center md:justify-start mb-3">
+              <Sparkles className="w-4 h-4 text-[#c62828]" />
+              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#c62828]">Additional Costs By Category</p>
+            </div>
+            <h2 className="font-perandory text-4xl md:text-5xl text-[#1a1a1a] mb-4 tracking-tight">
+              Know before <span className="font-aston-script text-[#c62828] lowercase italic text-5xl md:text-6xl">you order.</span>
+            </h2>
+            <p className="text-[14px] text-[#666666] max-w-sm mx-auto md:mx-0">
+              These charges are generally included in your final shipping calculation.
+            </p>
+          </RevealSection>
 
           <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+            className="flex flex-col gap-3"
             variants={staggerContainer}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-50px' }}
           >
             {[
-              { label: 'Ferrari, Adidas, Nike etc.', icon: Sparkles },
-              { label: 'Cosmetics & Beauty', icon: Heart },
-              { label: 'Lighters', icon: Zap },
-              { label: 'Restricted categories', icon: AlertTriangle },
-              { label: 'Fragile items', icon: ShieldCheck },
-              { label: 'Oversized items', icon: Box },
-              { label: 'Special handling', icon: Package },
+              { label: 'Ferrari, Adidas, Nike etc.', sub: 'Premium & branded items', icon: Sparkles },
+              { label: 'Cosmetics & Beauty', sub: 'Beauty, skincare, makeup & more', icon: Heart },
+              { label: 'Lighters', sub: 'All types of lighters', icon: Zap },
+              { label: 'Restricted categories', sub: 'Products with shipping restrictions', icon: AlertTriangle },
+              { label: 'Fragile items', sub: 'Breakable or delicate products', icon: ShieldCheck },
+              { label: 'Oversized items', sub: 'Large in size or weight', icon: Box },
+              { label: 'Special handling', sub: 'Items requiring extra care', icon: Package },
             ].map((item, idx) => (
               <motion.div
                 key={idx}
                 variants={staggerItem}
-                whileHover={{ y: -6, borderColor: 'rgba(138, 0, 26, 0.3)' }}
-                className="bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-6 text-center hover:bg-white/[0.06] transition-all duration-500 cursor-default group"
+                whileHover={{ scale: 1.01 }}
+                className="bg-white rounded-[20px] p-4 md:p-5 flex items-center justify-between shadow-[0_2px_15px_rgba(0,0,0,0.02)] border border-transparent hover:shadow-[0_8px_25px_rgba(198,40,40,0.08)] hover:border-[#c62828]/10 transition-all duration-300 cursor-default group"
               >
-                <item.icon className="w-5 h-5 text-[#8A001A] mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <span className="text-xs text-white/50 group-hover:text-white/80 transition-colors">{item.label}</span>
+                <div className="flex items-center gap-5">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#FFF5F5] flex items-center justify-center shrink-0 group-hover:bg-[#FFE0E0] transition-colors duration-300">
+                    <item.icon className="w-5 h-5 md:w-6 md:h-6 text-[#c62828] group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  <div>
+                    <h4 className="text-[15px] md:text-[16px] font-bold text-[#1a1a1a] mb-0.5">{item.label}</h4>
+                    <p className="text-[12px] md:text-[13px] text-[#888888]">{item.sub}</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-[#c62828] mr-2 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
               </motion.div>
             ))}
           </motion.div>
 
           <RevealSection delay={0.3}>
-            <p className="text-white/20 text-xs mt-8 italic">These additional costs are generally included within your final shipping calculation.</p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-start gap-3 opacity-80 max-w-sm">
+                <Info className="w-5 h-5 text-[#666666] shrink-0 mt-0.5" />
+                <p className="text-[#666666] text-[13px] italic leading-relaxed">These additional costs are generally included within your final shipping calculation.</p>
+              </div>
+              <div className="flex items-center gap-2 bg-white rounded-full px-5 py-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-[#E5E5E5] text-[13px] font-bold text-[#1a1a1a] hover:bg-neutral-50 transition-colors cursor-pointer">
+                <Globe className="w-4 h-4 opacity-70" />
+                <span className="text-[15px]">🇮🇳</span>
+                <span>INR</span>
+                <ChevronDown className="w-4 h-4 opacity-50 ml-1" />
+              </div>
+            </div>
           </RevealSection>
         </div>
       </section>
