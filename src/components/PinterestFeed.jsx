@@ -6,10 +6,22 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 import StickyScroll from '@/components/ui/sticky-scroll';
 
-export default function PinterestFeed({ children }) {
+export default function PinterestFeed({ children, products = null }) {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
+    if (products) {
+      const imgs = products.map(data => {
+        const productImages = data.images || (data.imageUrl ? [data.imageUrl] : []);
+        if (productImages[0]) {
+          return { src: productImages[0], id: data.id };
+        }
+        return null;
+      }).filter(Boolean);
+      setImages(imgs);
+      return;
+    }
+
     async function fetchImages() {
       try {
         const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), limit(30));
@@ -28,7 +40,7 @@ export default function PinterestFeed({ children }) {
       }
     }
     fetchImages();
-  }, []);
+  }, [products]);
 
   if (images.length === 0) {
     return (

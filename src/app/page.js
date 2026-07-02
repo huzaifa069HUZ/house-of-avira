@@ -179,9 +179,9 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  const newArrivals = products.filter(p => p.section === 'New Arrivals' || !p.section);
-  const bestSellers = products.filter(p => p.bestSeller === true || p.section === 'Best Sellers' || p.badge === 'MOST LOVED' || p.badge === 'MOST LOVED'.toUpperCase());
-  const bestSellersList = bestSellers.length > 0 ? bestSellers : products.slice(0, 4);
+  const newArrivals = products.filter(p => p.sections?.includes('New Arrivals') || p.section === 'New Arrivals');
+  const bestSellers = products.filter(p => p.bestSeller === true || p.sections?.includes('Best Seller') || p.section === 'Best Sellers');
+  const bestSellersList = bestSellers;
   const curatedAestheticsRaw = products.filter(p => p.sections?.includes('Shop your aesthetic') || p.section === 'Shop your aesthetic');
   const curatedAesthetics = curatedAestheticsRaw.filter(p => p.aesthetic === activeAesthetic);
   const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts.slice(0, 5);
@@ -254,18 +254,20 @@ export default function Home() {
       </section>
 
       {/* Best Sellers & Might Interest You Section */}
-      <PinterestFeed>
-        <div className="w-full bg-[#FAFAFA] pt-12 md:pt-24 pb-8 md:pb-16 relative z-30">
-          <div className="text-center max-w-[1400px] mx-auto fade-up px-4">
-            <h2 className="font-perandory text-4xl md:text-5xl lg:text-7xl font-bold tracking-widest uppercase text-black mb-6">
-              Best Seller
-            </h2>
-            <p className="font-aston-script text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-relaxed max-w-4xl mx-auto">
-              Our most loved pieces, curated just for you
-            </p>
+      {bestSellersList.length > 0 && (
+        <PinterestFeed products={bestSellersList}>
+          <div className="w-full bg-[#FAFAFA] pt-12 md:pt-24 pb-8 md:pb-16 relative z-30">
+            <div className="text-center max-w-[1400px] mx-auto fade-up px-4">
+              <h2 className="font-perandory text-4xl md:text-5xl lg:text-7xl font-bold tracking-widest uppercase text-black mb-6">
+                Best Seller
+              </h2>
+              <p className="font-aston-script text-3xl md:text-4xl lg:text-5xl text-[#8A001A] leading-relaxed max-w-4xl mx-auto">
+                Our most loved pieces, curated just for you
+              </p>
+            </div>
           </div>
-        </div>
-      </PinterestFeed>
+        </PinterestFeed>
+      )}
 
       {/* Shop Your Look Section */}
       <section className="w-full bg-[#000000] flex flex-col">
