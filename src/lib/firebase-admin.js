@@ -1,6 +1,5 @@
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getAuth } from 'firebase-admin/auth';
 
 if (!getApps().length) {
   try {
@@ -22,4 +21,3 @@ if (!getApps().length) {
 }
 
 export const adminDb = getApps().length > 0 ? getFirestore() : null;
-export const adminAuth = getApps().length > 0 ? getAuth() : null;
