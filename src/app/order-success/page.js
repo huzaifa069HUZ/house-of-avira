@@ -39,20 +39,33 @@ function OrderSuccessContent() {
               damping: 20,
               delay: 0.1 
             }}
-            className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center"
+            className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center relative overflow-hidden"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-                delay: 0.3 
-              }}
+            <motion.svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-green-600 z-10 relative"
             >
-              <Check className="w-12 h-12 text-green-600" strokeWidth={3} />
-            </motion.div>
+              <motion.path
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                d="M20 6 9 17l-5-5"
+              />
+            </motion.svg>
+            <motion.div 
+              initial={{ scale: 0, opacity: 0.5 }}
+              animate={{ scale: 1.5, opacity: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+              className="absolute inset-0 bg-green-200 rounded-full"
+            />
           </motion.div>
         </div>
 

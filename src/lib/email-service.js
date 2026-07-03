@@ -156,7 +156,7 @@ export function generateOrderConfirmationHtml({ customerName, orderId, items, pa
   const itemsList = items.map(item => `
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-        <span style="font-weight: 600; color: #000000;">${item.name}</span><br>
+        <span style="font-weight: 600; color: #000000;">${item.name || item.title || 'Unknown Item'}</span><br>
         <span style="font-size: 12px; color: #888888;">Qty: ${item.quantity || 1}</span>
       </td>
       <td style="text-align: right; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-weight: 500;">

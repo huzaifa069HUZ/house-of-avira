@@ -269,7 +269,7 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: cart,
+          items: cart.map(item => ({ ...item, name: item.title || item.name || 'Unknown Item' })),
           customer_id: user?.uid || null,
           customer_info: {
             name: formData.fullName,

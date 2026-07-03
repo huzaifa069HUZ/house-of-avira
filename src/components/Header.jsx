@@ -130,6 +130,11 @@ const menuData = [
     title: "Policies",
     href: "/policy",
     hideOnDesktop: true
+  },
+  {
+    title: "Track Order",
+    href: "/track-order",
+    hideOnDesktop: true
   }
 ];
 

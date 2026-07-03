@@ -115,8 +115,28 @@ export async function POST(request) {
       );
     }
 
-    const docRef = await adminDb.collection('orders').add(cleanOrderData);
+    const counterRef = adminDb.collection('counters').doc('orders');
     
+    let newOrderId;
+    await adminDb.runTransaction(async (t) => {
+      const doc = await t.get(counterRef);
+      let seq = 1;
+      if (doc.exists) {
+        seq = doc.data().seq + 1;
+      }
+      
+      const paddedSeq = String(seq).padStart(3, '0');
+      newOrderId = `HOR-${paddedSeq}`;
+      
+      // Update counter
+      t.set(counterRef, { seq }, { merge: true });
+      
+      // Create new order
+      const newOrderRef = adminDb.collection('orders').doc(newOrderId);
+      t.set(newOrderRef, cleanOrderData);
+    });
+    
+    const docRef = { id: newOrderId };
     // ── Send Emails ──
     try {
       const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
