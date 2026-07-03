@@ -270,6 +270,7 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: cart,
+          customer_id: user?.uid || null,
           customer_info: {
             name: formData.fullName,
             email: formData.email,

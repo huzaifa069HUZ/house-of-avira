@@ -6,11 +6,12 @@ import ProductList from '@/components/admin/ProductList';
 import CartAnalytics from '@/components/admin/CartAnalytics';
 import CouponManager from '@/components/admin/CouponManager';
 import BannerManager from '@/components/admin/BannerManager';
-import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon, Ship } from 'lucide-react';
+import OrderManager from '@/components/admin/OrderManager';
+import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon, Ship, ShoppingBag } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
-  const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit'
+  const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit', 'orders'
   const [editingProduct, setEditingProduct] = useState(null);
   const router = useRouter();
 
@@ -27,6 +28,11 @@ export default function AdminDashboard() {
   const handleList = () => {
     setEditingProduct(null);
     setCurrentView('list');
+  };
+
+  const handleOrders = () => {
+    setEditingProduct(null);
+    setCurrentView('orders');
   };
 
   const handleAnalytics = () => {
@@ -76,6 +82,13 @@ export default function AdminDashboard() {
             {currentView === 'edit' ? 'Edit Product' : 'Add Product'}
           </button>
           <button 
+            onClick={handleOrders}
+            className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'orders' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}
+          >
+            <ShoppingBag className="w-4 h-4" />
+            Orders
+          </button>
+          <button 
             onClick={handleShipping}
             className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all text-[#86868b] hover:text-black`}
           >
@@ -114,6 +127,7 @@ export default function AdminDashboard() {
               onClick={() => {
                 if (item === 'Analytics') handleAnalytics();
                 else if (item === 'Shipping') handleShipping();
+                else if (item === 'Orders') handleOrders();
               }}
               className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 hover:border-[#0071e3] transition-colors cursor-pointer group"
             >
@@ -126,6 +140,7 @@ export default function AdminDashboard() {
 
       <div className="mt-8">
         {currentView === 'list' && <ProductList onEdit={handleEdit} />}
+        {currentView === 'orders' && <OrderManager />}
         {(currentView === 'add' || currentView === 'edit') && (
           <ProductManager 
             initialProduct={editingProduct} 

@@ -20,6 +20,7 @@ export async function POST(request) {
       discount_amount,
       payable_amount,
       coupon_code,
+      customer_id,
     } = body;
 
     // Handle both flat and nested customer_info for backward compatibility
@@ -66,6 +67,7 @@ export async function POST(request) {
     // ── Build order document ──
     const orderData = {
       // Customer info
+      customer_id: customer_id || null,
       customer_name,
       customer_email,
       customer_phone: customer_phone || null,
@@ -153,7 +155,7 @@ export async function POST(request) {
   } catch (error) {
     console.error('Error creating order:', error);
     return NextResponse.json(
-      { success: false, message: 'Failed to create order.' },
+      { success: false, message: error.message || 'Failed to create order.' },
       { status: 500 }
     );
   }

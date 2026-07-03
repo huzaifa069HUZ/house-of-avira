@@ -4,9 +4,12 @@ import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Heart, Globe, Edit2 } from 'lucide-react';
+import { Heart, Globe, Edit2, Package, ChevronRight } from 'lucide-react';
 import { useCurrencyStore } from '@/store/currencyStore';
 import AddressManager from '@/components/profile/AddressManager';
+import { db } from '@/lib/firebase';
+import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { getStatusColor, ORDER_STATUS_LABELS, formatCurrency } from '@/lib/shipping-constants';
 
 export default function AccountPage() {
   const { user, role, loading, signOut, updateUser } = useAuthStore();
@@ -18,6 +21,9 @@ export default function AccountPage() {
   const [editCountryCode, setEditCountryCode] = useState('+91');
   const [editPhone, setEditPhone] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+
+  const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(true);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -37,8 +43,41 @@ export default function AccountPage() {
     }
   }, [user, loading, router, isEditing]);
 
+  useEffect(() => {
+    async function fetchOrders() {
+      if (!user) return;
+      try {
+        setLoadingOrders(true);
+        // Query by customer_email or customer_id
+        const ordersRef = collection(db, 'orders');
+        const q = query(
+          ordersRef, 
+          where('customer_email', '==', user.email)
+        );
+        const snapshot = await getDocs(q);
+        
+        let fetchedOrders = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        // Sort by created_at desc
+        fetchedOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setOrders(fetchedOrders);
+      } catch (err) {
+        console.error("Failed to fetch orders:", err);
+      } finally {
+        setLoadingOrders(false);
+      }
+    }
+
+    if (user) {
+      fetchOrders();
+    }
+  }, [user]);
+
   if (loading || !user) {
-    return <div className="p-12 text-center text-[#000000]/60 uppercase tracking-widest text-sm">Loading...</div>;
+    return <div className="p-12 text-center text-[#000000]/60 uppercase tracking-widest text-sm font-dm-sans">Loading...</div>;
   }
 
   const handleLogout = async () => {
@@ -179,12 +218,48 @@ export default function AccountPage() {
             <div className="flex justify-between items-center mb-8 border-b border-black/5 pb-4">
               <h2 className="text-3xl lg:text-4xl font-perandory tracking-tight text-[#000000]">Recent Orders</h2>
             </div>
-            <div className="bg-[#FAFAFA] border border-black/5 p-16 text-center flex flex-col items-center justify-center">
-              <p className="text-lg font-gambetta italic text-[#000000]/60 mb-6">No orders placed yet</p>
-              <Link href="/catalogue" className="text-[11px] font-dm-sans uppercase tracking-widest font-bold border-b-2 border-black pb-1 hover:text-black/60 hover:border-black/60 transition-colors">
-                Continue Shopping
-              </Link>
-            </div>
+            
+            {loadingOrders ? (
+              <div className="py-12 text-center text-[#000000]/60 uppercase tracking-widest text-xs font-dm-sans">
+                Loading orders...
+              </div>
+            ) : orders.length === 0 ? (
+              <div className="bg-[#FAFAFA] border border-black/5 p-16 text-center flex flex-col items-center justify-center">
+                <p className="text-lg font-gambetta italic text-[#000000]/60 mb-6">No orders placed yet</p>
+                <Link href="/catalogue" className="text-[11px] font-dm-sans uppercase tracking-widest font-bold border-b-2 border-black pb-1 hover:text-black/60 hover:border-black/60 transition-colors">
+                  Continue Shopping
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {orders.map(order => {
+                  const colors = getStatusColor(order.order_status);
+                  return (
+                    <div key={order.id} className="border border-black/10 p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-black/30 transition-colors bg-white">
+                      <div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="font-dm-sans font-bold text-black uppercase tracking-wider text-xs">Order #{order.id.slice(-6)}</span>
+                          <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest border ${colors.bg} ${colors.text} ${colors.border}`}>
+                            {ORDER_STATUS_LABELS[order.order_status] || order.order_status}
+                          </span>
+                        </div>
+                        <p className="font-dm-sans text-xs text-[#86868b]">
+                          {new Date(order.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} • {order.items_count} items
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between w-full md:w-auto gap-6 border-t border-black/5 pt-4 md:border-0 md:pt-0">
+                        <div className="text-right">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#000000]/40 mb-1">Total</p>
+                          <p className="font-dm-sans font-bold text-lg text-black">
+                            {formatCurrency(order.payable_amount, order.customer_country === 'USA' ? 'USD' : 'INR')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>
