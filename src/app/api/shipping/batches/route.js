@@ -75,8 +75,10 @@ export async function POST(request) {
 
     return NextResponse.json(
       {
-        id: docRef.id,
-        ...batchData,
+        batch: {
+          id: docRef.id,
+          ...batchData,
+        }
       },
       { status: 201 }
     );
