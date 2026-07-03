@@ -86,7 +86,7 @@ export async function POST(request) {
       discount_amount: discount_amount || 0,
       payable_amount,
       coupon_code: coupon_code || null,
-      product_payment_status: PRODUCT_PAYMENT_STATUS.PENDING,
+      product_payment_status: PRODUCT_PAYMENT_STATUS.CONFIRMED, // Auto-confirmed for now until Razorpay webhook is added
 
       // Weight / shipping fields — initialized to defaults
       estimated_order_weight: null,
@@ -98,7 +98,7 @@ export async function POST(request) {
       shipping_notes: null,
 
       // Order lifecycle
-      order_status: ORDER_STATUS.PLACED,
+      order_status: ORDER_STATUS.PRODUCT_PAID,
       created_at: now,
       updated_at: now,
     };
@@ -159,6 +159,7 @@ export async function POST(request) {
         orderId: docRef.id,
         customerName: customer_name,
         customerEmail: customer_email,
+        items,
         itemsCount: items_count,
         payableAmount: payable_amount,
         currencySymbol

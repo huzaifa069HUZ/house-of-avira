@@ -206,7 +206,19 @@ export function generateOrderConfirmationHtml({ customerName, orderId, items, pa
 }
 
 // ── Admin Order Notification Email ──
-export function generateAdminNotificationHtml({ orderId, customerName, customerEmail, itemsCount, payableAmount, currencySymbol = '₹' }) {
+export function generateAdminNotificationHtml({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol = '₹' }) {
+  const itemsList = items?.map(item => `
+    <tr>
+      <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+        <span style="font-weight: 600; color: #000000;">${item.name || item.title || 'Unknown Item'}</span><br>
+        <span style="font-size: 12px; color: #888888;">Qty: ${item.quantity || 1}</span>
+      </td>
+      <td style="text-align: right; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-weight: 500;">
+        ${currencySymbol}${(item.price * (item.quantity || 1)).toLocaleString()}
+      </td>
+    </tr>
+  `).join('') || '';
+
   const content = `
     <h2 style="font-size: 20px; font-weight: 500; color: #000000; margin: 0 0 16px 0;">
       New Order Received 🚀
@@ -222,15 +234,12 @@ export function generateAdminNotificationHtml({ orderId, customerName, customerE
           <td style="color: #000000; text-align: right; font-weight: 600;">${customerName}</td>
         </tr>
         <tr>
-          <td style="color: #888888; padding: 6px 0;">Email</td>
-          <td style="color: #000000; text-align: right; font-weight: 600;">${customerEmail}</td>
+          <td style="color: #888888; padding: 6px 0; border-bottom: 2px solid #e8e8e8;">Email</td>
+          <td style="color: #000000; text-align: right; font-weight: 600; border-bottom: 2px solid #e8e8e8;">${customerEmail}</td>
         </tr>
-        <tr>
-          <td style="color: #888888; padding: 6px 0;">Items Count</td>
-          <td style="color: #000000; text-align: right; font-weight: 600;">${itemsCount}</td>
-        </tr>
+        ${itemsList}
         <tr style="border-top: 1px solid #e8e8e8;">
-          <td style="color: #000000; padding: 12px 0 0 0; font-weight: 700;">Amount Paid</td>
+          <td style="color: #000000; padding: 12px 0 0 0; font-weight: 700;">Total Paid (Product Only)</td>
           <td style="color: #000000; text-align: right; padding: 12px 0 0 0; font-weight: 700;">${currencySymbol}${Number(payableAmount).toLocaleString()}</td>
         </tr>
       </table>
@@ -297,9 +306,9 @@ export async function sendOrderConfirmationEmail({ customerEmail, customerName, 
   await transporter.sendMail(mailOptions);
 }
 
-export async function sendAdminOrderNotificationEmail({ orderId, customerName, customerEmail, itemsCount, payableAmount, currencySymbol }) {
+export async function sendAdminOrderNotificationEmail({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol }) {
   const transporter = createTransporter();
-  const html = generateAdminNotificationHtml({ orderId, customerName, customerEmail, itemsCount, payableAmount, currencySymbol });
+  const html = generateAdminNotificationHtml({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol });
 
   const mailOptions = {
     from: `"House of Avira" <${BRAND.email}>`,

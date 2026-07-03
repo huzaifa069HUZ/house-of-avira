@@ -111,7 +111,7 @@ const InputField = ({ label, type = "text", value, onChange, placeholder, requir
 );
 
 export default function CheckoutPage() {
-  const { cart, discountAmount, appliedCoupon, updateQuantity } = useCartStore();
+  const { cart, discountAmount, appliedCoupon, updateQuantity, clearCart } = useCartStore();
   const { user } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   
@@ -309,8 +309,12 @@ export default function CheckoutPage() {
 
       const { order_id } = await response.json();
       
-      // Clear cart
-      useCartStore.setState({ cart: [], discountAmount: 0, appliedCoupon: null });
+      // Clear cart using the store action to sync with Firestore
+      if (typeof clearCart === 'function') {
+        await clearCart();
+      } else {
+        useCartStore.setState({ cart: [], discountAmount: 0, appliedCoupon: null });
+      }
       
       // Redirect to new success page
       router.push(`/order-success?orderId=${order_id}`);

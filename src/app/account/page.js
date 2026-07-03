@@ -45,25 +45,17 @@ export default function AccountPage() {
 
   useEffect(() => {
     async function fetchOrders() {
-      if (!user) return;
+      if (!user || !user.email) return;
       try {
         setLoadingOrders(true);
-        // Query by customer_email or customer_id
-        const ordersRef = collection(db, 'orders');
-        const q = query(
-          ordersRef, 
-          where('customer_email', '==', user.email)
-        );
-        const snapshot = await getDocs(q);
+        const res = await fetch(`/api/orders/user?email=${encodeURIComponent(user.email)}`);
+        const data = await res.json();
         
-        let fetchedOrders = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-
-        // Sort by created_at desc
-        fetchedOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        setOrders(fetchedOrders);
+        if (data.success) {
+          setOrders(data.orders);
+        } else {
+          console.error("Error from orders API:", data.error);
+        }
       } catch (err) {
         console.error("Failed to fetch orders:", err);
       } finally {
