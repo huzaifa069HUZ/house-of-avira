@@ -101,12 +101,25 @@ export async function POST(request) {
       updated_at: now,
     };
 
-    const docRef = await adminDb.collection('orders').add(orderData);
+    // Firebase Firestore throws an error if any field anywhere in the object tree is strictly 'undefined'.
+    // The easiest way to strip all undefined values deeply is to JSON serialize and parse.
+    const cleanOrderData = JSON.parse(JSON.stringify(orderData));
+
+    if (!adminDb) {
+      console.error("Firebase Admin SDK is not initialized.");
+      return NextResponse.json(
+        { success: false, message: 'Server Configuration Error: Database not connected.' },
+        { status: 500 }
+      );
+    }
+
+    const docRef = await adminDb.collection('orders').add(cleanOrderData);
     
     // ── Send Emails ──
     try {
       const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
-      const currencySymbol = getCurrencyForCountry(customer_country);
+      const currencyData = getCurrencyForCountry(customer_country);
+      const currencySymbol = currencyData.symbol;
       
       // Send to customer
       await sendOrderConfirmationEmail({
