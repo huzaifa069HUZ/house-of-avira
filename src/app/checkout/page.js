@@ -294,7 +294,8 @@ export default function CheckoutPage() {
       });
 
       if (!res.ok) {
-        throw new Error('Failed to create order');
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to create order');
       }
 
       const { order_id } = await res.json();
