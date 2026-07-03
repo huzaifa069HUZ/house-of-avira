@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: [],
+  serverExternalPackages: ['firebase-admin'],
   experimental: {
     serverActions: {
       bodySizeLimit: '20mb',
     },
-  },
-  serverActions: {
-    bodySizeLimit: '20mb',
   },
   images: {
     remotePatterns: [
