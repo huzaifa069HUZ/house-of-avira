@@ -293,20 +293,18 @@ export default function CheckoutPage() {
         })
       });
 
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || 'Failed to create order');
       }
 
-      const { order_id } = await res.json();
+      const { order_id } = await response.json();
       
-      // TODO: Redirect to actual Razorpay payment flow here in the future
-      // For now, redirect to a success page or account page
-      alert("Order Placed Successfully! (Razorpay integration pending). Order ID: " + order_id);
-      
-      // Clear cart (assuming useCartStore has a clearCart method or similar)
+      // Clear cart
       useCartStore.setState({ cart: [], discountAmount: 0, appliedCoupon: null });
-      router.push('/account');
+      
+      // Redirect to new success page
+      router.push(`/order-success?orderId=${order_id}`);
       
     } catch (err) {
       console.error(err);
