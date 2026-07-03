@@ -261,12 +261,12 @@ export default function TrackOrderPage() {
               <div className="trk-help">
                 <span>Need help with this order?</span>
                 <a
-                  href={`mailto:houseofavira@gmail.com?subject=Help%20with%20order%20${order.orderId}`}
+                  href={`https://wa.me/919986742779?text=Hi%20Support,%20I%20need%20help%20with%20order%20${order.orderId}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="trk-help-btn"
                 >
-                  CONTACT SUPPORT →
+                  CONTACT ON WHATSAPP →
                 </a>
               </div>
             </div>
@@ -302,7 +302,7 @@ const CSS = `
   color: #F5F0E8;
   padding: clamp(60px, 10vw, 100px) clamp(24px, 5vw, 80px);
   overflow: hidden;
-  border-bottom: 6px solid #8A001A;
+  border-bottom: 6px solid #E11D48;
 }
 .trk-hero-inner {
   position: relative;
@@ -316,8 +316,8 @@ const CSS = `
   font-weight: 700;
   letter-spacing: 0.3em;
   padding: 8px 16px;
-  border: 2px solid #8A001A;
-  color: #8A001A;
+  border: 2px solid #E11D48;
+  color: #E11D48;
   margin-bottom: 24px;
 }
 .trk-h1 {
@@ -330,7 +330,7 @@ const CSS = `
   text-transform: uppercase;
 }
 .trk-h1-accent {
-  color: #8A001A;
+  color: #E11D48;
   display: inline-block;
   -webkit-text-stroke: 0px;
 }
@@ -353,7 +353,7 @@ const CSS = `
   position: absolute;
   bottom: -30px; right: 200px;
   width: 80px; height: 80px;
-  background: #8A001A;
+  background: #E11D48;
   opacity: 0.15;
   transform: rotate(-8deg);
 }
@@ -361,7 +361,7 @@ const CSS = `
   position: absolute;
   top: 50%; right: 10%;
   width: 4px; height: 100px;
-  background: #8A001A;
+  background: #E11D48;
   opacity: 0.5;
 }
 @media(max-width:600px) {
@@ -401,7 +401,7 @@ const CSS = `
   font-family: 'Space Mono', monospace;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #8A001A;
+  color: #E11D48;
 }
 .trk-form-label {
   font-size: 0.75rem;
@@ -447,9 +447,9 @@ const CSS = `
   font-weight: 400;
 }
 .trk-input:focus {
-  border-color: #8A001A;
+  border-color: #E11D48;
   background: #FFF;
-  box-shadow: 4px 4px 0px #8A001A;
+  box-shadow: 4px 4px 0px #E11D48;
 }
 .trk-hint {
   font-size: 0.7rem;
@@ -463,7 +463,7 @@ const CSS = `
   width: calc(100% - 56px);
   margin: 8px 28px 28px;
   height: 56px;
-  background: #8A001A;
+  background: #E11D48;
   color: #FFF;
   border: 3px solid #0A0A0A;
   font-family: 'Space Grotesk', sans-serif;
@@ -478,7 +478,7 @@ const CSS = `
 .trk-btn:hover:not(:disabled) {
   background: #0A0A0A;
   transform: translate(-3px, -3px);
-  box-shadow: 6px 6px 0px #8A001A;
+  box-shadow: 6px 6px 0px #E11D48;
 }
 .trk-btn:active:not(:disabled) {
   transform: translate(0, 0);
@@ -571,7 +571,7 @@ const CSS = `
   position: absolute;
   top: 0; left: 0;
   height: 100%;
-  background: #8A001A;
+  background: #E11D48;
   transition: width 0.8s cubic-bezier(.16,1,.3,1);
 }
 .trk-steps {
@@ -597,8 +597,8 @@ const CSS = `
   transition: all 0.3s;
 }
 .trk-dot-active {
-  border-color: #8A001A;
-  background: #8A001A;
+  border-color: #E11D48;
+  background: #E11D48;
   color: #FFF;
 }
 .trk-step-label {
@@ -730,7 +730,7 @@ const CSS = `
 }
 .trk-total-amount {
   font-size: 1.3rem;
-  color: #8A001A;
+  color: #E11D48;
 }
 /* ── HELP ── */
 .trk-help {
