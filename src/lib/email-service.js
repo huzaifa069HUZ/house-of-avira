@@ -151,6 +151,101 @@ export function generatePaymentReceivedHtml({ customerName, orderId, amount, cur
   return wrapHtml(content);
 }
 
+// ── Order Confirmation Email (Customer) ──
+export function generateOrderConfirmationHtml({ customerName, orderId, items, payableAmount, shippingAddress, currencySymbol = '₹' }) {
+  const itemsList = items.map(item => `
+    <tr>
+      <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+        <span style="font-weight: 600; color: #000000;">${item.name}</span><br>
+        <span style="font-size: 12px; color: #888888;">Qty: ${item.quantity || 1}</span>
+      </td>
+      <td style="text-align: right; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-weight: 500;">
+        ${currencySymbol}${(item.price * (item.quantity || 1)).toLocaleString()}
+      </td>
+    </tr>
+  `).join('');
+
+  const content = `
+    <h2 style="font-size: 22px; font-weight: 500; color: #000000; margin: 0 0 8px 0;">
+      Hi ${customerName},
+    </h2>
+    <p style="font-size: 14px; color: #666666; line-height: 1.7; margin: 0 0 24px 0;">
+      Thank you for your order! We've received it and are currently processing it.
+      <br><strong>Order ID:</strong> ${orderId}
+    </p>
+
+    <div style="background-color: #fafafa; border-radius: 10px; padding: 20px; margin-bottom: 24px; border: 1px solid #f0f0f0;">
+      <h3 style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #888888; margin: 0 0 12px 0;">Order Summary</h3>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        ${itemsList}
+        <tr>
+          <td style="padding: 12px 0 0 0; font-weight: 700; color: #000000;">Total Paid (Product Only)</td>
+          <td style="text-align: right; padding: 12px 0 0 0; font-weight: 700; font-size: 16px; color: #000000;">
+            ${currencySymbol}${Number(payableAmount).toLocaleString()}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="background-color: #f0f7ff; border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; border: 1px solid #dbeafe;">
+      <p style="font-size: 13px; color: #1e40af; line-height: 1.6; margin: 0;">
+        <strong>Important:</strong> This payment was for the product only. Once your items are ready to be dispatched from our international warehouse, you will receive a second email with a link to pay the shipping & import costs.
+      </p>
+    </div>
+
+    <h3 style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #888888; margin: 0 0 8px 0;">Shipping Address</h3>
+    <p style="font-size: 14px; color: #444444; line-height: 1.5; margin: 0;">
+      ${shippingAddress.addressLine1}<br>
+      ${shippingAddress.addressLine2 ? shippingAddress.addressLine2 + '<br>' : ''}
+      ${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.pincode}<br>
+      ${shippingAddress.country}
+    </p>
+  `;
+
+  return wrapHtml(content);
+}
+
+// ── Admin Order Notification Email ──
+export function generateAdminNotificationHtml({ orderId, customerName, customerEmail, itemsCount, payableAmount, currencySymbol = '₹' }) {
+  const content = `
+    <h2 style="font-size: 20px; font-weight: 500; color: #000000; margin: 0 0 16px 0;">
+      New Order Received 🚀
+    </h2>
+    <div style="background-color: #fafafa; border-radius: 10px; padding: 20px; border: 1px solid #f0f0f0;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <tr>
+          <td style="color: #888888; padding: 6px 0;">Order ID</td>
+          <td style="color: #000000; text-align: right; font-weight: 600;">${orderId}</td>
+        </tr>
+        <tr>
+          <td style="color: #888888; padding: 6px 0;">Customer</td>
+          <td style="color: #000000; text-align: right; font-weight: 600;">${customerName}</td>
+        </tr>
+        <tr>
+          <td style="color: #888888; padding: 6px 0;">Email</td>
+          <td style="color: #000000; text-align: right; font-weight: 600;">${customerEmail}</td>
+        </tr>
+        <tr>
+          <td style="color: #888888; padding: 6px 0;">Items Count</td>
+          <td style="color: #000000; text-align: right; font-weight: 600;">${itemsCount}</td>
+        </tr>
+        <tr style="border-top: 1px solid #e8e8e8;">
+          <td style="color: #000000; padding: 12px 0 0 0; font-weight: 700;">Amount Paid</td>
+          <td style="color: #000000; text-align: right; padding: 12px 0 0 0; font-weight: 700;">${currencySymbol}${Number(payableAmount).toLocaleString()}</td>
+        </tr>
+      </table>
+    </div>
+    <div style="text-align: center; margin-top: 24px;">
+      <a href="${BRAND.website}/admin" 
+         style="display: inline-block; background-color: #000000; color: #ffffff; padding: 12px 24px; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; border-radius: 6px;">
+        View in Dashboard
+      </a>
+    </div>
+  `;
+
+  return wrapHtml(content);
+}
+
 // ── Send Email Functions ──
 export async function sendShippingInvoiceEmail({ customerEmail, customerName, orderId, shippingAmount, dueDate, batchRef, currencySymbol }) {
   const transporter = createTransporter();
@@ -181,6 +276,37 @@ export async function sendShippingPaymentReceivedEmail({ customerEmail, customer
     html,
     text: `Hi ${customerName},\n\nWe've received your shipping payment of ${currencySymbol || '₹'}${amount} for Order ${orderId}.\n\nYour order is now being prepared for dispatch. We'll notify you with tracking details once shipped.\n\nThank you for shopping with House of Avira!`,
     replyTo: BRAND.email,
+  };
+
+  await transporter.sendMail(mailOptions);
+}
+
+export async function sendOrderConfirmationEmail({ customerEmail, customerName, orderId, items, payableAmount, shippingAddress, currencySymbol }) {
+  const transporter = createTransporter();
+  const html = generateOrderConfirmationHtml({ customerName, orderId, items, payableAmount, shippingAddress, currencySymbol });
+
+  const mailOptions = {
+    from: `"House of Avira" <${BRAND.email}>`,
+    to: customerEmail,
+    subject: `Order Confirmation — ${orderId}`,
+    html,
+    text: `Hi ${customerName},\n\nThank you for your order!\nOrder ID: ${orderId}\nTotal Paid: ${currencySymbol || '₹'}${payableAmount}\n\nNote: This payment was for the product only. You will receive a second email for shipping costs later.\n\nThank you for shopping with House of Avira!`,
+    replyTo: BRAND.email,
+  };
+
+  await transporter.sendMail(mailOptions);
+}
+
+export async function sendAdminOrderNotificationEmail({ orderId, customerName, customerEmail, itemsCount, payableAmount, currencySymbol }) {
+  const transporter = createTransporter();
+  const html = generateAdminNotificationHtml({ orderId, customerName, customerEmail, itemsCount, payableAmount, currencySymbol });
+
+  const mailOptions = {
+    from: `"House of Avira" <${BRAND.email}>`,
+    to: 'houseofavira@gmail.com', // Explicitly to admin
+    subject: `New Order Received — ${orderId}`,
+    html,
+    text: `New order ${orderId} received from ${customerName} (${customerEmail}). Items: ${itemsCount}. Amount: ${currencySymbol || '₹'}${payableAmount}.`
   };
 
   await transporter.sendMail(mailOptions);

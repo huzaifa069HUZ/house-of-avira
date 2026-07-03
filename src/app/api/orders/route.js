@@ -5,6 +5,7 @@ import {
   WEIGHT_STATUS,
   PRODUCT_PAYMENT_STATUS,
   SHIPPING_PAYMENT_STATUS,
+  getCurrencyForCountry,
 } from '@/lib/shipping-constants';
 
 export async function POST(request) {
@@ -13,16 +14,20 @@ export async function POST(request) {
 
     const {
       items,
-      customer_name,
-      customer_email,
-      customer_phone,
-      customer_country,
+      customer_info,
       shipping_address,
       product_total,
       discount_amount,
       payable_amount,
       coupon_code,
     } = body;
+
+    // Handle both flat and nested customer_info for backward compatibility
+    const customer_name = customer_info?.name || body.customer_name;
+    const customer_email = customer_info?.email || body.customer_email;
+    const customer_phone = customer_info?.phone || body.customer_phone;
+    const customer_country = customer_info?.country || body.customer_country;
+    const instagram = customer_info?.instagram || body.instagram || null;
 
     // ── Validation ──
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -65,6 +70,7 @@ export async function POST(request) {
       customer_email,
       customer_phone: customer_phone || null,
       customer_country: customer_country || null,
+      instagram,
 
       // Shipping address
       shipping_address,
@@ -96,6 +102,36 @@ export async function POST(request) {
     };
 
     const docRef = await adminDb.collection('orders').add(orderData);
+    
+    // ── Send Emails ──
+    try {
+      const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
+      const currencySymbol = getCurrencyForCountry(customer_country);
+      
+      // Send to customer
+      await sendOrderConfirmationEmail({
+        customerEmail: customer_email,
+        customerName: customer_name,
+        orderId: docRef.id,
+        items,
+        payableAmount: payable_amount,
+        shippingAddress: shipping_address,
+        currencySymbol
+      });
+      
+      // Send to admin
+      await sendAdminOrderNotificationEmail({
+        orderId: docRef.id,
+        customerName: customer_name,
+        customerEmail: customer_email,
+        itemsCount: items_count,
+        payableAmount: payable_amount,
+        currencySymbol
+      });
+    } catch (emailErr) {
+      console.error('Failed to send order emails:', emailErr);
+      // We don't fail the order creation if emails fail
+    }
 
     return NextResponse.json(
       { success: true, order_id: docRef.id },
