@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Receipt, Search, Loader2, Send, CheckCircle2, Clock, XCircle, Mail, PackageX, ExternalLink } from 'lucide-react';
+import { Receipt, Search, Loader2, Send, CheckCircle2, Clock, XCircle, Mail, PackageX, ExternalLink, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import StatusBadge from '@/components/admin/shipping/StatusBadge';
 import ConfirmModal from '@/components/admin/shipping/ConfirmModal';
@@ -226,6 +226,15 @@ export default function InvoicesPage() {
                             >
                               <Send className="w-3.5 h-3.5" />
                             </button>
+                            <a
+                              href={`https://wa.me/?text=${encodeURIComponent(`Hello ${inv.customer_name},\n\nHere are the details for your shipping invoice ${inv.invoice_number} linked to order ${inv.order_id.substring(0,8)} at House of Avira.\n\nAmount Due: ${formatCurrency(inv.amount_due, 'INR')}\n\nPlease complete the payment to proceed with shipping. Let us know if you need any help!`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-8 h-8 rounded-full bg-[#F5F5F7] text-[#86868b] flex items-center justify-center hover:bg-green-50 hover:text-green-600 transition-colors"
+                              title="Send via WhatsApp"
+                            >
+                              <MessageCircle className="w-3.5 h-3.5" />
+                            </a>
                             <button
                               onClick={() => setConfirmModal({ type: 'MARK_PAID', isOpen: true, data: inv })}
                               className="w-8 h-8 rounded-full bg-[#F5F5F7] text-[#86868b] flex items-center justify-center hover:bg-green-50 hover:text-green-600 transition-colors"
