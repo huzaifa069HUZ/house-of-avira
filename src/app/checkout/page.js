@@ -11,7 +11,7 @@ import PriceDisplay from '@/components/PriceDisplay';
 import { Country } from 'country-state-city';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-
+import { useRouter } from 'next/navigation';
 const countries = Country.getAllCountries().map(c => c.name);
 
 const phoneCodes = [
@@ -214,6 +214,9 @@ export default function CheckoutPage() {
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   const totalPayable = Math.max(0, subtotal - discountAmount);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     
@@ -254,7 +257,61 @@ export default function CheckoutPage() {
        }
     }
 
-    alert("Proceeding to Razorpay payment with data: " + JSON.stringify(formData, null, 2));
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // 1. Create order in Firestore
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart,
+          customer_info: {
+            name: formData.fullName,
+            email: formData.email,
+            phone: formData.phoneCode + ' ' + formData.phone,
+            country: formData.country,
+            instagram: formData.instagram
+          },
+          shipping_address: {
+            addressLine1: formData.addressLine1,
+            addressLine2: formData.addressLine2,
+            city: formData.city,
+            state: formData.state,
+            pincode: formData.pincode,
+            country: formData.country
+          },
+          product_total: subtotal,
+          discount_amount: discountAmount,
+          payable_amount: totalPayable,
+          coupon_code: appliedCoupon?.code || null
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to create order');
+      }
+
+      const { order_id } = await res.json();
+      
+      // TODO: Redirect to actual Razorpay payment flow here in the future
+      // For now, redirect to a success page or account page
+      alert("Order Placed Successfully! (Razorpay integration pending). Order ID: " + order_id);
+      
+      // Clear cart (assuming useCartStore has a clearCart method or similar)
+      useCartStore.setState({ cart: [], discountAmount: 0, appliedCoupon: null });
+      router.push('/account');
+      
+    } catch (err) {
+      console.error(err);
+      alert("Error placing order: " + err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!mounted) return null;

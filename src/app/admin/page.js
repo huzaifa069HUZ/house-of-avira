@@ -6,11 +6,13 @@ import ProductList from '@/components/admin/ProductList';
 import CartAnalytics from '@/components/admin/CartAnalytics';
 import CouponManager from '@/components/admin/CouponManager';
 import BannerManager from '@/components/admin/BannerManager';
-import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon } from 'lucide-react';
+import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon, Ship } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
   const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit'
   const [editingProduct, setEditingProduct] = useState(null);
+  const router = useRouter();
 
   const handleEdit = (product) => {
     setEditingProduct(product);
@@ -42,6 +44,10 @@ export default function AdminDashboard() {
     setCurrentView('banners');
   };
 
+  const handleShipping = () => {
+    router.push('/admin/shipping');
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-screen bg-[#F5F5F7]">
       <div className="border-b border-[#d2d2d7] pb-6 mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
@@ -70,6 +76,13 @@ export default function AdminDashboard() {
             {currentView === 'edit' ? 'Edit Product' : 'Add Product'}
           </button>
           <button 
+            onClick={handleShipping}
+            className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all text-[#86868b] hover:text-black`}
+          >
+            <Ship className="w-4 h-4" />
+            Shipping
+          </button>
+          <button 
             onClick={handleAnalytics}
             className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'analytics' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}
           >
@@ -94,11 +107,14 @@ export default function AdminDashboard() {
       </div>
 
       {currentView === 'list' && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {['Orders', 'Customers', 'Analytics'].map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          {['Orders', 'Shipping', 'Customers', 'Analytics'].map((item) => (
             <div 
               key={item} 
-              onClick={() => item === 'Analytics' ? handleAnalytics() : null}
+              onClick={() => {
+                if (item === 'Analytics') handleAnalytics();
+                else if (item === 'Shipping') handleShipping();
+              }}
               className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 hover:border-[#0071e3] transition-colors cursor-pointer group"
             >
               <h3 className="text-sm font-bold tracking-widest uppercase mb-2 text-black group-hover:text-[#0071e3] transition-colors">{item}</h3>
