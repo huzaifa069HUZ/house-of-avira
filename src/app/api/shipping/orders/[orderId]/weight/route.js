@@ -45,8 +45,8 @@ export async function PATCH(request, { params }) {
 
     const orderData = orderSnap.data();
 
-    // Only allow weight entry/update when order is in PRODUCT_PAID or WEIGHT_ENTERED state
-    const allowedStatuses = [ORDER_STATUS.PRODUCT_PAID, ORDER_STATUS.WEIGHT_ENTERED];
+    // Only allow weight entry/update when order is in PRODUCT_PAID, PLACED, or WEIGHT_ENTERED state
+    const allowedStatuses = [ORDER_STATUS.PRODUCT_PAID, ORDER_STATUS.WEIGHT_ENTERED, ORDER_STATUS.PLACED];
     if (!allowedStatuses.includes(orderData.order_status)) {
       return NextResponse.json(
         {
