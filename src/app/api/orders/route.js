@@ -154,8 +154,18 @@ export async function POST(request) {
     );
   } catch (error) {
     console.error('Error creating order:', error);
+    
+    let errMsg = 'Failed to create order.';
+    if (error instanceof Error) {
+      errMsg = error.message;
+    } else if (typeof error === 'string') {
+      errMsg = error;
+    } else if (error && typeof error === 'object' && error.message) {
+      errMsg = error.message;
+    }
+    
     return NextResponse.json(
-      { success: false, message: error.message || 'Failed to create order.' },
+      { success: false, message: errMsg },
       { status: 500 }
     );
   }
