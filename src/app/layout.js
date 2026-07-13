@@ -31,8 +31,14 @@ const dmSans = DM_Sans({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://houseofavira.shop"),
   title: "HOUSE OF AVIRA-PINTEREST COLLECTION",
   description: "Internationally Sourced & Delivered to Your Doorstep.",
+  icons: {
+    icon: "/LOGO.png",
+    shortcut: "/LOGO.png",
+    apple: "/LOGO.png",
+  },
 };
 
 import RegionSelector from "@/components/RegionSelector";
