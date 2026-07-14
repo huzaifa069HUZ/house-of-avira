@@ -220,6 +220,8 @@ export default function CheckoutPage() {
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     
+    if (isLoading) return;
+
     if (user?.uid) {
        try {
          const docRef = doc(db, 'users', user.uid);
@@ -472,7 +474,7 @@ export default function CheckoutPage() {
           >
             <h2 className="text-3xl mb-6 tracking-normal" style={{ fontFamily: 'var(--font-gambetta, "Gambetta", serif)', fontStyle: 'italic', fontWeight: 400 }}>Order Summary</h2>
 
-            <div className="space-y-6 mb-8 max-h-[40vh] overflow-y-auto pr-2 hide-scrollbar">
+            <div className="space-y-6 mb-8 max-h-[40vh] overflow-y-auto pr-4 pt-3 hide-scrollbar">
               {cart.map((item) => (
                 <div key={item.cartItemId || item.id} className="flex gap-5">
                   <div className="relative w-24 h-28 shrink-0">
@@ -535,11 +537,16 @@ export default function CheckoutPage() {
             <button 
               type="submit"
               form="checkout-form"
-              className="w-full bg-black text-white py-5 rounded-2xl font-bold tracking-wide hover:bg-gray-800 transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-xl shadow-black/10 group relative overflow-hidden"
+              disabled={isLoading}
+              className={`w-full bg-black text-white py-5 rounded-2xl font-bold tracking-wide transition-all flex items-center justify-center gap-2 shadow-xl shadow-black/10 group relative overflow-hidden ${isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-800 active:scale-[0.98]'}`}
             >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform ease-out duration-300"></div>
+              {!isLoading && <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform ease-out duration-300"></div>}
               <span className="relative z-10 flex items-center gap-2">
-                Place Order & Pay <PriceDisplay basePrice={totalPayable} /> <ChevronRight className="w-5 h-5" />
+                {isLoading ? 'Processing...' : (
+                  <>
+                    Place Order & Pay <PriceDisplay basePrice={totalPayable} /> <ChevronRight className="w-5 h-5" />
+                  </>
+                )}
               </span>
             </button>
 
