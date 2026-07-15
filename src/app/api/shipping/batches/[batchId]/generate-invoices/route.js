@@ -145,6 +145,7 @@ export async function POST(request, { params }) {
         customer_id: allocation.customer_id || null,
         customer_name: allocation.customer_name || null,
         customer_email: allocation.customer_email || null,
+        customer_phone: orderData.customer_phone || allocation.customer_phone || null,
         amount_due: allocation.rounded_shipping_amount,
         amount_paid: 0,
         due_date: dueDate,

@@ -232,7 +232,7 @@ export default function InvoicesPage() {
                               <Send className="w-3.5 h-3.5" />
                             </button>
                             <a
-                              href={`https://wa.me/?text=${encodeURIComponent(`Hello ${inv.customer_name},\n\nHere is your shipping invoice ${inv.invoice_number} linked to order ${inv.order_id.substring(0,8)} at House of Avira.\n\nAmount Due: ${formatCurrency(inv.amount_due, 'INR')}\n\n${inv.payment_link_url ? `Please pay here: ${inv.payment_link_url}` : 'Please complete the payment to proceed with shipping.'}\n\nLet us know if you need any help!`)}`}
+                              href={`https://wa.me/${inv.customer_phone ? inv.customer_phone.replace(/[^0-9]/g, '') : ''}?text=${encodeURIComponent(`Hello ${inv.customer_name},\n\nHere is your shipping invoice ${inv.invoice_number} linked to order ${inv.order_id.substring(0,8)} at House of Avira.\n\nAmount Due: ${formatCurrency(inv.amount_due, 'INR')}\n\n${inv.payment_link_url ? `Please pay here: ${inv.payment_link_url}` : 'Please complete the payment to proceed with shipping.'}\n\nLet us know if you need any help!`)}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="w-8 h-8 rounded-full bg-[#F5F5F7] text-[#86868b] flex items-center justify-center hover:bg-green-50 hover:text-green-600 transition-colors"
