@@ -4,17 +4,21 @@ import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { formatCurrency } from '@/lib/shipping-constants';
-import { Loader2 } from 'lucide-react';
+import { Loader2, X, Phone, Mail, MapPin, Instagram, CreditCard, Clock, Package } from 'lucide-react';
 import StatusBadge from './shipping/StatusBadge';
+import Image from 'next/image';
 
 export default function OrderManager() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
     async function fetchAllOrders() {
       try {
         setLoading(true);
+        setError(null);
         const ordersRef = collection(db, 'orders');
         // Fetch latest 100 orders for admin dashboard
         const q = query(ordersRef, orderBy('created_at', 'desc'), limit(100));
@@ -28,12 +32,23 @@ export default function OrderManager() {
         setOrders(fetchedOrders);
       } catch (err) {
         console.error("Failed to fetch admin orders:", err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     }
     fetchAllOrders();
   }, []);
+
+  const openModal = (order) => {
+    setSelectedOrder(order);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setSelectedOrder(null);
+    document.body.style.overflow = 'auto';
+  };
 
   if (loading) {
     return (
@@ -50,6 +65,7 @@ export default function OrderManager() {
         <div>
           <h2 className="text-xl font-semibold text-black tracking-tight">Recent Orders</h2>
           <p className="text-sm text-[#86868b] mt-1">View all store orders.</p>
+          {error && <p className="text-sm text-red-500 mt-2">Error: {error}</p>}
         </div>
       </div>
 
@@ -72,7 +88,11 @@ export default function OrderManager() {
               </tr>
             ) : (
               orders.map((order) => (
-                <tr key={order.id} className="hover:bg-[#F5F5F7]/50 transition-colors">
+                <tr 
+                  key={order.id} 
+                  onClick={() => openModal(order)}
+                  className="hover:bg-[#F5F5F7]/50 transition-colors cursor-pointer"
+                >
                   <td className="py-4 px-6">
                     <div className="font-semibold text-black text-sm mb-1 uppercase tracking-wider">#{order.id.slice(-6)}</div>
                     <div className="text-xs text-[#86868b]">
@@ -98,6 +118,148 @@ export default function OrderManager() {
           </tbody>
         </table>
       </div>
+
+      {/* Order Details Modal */}
+      {selectedOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={closeModal}>
+          <div 
+            className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-[#d2d2d7]/50 flex justify-between items-center bg-[#FAFAFA]">
+              <div>
+                <h3 className="text-lg font-semibold text-black">Order #{selectedOrder.id.slice(-6).toUpperCase()}</h3>
+                <p className="text-sm text-[#86868b]">
+                  Placed on {new Date(selectedOrder.created_at).toLocaleString()}
+                </p>
+              </div>
+              <button 
+                onClick={closeModal}
+                className="p-2 hover:bg-[#E5E5EA] rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-[#86868b]" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="flex-1 overflow-y-auto p-6 bg-[#F5F5F7]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                {/* Left Column */}
+                <div className="space-y-6">
+                  {/* Customer Info */}
+                  <div className="bg-white p-5 rounded-xl border border-[#d2d2d7]/50 shadow-sm">
+                    <h4 className="text-sm font-semibold text-black mb-4 uppercase tracking-wider flex items-center gap-2">
+                      <Phone className="w-4 h-4" /> Customer Details
+                    </h4>
+                    <div className="space-y-3 text-sm">
+                      <div><span className="text-[#86868b]">Name:</span> <span className="font-medium text-black">{selectedOrder.customer_name}</span></div>
+                      <div><span className="text-[#86868b]">Email:</span> <span className="font-medium text-black">{selectedOrder.customer_email}</span></div>
+                      <div><span className="text-[#86868b]">Phone:</span> <span className="font-medium text-black">{selectedOrder.customer_phone}</span></div>
+                      {selectedOrder.customer_instagram && (
+                        <div className="flex items-center gap-1">
+                          <Instagram className="w-3 h-3 text-[#86868b]" />
+                          <span className="font-medium text-black">{selectedOrder.customer_instagram}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Shipping Info */}
+                  <div className="bg-white p-5 rounded-xl border border-[#d2d2d7]/50 shadow-sm">
+                    <h4 className="text-sm font-semibold text-black mb-4 uppercase tracking-wider flex items-center gap-2">
+                      <MapPin className="w-4 h-4" /> Shipping Address
+                    </h4>
+                    <div className="text-sm text-black space-y-1">
+                      <p>{selectedOrder.customer_address}</p>
+                      {selectedOrder.customer_landmark && <p>Landmark: {selectedOrder.customer_landmark}</p>}
+                      <p>{selectedOrder.customer_city}, {selectedOrder.customer_state}</p>
+                      <p>{selectedOrder.customer_country} - {selectedOrder.customer_pincode}</p>
+                    </div>
+                  </div>
+
+                  {/* Payment Info */}
+                  <div className="bg-white p-5 rounded-xl border border-[#d2d2d7]/50 shadow-sm">
+                    <h4 className="text-sm font-semibold text-black mb-4 uppercase tracking-wider flex items-center gap-2">
+                      <CreditCard className="w-4 h-4" /> Payment Details
+                    </h4>
+                    <div className="space-y-3 text-sm">
+                      <div><span className="text-[#86868b]">Status:</span> <StatusBadge status={selectedOrder.order_status} /></div>
+                      <div><span className="text-[#86868b]">Method:</span> <span className="font-medium text-black uppercase">{selectedOrder.payment_method}</span></div>
+                      {selectedOrder.razorpay_payment_id && (
+                        <>
+                          <div className="pt-2 border-t border-[#d2d2d7]/50"><span className="text-[#86868b]">Razorpay Payment ID:</span> <span className="font-medium text-black block">{selectedOrder.razorpay_payment_id}</span></div>
+                          <div><span className="text-[#86868b]">Razorpay Order ID:</span> <span className="font-medium text-black block">{selectedOrder.razorpay_order_id}</span></div>
+                          <div className="flex items-center gap-1 mt-1 text-xs text-[#86868b]">
+                            <Clock className="w-3 h-3" /> Verified at {new Date(selectedOrder.updated_at).toLocaleString()}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-6">
+                  {/* Order Items */}
+                  <div className="bg-white p-5 rounded-xl border border-[#d2d2d7]/50 shadow-sm">
+                    <h4 className="text-sm font-semibold text-black mb-4 uppercase tracking-wider flex items-center gap-2">
+                      <Package className="w-4 h-4" /> Ordered Items ({selectedOrder.items_count})
+                    </h4>
+                    <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                      {selectedOrder.items?.map((item, idx) => (
+                        <div key={idx} className="flex gap-4 p-3 bg-[#F5F5F7] rounded-lg">
+                          {item.image && (
+                            <div className="relative w-16 h-16 rounded-md overflow-hidden bg-[#e5e5ea] flex-shrink-0">
+                              <Image 
+                                src={item.image} 
+                                alt={item.name} 
+                                fill 
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <h5 className="text-sm font-medium text-black line-clamp-1">{item.name}</h5>
+                            <div className="text-xs text-[#86868b] mt-1 space-y-0.5">
+                              {item.selectedSize && <p>Size: {item.selectedSize}</p>}
+                              {item.selectedColor && <p>Color: {item.selectedColor}</p>}
+                              <p>Qty: {item.quantity}</p>
+                            </div>
+                          </div>
+                          <div className="text-sm font-medium text-black text-right">
+                            {formatCurrency(item.price * item.quantity, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Order Summary */}
+                    <div className="mt-4 pt-4 border-t border-[#d2d2d7]/50 space-y-2 text-sm">
+                      <div className="flex justify-between text-[#86868b]">
+                        <span>Subtotal</span>
+                        <span>{formatCurrency(selectedOrder.subtotal, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}</span>
+                      </div>
+                      {selectedOrder.discount_applied > 0 && (
+                        <div className="flex justify-between text-[#0071e3]">
+                          <span>Discount (Coupon: {selectedOrder.coupon_code})</span>
+                          <span>-{formatCurrency(selectedOrder.discount_applied, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between font-semibold text-black text-base pt-2 border-t border-[#d2d2d7]/30">
+                        <span>Total Paid</span>
+                        <span>{formatCurrency(selectedOrder.payable_amount, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

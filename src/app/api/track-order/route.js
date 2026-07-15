@@ -19,7 +19,9 @@ export async function POST(request) {
 
     // Verify contact matches customer_email or customer_phone
     const isEmailMatch = data.customer_email && data.customer_email.toLowerCase() === contact.toLowerCase();
-    const isPhoneMatch = data.customer_phone && data.customer_phone.replace(/[^0-9]/g, '') === contact.replace(/[^0-9]/g, '');
+    const dataPhone = data.customer_phone ? data.customer_phone.replace(/[^0-9]/g, '') : '';
+    const contactPhone = contact ? contact.replace(/[^0-9]/g, '') : '';
+    const isPhoneMatch = dataPhone && contactPhone && (dataPhone.endsWith(contactPhone) || contactPhone.endsWith(dataPhone));
 
     if (!isEmailMatch && !isPhoneMatch) {
       return NextResponse.json({ error: 'Contact information does not match the order records.' }, { status: 403 });
