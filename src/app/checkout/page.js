@@ -7,6 +7,7 @@ import { useAuthStore } from '@/store/authStore';
 import { ChevronRight, ArrowLeft, ShieldCheck, CreditCard, ChevronDown, Check, Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Script from 'next/script';
 import PriceDisplay from '@/components/PriceDisplay';
 import { Country } from 'country-state-city';
 import { db } from '@/lib/firebase';
@@ -309,22 +310,78 @@ export default function CheckoutPage() {
         throw new Error(errorMsg);
       }
 
-      const { order_id } = await response.json();
+      const data = await response.json();
+      const { db_order_id, order_id, amount, currency } = data;
       
-      // Clear cart using the store action to sync with Firestore
-      if (typeof clearCart === 'function') {
-        await clearCart();
-      } else {
-        useCartStore.setState({ cart: [], discountAmount: 0, appliedCoupon: null });
+      if (typeof window.Razorpay === 'undefined') {
+        throw new Error('Razorpay script not loaded. Please try again.');
       }
-      
-      // Redirect to new success page
-      router.push(`/order-success?orderId=${order_id}`);
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: amount.toString(),
+        currency: currency,
+        name: 'House of Avira',
+        description: 'Order Payment',
+        order_id: order_id,
+        handler: async function (response) {
+          try {
+            const verifyRes = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                db_order_id: db_order_id,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+            if (verifyData.success) {
+              // Clear cart using the store action to sync with Firestore
+              if (typeof clearCart === 'function') {
+                await clearCart();
+              } else {
+                useCartStore.setState({ cart: [], discountAmount: 0, appliedCoupon: null });
+              }
+              // Redirect to new success page
+              router.push(`/order-success?orderId=${db_order_id}`);
+            } else {
+              alert('Payment verification failed: ' + verifyData.message);
+              setIsLoading(false);
+            }
+          } catch (error) {
+            console.error('Verify error:', error);
+            alert('Payment verification failed.');
+            setIsLoading(false);
+          }
+        },
+        prefill: {
+          name: formData.fullName,
+          email: formData.email,
+          contact: formData.phoneCode + formData.phone,
+        },
+        theme: {
+          color: '#000000',
+        },
+        modal: {
+          ondismiss: function () {
+            setIsLoading(false);
+          },
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.on('payment.failed', function (response) {
+        alert(response.error.description);
+        setIsLoading(false);
+      });
+      paymentObject.open();
       
     } catch (err) {
       console.error(err);
       alert("Error placing order: " + err.message);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -333,6 +390,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-black selection:bg-black selection:text-white pb-20 lg:pb-0" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       
       <div className="w-full bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
         <Link href="/" className="flex items-center gap-2 group">

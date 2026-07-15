@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
+import Razorpay from 'razorpay';
 import {
   ORDER_STATUS,
   WEIGHT_STATUS,
@@ -86,7 +87,7 @@ export async function POST(request) {
       discount_amount: discount_amount || 0,
       payable_amount,
       coupon_code: coupon_code || null,
-      product_payment_status: PRODUCT_PAYMENT_STATUS.CONFIRMED, // Auto-confirmed for now until Razorpay webhook is added
+      product_payment_status: PRODUCT_PAYMENT_STATUS.PENDING,
 
       // Weight / shipping fields — initialized to defaults
       estimated_order_weight: null,
@@ -137,10 +138,28 @@ export async function POST(request) {
     });
     
     const docRef = { id: newOrderId };
+
+    // Initialize Razorpay
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+
+    const currencyData = getCurrencyForCountry(customer_country);
+    
+    // Determine amount in minor units (e.g. paise for INR). Minimum 100 paise.
+    const amountInPaise = Math.max(100, Math.round(payable_amount * 100));
+
+    // Create order in Razorpay
+    const razorpayOrder = await razorpay.orders.create({
+      amount: amountInPaise,
+      currency: currencyData.code,
+      receipt: docRef.id,
+    });
+
     // ── Send Emails ──
     try {
       const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
-      const currencyData = getCurrencyForCountry(customer_country);
       const currencySymbol = currencyData.symbol;
       
       // Send to customer
@@ -170,7 +189,13 @@ export async function POST(request) {
     }
 
     return NextResponse.json(
-      { success: true, order_id: docRef.id },
+      { 
+        success: true, 
+        db_order_id: docRef.id,
+        order_id: razorpayOrder.id,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency
+      },
       { status: 201 }
     );
   } catch (error) {
