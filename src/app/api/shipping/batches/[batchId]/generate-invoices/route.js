@@ -6,7 +6,14 @@ import {
   INVOICE_STATUS,
   INVOICE_PAYMENT_STATUS,
   generateInvoiceNumber,
+  getCurrencyForCountry,
 } from '@/lib/shipping-constants';
+import Razorpay from 'razorpay';
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 // ── POST /api/shipping/batches/[batchId]/generate-invoices — Generate shipping invoices ──
 export async function POST(request, { params }) {
@@ -88,12 +95,53 @@ export async function POST(request, { params }) {
         continue;
       }
 
-      // 4. Create shipping invoice
+      // Fetch order to get customer country
+      const orderDoc = await adminDb.collection('orders').doc(allocation.order_id).get();
+      const orderData = orderDoc.exists ? orderDoc.data() : {};
+      const currency = getCurrencyForCountry(orderData.customer_country || 'india');
+      
+      const invoiceNumber = generateInvoiceNumber();
       const invoiceRef = adminDb.collection('shipping_invoices').doc();
+      
+      // Generate Razorpay Payment Link
+      let paymentLinkId = null;
+      let paymentLinkUrl = null;
+      try {
+        const amountInPaise = Math.round(allocation.rounded_shipping_amount * 100);
+        const paymentLink = await razorpay.paymentLink.create({
+          amount: amountInPaise,
+          currency: currency.code,
+          accept_partial: false,
+          reference_id: invoiceNumber,
+          description: `Shipping Payment for Order ${allocation.order_id}`,
+          customer: {
+            name: allocation.customer_name || 'Customer',
+            email: allocation.customer_email || ''
+          },
+          notify: {
+            email: true, // Razorpay will send email
+            sms: false
+          },
+          reminder_enable: true,
+          callback_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://houseofavira.com'}/shipping-success?invoice_id=${invoiceRef.id}`,
+          callback_method: 'get'
+        });
+        paymentLinkId = paymentLink.id;
+        paymentLinkUrl = paymentLink.short_url;
+      } catch (err) {
+        console.error('Error creating Razorpay payment link:', err);
+        // We can either fail the whole process or continue without payment link
+        // We will throw so it doesn't create partial invoices without links
+        throw new Error(`Failed to generate payment link for order ${allocation.order_id}: ${err.message}`);
+      }
+
       const invoiceData = {
-        invoice_number: generateInvoiceNumber(),
+        invoice_number: invoiceNumber,
         order_id: allocation.order_id,
         batch_id: batchId,
+        batch_name: batchData.batch_name || batchId,
+        payment_link_id: paymentLinkId,
+        payment_link_url: paymentLinkUrl,
         customer_id: allocation.customer_id || null,
         customer_name: allocation.customer_name || null,
         customer_email: allocation.customer_email || null,
@@ -114,6 +162,8 @@ export async function POST(request, { params }) {
       const orderRef = adminDb.collection('orders').doc(allocation.order_id);
       writeBatch.update(orderRef, {
         shipping_invoice_id: invoiceRef.id,
+        shipping_payment_link: paymentLinkUrl,
+        shipping_amount_due: allocation.rounded_shipping_amount,
         order_status: ORDER_STATUS.SHIPPING_INVOICED,
         updated_at: now,
       });

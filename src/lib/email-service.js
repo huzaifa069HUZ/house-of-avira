@@ -59,7 +59,7 @@ function wrapHtml(content) {
 }
 
 // ── Shipping Invoice Email ──
-export function generateShippingInvoiceHtml({ customerName, orderId, shippingAmount, dueDate, batchRef, currencySymbol = '₹' }) {
+export function generateShippingInvoiceHtml({ customerName, orderId, shippingAmount, dueDate, batchRef, currencySymbol = '₹', paymentLinkUrl }) {
   const dueDateStr = dueDate ? new Date(dueDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : 'As soon as possible';
 
   const content = `
@@ -100,7 +100,7 @@ export function generateShippingInvoiceHtml({ customerName, orderId, shippingAmo
     </div>
     
     <div style="text-align: center; margin-bottom: 12px;">
-      <a href="${BRAND.website}" 
+      <a href="${paymentLinkUrl || BRAND.website}" 
          style="display: inline-block; background-color: #000000; color: #ffffff; padding: 16px 36px; text-decoration: none; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; border-radius: 6px;">
         Pay Now
       </a>
@@ -256,17 +256,17 @@ export function generateAdminNotificationHtml({ orderId, customerName, customerE
 }
 
 // ── Send Email Functions ──
-export async function sendShippingInvoiceEmail({ customerEmail, customerName, orderId, shippingAmount, dueDate, batchRef, currencySymbol }) {
+export async function sendShippingInvoiceEmail({ customerEmail, customerName, orderId, shippingAmount, dueDate, batchRef, currencySymbol, paymentLinkUrl }) {
   const transporter = createTransporter();
 
-  const html = generateShippingInvoiceHtml({ customerName, orderId, shippingAmount, dueDate, batchRef, currencySymbol });
+  const html = generateShippingInvoiceHtml({ customerName, orderId, shippingAmount, dueDate, batchRef, currencySymbol, paymentLinkUrl });
 
   const mailOptions = {
     from: `"House of Avira" <${BRAND.email}>`,
     to: customerEmail,
     subject: `Shipping Payment Due — Order ${orderId}`,
     html,
-    text: `Hi ${customerName},\n\nYour shipment batch has been processed. Your shipping amount due for Order ${orderId} is ${currencySymbol || '₹'}${shippingAmount}.\n\nThis is your second payment for this order — the shipping & import cost.\n\nDue date: ${dueDate ? new Date(dueDate).toLocaleDateString() : 'As soon as possible'}\n\nPlease visit ${BRAND.website} to complete your payment.\n\nThank you,\nThe House of Avira Team`,
+    text: `Hi ${customerName},\n\nYour shipment batch has been processed. Your shipping amount due for Order ${orderId} is ${currencySymbol || '₹'}${shippingAmount}.\n\nThis is your second payment for this order — the shipping & import cost.\n\nDue date: ${dueDate ? new Date(dueDate).toLocaleDateString() : 'As soon as possible'}\n\nPlease visit ${paymentLinkUrl || BRAND.website} to complete your payment.\n\nThank you,\nThe House of Avira Team`,
     replyTo: BRAND.email,
   };
 

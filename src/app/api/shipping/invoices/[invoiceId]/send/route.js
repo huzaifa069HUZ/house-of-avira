@@ -71,10 +71,11 @@ export async function POST(request, { params }) {
       customerEmail: orderData.customer_email,
       customerName: orderData.customer_name || orderData.customer_email,
       orderId: invoiceData.order_id,
-      shippingAmount: invoiceData.amount,
+      shippingAmount: invoiceData.amount_due,
       dueDate: invoiceData.due_date,
       batchRef: invoiceData.batch_name || invoiceData.batch_ref || null,
       currencySymbol: currency.symbol,
+      paymentLinkUrl: invoiceData.payment_link_url,
     });
 
     // 4. Update invoice: set status to SENT (if it was DRAFT), record sent_at

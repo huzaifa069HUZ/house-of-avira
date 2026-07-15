@@ -241,11 +241,34 @@ export default function AccountPage() {
                       </div>
                       <div className="flex items-center justify-between w-full md:w-auto gap-6 border-t border-black/5 pt-4 md:border-0 md:pt-0">
                         <div className="text-right">
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#000000]/40 mb-1">Total</p>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#000000]/40 mb-1">Product Total</p>
                           <p className="font-dm-sans font-bold text-lg text-black">
                             {formatCurrency(order.payable_amount, order.customer_country === 'USA' ? 'USD' : 'INR')}
                           </p>
                         </div>
+                        {(order.order_status === 'SHIPPING_INVOICED' || order.order_status === 'SHIPPING_PAID') && order.shipping_amount_due && (
+                          <div className="text-right border-l border-black/10 pl-6">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-[#000000]/40 mb-1">Shipping</p>
+                            <p className="font-dm-sans font-bold text-lg text-black mb-1">
+                              {formatCurrency(order.shipping_paid_amount || order.shipping_amount_due, order.customer_country === 'USA' ? 'USD' : 'INR')}
+                            </p>
+                            {order.order_status === 'SHIPPING_INVOICED' && order.shipping_payment_link && (
+                              <a 
+                                href={order.shipping_payment_link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block text-[9px] font-bold uppercase tracking-widest bg-black text-white px-3 py-1 hover:bg-black/80 transition-colors"
+                              >
+                                Pay Now
+                              </a>
+                            )}
+                            {order.order_status === 'SHIPPING_PAID' && (
+                              <span className="inline-block text-[9px] font-bold uppercase tracking-widest text-green-600 bg-green-50 px-2 py-0.5 border border-green-200">
+                                Paid
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
