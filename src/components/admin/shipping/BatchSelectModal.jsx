@@ -98,8 +98,8 @@ export default function BatchSelectModal({
                             {batch.batch_name || batch.id}
                           </p>
                           <p className="text-[11px] text-[#86868b] mt-0.5">
-                            {batch.order_count || 0}{' '}
-                            {(batch.order_count || 0) === 1 ? 'order' : 'orders'}
+                            {batch.total_orders_count || 0}{' '}
+                            {(batch.total_orders_count || 0) === 1 ? 'order' : 'orders'}
                           </p>
                         </div>
                       </div>

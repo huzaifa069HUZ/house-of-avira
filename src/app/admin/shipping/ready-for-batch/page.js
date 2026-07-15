@@ -205,15 +205,13 @@ export default function ReadyForBatchPage() {
               <Plus className="w-3.5 h-3.5" />
               Create New Batch
             </button>
-            {batches.length > 0 && (
-              <button
-                onClick={() => setShowSelectModal(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-white text-black border border-[#d2d2d7] text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-[#F5F5F7] transition-colors"
-              >
-                <FolderPlus className="w-3.5 h-3.5" />
-                Add to Existing Batch
-              </button>
-            )}
+            <button
+              onClick={() => setShowSelectModal(true)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white text-black border border-[#d2d2d7] text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-[#F5F5F7] transition-colors"
+            >
+              <FolderPlus className="w-3.5 h-3.5" />
+              Add to Existing Batch
+            </button>
           </div>
         )}
       </div>
