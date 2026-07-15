@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { formatCurrency } from '@/lib/shipping-constants';
-import { Loader2, X, Phone, Mail, MapPin, Instagram, CreditCard, Clock, Package } from 'lucide-react';
+import { Loader2, X, Phone, Mail, MapPin, CreditCard, Clock, Package, AtSign } from 'lucide-react';
 import StatusBadge from './shipping/StatusBadge';
 import Image from 'next/image';
 
@@ -159,7 +159,7 @@ export default function OrderManager() {
                       <div><span className="text-[#86868b]">Phone:</span> <span className="font-medium text-black">{selectedOrder.customer_phone}</span></div>
                       {selectedOrder.customer_instagram && (
                         <div className="flex items-center gap-1">
-                          <Instagram className="w-3 h-3 text-[#86868b]" />
+                          <AtSign className="w-3 h-3 text-[#86868b]" />
                           <span className="font-medium text-black">{selectedOrder.customer_instagram}</span>
                         </div>
                       )}
