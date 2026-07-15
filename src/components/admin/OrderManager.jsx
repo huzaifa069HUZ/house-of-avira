@@ -172,10 +172,10 @@ export default function OrderManager() {
                       <MapPin className="w-4 h-4" /> Shipping Address
                     </h4>
                     <div className="text-sm text-black space-y-1">
-                      <p>{selectedOrder.customer_address}</p>
-                      {selectedOrder.customer_landmark && <p>Landmark: {selectedOrder.customer_landmark}</p>}
-                      <p>{selectedOrder.customer_city}, {selectedOrder.customer_state}</p>
-                      <p>{selectedOrder.customer_country} - {selectedOrder.customer_pincode}</p>
+                      <p>{selectedOrder.shipping_address?.addressLine1 || selectedOrder.customer_address}</p>
+                      {(selectedOrder.shipping_address?.addressLine2 || selectedOrder.customer_landmark) && <p>Landmark: {selectedOrder.shipping_address?.addressLine2 || selectedOrder.customer_landmark}</p>}
+                      <p>{selectedOrder.shipping_address?.city || selectedOrder.customer_city}, {selectedOrder.shipping_address?.state || selectedOrder.customer_state}</p>
+                      <p>{selectedOrder.shipping_address?.country || selectedOrder.customer_country} - {selectedOrder.shipping_address?.pincode || selectedOrder.customer_pincode}</p>
                     </div>
                   </div>
 
@@ -229,7 +229,7 @@ export default function OrderManager() {
                             </div>
                           </div>
                           <div className="text-sm font-medium text-black text-right">
-                            {formatCurrency(item.price * item.quantity, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}
+                            {formatCurrency(item.price * item.quantity, (selectedOrder.shipping_address?.country || selectedOrder.customer_country) === 'USA' ? 'USD' : 'INR')}
                           </div>
                         </div>
                       ))}
@@ -239,17 +239,17 @@ export default function OrderManager() {
                     <div className="mt-4 pt-4 border-t border-[#d2d2d7]/50 space-y-2 text-sm">
                       <div className="flex justify-between text-[#86868b]">
                         <span>Subtotal</span>
-                        <span>{formatCurrency(selectedOrder.subtotal, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}</span>
+                        <span>{formatCurrency(selectedOrder.product_total || selectedOrder.subtotal || 0, (selectedOrder.shipping_address?.country || selectedOrder.customer_country) === 'USA' ? 'USD' : 'INR')}</span>
                       </div>
-                      {selectedOrder.discount_applied > 0 && (
+                      {(selectedOrder.discount_amount > 0 || selectedOrder.discount_applied > 0) && (
                         <div className="flex justify-between text-[#0071e3]">
                           <span>Discount (Coupon: {selectedOrder.coupon_code})</span>
-                          <span>-{formatCurrency(selectedOrder.discount_applied, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}</span>
+                          <span>-{formatCurrency(selectedOrder.discount_amount || selectedOrder.discount_applied || 0, (selectedOrder.shipping_address?.country || selectedOrder.customer_country) === 'USA' ? 'USD' : 'INR')}</span>
                         </div>
                       )}
                       <div className="flex justify-between font-semibold text-black text-base pt-2 border-t border-[#d2d2d7]/30">
-                        <span>Total Paid</span>
-                        <span>{formatCurrency(selectedOrder.payable_amount, selectedOrder.customer_country === 'USA' ? 'USD' : 'INR')}</span>
+                        <span>Paid Amount</span>
+                        <span>{formatCurrency(selectedOrder.payable_amount || selectedOrder.total_amount || 0, (selectedOrder.shipping_address?.country || selectedOrder.customer_country) === 'USA' ? 'USD' : 'INR')}</span>
                       </div>
                     </div>
                   </div>
