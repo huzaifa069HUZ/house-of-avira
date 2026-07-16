@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
 import { BATCH_STATUS, ORDER_STATUS } from '@/lib/shipping-constants';
+import { FieldValue } from 'firebase-admin/firestore';
 
 // ── GET /api/shipping/batches/[batchId] — Fetch batch with orders and allocations ──
 export async function GET(request, { params }) {
@@ -143,31 +144,30 @@ export async function DELETE(request, { params }) {
 
     const batchData = batchDoc.data();
 
-    // Only allow deletion if batch is OPEN
-    if (batchData.status !== BATCH_STATUS.OPEN) {
-      return NextResponse.json(
-        {
-          error: `Cannot delete batch with status "${batchData.status}". Only OPEN batches can be deleted.`,
-        },
-        { status: 400 }
-      );
+    // Remove batch_id from all linked orders and reset their status
+    const orderIds = batchData.order_ids || [];
+    const batchWrite = adminDb.batch();
+
+    for (const orderId of orderIds) {
+      const orderRef = adminDb.collection('orders').doc(orderId);
+      batchWrite.update(orderRef, {
+        batch_id: null,
+        shipping_invoice_id: FieldValue.delete(),
+        shipping_payment_link: FieldValue.delete(),
+        shipping_amount_due: FieldValue.delete(),
+        order_status: ORDER_STATUS.WEIGHT_ENTERED,
+        updated_at: new Date().toISOString(),
+      });
     }
 
-    // Check if any invoices exist for this batch
+    // Delete any invoices for this batch
     const invoicesSnapshot = await adminDb
       .collection('shipping_invoices')
       .where('batch_id', '==', batchId)
-      .limit(1)
       .get();
-
-    if (!invoicesSnapshot.empty) {
-      return NextResponse.json(
-        {
-          error:
-            'Cannot delete batch that has associated invoices. Cancel invoices first.',
-        },
-        { status: 400 }
-      );
+    
+    for (const invoiceDoc of invoicesSnapshot.docs) {
+      batchWrite.delete(invoiceDoc.ref);
     }
 
     // Remove batch_id from all linked orders and reset their status
