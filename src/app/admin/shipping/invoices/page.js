@@ -62,6 +62,23 @@ export default function InvoicesPage() {
     }
   };
 
+  const handleDeleteInvoice = async (invoiceId) => {
+    setActionLoading(true);
+    try {
+      const res = await fetch(`/api/shipping/invoices/${invoiceId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to delete invoice');
+      await fetchInvoices();
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    } finally {
+      setActionLoading(false);
+      setConfirmModal({ isOpen: false });
+    }
+  };
   const handleSendEmail = async (invoiceId) => {
     setActionLoading(true);
     try {
@@ -250,7 +267,7 @@ export default function InvoicesPage() {
                             <button
                               onClick={() => setConfirmModal({ type: 'CANCEL', isOpen: true, data: inv })}
                               className="w-8 h-8 rounded-full bg-[#F5F5F7] text-[#86868b] flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors"
-                              title="Cancel Invoice"
+                              title="Delete Invoice"
                             >
                               <XCircle className="w-3.5 h-3.5" />
                             </button>
@@ -295,10 +312,10 @@ export default function InvoicesPage() {
       <ConfirmModal
         isOpen={confirmModal.isOpen && confirmModal.type === 'CANCEL'}
         onClose={() => setConfirmModal({ isOpen: false })}
-        onConfirm={() => handleAction(confirmModal.data?.id, 'cancel')}
-        title="Cancel Invoice"
-        message={`Are you sure you want to cancel this invoice? The order will still be in the batch, but the customer won't be able to pay this invoice.`}
-        confirmText="Cancel Invoice"
+        onConfirm={() => handleDeleteInvoice(confirmModal.data?.id)}
+        title="Delete Invoice"
+        message={`Are you sure you want to delete this invoice? The invoice will be permanently removed, and the linked order will be reset back to the batch ready state.`}
+        confirmText="Delete Invoice"
         confirmVariant="destructive"
         loading={actionLoading}
       />

@@ -202,3 +202,66 @@ export async function PATCH(request, { params }) {
     );
   }
 }
+
+// DELETE /api/shipping/invoices/[invoiceId]
+export async function DELETE(request, { params }) {
+  try {
+    if (!adminDb) {
+      return NextResponse.json(
+        { error: 'Firebase Admin not initialized' },
+        { status: 500 }
+      );
+    }
+
+    const { invoiceId } = await params;
+    const invoiceRef = adminDb.collection('shipping_invoices').doc(invoiceId);
+    const invoiceDoc = await invoiceRef.get();
+
+    if (!invoiceDoc.exists) {
+      return NextResponse.json(
+        { error: 'Invoice not found' },
+        { status: 404 }
+      );
+    }
+
+    const invoiceData = invoiceDoc.data();
+    
+    // Check if paid
+    if (invoiceData.payment_status !== INVOICE_PAYMENT_STATUS.NOT_PAID) {
+      return NextResponse.json(
+        { error: 'Cannot delete a paid invoice.' },
+        { status: 400 }
+      );
+    }
+
+    const batchWrite = adminDb.batch();
+
+    // 1. Reset the linked order
+    if (invoiceData.order_id) {
+      const orderRef = adminDb.collection('orders').doc(invoiceData.order_id);
+      const orderDoc = await orderRef.get();
+      if (orderDoc.exists) {
+        batchWrite.update(orderRef, {
+          shipping_invoice_id: require('firebase-admin/firestore').FieldValue.delete(),
+          shipping_payment_link: require('firebase-admin/firestore').FieldValue.delete(),
+          shipping_amount_due: require('firebase-admin/firestore').FieldValue.delete(),
+          order_status: ORDER_STATUS.IN_BATCH,
+          updated_at: new Date().toISOString(),
+        });
+      }
+    }
+
+    // 2. Delete the invoice
+    batchWrite.delete(invoiceRef);
+
+    await batchWrite.commit();
+
+    return NextResponse.json({ success: true, message: 'Invoice deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting invoice:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete invoice', details: error.message },
+      { status: 500 }
+    );
+  }
+}
