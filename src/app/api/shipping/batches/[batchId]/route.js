@@ -170,18 +170,7 @@ export async function DELETE(request, { params }) {
       batchWrite.delete(invoiceDoc.ref);
     }
 
-    // Remove batch_id from all linked orders and reset their status
-    const orderIds = batchData.order_ids || [];
-    const batchWrite = adminDb.batch();
 
-    for (const orderId of orderIds) {
-      const orderRef = adminDb.collection('orders').doc(orderId);
-      batchWrite.update(orderRef, {
-        batch_id: null,
-        order_status: ORDER_STATUS.WEIGHT_ENTERED,
-        updated_at: new Date().toISOString(),
-      });
-    }
 
     // Delete any allocations for this batch
     const allocationsSnapshot = await adminDb

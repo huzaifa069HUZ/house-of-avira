@@ -236,8 +236,7 @@ export default function BatchesPage() {
           ))}
         </div>
       )}
-    </div>
-      
+
       {/* Close Confirmation Modal */}
       {closeModalOpen && batchToClose && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
