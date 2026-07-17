@@ -72,7 +72,7 @@ export default function HeroCarousel() {
   }, [mobileSlides]);
 
   return (
-    <section className="relative w-full h-[100dvh] md:h-[calc(100vh-32px)] -mt-[128px] overflow-hidden bg-black">
+    <section className="relative w-full h-[100dvh] md:h-[calc(100vh-32px)] -mt-[140px] overflow-hidden bg-black">
       {/* DESKTOP CAROUSEL */}
       <div className="hidden md:block w-full h-full">
         {defaultDesktopSlides.map((slide, index) => {
@@ -87,17 +87,6 @@ export default function HeroCarousel() {
                 style={{ backgroundImage: `url('${slide.desktopImage}')` }}
               />
               <div className="absolute inset-0 bg-black/10"></div>
-              
-              <div className="absolute inset-0 flex flex-col justify-end items-end p-20 pb-20">
-                <div className="text-right flex flex-col items-end w-full max-w-2xl">
-                  <h1 className="text-8xl font-serif tracking-tight text-white mb-2 shadow-sm mix-blend-overlay">
-                    {slide.title}
-                  </h1>
-                  <p className="text-3xl text-white italic underline mb-2 font-light drop-shadow-md mix-blend-overlay">
-                    {slide.subtitle}
-                  </p>
-                </div>
-              </div>
             </div>
           );
         })}
