@@ -201,33 +201,31 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Desktop View (Tilted Marquee) */}
-        <div className="hidden md:flex w-full h-[60px] overflow-hidden bg-transparent items-center justify-center -mt-6">
-          <div className="absolute w-[110%] h-[50px] bg-[#1a1a1a] -rotate-2 flex items-center shadow-lg border border-[#000000]">
-            <div className="flex whitespace-nowrap animate-marquee-full shrink-0">
-              {[...Array(6)].map((_, i) => (
-                <div key={`mqa3-${i}`} className="flex items-center gap-8 px-4">
-                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">5000+ Orders</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
-                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">Imported Directly</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
-                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">4+ Years Trusted</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
-                </div>
-              ))}
-            </div>
-            <div className="flex whitespace-nowrap animate-marquee-full shrink-0" aria-hidden="true">
-              {[...Array(6)].map((_, i) => (
-                <div key={`mqb3-${i}`} className="flex items-center gap-8 px-4">
-                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">5000+ Orders</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
-                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">Imported Directly</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
-                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">4+ Years Trusted</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
-                </div>
-              ))}
-            </div>
+        {/* Desktop View (Straight Marquee) */}
+        <div className="hidden md:flex w-full h-[70px] overflow-hidden bg-[#111111] items-center justify-center border-y border-white/10">
+          <div className="flex whitespace-nowrap animate-marquee-full shrink-0 items-center h-full">
+            {[...Array(6)].map((_, i) => (
+              <div key={`mqa3-${i}`} className="flex items-center gap-16 px-8 h-full">
+                <span className="text-white font-bold tracking-[0.3em] uppercase text-base font-sans drop-shadow-sm">5000+ Orders</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                <span className="text-white font-bold tracking-[0.3em] uppercase text-base font-sans drop-shadow-sm">Imported Directly</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                <span className="text-white font-bold tracking-[0.3em] uppercase text-base font-sans drop-shadow-sm">4+ Years Trusted</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+              </div>
+            ))}
+          </div>
+          <div className="flex whitespace-nowrap animate-marquee-full shrink-0 items-center h-full" aria-hidden="true">
+            {[...Array(6)].map((_, i) => (
+              <div key={`mqb3-${i}`} className="flex items-center gap-16 px-8 h-full">
+                <span className="text-white font-bold tracking-[0.3em] uppercase text-base font-sans drop-shadow-sm">5000+ Orders</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                <span className="text-white font-bold tracking-[0.3em] uppercase text-base font-sans drop-shadow-sm">Imported Directly</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                <span className="text-white font-bold tracking-[0.3em] uppercase text-base font-sans drop-shadow-sm">4+ Years Trusted</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+              </div>
+            ))}
           </div>
         </div>
       </div>
