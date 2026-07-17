@@ -179,29 +179,55 @@ export default function Home() {
       <HeroCarousel />
 
       {/* Modern Trust Strip */}
-      <div className="w-full bg-[#FAFAFA] border-b border-[#000000]/5 py-3 overflow-hidden flex flex-col md:flex-row justify-center items-center gap-3 md:gap-10">
-
-        {/* First Row (Mobile) / Left Side (Desktop) */}
-        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-perandory font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
-          <div className="flex items-center gap-2 shrink-0">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4L12 14.01l-3-3" /></svg>
-            <span>5000+ Orders</span>
+      <div className="w-full relative z-20">
+        {/* Mobile View */}
+        <div className="md:hidden w-full bg-[#FAFAFA] border-b border-[#000000]/5 py-3 overflow-hidden flex flex-col justify-center items-center gap-3">
+          <div className="flex justify-center items-center gap-4 text-[10px] font-perandory font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4">
+            <div className="flex items-center gap-2 shrink-0">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4L12 14.01l-3-3" /></svg>
+              <span>5000+ Orders</span>
+            </div>
+            <span className="text-[#000000]/20 shrink-0">•</span>
+            <div className="flex items-center gap-2 shrink-0">
+              <Plane className="w-4 h-4" />
+              <span>Imported Directly</span>
+            </div>
           </div>
-          <span className="text-[#000000]/20 shrink-0">•</span>
-          <div className="flex items-center gap-2 shrink-0">
-            <Plane className="w-4 h-4" />
-            <span>Imported Directly</span>
+          <div className="flex justify-center items-center gap-4 text-[10px] font-perandory font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4">
+            <div className="flex items-center gap-2 shrink-0">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+              <span>4+ Years Trusted</span>
+            </div>
           </div>
         </div>
 
-        {/* Separator for Desktop only */}
-        <span className="text-[#000000]/20 hidden md:block shrink-0">•</span>
-
-        {/* Second Row (Mobile) / Right Side (Desktop) */}
-        <div className="flex justify-center items-center gap-4 md:gap-10 text-[10px] font-perandory font-bold tracking-[0.2em] uppercase text-[#000000]/80 px-4 md:px-0">
-          <div className="flex items-center gap-2 shrink-0">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-            <span>4+ Years Trusted</span>
+        {/* Desktop View (Tilted Marquee) */}
+        <div className="hidden md:flex w-full h-[60px] overflow-hidden bg-transparent items-center justify-center -mt-6">
+          <div className="absolute w-[110%] h-[50px] bg-[#1a1a1a] -rotate-2 flex items-center shadow-lg border border-[#000000]">
+            <div className="flex whitespace-nowrap animate-marquee-full shrink-0">
+              {[...Array(6)].map((_, i) => (
+                <div key={`mqa3-${i}`} className="flex items-center gap-8 px-4">
+                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">5000+ Orders</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">Imported Directly</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">4+ Years Trusted</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                </div>
+              ))}
+            </div>
+            <div className="flex whitespace-nowrap animate-marquee-full shrink-0" aria-hidden="true">
+              {[...Array(6)].map((_, i) => (
+                <div key={`mqb3-${i}`} className="flex items-center gap-8 px-4">
+                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">5000+ Orders</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">Imported Directly</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                  <span className="text-white font-bold tracking-widest uppercase text-sm font-perandory">4+ Years Trusted</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff5c00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M12 2v20M17 5l-10 14M22 12H2M19 19L5 5" /></svg>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
