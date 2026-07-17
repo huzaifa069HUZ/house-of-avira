@@ -8,17 +8,19 @@ import { db } from '@/lib/firebase';
 const defaultDesktopSlides = [
   {
     id: 1,
-    desktopImage: '/pchero.png',
-    title: 'Summer',
-    subtitle: 'shop new arrivals',
-    link: '/category/women'
+    desktopImage: '/newpchero.png',
+    title: 'UNAPOLOGETIC.',
+    subtitle: 'THE NEW STANDARD',
+    link: '/category/women',
+    textPosition: 'left'
   },
   {
     id: 2,
     desktopImage: '/banner2.png',
-    title: 'The Archive',
-    subtitle: 'explore the curation',
-    link: '/catalogue'
+    title: '',
+    subtitle: '',
+    link: '/catalogue',
+    textPosition: 'right'
   }
 ];
 
@@ -86,7 +88,31 @@ export default function HeroCarousel() {
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url('${slide.desktopImage}')` }}
               />
-              <div className="absolute inset-0 bg-black/10"></div>
+              <div className="absolute inset-0 bg-black/20"></div>
+              
+              {(slide.title || slide.subtitle) && (
+                <div className={`absolute inset-0 flex flex-col justify-center ${slide.textPosition === 'left' ? 'items-start pl-24' : 'items-end pr-24'} p-20`}>
+                  <div className={`flex flex-col ${slide.textPosition === 'left' ? 'items-start text-left' : 'items-end text-right'} w-full max-w-4xl`}>
+                    {slide.title && (
+                      <h1 className="text-[120px] leading-[0.9] font-perandory font-black tracking-tighter text-white mb-6 uppercase drop-shadow-lg">
+                        {slide.title}
+                      </h1>
+                    )}
+                    {slide.subtitle && (
+                      <p className="text-2xl text-white font-sans font-medium tracking-[0.4em] uppercase drop-shadow-md">
+                        {slide.subtitle}
+                      </p>
+                    )}
+                    
+                    <Link 
+                      href={slide.link || '/catalogue'}
+                      className="mt-12 inline-flex items-center justify-center border-2 border-white text-white px-12 py-4 hover:bg-white hover:text-black transition-colors duration-300 font-bold tracking-[0.2em] uppercase text-sm"
+                    >
+                      EXPLORE NOW
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
