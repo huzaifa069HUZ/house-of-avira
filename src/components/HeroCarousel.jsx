@@ -9,13 +9,29 @@ const defaultDesktopSlides = [
   {
     id: 1,
     desktopImage: '/newpchero.png',
-    title: 'UNAPOLOGETIC.',
-    subtitle: 'THE NEW STANDARD',
+    title: 'NEW\nDROP',
+    subtitle: 'CURATED AESTHETICS',
     link: '/category/women',
     textPosition: 'left'
   },
   {
     id: 2,
+    desktopImage: '/pchero.png',
+    title: '',
+    subtitle: '',
+    link: '/category/women',
+    textPosition: 'right'
+  },
+  {
+    id: 3,
+    desktopImage: '/banner.png',
+    title: '',
+    subtitle: '',
+    link: '/category/women',
+    textPosition: 'right'
+  },
+  {
+    id: 4,
     desktopImage: '/banner2.png',
     title: '',
     subtitle: '',
@@ -91,24 +107,27 @@ export default function HeroCarousel() {
               <div className="absolute inset-0 bg-black/20"></div>
               
               {(slide.title || slide.subtitle) && (
-                <div className={`absolute inset-0 flex flex-col justify-center ${slide.textPosition === 'left' ? 'items-start pl-24' : 'items-end pr-24'} p-20`}>
-                  <div className={`flex flex-col ${slide.textPosition === 'left' ? 'items-start text-left' : 'items-end text-right'} w-full max-w-4xl`}>
+                <div className={`absolute inset-0 flex flex-col justify-center ${slide.textPosition === 'left' ? 'items-start pl-8 md:pl-24' : 'items-end pr-8 md:pr-24'} p-20 pointer-events-none`}>
+                  <div className={`flex flex-col ${slide.textPosition === 'left' ? 'items-start text-left' : 'items-end text-right'} w-full max-w-5xl pointer-events-auto`}>
                     {slide.title && (
-                      <h1 className="text-[120px] leading-[0.9] font-perandory font-black tracking-tighter text-white mb-6 uppercase drop-shadow-lg">
+                      <h1 className="text-[100px] md:text-[160px] leading-[0.8] font-sans font-black tracking-tighter text-white mb-6 uppercase mix-blend-overlay whitespace-pre-line">
                         {slide.title}
                       </h1>
                     )}
                     {slide.subtitle && (
-                      <p className="text-2xl text-white font-sans font-medium tracking-[0.4em] uppercase drop-shadow-md">
-                        {slide.subtitle}
-                      </p>
+                      <div className="flex items-center gap-6 mt-4">
+                        <div className="h-[2px] w-16 bg-white/80"></div>
+                        <p className="text-sm md:text-xl text-white/90 font-sans font-semibold tracking-[0.5em] uppercase">
+                          {slide.subtitle}
+                        </p>
+                      </div>
                     )}
                     
                     <Link 
                       href={slide.link || '/catalogue'}
-                      className="mt-12 inline-flex items-center justify-center border-2 border-white text-white px-12 py-4 hover:bg-white hover:text-black transition-colors duration-300 font-bold tracking-[0.2em] uppercase text-sm"
+                      className="mt-16 inline-flex items-center justify-center bg-white text-black px-12 py-5 hover:bg-black hover:text-white transition-all duration-500 font-bold tracking-[0.3em] uppercase text-xs md:text-sm shadow-2xl"
                     >
-                      EXPLORE NOW
+                      SHOP THE DROP
                     </Link>
                   </div>
                 </div>
