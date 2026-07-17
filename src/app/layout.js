@@ -32,23 +32,70 @@ const dmSans = DM_Sans({
 
 export const metadata = {
   metadataBase: new URL("https://houseofavira.shop"),
-  title: "HOUSE OF AVIRA-PINTEREST COLLECTION",
-  description: "Internationally Sourced & Delivered to Your Doorstep.",
-  icons: {
-    icon: "/LOGO.png",
-    shortcut: "/LOGO.png",
-    apple: "/LOGO.png",
+  title: "HOUSE OF AVIRA | Premium Import Based Shopping",
+  description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping, trendy clothes, and luxury aesthetics at House of Avira.",
+  keywords: ["House of Avira", "import based shopping", "premium shopping", "trendy clothes", "luxury aesthetics", "international clothing india", "Avira shopping"],
+  verification: {
+    google: "hliUadrK80fd7IaPduYmqG5-aOHzpBLlkWYOIt22yBA",
+  },
+  openGraph: {
+    title: "HOUSE OF AVIRA | Premium Import Based Shopping",
+    description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping and luxury aesthetics.",
+    url: "https://houseofavira.shop",
+    siteName: "House of Avira",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "House of Avira Logo",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HOUSE OF AVIRA | Premium Import Based Shopping",
+    description: "Internationally Sourced & Delivered to Your Doorstep.",
+    images: ["/opengraph-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
 import ProductOptionsModal from "@/components/ProductOptionsModal";
 
 export default function RootLayout({ children }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "House of Avira",
+    url: "https://houseofavira.shop",
+    logo: "https://houseofavira.shop/icon.png",
+    description: "Internationally Sourced & Delivered to Your Doorstep. Premium import based shopping for trendy clothes.",
+  };
+
   return (
-      <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} ${dmSans.variable} h-full antialiased`}
-      >
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} ${dmSans.variable} h-full antialiased`}
+    >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-[#FFFFFF] text-[#000000] selection:bg-[#8A001A] selection:text-[#FFFFFF]">
         <AuthProvider>
           <Header />
