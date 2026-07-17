@@ -8,7 +8,7 @@ import { db } from '@/lib/firebase';
 const defaultDesktopSlides = [
   {
     id: 1,
-    desktopImage: '/banner.png',
+    desktopImage: '/pchero.png',
     title: 'Summer',
     subtitle: 'shop new arrivals',
     link: '/category/women'
