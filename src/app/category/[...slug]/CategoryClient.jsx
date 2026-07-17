@@ -107,7 +107,15 @@ export default function CategoryClient({ slug = [] }) {
   const availableColors = useMemo(() => {
     const colors = new Set();
     routeFilteredProducts.forEach(p => {
-      if (p.swatches) p.swatches.forEach(s => colors.add(s.name || s.color));
+      if (p.swatches) {
+        p.swatches.forEach(s => {
+          const colorVal = s.name || s.color;
+          if (colorVal) {
+            const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+            colors.add(formatted);
+          }
+        });
+      }
     });
     return Array.from(colors);
   }, [routeFilteredProducts]);
@@ -123,7 +131,12 @@ export default function CategoryClient({ slug = [] }) {
 
     // Filter Color (Match by swatch name or hex code loosely)
     if (selectedColors.length > 0) {
-      result = result.filter(p => p.swatches && p.swatches.some(s => selectedColors.includes(s.name || s.color)));
+      result = result.filter(p => p.swatches && p.swatches.some(s => {
+        const colorVal = s.name || s.color;
+        if (!colorVal) return false;
+        const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        return selectedColors.includes(formatted);
+      }));
     }
 
     // Sort
@@ -132,8 +145,7 @@ export default function CategoryClient({ slug = [] }) {
     } else if (activeSort === 'price_desc') {
       result.sort((a, b) => (b.price || 0) - (a.price || 0));
     } else {
-      // Newest (already sorted by query initially, but we might have messed up index so we just trust the original order from Firestore since it was orderBy('createdAt', 'desc'))
-      // To strictly ensure newest is first if we mutated:
+      // Newest
       result.sort((a, b) => {
         const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
         const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
@@ -170,7 +182,7 @@ export default function CategoryClient({ slug = [] }) {
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#FAFAFA] relative pb-32 md:pb-0">
+    <div className="w-full min-h-screen bg-[#FAFAFA] relative pb-32 md:pb-0" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
       
       {/* Page Header */}
       <div className="w-full pt-32 pb-8 px-4 md:px-8 text-center max-w-[1600px] mx-auto">
