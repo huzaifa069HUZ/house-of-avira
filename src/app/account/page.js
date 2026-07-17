@@ -4,8 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Heart, Globe, Edit2, Package, ChevronRight } from 'lucide-react';
-import { useCurrencyStore } from '@/store/currencyStore';
+import { Heart, Edit2, Package, ChevronRight } from 'lucide-react';
 import AddressManager from '@/components/profile/AddressManager';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
@@ -13,12 +12,12 @@ import { getStatusColor, ORDER_STATUS_LABELS, formatCurrency } from '@/lib/shipp
 
 export default function AccountPage() {
   const { user, role, loading, signOut, updateUser } = useAuthStore();
-  const { currency, setRegionModalOpen } = useCurrencyStore();
+
   const router = useRouter();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState('');
-  const [editCountryCode, setEditCountryCode] = useState('+91');
+
   const [editPhone, setEditPhone] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -34,10 +33,8 @@ export default function AccountPage() {
       const phoneRaw = user.phone || user.phoneNumber || '';
       const parts = phoneRaw.trim().split(' ');
       if (parts.length > 1 && parts[0].startsWith('+')) {
-        setEditCountryCode(parts[0]);
         setEditPhone(parts.slice(1).join(' '));
       } else {
-        setEditCountryCode('+91');
         setEditPhone(phoneRaw);
       }
     }
@@ -80,7 +77,7 @@ export default function AccountPage() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await updateUser({ name: editName, phone: `${editCountryCode} ${editPhone}`.trim() });
+      await updateUser({ name: editName, phone: `+91 ${editPhone}`.trim() });
       setIsEditing(false);
     } catch (error) {
       console.error("Failed to update profile", error);
@@ -151,18 +148,7 @@ export default function AccountPage() {
                 <label className="block text-[9px] font-sans font-bold tracking-[0.25em] uppercase text-[#000000]/40 mb-1.5">Phone Number</label>
                 {isEditing ? (
                   <div className="flex">
-                    <select
-                      value={editCountryCode}
-                      onChange={(e) => setEditCountryCode(e.target.value)}
-                      className="appearance-none block w-[80px] px-3 py-2 border-b border-black/20 outline-none focus:border-black text-sm font-dm-sans transition-colors bg-transparent text-center"
-                    >
-                      <option value="+91">+91 (IN)</option>
-                      <option value="+1">+1 (US/CA)</option>
-                      <option value="+44">+44 (UK)</option>
-                      <option value="+61">+61 (AU)</option>
-                      <option value="+971">+971 (AE)</option>
-                      <option value="+65">+65 (SG)</option>
-                    </select>
+                    <span className="block w-[80px] px-3 py-2 border-b border-black/20 text-sm font-dm-sans bg-transparent text-center text-black/70">+91</span>
                     <input 
                       type="tel" 
                       value={editPhone} 
@@ -185,13 +171,7 @@ export default function AccountPage() {
                 </div>
                 <Heart className="w-4 h-4 text-black group-hover:fill-black/10 transition-colors" />
               </Link>
-              <button onClick={() => setRegionModalOpen(true)} className="group flex items-center justify-between border border-black/10 px-5 py-3 hover:border-black hover:bg-black/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <span className="font-perandory text-sm tracking-widest uppercase text-black">Region / Currency</span>
-                  <span className="bg-black/5 px-2 py-0.5 text-[9px] rounded-sm font-dm-sans font-bold">{currency}</span>
-                </div>
-                <Globe className="w-4 h-4 text-black" />
-              </button>
+
               {role === 'admin_owner' && (
                 <Link href="/admin" className="mt-4 flex items-center justify-center font-perandory text-sm text-white bg-black px-5 py-3.5 uppercase tracking-widest hover:bg-black/80 transition-colors">
                   Admin Dashboard
@@ -243,14 +223,14 @@ export default function AccountPage() {
                         <div className="text-right">
                           <p className="text-[10px] font-bold uppercase tracking-widest text-[#000000]/40 mb-1">Product Total</p>
                           <p className="font-dm-sans font-bold text-lg text-black">
-                            {formatCurrency(order.payable_amount, order.customer_country === 'USA' ? 'USD' : 'INR')}
+                            {formatCurrency(order.payable_amount, 'INR')}
                           </p>
                         </div>
                         {(order.order_status === 'SHIPPING_INVOICED' || order.order_status === 'SHIPPING_PAID') && order.shipping_amount_due && (
                           <div className="text-right border-l border-black/10 pl-6">
                             <p className="text-[10px] font-bold uppercase tracking-widest text-[#000000]/40 mb-1">Shipping</p>
                             <p className="font-dm-sans font-bold text-lg text-black mb-1">
-                              {formatCurrency(order.shipping_paid_amount || order.shipping_amount_due, order.customer_country === 'USA' ? 'USD' : 'INR')}
+                              {formatCurrency(order.shipping_paid_amount || order.shipping_amount_due, 'INR')}
                             </p>
                             {order.order_status === 'SHIPPING_INVOICED' && order.shipping_payment_link && (
                               <a 

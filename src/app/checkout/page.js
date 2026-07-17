@@ -4,96 +4,16 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
-import { ChevronRight, ArrowLeft, ShieldCheck, CreditCard, ChevronDown, Check, Minus, Plus } from 'lucide-react';
+import { ChevronRight, ArrowLeft, ShieldCheck, CreditCard, Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import PriceDisplay from '@/components/PriceDisplay';
-import { Country } from 'country-state-city';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-const countries = Country.getAllCountries().map(c => c.name);
 
-const phoneCodes = [
-  { code: '+91', country: 'IN' },
-  { code: '+1', country: 'US/CA' },
-  { code: '+44', country: 'UK' },
-  { code: '+61', country: 'AU' },
-  { code: '+49', country: 'DE' },
-  { code: '+33', country: 'FR' },
-  { code: '+971', country: 'AE' },
-  { code: '+65', country: 'SG' },
-];
 
-const CountryComboBox = ({ value, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState(value || '');
-  const ref = useRef(null);
-
-  useEffect(() => {
-    setSearch(value || '');
-  }, [value]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const filtered = countries.filter(c => c.toLowerCase().includes(search.toLowerCase()));
-
-  return (
-    <div className="relative w-full" ref={ref}>
-      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Country / Region</label>
-      <div className="relative">
-        <input 
-          type="text"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            onChange(e.target.value);
-            setIsOpen(true);
-          }}
-          onFocus={() => setIsOpen(true)}
-          placeholder="Type or select a country"
-          className="w-full bg-transparent border-b-2 border-gray-200 focus:border-black text-gray-900 placeholder-gray-400 py-2 outline-none transition-colors text-sm font-medium pr-8"
-        />
-        <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-      </div>
-      
-      <AnimatePresence>
-        {isOpen && filtered.length > 0 && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute z-20 w-full mt-2 bg-white border border-gray-100 shadow-xl rounded-xl overflow-hidden max-h-60 overflow-y-auto"
-          >
-            {filtered.map((country) => (
-              <div 
-                key={country}
-                onClick={() => {
-                  setSearch(country);
-                  onChange(country);
-                  setIsOpen(false);
-                }}
-                className={`px-4 py-3 text-sm cursor-pointer hover:bg-gray-50 flex items-center justify-between ${search.toLowerCase() === country.toLowerCase() ? 'bg-gray-50 font-bold text-black' : 'text-gray-600 font-medium'}`}
-              >
-                {country}
-                {search.toLowerCase() === country.toLowerCase() && <Check className="w-4 h-4 text-black" />}
-              </div>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
 
 const InputField = ({ label, type = "text", value, onChange, placeholder, required = false }) => (
   <div className="w-full">
@@ -122,7 +42,6 @@ export default function CheckoutPage() {
 
   const [formData, setFormData] = useState({
     fullName: '',
-    phoneCode: '+91',
     phone: '',
     email: '',
     instagram: '',
@@ -277,7 +196,7 @@ export default function CheckoutPage() {
           customer_info: {
             name: formData.fullName,
             email: formData.email,
-            phone: formData.phoneCode + ' ' + formData.phone,
+            phone: '+91 ' + formData.phone,
             country: formData.country,
             instagram: formData.instagram
           },
@@ -360,7 +279,7 @@ export default function CheckoutPage() {
         prefill: {
           name: formData.fullName,
           email: formData.email,
-          contact: formData.phoneCode + formData.phone,
+          contact: '+91' + formData.phone,
         },
         theme: {
           color: '#000000',
@@ -432,15 +351,7 @@ export default function CheckoutPage() {
                       Phone Number <span className="text-red-500">*</span>
                     </label>
                     <div className="flex">
-                      <select 
-                        value={formData.phoneCode} 
-                        onChange={(e) => handleChange('phoneCode', e.target.value)}
-                        className="bg-transparent border-b-2 border-gray-200 focus:border-black text-gray-900 py-2 outline-none transition-colors text-sm font-bold w-24 cursor-pointer"
-                      >
-                        {phoneCodes.map(pc => (
-                          <option key={pc.code} value={pc.code}>{pc.country} {pc.code}</option>
-                        ))}
-                      </select>
+                      <span className="border-b-2 border-gray-200 text-gray-900 py-2 text-sm font-bold w-16 flex items-center select-none">+91</span>
                       <input
                         type="tel"
                         value={formData.phone}
@@ -491,7 +402,15 @@ export default function CheckoutPage() {
                 )}
 
                 <div className="space-y-6">
-                  <CountryComboBox value={formData.country} onChange={val => handleChange('country', val)} />
+                  <div className="w-full">
+                    <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Country / Region</label>
+                    <input
+                      type="text"
+                      readOnly
+                      value="India"
+                      className="w-full bg-transparent border-b-2 border-gray-200 text-gray-900 py-2 outline-none text-sm font-medium cursor-default"
+                    />
+                  </div>
                   
                   <InputField label="Address Line 1" placeholder="Street address, P.O. box, etc." value={formData.addressLine1} onChange={e => handleChange('addressLine1', e.target.value)} required />
                   <InputField label="Address Line 2 (Optional)" placeholder="Apartment, suite, unit, building, floor, etc." value={formData.addressLine2} onChange={e => handleChange('addressLine2', e.target.value)} />

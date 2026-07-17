@@ -17,7 +17,6 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { useCurrencyStore } from '@/store/currencyStore';
 import { Plane } from 'lucide-react';
 import PriceDisplay from '@/components/PriceDisplay';
 
@@ -52,7 +51,6 @@ export default function Home() {
   const { user } = useAuthStore();
   const { wishlist, toggleWishlist } = useWishlistStore();
   const { t } = useTranslation();
-  const { initSettings } = useCurrencyStore();
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
@@ -73,19 +71,6 @@ export default function Home() {
   ];
   const [activeAesthetic, setActiveAesthetic] = useState(aestheticsTabs[0]);
   const [activeTab, setActiveTab] = useState('new'); // 'new' or 'best'
-
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const cookies = document.cookie.split('; ').reduce((prev, current) => {
-        const [name, ...value] = current.split('=');
-        if (name) prev[name.trim()] = value.join('=');
-        return prev;
-      }, {});
-      if (cookies.USER_CURRENCY || cookies.NEXT_LOCALE) {
-        initSettings(cookies.USER_CURRENCY, cookies.NEXT_LOCALE);
-      }
-    }
-  }, [initSettings]);
 
   const handleWishlistToggle = async (e, product) => {
     e.preventDefault();

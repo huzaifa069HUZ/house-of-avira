@@ -11,7 +11,6 @@ import { db } from '@/lib/firebase';
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [countryCode, setCountryCode] = useState('+91');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -39,7 +38,7 @@ export default function Register() {
         name,
         email: user.email,
         role,
-        phone: `${countryCode} ${phone}`,
+        phone: `+91 ${phone}`,
         instagramHandle: '',
         profilePicUrl: '',
         createdAt: serverTimestamp()
@@ -97,18 +96,11 @@ export default function Register() {
           <div>
             <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Phone Number</label>
             <div className="flex">
-              <select
-                value={countryCode}
-                onChange={(e) => setCountryCode(e.target.value)}
-                className="appearance-none block w-[80px] px-3 py-2 border border-[#000000]/20 border-r-0 bg-transparent rounded-l-sm shadow-sm focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm text-center"
+              <span
+                className="flex items-center justify-center w-[80px] px-3 py-2 border border-[#000000]/20 border-r-0 bg-transparent rounded-l-sm shadow-sm sm:text-sm text-center"
               >
-                <option value="+91">+91 (IN)</option>
-                <option value="+1">+1 (US/CA)</option>
-                <option value="+44">+44 (UK)</option>
-                <option value="+61">+61 (AU)</option>
-                <option value="+971">+971 (AE)</option>
-                <option value="+65">+65 (SG)</option>
-              </select>
+                +91
+              </span>
               <input
                 type="tel"
                 required

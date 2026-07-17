@@ -124,35 +124,15 @@ export function getStatusColor(status) {
 // ── Currency Configuration ──
 export const CURRENCIES = {
   INR: { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
-  USD: { code: 'USD', symbol: '$', name: 'US Dollar' },
-  PHP: { code: 'PHP', symbol: '₱', name: 'Philippine Peso' },
-  AED: { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham' },
 };
 
-// Map delivery countries to currencies
-const COUNTRY_CURRENCY_MAP = {
-  'india': 'INR',
-  'united states': 'USD',
-  'united states of america': 'USD',
-  'usa': 'USD',
-  'us': 'USD',
-  'philippines': 'PHP',
-  'united arab emirates': 'AED',
-  'uae': 'AED',
-  'dubai': 'AED',
-};
-
-export function getCurrencyForCountry(country) {
-  if (!country) return CURRENCIES.INR;
-  const key = country.toLowerCase().trim();
-  const currencyCode = COUNTRY_CURRENCY_MAP[key] || 'INR';
-  return CURRENCIES[currencyCode];
+export function getCurrencyForCountry() {
+  return CURRENCIES.INR;
 }
 
-export function formatCurrency(amount, currencyCode = 'INR') {
-  const currency = CURRENCIES[currencyCode] || CURRENCIES.INR;
+export function formatCurrency(amount) {
   const rounded = Math.round(amount * 100) / 100;
-  return `${currency.symbol}${rounded.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  return `${CURRENCIES.INR.symbol}${rounded.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 // ── Allocation Helpers ──

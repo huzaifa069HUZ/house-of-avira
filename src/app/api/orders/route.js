@@ -6,7 +6,6 @@ import {
   WEIGHT_STATUS,
   PRODUCT_PAYMENT_STATUS,
   SHIPPING_PAYMENT_STATUS,
-  getCurrencyForCountry,
 } from '@/lib/shipping-constants';
 
 export async function POST(request) {
@@ -145,22 +144,20 @@ export async function POST(request) {
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    const currencyData = getCurrencyForCountry(customer_country);
-    
-    // Determine amount in minor units (e.g. paise for INR). Minimum 100 paise.
+    // Determine amount in minor units (paise for INR). Minimum 100 paise.
     const amountInPaise = Math.max(100, Math.round(payable_amount * 100));
 
     // Create order in Razorpay
     const razorpayOrder = await razorpay.orders.create({
       amount: amountInPaise,
-      currency: currencyData.code,
+      currency: 'INR',
       receipt: docRef.id,
     });
 
     // ── Send Emails ──
     try {
       const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
-      const currencySymbol = currencyData.symbol;
+      const currencySymbol = '₹';
       
       // Send to customer
       await sendOrderConfirmationEmail({
