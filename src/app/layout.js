@@ -32,15 +32,40 @@ const dmSans = DM_Sans({
 
 export const metadata = {
   metadataBase: new URL("https://houseofavira.shop"),
-  title: "HOUSE OF AVIRA | Premium Import Based Shopping",
-  description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping, trendy clothes, and luxury aesthetics at House of Avira.",
-  keywords: ["House of Avira", "import based shopping", "premium shopping", "trendy clothes", "luxury aesthetics", "international clothing india", "Avira shopping"],
+  title: "HOUSE OF AVIRA | Avira Shopping | Premium Import Based Shopping",
+  description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping, imported pinterest finds, trendy clothes, and luxury aesthetics at House of Avira Shopping.",
+  keywords: [
+    "House of Avira", 
+    "Avira Shopping", 
+    "HOUSEOFAVIRA", 
+    "premium shopping", 
+    "import based shopping", 
+    "trendy clothes", 
+    "luxury aesthetics", 
+    "international clothing india", 
+    "buy streetwear online",
+    "genz fashion store",
+    "korean fashion india",
+    "y2k fashion india",
+    "imported pinterest finds",
+    "aesthetic clothes",
+    "vintage clothing online",
+    "sneakers and collectibles",
+    "trendy bags and accessories",
+    "high quality imported clothes",
+    "Avira clothing brand",
+    "Avira fashion store",
+    "Avira"
+  ],
   verification: {
     google: "hliUadrK80fd7IaPduYmqG5-aOHzpBLlkWYOIt22yBA",
   },
+  alternates: {
+    canonical: "https://houseofavira.shop",
+  },
   openGraph: {
-    title: "HOUSE OF AVIRA | Premium Import Based Shopping",
-    description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping and luxury aesthetics.",
+    title: "HOUSE OF AVIRA | Avira Shopping | Premium Import Based Shopping",
+    description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping and luxury aesthetics at House of Avira.",
     url: "https://houseofavira.shop",
     siteName: "House of Avira",
     images: [
@@ -56,8 +81,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HOUSE OF AVIRA | Premium Import Based Shopping",
-    description: "Internationally Sourced & Delivered to Your Doorstep.",
+    title: "HOUSE OF AVIRA | Avira Shopping | Premium Import Based Shopping",
+    description: "Internationally Sourced & Delivered to Your Doorstep. Discover imported pinterest finds at House of Avira.",
     images: ["/opengraph-image.png"],
   },
   robots: {
@@ -78,11 +103,51 @@ import ProductOptionsModal from "@/components/ProductOptionsModal";
 export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "House of Avira",
-    url: "https://houseofavira.shop",
-    logo: "https://houseofavira.shop/icon.png",
-    description: "Internationally Sourced & Delivered to Your Doorstep. Premium import based shopping for trendy clothes.",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://houseofavira.shop/#organization",
+        "name": "House of Avira",
+        "alternateName": ["Avira Shopping", "HOUSEOFAVIRA"],
+        "url": "https://houseofavira.shop",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://houseofavira.shop/icon.png"
+        },
+        "description": "Internationally Sourced & Delivered to Your Doorstep. Premium import based shopping for trendy clothes.",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "support@houseofavira.shop"
+        },
+        "sameAs": [
+          "https://www.instagram.com/houseofavira"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://houseofavira.shop/#website",
+        "url": "https://houseofavira.shop",
+        "name": "House of Avira",
+        "publisher": {
+          "@id": "https://houseofavira.shop/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://houseofavira.shop/catalogue?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Store",
+        "name": "House of Avira",
+        "image": "https://houseofavira.shop/icon.png",
+        "@id": "https://houseofavira.shop",
+        "url": "https://houseofavira.shop",
+        "priceRange": "$$$",
+        "description": "Premium imported fashion, streetwear, and GenZ aesthetic clothing store."
+      }
+    ]
   };
 
   return (
