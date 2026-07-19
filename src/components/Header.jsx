@@ -304,7 +304,7 @@ export default function Header() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onFocus={handleSearchFocus}
-                    className="bg-transparent outline-none w-24 md:w-32 lg:w-48 text-sm placeholder:text-current opacity-80"
+                    className="bg-transparent outline-none w-24 md:w-32 lg:w-48 text-sm placeholder:text-current opacity-80 font-dm-sans"
                   />
                 </div>
                 <button 
@@ -319,7 +319,7 @@ export default function Header() {
 
                 {/* Search Dropdown / Fullscreen Mobile Search */}
                 {showSearchDropdown && (
-                  <div className="fixed inset-0 sm:absolute sm:inset-auto sm:top-[120%] sm:right-0 w-[100vw] h-[100vh] sm:h-auto sm:w-[400px] sm:max-h-[70vh] overflow-y-auto bg-white sm:border border-black/10 sm:shadow-2xl sm:rounded-2xl p-4 sm:p-4 z-[100] animate-in fade-in sm:slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default">
+                  <div className="fixed inset-0 sm:absolute sm:inset-auto sm:top-[120%] sm:right-0 w-[100vw] h-[100vh] sm:h-auto sm:w-[400px] sm:max-h-[70vh] overflow-y-auto bg-white sm:border border-black/10 sm:shadow-2xl sm:rounded-2xl p-4 sm:p-4 z-[100] animate-in fade-in sm:slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default font-dm-sans">
                     {/* Mobile Close Header */}
                     <div className="sm:hidden flex items-center justify-between pb-2 border-b border-black/5 mb-2">
                       <span className="font-dm-sans font-bold text-xl tracking-widest uppercase">Search</span>
@@ -336,7 +336,7 @@ export default function Header() {
                         placeholder="Search products..." 
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="bg-transparent outline-none flex-1 text-base placeholder:text-neutral-500"
+                        className="bg-transparent outline-none flex-1 text-base placeholder:text-neutral-500 font-dm-sans"
                         autoFocus
                       />
                     </div>
