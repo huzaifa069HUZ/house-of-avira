@@ -44,7 +44,8 @@ export default function ProductCard({ product }) {
         id: product.id, 
         title: product.name || product.title, 
         price: product.price, 
-        image: product.imageUrl || (product.images && product.images[0]) 
+        image: product.imageUrl || (product.images && product.images[0]),
+        availableSizes: product.sizes || []
       });
     }
   };

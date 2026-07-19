@@ -11,6 +11,7 @@ import CartSlideOver from '@/components/ui/CartSlideOver';
 import React, { useState, useEffect, useRef } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import PriceDisplay from '@/components/PriceDisplay';
 
 const menuData = [
   { title: "Shop All", href: "/catalogue" },
@@ -321,7 +322,7 @@ export default function Header() {
                   <div className="fixed inset-0 sm:absolute sm:inset-auto sm:top-[120%] sm:right-0 w-[100vw] h-[100vh] sm:h-auto sm:w-[400px] sm:max-h-[70vh] overflow-y-auto bg-white sm:border border-black/10 sm:shadow-2xl sm:rounded-2xl p-4 sm:p-4 z-[100] animate-in fade-in sm:slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default">
                     {/* Mobile Close Header */}
                     <div className="sm:hidden flex items-center justify-between pb-2 border-b border-black/5 mb-2">
-                      <span className="font-cormorant text-xl tracking-widest uppercase">Search</span>
+                      <span className="font-dm-sans font-bold text-xl tracking-widest uppercase">Search</span>
                       <button onClick={() => setShowSearchDropdown(false)} className="p-2 hover:bg-black/5 rounded-full">
                         <X className="w-5 h-5" />
                       </button>
@@ -376,7 +377,7 @@ export default function Header() {
                             <div className="flex flex-col flex-1 overflow-hidden">
                               <span className="text-[11px] font-bold uppercase tracking-widest truncate">{product.name}</span>
                               <span className="text-[10px] text-neutral-500 capitalize truncate">{product.category}</span>
-                              <span className="text-xs font-medium mt-1 text-[#8A001A]">${product.price?.toFixed(2) || '0.00'}</span>
+                              <span className="text-xs font-medium mt-1 text-[#8A001A]"><PriceDisplay basePrice={product.price || 0} /></span>
                             </div>
                           </Link>
                         ))}

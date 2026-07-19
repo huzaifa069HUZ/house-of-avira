@@ -48,7 +48,8 @@ export default function ProductOptionsModal() {
       image: selectedImage,
       color: selectedColor?.colorName || selectedColor?.color || null,
       size: selectedSize || null,
-      quantity: quantity
+      quantity: quantity,
+      availableSizes: product.sizes || []
     });
 
     setIsAdding(false);

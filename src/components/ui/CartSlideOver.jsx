@@ -313,7 +313,7 @@ export default function CartSlideOver() {
                                     className="appearance-none border border-gray-200 rounded-md pl-2.5 pr-7 py-1 text-[11px] font-bold text-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer shadow-sm outline-none uppercase tracking-widest"
                                   >
                                     {!item.size && <option value="" disabled>SIZE</option>}
-                                    {['XS', 'S', 'M', 'L', 'XL', 'XXL', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45'].map(s => (
+                                    {(item.availableSizes && item.availableSizes.length > 0 ? item.availableSizes : ['XS', 'S', 'M', 'L', 'XL', 'XXL', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45']).map(s => (
                                       <option key={s} value={s}>{s}</option>
                                     ))}
                                   </select>

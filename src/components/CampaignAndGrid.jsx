@@ -5,10 +5,10 @@ import Link from 'next/link';
 export default function CampaignAndGrid() {
 
   const items = [
-    { title: "UNDER 199", img: "/under199.png", bg: "bg-[#F9F9F9]", priceValue: "199" },
-    { title: "UNDER 299", img: "/under299.png", bg: "bg-[#0A0A0A]", priceValue: "299" },
-    { title: "UNDER 499", img: "/under499.png", bg: "bg-[#F9F9F9]", priceValue: "499" },
-    { title: "UNDER 999", img: "/under999.png", bg: "bg-[#0A0A0A]", priceValue: "999" }
+    { title: "UNDER 199", img: "/under199-new.png", bg: "bg-[#F9F9F9]", priceValue: "199" },
+    { title: "UNDER 299", img: "/under299-new.png", bg: "bg-[#0A0A0A]", priceValue: "299" },
+    { title: "UNDER 599", img: "/under599-new.png", bg: "bg-[#F9F9F9]", priceValue: "599" },
+    { title: "UNDER 999", img: "/under999-new.png", bg: "bg-[#0A0A0A]", priceValue: "999" }
   ];
 
   return (
@@ -24,9 +24,9 @@ export default function CampaignAndGrid() {
             <h2 className="font-serif text-4xl md:text-7xl mb-6 drop-shadow-md">
               Curated For The Unforgettable
             </h2>
-            <a href="#" className="border-b border-white pb-1 text-xs uppercase tracking-widest hover:opacity-70 transition-opacity drop-shadow-md">
+            <Link href="/catalogue" className="border-b border-white pb-1 text-xs uppercase tracking-widest hover:opacity-70 transition-opacity drop-shadow-md">
               explore the unmatched imported collection
-            </a>
+            </Link>
           </div>
         </section>
       </div>

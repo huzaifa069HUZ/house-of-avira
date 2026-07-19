@@ -43,7 +43,8 @@ export default function ProductClient({ params: paramsPromise }) {
       price: product.price,
       image: productImage,
       size: selectedSize,
-      color: selectedSwatch?.colorName || selectedColor
+      color: selectedSwatch?.colorName || selectedColor,
+      availableSizes: product.sizes || []
     });
   };
 
