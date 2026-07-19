@@ -306,19 +306,23 @@ export default function CartSlideOver() {
                                 {item.title}
                               </h3>
                               <div className="flex items-center gap-2 mt-0.5">
-                                <div className="relative">
-                                  <select
-                                    value={item.size || ''}
-                                    onChange={(e) => updateItemSize(item.cartItemId || item.id, e.target.value)}
-                                    className="appearance-none border border-gray-200 rounded-md pl-2.5 pr-7 py-1 text-[11px] font-bold text-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer shadow-sm outline-none uppercase tracking-widest"
-                                  >
-                                    {!item.size && <option value="" disabled>SIZE</option>}
-                                    {(item.availableSizes && item.availableSizes.length > 0 ? item.availableSizes : ['XS', 'S', 'M', 'L', 'XL', 'XXL', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45']).map(s => (
-                                      <option key={s} value={s}>{s}</option>
-                                    ))}
-                                  </select>
-                                  <ChevronDown className="w-3.5 h-3.5 text-gray-500 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
-                                </div>
+                                {item.size && (!item.availableSizes || item.availableSizes.length <= 1) ? (
+                                  <span className="text-[11px] font-bold text-gray-600 uppercase bg-gray-100 border border-gray-200 px-2.5 py-1.5 rounded-md shadow-sm">{item.size}</span>
+                                ) : (item.availableSizes && item.availableSizes.length > 1) ? (
+                                  <div className="relative">
+                                    <select
+                                      value={item.size || ''}
+                                      onChange={(e) => updateItemSize(item.cartItemId || item.id, e.target.value)}
+                                      className="appearance-none border border-gray-200 rounded-md pl-2.5 pr-7 py-1 text-[11px] font-bold text-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer shadow-sm outline-none uppercase tracking-widest"
+                                    >
+                                      {!item.size && <option value="" disabled>SIZE</option>}
+                                      {item.availableSizes.map(s => (
+                                        <option key={s} value={s}>{s}</option>
+                                      ))}
+                                    </select>
+                                    <ChevronDown className="w-3.5 h-3.5 text-gray-500 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                  </div>
+                                ) : null}
                                 {item.color && (
                                   <span className="text-[11px] font-bold text-gray-600 capitalize bg-gray-100 border border-gray-200 px-2.5 py-1.5 rounded-md shadow-sm">{item.color}</span>
                                 )}

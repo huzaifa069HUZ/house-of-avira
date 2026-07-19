@@ -81,7 +81,8 @@ export const useCartStore = create((set, get) => ({
         image: product.image || product.images?.[0] || null,
         size: product.size || null,
         color: product.color || null,
-        quantity: 1
+        quantity: 1,
+        availableSizes: product.availableSizes || []
       });
     }
 
