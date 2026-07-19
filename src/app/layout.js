@@ -63,15 +63,7 @@ export const metadata = {
   alternates: {
     canonical: "https://houseofavira.shop",
   },
-  icons: {
-    icon: [
-      { url: '/icon.png', type: 'image/png' },
-      { url: '/favicon.ico', sizes: 'any' }
-    ],
-    apple: [
-      { url: '/apple-icon.png', type: 'image/png' }
-    ]
-  },
+
   openGraph: {
     title: "HOUSE OF AVIRA | Avira Shopping | Premium Import Based Shopping",
     description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping and luxury aesthetics at House of Avira.",
