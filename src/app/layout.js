@@ -32,41 +32,50 @@ const dmSans = DM_Sans({
 
 export const metadata = {
   metadataBase: new URL("https://houseofavira.shop"),
-  title: "HOUSE OF AVIRA | Avira Shopping | Premium Import Based Shopping",
-  description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping, imported pinterest finds, trendy clothes, and luxury aesthetics at House of Avira Shopping.",
+  title: "House of Avira — Premium Imported Fashion Store India | Shop Pinterest Finds & Luxury Clothing",
+  description: "Shop premium imported fashion at House of Avira. Internationally sourced clothing, bags, shoes & accessories delivered to India. ✈️ Pinterest finds, Korean fashion, old money aesthetics, luxury streetwear & 5000+ orders delivered.",
   keywords: [
-    "House of Avira", 
-    "Avira Shopping", 
-    "HOUSEOFAVIRA", 
-    "premium shopping", 
-    "import based shopping", 
-    "trendy clothes", 
-    "luxury aesthetics", 
-    "international clothing india", 
-    "buy streetwear online",
-    "genz fashion store",
-    "korean fashion india",
-    "y2k fashion india",
-    "imported pinterest finds",
-    "aesthetic clothes",
-    "vintage clothing online",
-    "sneakers and collectibles",
-    "trendy bags and accessories",
-    "high quality imported clothes",
-    "Avira clothing brand",
-    "Avira fashion store",
-    "Avira"
+    "House of Avira",
+    "Avira Shopping",
+    "HOUSEOFAVIRA",
+    "imported clothing India",
+    "imported fashion India",
+    "premium imported clothing",
+    "luxury fashion India",
+    "Pinterest outfits India",
+    "Pinterest clothing India",
+    "old money outfits",
+    "quiet luxury clothing",
+    "Korean fashion India",
+    "Japanese streetwear India",
+    "aesthetic clothing India",
+    "imported dresses India",
+    "premium women's clothing",
+    "luxury men's clothing",
+    "designer inspired fashion",
+    "online luxury boutique India",
+    "buy imported clothes online",
+    "premium fashion store India",
+    "international fashion India",
+    "co-ord sets for women",
+    "oversized t-shirts India",
+    "luxury handbags India",
+    "imported heels",
+    "viral fashion products",
+    "trending women's fashion",
+    "celebrity inspired outfits",
+    "premium fashion accessories",
+    "vacation outfits",
+    "party dresses India",
+    "wedding guest dresses"
   ],
   verification: {
     google: "hliUadrK80fd7IaPduYmqG5-aOHzpBLlkWYOIt22yBA",
   },
-  alternates: {
-    canonical: "https://houseofavira.shop",
-  },
 
   openGraph: {
-    title: "HOUSE OF AVIRA | Avira Shopping | Premium Import Based Shopping",
-    description: "Internationally Sourced & Delivered to Your Doorstep. Discover premium shopping and luxury aesthetics at House of Avira.",
+    title: "House of Avira — Premium Imported Fashion Store India | Shop Pinterest Finds & Luxury Clothing",
+    description: "Shop premium imported fashion at House of Avira. Internationally sourced clothing, bags, shoes & accessories delivered to India. ✈️ Pinterest finds, Korean fashion, old money aesthetics, luxury streetwear & 5000+ orders delivered.",
     url: "https://houseofavira.shop",
     siteName: "House of Avira",
     images: [
@@ -82,8 +91,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HOUSE OF AVIRA | Avira Shopping | Premium Import Based Shopping",
-    description: "Internationally Sourced & Delivered to Your Doorstep. Discover imported pinterest finds at House of Avira.",
+    title: "House of Avira — Premium Imported Fashion Store India | Shop Pinterest Finds & Luxury Clothing",
+    description: "Shop premium imported fashion at House of Avira. Internationally sourced clothing, bags, shoes & accessories delivered to India. ✈️ Pinterest finds, Korean fashion, old money aesthetics, luxury streetwear & 5000+ orders delivered.",
     images: ["/opengraph-image.png"],
   },
   robots: {
@@ -109,20 +118,40 @@ export default function RootLayout({ children }) {
         "@type": "Organization",
         "@id": "https://houseofavira.shop/#organization",
         "name": "House of Avira",
-        "alternateName": ["Avira Shopping", "HOUSEOFAVIRA"],
+        "alternateName": ["Avira Shopping", "HOUSEOFAVIRA", "Avira Fashion Store"],
         "url": "https://houseofavira.shop",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://houseofavira.shop/LOGO.png"
+          "url": "https://houseofavira.shop/LOGO.png",
+          "width": 512,
+          "height": 512
         },
-        "description": "Internationally Sourced & Delivered to Your Doorstep. Premium import based shopping for trendy clothes.",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "customer support",
-          "email": "support@houseofavira.shop"
+        "image": "https://houseofavira.shop/opengraph-image.png",
+        "description": "Premium import-based fashion store in India. Internationally sourced clothing, bags, shoes & accessories delivered to your doorstep. Shop Pinterest finds, Korean fashion, luxury aesthetics & trending styles.",
+        "foundingDate": "2022",
+        "areaServed": {
+          "@type": "Country",
+          "name": "India"
         },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "support@houseofavira.shop",
+            "availableLanguage": ["English", "Hindi"]
+          }
+        ],
         "sameAs": [
           "https://www.instagram.com/houseofavira"
+        ],
+        "knowsAbout": [
+          "Imported Fashion",
+          "Luxury Clothing",
+          "Korean Fashion",
+          "Pinterest Fashion",
+          "Streetwear",
+          "Old Money Fashion",
+          "Premium Accessories"
         ]
       },
       {
@@ -130,30 +159,59 @@ export default function RootLayout({ children }) {
         "@id": "https://houseofavira.shop/#website",
         "url": "https://houseofavira.shop",
         "name": "House of Avira",
+        "description": "Premium imported fashion store India — Shop internationally sourced clothing, bags, shoes & accessories",
         "publisher": {
           "@id": "https://houseofavira.shop/#organization"
         },
+        "inLanguage": "en-IN",
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://houseofavira.shop/catalogue?q={search_term_string}",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://houseofavira.shop/catalogue?search={search_term_string}"
+          },
           "query-input": "required name=search_term_string"
         }
       },
       {
         "@type": "Store",
+        "@id": "https://houseofavira.shop/#store",
         "name": "House of Avira",
-        "image": "https://houseofavira.shop/icon.png",
-        "@id": "https://houseofavira.shop",
+        "image": "https://houseofavira.shop/LOGO.png",
         "url": "https://houseofavira.shop",
-        "priceRange": "$$$",
-        "description": "Premium imported fashion, streetwear, and GenZ aesthetic clothing store."
+        "priceRange": "₹₹₹",
+        "currenciesAccepted": "INR",
+        "paymentAccepted": "UPI, Credit Card, Debit Card, Net Banking, COD",
+        "description": "Premium imported fashion store offering internationally sourced clothing, bags, shoes, jewelry & accessories delivered across India.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "IN"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "00:00",
+          "closes": "23:59"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Imported Fashion Collection",
+          "itemListElement": [
+            {"@type": "OfferCatalog", "name": "Women's Clothing"},
+            {"@type": "OfferCatalog", "name": "Men's Clothing"},
+            {"@type": "OfferCatalog", "name": "Luxury Bags"},
+            {"@type": "OfferCatalog", "name": "Premium Footwear"},
+            {"@type": "OfferCatalog", "name": "Fashion Accessories"},
+            {"@type": "OfferCatalog", "name": "Collectibles"}
+          ]
+        }
       }
     ]
   };
 
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} ${dmSans.variable} h-full antialiased`}
     >
       <head>

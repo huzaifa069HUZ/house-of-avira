@@ -24,6 +24,22 @@ async function getProduct(idOrSlug) {
   return null;
 }
 
+// Map category slugs to readable names for breadcrumbs
+function getCategoryDisplay(category) {
+  const map = {
+    women: "Women's Clothing",
+    men: "Men's Clothing",
+    footwear: 'Footwear',
+    bags: 'Bags',
+    accessories: 'Accessories',
+    collectibles: 'Collectibles',
+    pets: 'Pets',
+  };
+  if (!category) return { name: 'Shop', slug: 'catalogue' };
+  const mainCat = category.split('/')[0]?.toLowerCase();
+  return { name: map[mainCat] || category, slug: mainCat || 'catalogue' };
+}
+
 export async function generateMetadata({ params: paramsPromise }) {
   const params = await paramsPromise;
   const product = await getProduct(params.id);
@@ -36,27 +52,39 @@ export async function generateMetadata({ params: paramsPromise }) {
 
   const images = product.images || [];
   const imageUrl = images.length > 0 ? images[0] : '/opengraph-image.png';
+  const productSlug = product.slug || product.id;
+  const canonicalUrl = `https://houseofavira.shop/product/${productSlug}`;
+  
+  const seoTitle = `${product.name} — Buy Imported ${product.category || 'Fashion'} India | House of Avira`;
+  const seoDesc = product.description 
+    ? `${product.description.substring(0, 140)}. Shop at House of Avira.`
+    : `Buy ${product.name} at House of Avira. Premium imported ${(product.category || 'fashion').toLowerCase()} delivered to India. Internationally sourced, authentic quality.`;
 
   return {
-    title: `${product.name} | House of Avira`,
-    description: product.description ? product.description.substring(0, 160) : `Buy ${product.name} from House of Avira. Premium import based shopping for trendy clothes.`,
+    title: seoTitle,
+    description: seoDesc,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
-      title: `${product.name} | House of Avira`,
-      description: product.description ? product.description.substring(0, 160) : `Buy ${product.name} from House of Avira.`,
+      title: seoTitle,
+      description: seoDesc,
+      url: canonicalUrl,
+      siteName: 'House of Avira',
       images: [
         {
           url: imageUrl,
           width: 800,
           height: 800,
-          alt: product.name,
+          alt: `${product.name} — Imported Fashion at House of Avira`,
         },
       ],
-      type: 'article',
+      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${product.name} | House of Avira`,
-      description: product.description ? product.description.substring(0, 160) : `Buy ${product.name} from House of Avira.`,
+      title: seoTitle,
+      description: seoDesc,
       images: [imageUrl],
     }
   };
@@ -66,34 +94,99 @@ export default async function ProductPage({ params }) {
   const resolvedParams = await params;
   const product = await getProduct(resolvedParams.id);
   
-  // Create Product structured data
-  const jsonLd = product ? {
+  if (!product) {
+    return <ProductClient params={params} />;
+  }
+
+  const productSlug = product.slug || product.id;
+  const canonicalUrl = `https://houseofavira.shop/product/${productSlug}`;
+  const catInfo = getCategoryDisplay(product.category);
+
+  // Enhanced Product structured data
+  const productSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     image: product.images || [],
-    description: product.description || `Buy ${product.name} from House of Avira`,
+    description: product.description || `Buy ${product.name} from House of Avira — premium imported fashion delivered to India.`,
+    sku: product.sku || `HOA-${product.id}`,
+    brand: {
+      '@type': 'Brand',
+      name: 'House of Avira'
+    },
+    category: product.category || 'Fashion',
+    color: product.swatches?.[0]?.colorName || undefined,
     offers: {
       '@type': 'Offer',
-      url: `https://houseofavira.shop/product/${product.slug || product.id}`,
+      url: canonicalUrl,
       priceCurrency: 'INR',
       price: product.price,
-      availability: 'https://schema.org/InStock',
+      availability: 'https://schema.org/PreOrder',
+      priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      itemCondition: 'https://schema.org/NewCondition',
       seller: {
-        '@type': 'Organization',
-        name: 'House of Avira'
+        '@id': 'https://houseofavira.shop/#organization'
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'IN'
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 7,
+            maxValue: 21,
+            unitCode: 'd'
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 7,
+            unitCode: 'd'
+          }
+        }
       }
     }
-  } : null;
+  };
+
+  // BreadcrumbList schema
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://houseofavira.shop'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: catInfo.name,
+        item: `https://houseofavira.shop/category/${catInfo.slug}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.name
+      }
+    ]
+  };
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <ProductClient params={params} />
     </>
   );

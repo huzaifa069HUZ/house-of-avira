@@ -267,3 +267,16 @@ html {
 .scroll-reel-exit {
   animation: scroll-reel-exit 0.24s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
+
+/* Screen reader only - SEO content visible to crawlers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
