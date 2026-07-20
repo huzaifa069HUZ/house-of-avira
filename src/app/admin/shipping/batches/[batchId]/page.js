@@ -238,9 +238,9 @@ export default function BatchDetailPage({ params }) {
                     const allocation = allocations.find(a => a.order_id === order.id);
                     return (
                       <tr key={order.id} className="hover:bg-[#F5F5F7]/50 transition-colors">
-                        <td className="px-5 py-3">
-                          <span className="text-sm font-bold text-black">{order.id?.substring(0,8)}</span>
-                        </td>
+                        <td className="px-5 py-4 whitespace-nowrap">
+                        <span className="text-sm font-bold text-black">#{order.id}</span>
+                      </td>
                         <td className="px-5 py-3">
                           <div className="flex flex-col">
                             <span className="text-sm font-semibold text-black">{order.customer_name}</span>
@@ -437,8 +437,8 @@ export default function BatchDetailPage({ params }) {
         isOpen={confirmModal.isOpen && confirmModal.type === 'REMOVE_ORDER'}
         onClose={() => setConfirmModal({ isOpen: false })}
         onConfirm={() => handleRemoveOrder(confirmModal.data?.id)}
-        title="Remove Order"
-        message={`Are you sure you want to remove order ${confirmModal.data?.id?.substring(0,8)} from this batch?`}
+        title="Remove Order from Batch"
+        message={`Are you sure you want to remove order #${confirmModal.data?.id} from this batch?`}
         confirmText="Remove Order"
         confirmVariant="destructive"
         loading={actionLoading}

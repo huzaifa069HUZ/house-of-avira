@@ -62,7 +62,7 @@ export default function BatchesPage() {
 
   const filteredBatches = batches.filter(batch => {
     if (!search) return true;
-    const s = search.toLowerCase();
+    const s = search.replace(/#/g, '').toLowerCase();
     return (
       batch.id?.toLowerCase().includes(s) ||
       batch.batch_name?.toLowerCase().includes(s)

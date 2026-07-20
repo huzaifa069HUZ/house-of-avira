@@ -103,7 +103,7 @@ export default function TrackOrderClient() {
                   id="trk-oid"
                   type="text"
                   className="trk-input"
-                  placeholder="e.g. HOR-001"
+                  placeholder="e.g. #HOA001"
                   value={orderId}
                   onChange={e => setOrderId(e.target.value.toUpperCase())}
                   autoComplete="off"

@@ -3,11 +3,14 @@ import { adminDb } from '@/lib/firebase-admin';
 
 export async function POST(request) {
   try {
-    const { orderId, contact } = await request.json();
+    let { orderId, contact } = await request.json();
 
     if (!orderId || !contact) {
       return NextResponse.json({ error: 'Order ID and Contact info are required.' }, { status: 400 });
     }
+    
+    // Normalize orderId (remove # and spaces) for robust searching
+    orderId = orderId.replace(/[\s#]/g, '').toUpperCase();
 
     const orderDoc = await adminDb.collection('orders').doc(orderId).get();
 

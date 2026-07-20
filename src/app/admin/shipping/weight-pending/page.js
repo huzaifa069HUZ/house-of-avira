@@ -83,7 +83,7 @@ export default function WeightPendingPage() {
 
   const filteredOrders = orders.filter(order => {
     if (!search) return true;
-    const s = search.toLowerCase();
+    const s = search.replace(/#/g, '').toLowerCase();
     return (
       order.id?.toLowerCase().includes(s) ||
       order.customer_name?.toLowerCase().includes(s) ||
@@ -180,7 +180,7 @@ export default function WeightPendingPage() {
                       }`}
                     >
                       <td className="px-5 py-4 whitespace-nowrap">
-                        <span className="text-xs font-bold text-black">{order.id?.substring(0, 8)}...</span>
+                        <span className="text-xs font-bold text-black">#{order.id}</span>
                       </td>
                       <td className="px-5 py-4">
                         <div className="flex flex-col">

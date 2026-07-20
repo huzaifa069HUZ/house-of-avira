@@ -126,7 +126,7 @@ export async function POST(request) {
       }
       
       const paddedSeq = String(seq).padStart(3, '0');
-      newOrderId = `HOR-${paddedSeq}`;
+      newOrderId = `HOA${paddedSeq}`;
       
       // Update counter
       t.set(counterRef, { seq }, { merge: true });

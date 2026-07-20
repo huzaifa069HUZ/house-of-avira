@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { BarChart3, ShoppingBag, Users, User, Phone, Mail, Loader2, CheckCircle2 } from 'lucide-react';
+import { BarChart3, ShoppingBag, Users, User, Phone, Mail, Loader2, CheckCircle2, Send, X } from 'lucide-react';
 
 export default function CartAnalytics() {
   const [allUsers, setAllUsers] = useState([]);
@@ -12,6 +12,86 @@ export default function CartAnalytics() {
   const [activeTab, setActiveTab] = useState('carts'); // 'carts' or 'users'
   const [sendingIds, setSendingIds] = useState(new Set());
   const [sentIds, setSentIds] = useState(new Set());
+  
+  // Bulk sending states
+  const [isSendingBulk, setIsSendingBulk] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState(0);
+  const [bulkTotal, setBulkTotal] = useState(0);
+  
+  // Promo Modal states
+  const [isPromoModalOpen, setIsPromoModalOpen] = useState(false);
+  const [promoSubject, setPromoSubject] = useState('');
+  const [promoMessage, setPromoMessage] = useState('');
+
+  const handleSendAllReminders = async () => {
+    const unsentCarts = abandonedCarts.filter(cart => !sentIds.has(cart.id)).slice(0, 50);
+    if (unsentCarts.length === 0) {
+      alert('All active carts have already been sent a reminder in this session!');
+      return;
+    }
+    
+    if (!confirm(`Are you sure you want to send reminder emails to ${unsentCarts.length} users?`)) return;
+
+    setIsSendingBulk(true);
+    setBulkTotal(unsentCarts.length);
+    setBulkProgress(0);
+
+    for (let i = 0; i < unsentCarts.length; i++) {
+      const cart = unsentCarts[i];
+      await handleSendReminder(cart);
+      setBulkProgress(i + 1);
+      if (i < unsentCarts.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
+
+    setIsSendingBulk(false);
+    alert('Finished sending bulk reminders!');
+  };
+
+  const handleSendPromo = async () => {
+    if (!promoSubject || !promoMessage) {
+      alert('Please fill in both subject and message.');
+      return;
+    }
+    
+    const usersToSend = allUsers.slice(0, 50);
+    if (!confirm(`Are you sure you want to send this promotional email to ${usersToSend.length} users?`)) return;
+
+    setIsSendingBulk(true);
+    setBulkTotal(usersToSend.length);
+    setBulkProgress(0);
+    setIsPromoModalOpen(false);
+
+    for (let i = 0; i < usersToSend.length; i++) {
+      const user = usersToSend[i];
+      try {
+        await fetch('/api/send-custom-mail', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: user.email,
+            name: user.name,
+            subject: promoSubject,
+            message: promoMessage,
+            link: 'https://houseofavira.shop/catalogue'
+          }),
+        });
+      } catch (error) {
+        console.error("Error sending promo to", user.email, ":", error);
+      }
+      
+      setBulkProgress(i + 1);
+      if (i < usersToSend.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
+
+    setIsSendingBulk(false);
+    alert('Finished sending promotional emails!');
+    setPromoSubject('');
+    setPromoMessage('');
+  };
 
   const handleSendReminder = async (cart) => {
     setSendingIds(prev => new Set(prev).add(cart.id));
@@ -134,20 +214,46 @@ export default function CartAnalytics() {
 
       {/* Main Content Area */}
       <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 overflow-hidden flex flex-col">
-        {/* Tabs */}
-        <div className="flex border-b border-[#d2d2d7]/50 bg-gray-50/30">
-          <button 
-            onClick={() => setActiveTab('carts')}
-            className={`px-6 py-4 text-sm font-semibold transition-colors border-b-2 ${activeTab === 'carts' ? 'border-black text-black' : 'border-transparent text-[#86868b] hover:text-black'}`}
-          >
-            Abandoned Carts
-          </button>
-          <button 
-            onClick={() => setActiveTab('users')}
-            className={`px-6 py-4 text-sm font-semibold transition-colors border-b-2 ${activeTab === 'users' ? 'border-black text-black' : 'border-transparent text-[#86868b] hover:text-black'}`}
-          >
-            All Registered Users
-          </button>
+        {/* Tabs and Actions */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#d2d2d7]/50 bg-gray-50/30 pr-0 sm:pr-4">
+          <div className="flex">
+            <button 
+              onClick={() => setActiveTab('carts')}
+              className={`px-6 py-4 text-sm font-semibold transition-colors border-b-2 ${activeTab === 'carts' ? 'border-black text-black' : 'border-transparent text-[#86868b] hover:text-black'}`}
+            >
+              Abandoned Carts
+            </button>
+            <button 
+              onClick={() => setActiveTab('users')}
+              className={`px-6 py-4 text-sm font-semibold transition-colors border-b-2 ${activeTab === 'users' ? 'border-black text-black' : 'border-transparent text-[#86868b] hover:text-black'}`}
+            >
+              All Registered Users
+            </button>
+          </div>
+          
+          <div className="px-6 pb-4 sm:px-0 sm:pb-0">
+            {activeTab === 'carts' && abandonedCarts.length > 0 && (
+              <button 
+                onClick={handleSendAllReminders}
+                disabled={isSendingBulk}
+                className="inline-flex w-full sm:w-auto justify-center items-center gap-2 px-4 py-2.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+              >
+                {isSendingBulk ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                {isSendingBulk ? `Sending (${bulkProgress}/${bulkTotal})` : 'Send to All Carts (Max 50)'}
+              </button>
+            )}
+            
+            {activeTab === 'users' && allUsers.length > 0 && (
+              <button 
+                onClick={() => setIsPromoModalOpen(true)}
+                disabled={isSendingBulk}
+                className="inline-flex w-full sm:w-auto justify-center items-center gap-2 px-4 py-2.5 bg-black text-white text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+              >
+                {isSendingBulk ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                {isSendingBulk ? `Sending (${bulkProgress}/${bulkTotal})` : 'Send Promo to All (Max 50)'}
+              </button>
+            )}
+          </div>
         </div>
         
         {/* Tab Content */}
@@ -295,6 +401,72 @@ export default function CartAnalytics() {
           )}
         </div>
       </div>
+
+      {/* Promo Email Modal */}
+      {isPromoModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setIsPromoModalOpen(false)}>
+          <div 
+            className="bg-white rounded-2xl w-full max-w-lg overflow-hidden flex flex-col shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="px-6 py-4 border-b border-[#d2d2d7]/50 flex justify-between items-center bg-[#FAFAFA]">
+              <div>
+                <h3 className="text-lg font-semibold text-black">Send Promotional Email</h3>
+                <p className="text-sm text-[#86868b]">Will be sent to max 50 registered users.</p>
+              </div>
+              <button 
+                onClick={() => setIsPromoModalOpen(false)}
+                className="p-2 hover:bg-[#E5E5EA] rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-[#86868b]" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-black mb-1">Subject</label>
+                <input
+                  type="text"
+                  placeholder="e.g. 50% Off Our New Collection!"
+                  value={promoSubject}
+                  onChange={(e) => setPromoSubject(e.target.value)}
+                  className="w-full px-4 py-2 bg-white border border-[#d2d2d7] rounded-lg text-sm text-black placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-black mb-1">Message</label>
+                <textarea
+                  placeholder="Type your beautiful message here. We will format it into a stunning House of Avira email template..."
+                  value={promoMessage}
+                  onChange={(e) => setPromoMessage(e.target.value)}
+                  rows={6}
+                  className="w-full px-4 py-2 bg-white border border-[#d2d2d7] rounded-lg text-sm text-black placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all resize-none"
+                />
+                <p className="text-xs text-[#86868b] mt-2">
+                  A "View Catalogue" button linking to your catalogue will be automatically added at the bottom.
+                </p>
+              </div>
+            </div>
+
+            <div className="px-6 py-4 bg-[#FAFAFA] border-t border-[#d2d2d7]/50 flex justify-end gap-3">
+              <button
+                onClick={() => setIsPromoModalOpen(false)}
+                className="px-4 py-2 text-sm font-semibold text-black bg-white border border-[#d2d2d7] rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendPromo}
+                disabled={!promoSubject || !promoMessage}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+              >
+                <Send className="w-4 h-4" />
+                Send Email
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

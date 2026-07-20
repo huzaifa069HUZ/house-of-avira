@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { formatCurrency } from '@/lib/shipping-constants';
-import { Loader2, X, Phone, Mail, MapPin, CreditCard, Clock, Package, AtSign } from 'lucide-react';
+import { Loader2, X, Phone, Mail, MapPin, CreditCard, Clock, Package, AtSign, Search } from 'lucide-react';
 import StatusBadge from './shipping/StatusBadge';
 import Image from 'next/image';
 
@@ -13,6 +13,7 @@ export default function OrderManager() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     async function fetchAllOrders() {
@@ -59,14 +60,38 @@ export default function OrderManager() {
     );
   }
 
+  const filteredOrders = orders.filter(order => {
+    if (!searchTerm) return true;
+    const s = searchTerm.replace(/#/g, '').toLowerCase();
+    return (
+      order.id?.toLowerCase().includes(s) ||
+      order.customer_name?.toLowerCase().includes(s) ||
+      order.customer_email?.toLowerCase().includes(s) ||
+      order.customer_phone?.toLowerCase().includes(s)
+    );
+  });
+
   return (
     <div className="bg-white rounded-2xl border border-[#d2d2d7]/50 shadow-sm overflow-hidden font-dm-sans">
-      <div className="p-6 border-b border-[#d2d2d7]/50 bg-[#FAFAFA] flex justify-between items-center">
+      <div className="p-6 border-b border-[#d2d2d7]/50 bg-[#FAFAFA] flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
           <h2 className="text-xl font-semibold text-black tracking-tight">Recent Orders</h2>
           <p className="text-sm text-[#86868b] mt-1">View all store orders.</p>
           {error && <p className="text-sm text-red-500 mt-2">Error: {error}</p>}
         </div>
+        
+        {orders.length > 0 && (
+          <div className="relative w-full sm:max-w-xs shrink-0">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#86868b]" />
+            <input
+              type="text"
+              placeholder="Search by order ID, name..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 bg-white border border-[#d2d2d7] rounded-lg text-sm text-black placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all shadow-sm"
+            />
+          </div>
+        )}
       </div>
 
       <div className="overflow-x-auto">
@@ -80,21 +105,21 @@ export default function OrderManager() {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#d2d2d7]/30">
-            {orders.length === 0 ? (
+            {filteredOrders.length === 0 ? (
               <tr>
                 <td colSpan="4" className="py-12 text-center text-[#86868b] text-sm">
-                  No orders found.
+                  {orders.length === 0 ? 'No orders found.' : 'No matching orders found.'}
                 </td>
               </tr>
             ) : (
-              orders.map((order) => (
+              filteredOrders.map((order) => (
                 <tr 
                   key={order.id} 
                   onClick={() => openModal(order)}
                   className="hover:bg-[#F5F5F7]/50 transition-colors cursor-pointer"
                 >
                   <td className="py-4 px-6">
-                    <div className="font-semibold text-black text-sm mb-1 uppercase tracking-wider">#{order.id.slice(-6)}</div>
+                    <div className="font-semibold text-black text-sm mb-1 uppercase tracking-wider">#{order.id}</div>
                     <div className="text-xs text-[#86868b]">
                       {new Date(order.created_at).toLocaleDateString()}
                     </div>
@@ -129,7 +154,7 @@ export default function OrderManager() {
             {/* Modal Header */}
             <div className="px-6 py-4 border-b border-[#d2d2d7]/50 flex justify-between items-center bg-[#FAFAFA]">
               <div>
-                <h3 className="text-lg font-semibold text-black">Order #{selectedOrder.id.slice(-6).toUpperCase()}</h3>
+                <h3 className="text-lg font-semibold text-black">Order #{selectedOrder.id.toUpperCase()}</h3>
                 <p className="text-sm text-[#86868b]">
                   Placed on {new Date(selectedOrder.created_at).toLocaleString()}
                 </p>

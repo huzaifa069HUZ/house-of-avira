@@ -108,7 +108,7 @@ export default function InvoicesPage() {
     
     // Search filter
     if (!search) return true;
-    const s = search.toLowerCase();
+    const s = search.replace(/#/g, '').toLowerCase();
     return (
       inv.invoice_number?.toLowerCase().includes(s) ||
       inv.order_id?.toLowerCase().includes(s) ||
@@ -231,10 +231,8 @@ export default function InvoicesPage() {
                         </Link>
                       </div>
                     </td>
-                    <td className="px-5 py-4 whitespace-nowrap">
-                      <div className="text-xs font-bold text-[#86868b] flex items-center gap-1.5">
-                        {inv.order_id?.substring(0,8)}
-                      </div>
+                    <td className="px-5 py-4 whitespace-nowrap text-sm text-[#86868b]">
+                      #{inv.order_id}
                     </td>
                     <td className="px-5 py-4 whitespace-nowrap">
                       <span className="text-sm font-bold text-black">
@@ -263,7 +261,7 @@ export default function InvoicesPage() {
                               <Send className="w-3.5 h-3.5" />
                             </button>
                             <a
-                              href={`https://wa.me/${formatWhatsAppNumber(inv.customer_phone)}?text=${encodeURIComponent(`Hello ${inv.customer_name},\n\nHere is your shipping invoice ${inv.invoice_number} linked to order ${inv.order_id.substring(0,8)} at House of Avira.\n\nAmount Due: ${formatCurrency(inv.amount_due, 'INR')}\n\n${inv.payment_link_url ? `Please pay here: ${inv.payment_link_url}` : 'Please complete the payment to proceed with shipping.'}\n\nLet us know if you need any help!`)}`}
+                              href={`https://wa.me/${formatWhatsAppNumber(inv.customer_phone)}?text=${encodeURIComponent(`Hello ${inv.customer_name},\n\nHere is your shipping invoice ${inv.invoice_number} linked to order #${inv.order_id} at House of Avira.\n\nAmount Due: ${formatCurrency(inv.amount_due, 'INR')}\n\n${inv.payment_link_url ? `Please pay here: ${inv.payment_link_url}` : 'Please complete the payment to proceed with shipping.'}\n\nLet us know if you need any help!`)}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="w-8 h-8 rounded-full bg-[#F5F5F7] text-[#86868b] flex items-center justify-center hover:bg-green-50 hover:text-green-600 transition-colors"
