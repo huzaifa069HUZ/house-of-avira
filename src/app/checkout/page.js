@@ -79,7 +79,7 @@ export default function CheckoutPage() {
                  ...prev,
                  fullName: user.name || '',
                  email: user.email || '',
-                 phone: user.phoneNumber || '',
+                 phone: (user.phone || user.phoneNumber || '').replace('+91 ', ''),
                }));
             }
           }
@@ -98,7 +98,7 @@ export default function CheckoutPage() {
       ...prev,
       fullName: user?.name || prev.fullName,
       email: user?.email || prev.email,
-      phone: user?.phoneNumber || prev.phone,
+      phone: (user?.phone || user?.phoneNumber || '').replace('+91 ', '') || prev.phone,
       addressLine1: addr.street || '',
       addressLine2: '',
       city: addr.city || '',
@@ -109,6 +109,9 @@ export default function CheckoutPage() {
   };
 
   const handleChange = (field, value) => {
+    if (field === 'phone') {
+      value = value.replace(/\D/g, '').slice(0, 10);
+    }
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

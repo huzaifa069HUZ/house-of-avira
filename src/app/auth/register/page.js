@@ -106,7 +106,7 @@ export default function Register() {
                 required
                 className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-r-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
                 placeholder="1234567890"
               />
             </div>
