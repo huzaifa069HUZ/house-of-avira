@@ -6,7 +6,7 @@ import { Receipt, Search, Loader2, Send, CheckCircle2, Clock, XCircle, Mail, Pac
 import Link from 'next/link';
 import StatusBadge from '@/components/admin/shipping/StatusBadge';
 import ConfirmModal from '@/components/admin/shipping/ConfirmModal';
-import { formatCurrency, getCurrencyForCountry } from '@/lib/shipping-constants';
+import { formatCurrency, getCurrencyForCountry, isOrderIdMatch } from '@/lib/shipping-constants';
 
 export default function InvoicesPage() {
   const searchParams = useSearchParams();
@@ -111,7 +111,7 @@ export default function InvoicesPage() {
     const s = search.replace(/#/g, '').toLowerCase();
     return (
       inv.invoice_number?.toLowerCase().includes(s) ||
-      inv.order_id?.toLowerCase().includes(s) ||
+      isOrderIdMatch(inv.order_id, search) ||
       inv.customer_name?.toLowerCase().includes(s) ||
       inv.customer_email?.toLowerCase().includes(s)
     );

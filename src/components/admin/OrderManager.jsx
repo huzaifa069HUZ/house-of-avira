@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
-import { formatCurrency } from '@/lib/shipping-constants';
+import { formatCurrency, isOrderIdMatch } from '@/lib/shipping-constants';
 import { Loader2, X, Phone, Mail, MapPin, CreditCard, Clock, Package, AtSign, Search } from 'lucide-react';
 import StatusBadge from './shipping/StatusBadge';
 import Image from 'next/image';
@@ -64,7 +64,7 @@ export default function OrderManager() {
     if (!searchTerm) return true;
     const s = searchTerm.replace(/#/g, '').toLowerCase();
     return (
-      order.id?.toLowerCase().includes(s) ||
+      isOrderIdMatch(order.id, searchTerm) ||
       order.customer_name?.toLowerCase().includes(s) ||
       order.customer_email?.toLowerCase().includes(s) ||
       order.customer_phone?.toLowerCase().includes(s)

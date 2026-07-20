@@ -10,11 +10,37 @@ export async function POST(request) {
     }
     
     // Normalize orderId (remove # and spaces) for robust searching
-    orderId = orderId.replace(/[\s#]/g, '').toUpperCase();
+    const cleanId = orderId.replace(/[\s#]/g, '').toUpperCase();
+    
+    // Generate possible ID combinations to make search super logical
+    // (e.g. searching 'hor31' should match 'HOR-031' or 'HOA031')
+    let possibleIds = [cleanId];
+    
+    const match = cleanId.match(/^([A-Z]+)(\d+)$/);
+    if (match) {
+      const prefix = match[1];
+      const num = match[2];
+      const paddedNum = num.padStart(3, '0');
+      
+      possibleIds = [
+        `${prefix}-${paddedNum}`, // e.g. HOR-031
+        `${prefix}${paddedNum}`,  // e.g. HOR031
+        `${prefix}-${num}`,       // e.g. HOR-31
+        `${prefix}${num}`,        // e.g. HOR31
+        cleanId
+      ];
+    }
 
-    const orderDoc = await adminDb.collection('orders').doc(orderId).get();
+    let orderDoc = null;
+    for (const pid of possibleIds) {
+      const doc = await adminDb.collection('orders').doc(pid).get();
+      if (doc.exists) {
+        orderDoc = doc;
+        break;
+      }
+    }
 
-    if (!orderDoc.exists) {
+    if (!orderDoc) {
       return NextResponse.json({ error: 'Order not found. Please verify your Order ID.' }, { status: 404 });
     }
 

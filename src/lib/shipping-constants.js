@@ -153,3 +153,24 @@ export function generateInvoiceNumber() {
   const ts = now.getTime().toString(36).toUpperCase();
   return `SHP-INV-${ts}`;
 }
+
+/**
+ * Normalizes an order ID or search string for robust matching.
+ * Removes spaces, dashes, hashes, and leading zeros from the numeric part.
+ * e.g., "#HOR-031" -> "hor31"
+ * e.g., "hor 31" -> "hor31"
+ * e.g., "HOA001" -> "hoa1"
+ */
+export function normalizeOrderId(id) {
+  if (!id) return '';
+  const cleaned = id.toString().replace(/[\s#-]/g, '').toLowerCase();
+  return cleaned.replace(/([a-z]+)0+(\d+)/, '$1$2');
+}
+
+/**
+ * Checks if search string robustly matches an orderId.
+ */
+export function isOrderIdMatch(orderId, searchStr) {
+  if (!orderId || !searchStr) return false;
+  return normalizeOrderId(orderId).includes(normalizeOrderId(searchStr));
+}

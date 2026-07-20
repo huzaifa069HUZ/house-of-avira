@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Boxes, Search, Loader2, PackageX, Calendar, Users, Scale, ArrowRight, Trash2, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import StatusBadge from '@/components/admin/shipping/StatusBadge';
-import { formatCurrency } from '@/lib/shipping-constants';
+import { formatCurrency, isOrderIdMatch } from '@/lib/shipping-constants';
 
 export default function BatchesPage() {
   const [batches, setBatches] = useState([]);
@@ -64,7 +64,7 @@ export default function BatchesPage() {
     if (!search) return true;
     const s = search.replace(/#/g, '').toLowerCase();
     return (
-      batch.id?.toLowerCase().includes(s) ||
+      isOrderIdMatch(batch.id, search) ||
       batch.batch_name?.toLowerCase().includes(s)
     );
   });

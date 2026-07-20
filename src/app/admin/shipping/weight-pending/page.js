@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Scale, Search, Loader2, Save, CheckCircle2, PackageX, ChevronRight } from 'lucide-react';
 import StatusBadge from '@/components/admin/shipping/StatusBadge';
-import { formatCurrency, getCurrencyForCountry } from '@/lib/shipping-constants';
+import { formatCurrency, getCurrencyForCountry, isOrderIdMatch } from '@/lib/shipping-constants';
 
 export default function WeightPendingPage() {
   const [orders, setOrders] = useState([]);
@@ -85,7 +85,7 @@ export default function WeightPendingPage() {
     if (!search) return true;
     const s = search.replace(/#/g, '').toLowerCase();
     return (
-      order.id?.toLowerCase().includes(s) ||
+      isOrderIdMatch(order.id, search) ||
       order.customer_name?.toLowerCase().includes(s) ||
       order.customer_email?.toLowerCase().includes(s) ||
       order.customer_country?.toLowerCase().includes(s)
