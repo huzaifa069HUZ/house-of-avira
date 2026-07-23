@@ -1,0 +1,126 @@
+import { NextResponse } from 'next/server';
+import crypto from 'crypto';
+import { adminDb } from '@/lib/firebase-admin';
+import { PRODUCT_PAYMENT_STATUS } from '@/lib/shipping-constants';
+// Note: Uncomment or import email service here when ready to send receipts
+// import { sendPaymentReceipt } from '@/lib/email-service';
+
+export async function POST(request) {
+  try {
+    // 1. Get raw body for webhook verification
+    const rawBody = await request.text();
+    const signature = request.headers.get('x-razorpay-signature');
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+
+    if (!signature || !secret) {
+      console.error('Missing signature or webhook secret');
+      return NextResponse.json(
+        { success: false, message: 'Invalid configuration or missing signature' },
+        { status: 400 }
+      );
+    }
+
+    // 2. Verify signature
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(rawBody)
+      .digest('hex');
+
+    if (expectedSignature !== signature) {
+      console.error('Invalid Razorpay Webhook signature');
+      return NextResponse.json(
+        { success: false, message: 'Invalid signature' },
+        { status: 400 }
+      );
+    }
+
+    // 3. Parse verified body
+    const event = JSON.parse(rawBody);
+
+    // 4. Handle events
+    if (event.event === 'payment.captured') {
+      const paymentEntity = event.payload.payment.entity;
+      const razorpayOrderId = paymentEntity.order_id;
+      const razorpayPaymentId = paymentEntity.id;
+
+      if (!adminDb) {
+        throw new Error('Database not connected.');
+      }
+
+      // Find order by razorpay_order_id
+      const ordersRef = adminDb.collection('orders');
+      const snapshot = await ordersRef.where('razorpay_order_id', '==', razorpayOrderId).get();
+
+      if (snapshot.empty) {
+        console.warn(`Webhook: Order with razorpay_order_id ${razorpayOrderId} not found.`);
+        return NextResponse.json({ success: true, message: 'Order not found, but webhook received.' });
+      }
+
+      const orderDoc = snapshot.docs[0];
+      const orderData = orderDoc.data();
+
+      // Idempotency check: if already confirmed, skip
+      if (orderData.product_payment_status !== PRODUCT_PAYMENT_STATUS.CONFIRMED) {
+        
+        // Extract payment details for receipt
+        const paymentDetails = {
+          method: paymentEntity.method,
+          bank: paymentEntity.bank || null,
+          wallet: paymentEntity.wallet || null,
+          vpa: paymentEntity.vpa || null,
+          card_last4: paymentEntity.card ? paymentEntity.card.last4 : null,
+          card_network: paymentEntity.card ? paymentEntity.card.network : null,
+          amount: paymentEntity.amount / 100, // stored in paise, convert to INR
+        };
+
+        await orderDoc.ref.update({
+          product_payment_status: PRODUCT_PAYMENT_STATUS.CONFIRMED,
+          razorpay_payment_id: razorpayPaymentId,
+          payment_details: paymentDetails,
+          updated_at: new Date().toISOString(),
+        });
+
+        console.log(`Webhook: Order ${orderDoc.id} confirmed via payment.captured`);
+        
+        // TODO: Send Payment Receipt email (Wave 4)
+        // if (orderData.customer_email) {
+        //   await sendPaymentReceipt({ id: orderDoc.id, ...orderData }, paymentDetails, razorpayPaymentId);
+        // }
+      } else {
+        console.log(`Webhook: Order ${orderDoc.id} already confirmed, skipping update.`);
+      }
+
+    } else if (event.event === 'payment.failed') {
+      const paymentEntity = event.payload.payment.entity;
+      const razorpayOrderId = paymentEntity.order_id;
+      
+      const ordersRef = adminDb.collection('orders');
+      const snapshot = await ordersRef.where('razorpay_order_id', '==', razorpayOrderId).get();
+      
+      if (!snapshot.empty) {
+        const orderDoc = snapshot.docs[0];
+        // We only want to log or mark failed if it's currently pending
+        if (orderDoc.data().product_payment_status === PRODUCT_PAYMENT_STATUS.PENDING) {
+          await orderDoc.ref.update({
+             // We can use FAILED if it exists, otherwise keep it PENDING but update attempts
+            product_payment_status: PRODUCT_PAYMENT_STATUS.FAILED || 'FAILED', 
+            updated_at: new Date().toISOString(),
+          });
+          console.log(`Webhook: Order ${orderDoc.id} marked as failed via payment.failed`);
+        }
+      }
+    }
+
+    // Always return 200 OK to Razorpay so it doesn't retry
+    return NextResponse.json({ success: true, message: 'Webhook processed' });
+
+  } catch (error) {
+    console.error('Webhook processing error:', error);
+    // Return 200 even on some internal errors if we don't want Razorpay to retry endlessly,
+    // but 500 will make it retry. Let's return 500 for actual unhandled exceptions so it retries.
+    return NextResponse.json(
+      { success: false, message: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+}

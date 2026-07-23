@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { sanitizeString, sanitizeEmail } from '@/lib/sanitize';
 
 export async function POST(request) {
   try {
-    const body = await request.json();
-    const { email, name, itemCount } = body;
+    const rawBody = await request.json();
+    const email = sanitizeEmail(rawBody.email);
+    const name = sanitizeString(rawBody.name, 100);
+    const itemCount = rawBody.itemCount;
 
     if (!email || !name || !itemCount) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });

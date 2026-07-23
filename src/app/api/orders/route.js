@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
 import Razorpay from 'razorpay';
+import { sanitizeOrderInput } from '@/lib/sanitize';
 import {
   ORDER_STATUS,
   WEIGHT_STATUS,
@@ -10,7 +11,8 @@ import {
 
 export async function POST(request) {
   try {
-    const body = await request.json();
+    const rawBody = await request.json();
+    const body = sanitizeOrderInput(rawBody);
 
     const {
       items,
@@ -98,7 +100,7 @@ export async function POST(request) {
       shipping_notes: null,
 
       // Order lifecycle
-      order_status: ORDER_STATUS.PRODUCT_PAID,
+      order_status: ORDER_STATUS.PLACED,
       created_at: now,
       updated_at: now,
     };

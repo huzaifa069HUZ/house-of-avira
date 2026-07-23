@@ -138,7 +138,13 @@ export default function CheckoutPage() {
   const totalPayable = Math.max(0, subtotal - discountAmount);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingPayment, setPendingPayment] = useState(null);
   const router = useRouter();
+
+  // Clear pending payment if cart changes
+  useEffect(() => {
+    setPendingPayment(null);
+  }, [cart]);
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -188,6 +194,13 @@ export default function CheckoutPage() {
     }
 
     setIsLoading(true);
+
+    // If we already have a pending payment for this exact cart state, just retry Razorpay
+    if (pendingPayment) {
+      openRazorpay(pendingPayment.db_order_id, pendingPayment.order_id, pendingPayment.amount, pendingPayment.currency);
+      return;
+    }
+
     try {
       // 1. Create order in Firestore
       const response = await fetch('/api/orders', {
@@ -235,6 +248,19 @@ export default function CheckoutPage() {
       const data = await response.json();
       const { db_order_id, order_id, amount, currency } = data;
       
+      setPendingPayment({ db_order_id, order_id, amount, currency });
+      
+      openRazorpay(db_order_id, order_id, amount, currency);
+      
+    } catch (err) {
+      console.error(err);
+      alert("Error placing order: " + err.message);
+      setIsLoading(false);
+    }
+  };
+
+  const openRazorpay = (db_order_id, order_id, amount, currency) => {
+    try {
       if (typeof window.Razorpay === 'undefined') {
         throw new Error('Razorpay script not loaded. Please try again.');
       }
@@ -300,10 +326,9 @@ export default function CheckoutPage() {
         setIsLoading(false);
       });
       paymentObject.open();
-      
     } catch (err) {
       console.error(err);
-      alert("Error placing order: " + err.message);
+      alert("Error starting payment: " + err.message);
       setIsLoading(false);
     }
   };

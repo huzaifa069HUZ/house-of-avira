@@ -35,7 +35,22 @@ export async function POST(request) {
     }
 
     const orderRef = adminDb.collection('orders').doc(db_order_id);
+    const orderDoc = await orderRef.get();
+    
+    if (!orderDoc.exists) {
+      return NextResponse.json(
+        { success: false, message: 'Order not found.' },
+        { status: 404 }
+      );
+    }
+
+    if (orderDoc.data().product_payment_status === PRODUCT_PAYMENT_STATUS.CONFIRMED) {
+      // Idempotency: Already confirmed, possibly by webhook
+      return NextResponse.json({ success: true, message: 'Payment verified successfully.' });
+    }
+
     await orderRef.update({
+      order_status: ORDER_STATUS.PRODUCT_PAID,
       product_payment_status: PRODUCT_PAYMENT_STATUS.CONFIRMED,
       razorpay_order_id,
       razorpay_payment_id,

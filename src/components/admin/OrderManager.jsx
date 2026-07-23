@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { formatCurrency, isOrderIdMatch } from '@/lib/shipping-constants';
-import { Loader2, X, Phone, Mail, MapPin, CreditCard, Clock, Package, AtSign, Search } from 'lucide-react';
+import { Loader2, X, Phone, Mail, MapPin, CreditCard, Clock, Package, AtSign, Search, Plus } from 'lucide-react';
 import StatusBadge from './shipping/StatusBadge';
 import Image from 'next/image';
 
-export default function OrderManager() {
+export default function OrderManager({ onAddOrder }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -81,15 +81,26 @@ export default function OrderManager() {
         </div>
         
         {orders.length > 0 && (
-          <div className="relative w-full sm:max-w-xs shrink-0">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#86868b]" />
-            <input
-              type="text"
-              placeholder="Search by order ID, name..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-white border border-[#d2d2d7] rounded-lg text-sm text-black placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all shadow-sm"
-            />
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="relative w-full sm:max-w-xs shrink-0">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#86868b]" />
+              <input
+                type="text"
+                placeholder="Search by order ID, name..."
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 bg-white border border-[#d2d2d7] rounded-lg text-sm text-black placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all shadow-sm"
+              />
+            </div>
+            {onAddOrder && (
+              <button
+                onClick={onAddOrder}
+                className="shrink-0 flex items-center gap-2 bg-black hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm"
+              >
+                <Plus className="w-4 h-4" />
+                <span className="hidden sm:inline">Create Order</span>
+              </button>
+            )}
           </div>
         )}
       </div>

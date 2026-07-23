@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
+import { sanitizeString } from '@/lib/sanitize';
 
 export async function POST(request) {
   try {
-    let { orderId, contact } = await request.json();
+    const rawBody = await request.json();
+    let orderId = sanitizeString(rawBody.orderId, 50);
+    let contact = sanitizeString(rawBody.contact, 100);
 
     if (!orderId || !contact) {
       return NextResponse.json({ error: 'Order ID and Contact info are required.' }, { status: 400 });

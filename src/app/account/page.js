@@ -9,6 +9,7 @@ import AddressManager from '@/components/profile/AddressManager';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { getStatusColor, ORDER_STATUS_LABELS, formatCurrency } from '@/lib/shipping-constants';
+import Script from 'next/script';
 
 export default function AccountPage() {
   const { user, role, loading, signOut, updateUser } = useAuthStore();
@@ -86,8 +87,79 @@ export default function AccountPage() {
     }
   };
 
+  const handleRetryPayment = async (orderId) => {
+    try {
+      const res = await fetch('/api/orders/retry-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId }),
+      });
+      const data = await res.json();
+      
+      if (!data.success) {
+        alert(data.message || 'Failed to initialize payment.');
+        return;
+      }
+      
+      const { db_order_id, order_id, amount, currency, customer_info } = data;
+      
+      if (typeof window.Razorpay === 'undefined') {
+        alert('Razorpay script not loaded. Please wait a moment and try again.');
+        return;
+      }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: amount.toString(),
+        currency: currency,
+        name: 'House of Avira',
+        description: 'Order Payment',
+        order_id: order_id,
+        handler: async function (response) {
+          try {
+            const verifyRes = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                db_order_id: db_order_id,
+              }),
+            });
+            const verifyData = await verifyRes.json();
+            if (verifyData.success) {
+              window.location.reload();
+            } else {
+              alert('Payment verification failed: ' + verifyData.message);
+            }
+          } catch (e) {
+            console.error(e);
+            alert('Verification error.');
+          }
+        },
+        prefill: {
+          name: customer_info?.name || user?.name || '',
+          email: customer_info?.email || user?.email || '',
+          contact: customer_info?.phone || user?.phone || '',
+        },
+        theme: { color: '#000000' }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.on('payment.failed', function (response) {
+        alert(response.error.description);
+      });
+      paymentObject.open();
+    } catch (e) {
+      console.error(e);
+      alert('Failed to retry payment');
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 pb-6 border-b border-black/10">
         <div>
           <h1 className="text-4xl md:text-5xl font-perandory tracking-tight text-[#000000] mb-2">My Account</h1>
@@ -225,6 +297,14 @@ export default function AccountPage() {
                           <p className="font-dm-sans font-bold text-lg text-black">
                             {formatCurrency(order.payable_amount, 'INR')}
                           </p>
+                          {order.product_payment_status === 'PENDING' && (
+                            <button
+                              onClick={() => handleRetryPayment(order.id)}
+                              className="mt-2 inline-block text-[9px] font-bold uppercase tracking-widest bg-[#8A001A] text-white px-3 py-1 hover:bg-[#8A001A]/80 transition-colors"
+                            >
+                              Retry Payment
+                            </button>
+                          )}
                         </div>
                         {(order.order_status === 'SHIPPING_INVOICED' || order.order_status === 'SHIPPING_PAID') && order.shipping_amount_due && (
                           <div className="text-right border-l border-black/10 pl-6">

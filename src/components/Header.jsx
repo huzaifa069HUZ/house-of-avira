@@ -8,10 +8,11 @@ import { useWishlistStore } from '@/store/wishlistStore';
 import { useCurrencyStore } from '@/store/currencyStore';
 import { useCartStore } from '@/store/cartStore';
 import CartSlideOver from '@/components/ui/CartSlideOver';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import PriceDisplay from '@/components/PriceDisplay';
+import { createSearchIndex, getTopSuggestions, getDidYouMean, logSearchAnalytics } from '@/lib/search';
 
 const menuData = [
   { title: "Shop All", href: "/catalogue" },
@@ -154,6 +155,7 @@ export default function Header() {
   const [allProducts, setAllProducts] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const searchRef = useRef(null);
   
   const isHome = pathname === '/';
@@ -204,15 +206,55 @@ export default function Header() {
     }
   };
 
-  const filteredProducts = allProducts.filter(p => {
-    if (!searchQuery) return false;
-    const term = searchQuery.toLowerCase();
-    return (
-      p.name?.toLowerCase().includes(term) ||
-      p.category?.toLowerCase().includes(term) ||
-      p.description?.toLowerCase().includes(term)
-    );
-  }).slice(0, 5);
+  const searchIndex = useMemo(() => {
+    if (allProducts.length === 0) return null;
+    return createSearchIndex(allProducts);
+  }, [allProducts]);
+
+  const filteredProducts = useMemo(() => {
+    if (!searchQuery || !searchIndex) return [];
+    return getTopSuggestions(searchIndex, searchQuery, 5);
+  }, [searchQuery, searchIndex]);
+
+  const didYouMean = useMemo(() => {
+    if (!searchQuery || filteredProducts.length > 0) return null;
+    return getDidYouMean(allProducts, searchQuery);
+  }, [searchQuery, filteredProducts.length, allProducts]);
+
+  useEffect(() => {
+    setSelectedIndex(-1);
+  }, [searchQuery]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      logSearchAnalytics(searchQuery, filteredProducts.length, 'header', user?.uid);
+      if (selectedIndex >= 0 && selectedIndex < filteredProducts.length) {
+        const selected = filteredProducts[selectedIndex];
+        router.push(`/product/${selected.slug || selected.id}`);
+      } else if (searchQuery) {
+        router.push(`/catalogue?search=${encodeURIComponent(searchQuery)}`);
+      }
+      setShowSearchDropdown(false);
+      setSearchQuery('');
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (filteredProducts.length > 0) {
+        setSelectedIndex(prev => (prev < filteredProducts.length - 1 ? prev + 1 : prev));
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (filteredProducts.length > 0) {
+        setSelectedIndex(prev => (prev > 0 ? prev - 1 : -1));
+      }
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    logSearchAnalytics(searchQuery, filteredProducts.length, 'header', user?.uid);
+    setShowSearchDropdown(false);
+    setSearchQuery('');
+  };
 
   const handleUserClick = () => {
     if (user) {
@@ -304,6 +346,7 @@ export default function Header() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onFocus={handleSearchFocus}
+                    onKeyDown={handleKeyDown}
                     className="bg-transparent outline-none w-24 md:w-32 lg:w-48 text-sm placeholder:text-current opacity-80 font-dm-sans"
                   />
                 </div>
@@ -336,6 +379,7 @@ export default function Header() {
                         placeholder="Search products..." 
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         className="bg-transparent outline-none flex-1 text-base placeholder:text-neutral-500 font-dm-sans"
                         autoFocus
                       />
@@ -352,18 +396,20 @@ export default function Header() {
                     ) : searchQuery && filteredProducts.length === 0 ? (
                       <div className="text-center py-8 text-neutral-500 text-xs uppercase tracking-widest">
                         No products found for "{searchQuery}"
+                        {didYouMean && (
+                          <div className="mt-2 text-black cursor-pointer" onClick={() => setSearchQuery(didYouMean)}>
+                            Did you mean <strong>{didYouMean}</strong>?
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <div className="flex flex-col gap-2">
-                        {(searchQuery ? filteredProducts : allProducts.slice(0, 4)).map(product => (
+                        {(searchQuery ? filteredProducts : allProducts.slice(0, 4)).map((product, idx) => (
                           <Link 
                             href={`/product/${product.slug || product.id}`} 
                             key={product.id}
-                            onClick={() => {
-                              setShowSearchDropdown(false);
-                              setSearchQuery('');
-                            }}
-                            className="flex items-center gap-4 hover:bg-[#FAFAFA] p-2 rounded-xl transition-colors group border border-transparent hover:border-black/5"
+                            onClick={handleSearchSubmit}
+                            className={`flex items-center gap-4 p-2 rounded-xl transition-colors group border ${selectedIndex === idx ? 'bg-[#FAFAFA] border-black/10' : 'hover:bg-[#FAFAFA] border-transparent hover:border-black/5'}`}
                           >
                             <div className="w-14 h-16 bg-neutral-100 rounded-md overflow-hidden flex-shrink-0 relative">
                               {product.imageUrl ? (
@@ -387,10 +433,7 @@ export default function Header() {
                     {searchQuery && filteredProducts.length > 0 && (
                       <Link 
                         href={`/catalogue?search=${encodeURIComponent(searchQuery)}`}
-                        onClick={() => {
-                          setShowSearchDropdown(false);
-                          setSearchQuery('');
-                        }}
+                        onClick={handleSearchSubmit}
                         className="mt-2 text-center text-[10px] uppercase tracking-widest font-bold py-3 border border-black rounded-xl hover:bg-black hover:text-white transition-colors"
                       >
                         View All Results

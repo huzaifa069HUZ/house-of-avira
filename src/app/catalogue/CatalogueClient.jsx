@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 import { Loader2, Layers, Heart, X, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
@@ -11,6 +12,7 @@ import { useQuickAddStore } from '@/store/quickAddStore';
 import PriceDisplay from '@/components/PriceDisplay';
 import { motion, AnimatePresence } from 'framer-motion';
 import DualRangeSlider from '@/components/ui/DualRangeSlider';
+import { createSearchIndex, search as fuseSearch, getDidYouMean, logSearchAnalytics } from '@/lib/search';
 import './catalogue.css';
 
 const CATEGORIES = [
@@ -68,6 +70,9 @@ const getColorHex = (colorName) => {
 };
 
 export default function CatalogueClient() {
+  const searchParams = useSearchParams();
+  const searchParamQuery = searchParams.get('search') || '';
+  
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('ALL');
@@ -107,11 +112,33 @@ export default function CatalogueClient() {
     fetchProducts();
   }, []);
 
+  // Initialize Search Index
+  const searchIndex = useMemo(() => {
+    if (products.length === 0) return null;
+    return createSearchIndex(products);
+  }, [products]);
+
+  // If there's a search query, run the fuse search
+  const searchResults = useMemo(() => {
+    if (!searchParamQuery || !searchIndex) return null;
+    return fuseSearch(searchIndex, searchParamQuery, 100);
+  }, [searchParamQuery, searchIndex]);
+
+  // Log search analytics once when query changes and results are ready
+  useEffect(() => {
+    if (searchParamQuery && searchResults !== null) {
+      logSearchAnalytics(searchParamQuery, searchResults.length, 'catalogue', user?.uid);
+    }
+  }, [searchParamQuery, searchResults, user?.uid]);
+
+  // Base products list is either the search results or all products
+  const baseProducts = searchResults !== null ? searchResults : products;
+
   // Filter strictly by the category pill selected
   const categoryFilteredProducts = useMemo(() => {
     return activeCategory === 'ALL' 
-      ? products 
-      : products.filter(p => {
+      ? baseProducts 
+      : baseProducts.filter(p => {
           const term = activeCategory.toLowerCase();
           return (
             p.category?.toLowerCase().includes(term) ||
@@ -122,7 +149,7 @@ export default function CatalogueClient() {
             p.description?.toLowerCase().includes(term)
           );
         });
-  }, [products, activeCategory]);
+  }, [baseProducts, activeCategory]);
 
   // Extract available unique sizes and colors dynamically from the category-filtered items
   const availableSizes = useMemo(() => {
@@ -215,7 +242,18 @@ export default function CatalogueClient() {
     <div className="avira-catalogue-container relative pb-32 md:pb-0" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
       {/* Header */}
       <header className="avira-catalogue-header">
-        <h1 className="avira-catalogue-title tracking-tight uppercase">GET THE LOOK</h1>
+        <h1 className="avira-catalogue-title tracking-tight uppercase">
+          {searchParamQuery ? `SEARCH: ${searchParamQuery}` : 'GET THE LOOK'}
+        </h1>
+        {searchParamQuery && searchResults?.length === 0 && (
+          <p className="text-sm mt-4 text-neutral-500">
+            {getDidYouMean(products, searchParamQuery) ? (
+              <span>Did you mean <Link href={`/catalogue?search=${encodeURIComponent(getDidYouMean(products, searchParamQuery))}`} className="text-black font-bold underline">{getDidYouMean(products, searchParamQuery)}</Link>?</span>
+            ) : (
+              'No results found. Try adjusting your search.'
+            )}
+          </p>
+        )}
       </header>
 
       {/* Categories Scroll */}

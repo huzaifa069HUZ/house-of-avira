@@ -1,13 +1,18 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { sanitizeString, sanitizeEmail, sanitizeHtml } from '@/lib/sanitize';
 
 export async function POST(request) {
   try {
-    const body = await request.json();
-    const { email, name, subject, message, link } = body;
+    const rawBody = await request.json();
+    const email = sanitizeEmail(rawBody.email);
+    const name = sanitizeString(rawBody.name, 100);
+    const subject = sanitizeString(rawBody.subject, 200);
+    const message = sanitizeHtml(sanitizeString(rawBody.message, 5000));
+    const link = sanitizeString(rawBody.link, 500);
 
     if (!email || !subject || !message) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields or invalid email' }, { status: 400 });
     }
 
     const transporter = nodemailer.createTransport({

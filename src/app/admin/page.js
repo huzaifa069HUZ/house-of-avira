@@ -7,11 +7,12 @@ import CartAnalytics from '@/components/admin/CartAnalytics';
 import CouponManager from '@/components/admin/CouponManager';
 import BannerManager from '@/components/admin/BannerManager';
 import OrderManager from '@/components/admin/OrderManager';
+import AddManualOrder from '@/components/admin/AddManualOrder';
 import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon, Ship, ShoppingBag } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
-  const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit', 'orders'
+  const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit', 'orders', 'add-order'
   const [editingProduct, setEditingProduct] = useState(null);
   const router = useRouter();
 
@@ -33,6 +34,11 @@ export default function AdminDashboard() {
   const handleOrders = () => {
     setEditingProduct(null);
     setCurrentView('orders');
+  };
+
+  const handleAddOrder = () => {
+    setEditingProduct(null);
+    setCurrentView('add-order');
   };
 
   const handleAnalytics = () => {
@@ -140,7 +146,8 @@ export default function AdminDashboard() {
 
       <div className="mt-8">
         {currentView === 'list' && <ProductList onEdit={handleEdit} />}
-        {currentView === 'orders' && <OrderManager />}
+        {currentView === 'orders' && <OrderManager onAddOrder={handleAddOrder} />}
+        {currentView === 'add-order' && <AddManualOrder onSuccess={handleOrders} onCancel={handleOrders} />}
         {(currentView === 'add' || currentView === 'edit') && (
           <ProductManager 
             initialProduct={editingProduct} 

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import CatalogueClient from './CatalogueClient';
 
 export const metadata = {
@@ -72,7 +73,9 @@ export default function CataloguePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <CatalogueClient />
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading catalogue...</div>}>
+        <CatalogueClient />
+      </Suspense>
     </>
   );
 }

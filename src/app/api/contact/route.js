@@ -1,9 +1,15 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
+import { sanitizeString, sanitizeEmail } from '@/lib/sanitize';
 
 export async function POST(request) {
   try {
-    const { name, email, projectInfo, categories } = await request.json();
+    const rawBody = await request.json();
+    const name = sanitizeString(rawBody.name, 100);
+    const email = sanitizeEmail(rawBody.email);
+    const projectInfo = sanitizeString(rawBody.projectInfo, 2000);
+    const categories = Array.isArray(rawBody.categories) ? rawBody.categories.map(c => sanitizeString(c, 50)) : [];
+
 
     // Warn if missing
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
