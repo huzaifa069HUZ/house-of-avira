@@ -80,8 +80,8 @@ export default function OrderManager({ onAddOrder }) {
           {error && <p className="text-sm text-red-500 mt-2">Error: {error}</p>}
         </div>
         
-        {orders.length > 0 && (
-          <div className="flex items-center gap-3 w-full sm:w-auto">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          {orders.length > 0 && (
             <div className="relative w-full sm:max-w-xs shrink-0">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#86868b]" />
               <input
@@ -92,17 +92,17 @@ export default function OrderManager({ onAddOrder }) {
                 className="w-full pl-9 pr-4 py-2 bg-white border border-[#d2d2d7] rounded-lg text-sm text-black placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all shadow-sm"
               />
             </div>
-            {onAddOrder && (
-              <button
-                onClick={onAddOrder}
-                className="shrink-0 flex items-center gap-2 bg-black hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm"
-              >
-                <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Create Order</span>
-              </button>
-            )}
-          </div>
-        )}
+          )}
+          {onAddOrder && (
+            <button
+              onClick={onAddOrder}
+              className="shrink-0 flex items-center gap-2 bg-black hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">Create Order</span>
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="overflow-x-auto">
