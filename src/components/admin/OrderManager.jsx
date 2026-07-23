@@ -80,13 +80,13 @@ export default function OrderManager({ onAddOrder }) {
           {error && <p className="text-sm text-red-500 mt-2">Error: {error}</p>}
         </div>
         
-        <div className="flex items-center gap-3 w-full sm:w-auto">
+        <div className="flex items-center gap-3 w-full sm:w-auto flex-1 sm:flex-none justify-end min-w-0">
           {orders.length > 0 && (
-            <div className="relative w-full sm:max-w-xs shrink-0">
+            <div className="relative w-full sm:w-64 max-w-full">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#86868b]" />
               <input
                 type="text"
-                placeholder="Search by order ID, name..."
+                placeholder="Search orders..."
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 bg-white border border-[#d2d2d7] rounded-lg text-sm text-black placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all shadow-sm"
