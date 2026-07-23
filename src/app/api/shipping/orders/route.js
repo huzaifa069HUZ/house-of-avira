@@ -27,11 +27,10 @@ export async function GET(request) {
         .filter((order) => order.order_status !== ORDER_STATUS.CANCELLED);
     } else if (filter === 'ready_for_batch') {
       // Orders with weight entered, not yet in a batch, payment confirmed
-      // Firestore query for equality fields, then filter out CANCELLED in-memory
+      // We query by order_status == WEIGHT_ENTERED, since batching changes it to IN_BATCH.
       const snapshot = await adminDb
         .collection('orders')
-        .where('weight_status', '==', WEIGHT_STATUS.ENTERED)
-        .where('batch_id', '==', null)
+        .where('order_status', '==', ORDER_STATUS.WEIGHT_ENTERED)
         .where('product_payment_status', 'in', [PRODUCT_PAYMENT_STATUS.CONFIRMED, PRODUCT_PAYMENT_STATUS.PENDING])
         .get();
 
