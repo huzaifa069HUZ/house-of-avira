@@ -77,7 +77,9 @@ export default function AddManualOrder({ onSuccess, onCancel }) {
       selectedSize: product.sizes?.length > 0 ? product.sizes[0] : null,
       selectedColor: product.swatches?.length > 0 ? product.swatches[0].colorName : null,
       category: product.category,
-      weight: product.weight || 0
+      weight: product.weight || 0,
+      productSizes: product.sizes || [],
+      productSwatches: product.swatches || []
     };
     setSelectedItems([...selectedItems, newItem]);
     setSearchQuery('');
@@ -113,8 +115,8 @@ export default function AddManualOrder({ onSuccess, onCancel }) {
         customer_country: address.country,
         instagram: customer.instagram,
         
-        // Items
-        items: selectedItems,
+        // Strip internal UI helpers from items before saving
+        items: selectedItems.map(({ productSizes, productSwatches, ...item }) => item),
         items_count: selectedItems.reduce((sum, item) => sum + item.quantity, 0),
         
         // Shipping Address
@@ -143,7 +145,18 @@ export default function AddManualOrder({ onSuccess, onCancel }) {
         is_manual_order: true
       };
 
-      await addDoc(collection(db, 'orders'), orderData);
+      const res = await fetch('/api/admin/manual-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      });
+      
+      const data = await res.json();
+      
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Failed to save order');
+      }
+
       onSuccess();
     } catch (err) {
       console.error("Error saving manual order:", err);
@@ -250,29 +263,42 @@ export default function AddManualOrder({ onSuccess, onCancel }) {
                       <div className="flex-1 space-y-2 w-full">
                         <h4 className="text-sm font-medium text-black line-clamp-1">{item.name}</h4>
                         <div className="flex flex-wrap gap-3">
-                          <select 
-                            value={item.quantity} 
-                            onChange={(e) => updateItem(item.cartItemId, 'quantity', Number(e.target.value))}
-                            className="bg-[#F5F5F7] border border-transparent hover:border-[#d2d2d7] rounded-md text-xs px-2 py-1.5 focus:ring-2 focus:ring-[#0071e3] outline-none cursor-pointer"
-                          >
-                            {[...Array(10)].map((_, i) => (
-                              <option key={i+1} value={i+1}>Qty: {i+1}</option>
-                            ))}
-                          </select>
-                          <input 
-                            type="text" 
-                            placeholder="Size" 
-                            value={item.selectedSize || ''}
-                            onChange={(e) => updateItem(item.cartItemId, 'selectedSize', e.target.value)}
-                            className="w-20 bg-[#F5F5F7] border border-transparent hover:border-[#d2d2d7] rounded-md text-xs px-2 py-1.5 focus:bg-white focus:ring-2 focus:ring-[#0071e3] outline-none transition-all placeholder-[#86868b]"
-                          />
-                          <input 
-                            type="text" 
-                            placeholder="Color" 
-                            value={item.selectedColor || ''}
-                            onChange={(e) => updateItem(item.cartItemId, 'selectedColor', e.target.value)}
-                            className="w-24 bg-[#F5F5F7] border border-transparent hover:border-[#d2d2d7] rounded-md text-xs px-2 py-1.5 focus:bg-white focus:ring-2 focus:ring-[#0071e3] outline-none transition-all placeholder-[#86868b]"
-                          />
+                          <div className="flex items-center border border-[#d2d2d7] rounded-md bg-white overflow-hidden">
+                            <button 
+                              onClick={() => updateItem(item.cartItemId, 'quantity', Math.max(1, item.quantity - 1))}
+                              className="px-2.5 py-1.5 text-black hover:bg-[#F5F5F7] transition-colors"
+                            >-</button>
+                            <input 
+                              type="number"
+                              value={item.quantity}
+                              onChange={(e) => updateItem(item.cartItemId, 'quantity', Math.max(1, parseInt(e.target.value) || 1))}
+                              className="w-10 text-center bg-transparent border-none text-xs outline-none py-1.5 focus:ring-0 [-moz-appearance:_textfield] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                            />
+                            <button 
+                              onClick={() => updateItem(item.cartItemId, 'quantity', item.quantity + 1)}
+                              className="px-2.5 py-1.5 text-black hover:bg-[#F5F5F7] transition-colors"
+                            >+</button>
+                          </div>
+                          
+                          {item.productSizes?.length > 0 && (
+                            <select 
+                              value={item.selectedSize || ''}
+                              onChange={(e) => updateItem(item.cartItemId, 'selectedSize', e.target.value)}
+                              className="bg-white border border-[#d2d2d7] hover:border-black rounded-md text-xs px-2 py-1.5 focus:ring-2 focus:ring-[#0071e3] outline-none cursor-pointer"
+                            >
+                              {item.productSizes.map(s => <option key={s} value={s}>Size: {s}</option>)}
+                            </select>
+                          )}
+                          
+                          {item.productSwatches?.length > 0 && (
+                            <select 
+                              value={item.selectedColor || ''}
+                              onChange={(e) => updateItem(item.cartItemId, 'selectedColor', e.target.value)}
+                              className="bg-white border border-[#d2d2d7] hover:border-black rounded-md text-xs px-2 py-1.5 focus:ring-2 focus:ring-[#0071e3] outline-none cursor-pointer"
+                            >
+                              {item.productSwatches.map(sw => <option key={sw.colorName} value={sw.colorName}>Color: {sw.colorName}</option>)}
+                            </select>
+                          )}
                         </div>
                       </div>
                       <div className="text-right flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-2">
