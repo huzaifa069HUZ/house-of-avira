@@ -75,8 +75,8 @@ export default function Login() {
         router.push('/account');
       }
     } catch (err) {
-      console.error(err);
-      setError('Failed to sign in with Google.');
+      console.error("Google Sign-in error:", err);
+      setError('Google Login failed: ' + (err.message || 'Unknown error'));
     } finally {
       setLoading(false);
     }
