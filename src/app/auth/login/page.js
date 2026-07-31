@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { auth, googleProvider } from '@/lib/firebase';
-import { signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithRedirect, getRedirectResult, sendPasswordResetEmail } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -22,6 +22,31 @@ export default function Login() {
   const [name, setName] = useState('');
 
   const router = useRouter();
+
+  useEffect(() => {
+    const checkRedirect = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result && result.user) {
+          const user = result.user;
+          const userDocRef = doc(db, 'users', user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          
+          if (!userDocSnap.exists()) {
+            setGoogleUser(user);
+            setName(user.displayName || '');
+            setShowGoogleExtraForm(true);
+          } else {
+            router.push('/account');
+          }
+        }
+      } catch (err) {
+        console.error("Google Redirect Error:", err);
+        setError('Google Login failed: ' + (err.message || 'Unknown error'));
+      }
+    };
+    checkRedirect();
+  }, [router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -58,26 +83,10 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      
-      // Check if user doc exists in Firestore, if not create one
-      const userDocRef = doc(db, 'users', user.uid);
-      const userDocSnap = await getDoc(userDocRef);
-      
-      if (!userDocSnap.exists()) {
-        // Show the extra details form instead of immediately continuing
-        setGoogleUser(user);
-        setName(user.displayName || '');
-        setShowGoogleExtraForm(true);
-      } else {
-        // Existing user, just login
-        router.push('/account');
-      }
+      await signInWithRedirect(auth, googleProvider);
     } catch (err) {
       console.error("Google Sign-in error:", err);
       setError('Google Login failed: ' + (err.message || 'Unknown error'));
-    } finally {
       setLoading(false);
     }
   };
