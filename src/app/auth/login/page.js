@@ -143,7 +143,7 @@ export default function Login() {
           
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-white/80 uppercase tracking-widest mb-1">Full Name</label>
+              <label className="block text-xs font-perandory text-white/80 uppercase tracking-widest mb-1">Full Name</label>
               <input
                 type="text"
                 required
@@ -153,7 +153,7 @@ export default function Login() {
               />
             </div>
             <div>
-            <label className="block text-xs font-medium text-white/80 uppercase tracking-widest mb-1">Phone Number</label>
+            <label className="block text-xs font-perandory text-white/80 uppercase tracking-widest mb-1">Phone Number</label>
             <div className="flex">
               <span
                 className="flex items-center justify-center w-[80px] px-3 py-2 border border-white/20 border-r-0 bg-white/5 text-white rounded-l-sm shadow-sm sm:text-sm text-center"
@@ -177,7 +177,7 @@ export default function Login() {
               type="submit"
               disabled={loading}
               label={loading ? 'Saving...' : 'Complete Setup'}
-              className="w-full h-[45px] text-sm font-bold text-white uppercase tracking-widest rounded-sm disabled:opacity-70"
+              className="w-full h-[45px] text-sm font-perandory text-white uppercase tracking-widest rounded-sm disabled:opacity-70"
             />
           </div>
         </form>
@@ -211,7 +211,7 @@ export default function Login() {
         
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-white/80 uppercase tracking-widest mb-1">Email address</label>
+            <label className="block text-xs font-perandory text-white/80 uppercase tracking-widest mb-1">Email address</label>
             <input
               type="email"
               required
@@ -222,7 +222,7 @@ export default function Login() {
           </div>
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block text-xs font-medium text-white/80 uppercase tracking-widest">Password</label>
+              <label className="block text-xs font-perandory text-white/80 uppercase tracking-widest">Password</label>
               <button
                 type="button"
                 onClick={handleResetPassword}
@@ -246,7 +246,7 @@ export default function Login() {
             type="submit"
             disabled={loading}
             label={loading ? 'Signing in...' : 'Sign in'}
-            className="w-full h-[45px] text-sm font-bold text-white uppercase tracking-widest rounded-sm disabled:opacity-70"
+            className="w-full h-[45px] text-sm font-perandory text-white uppercase tracking-widest rounded-sm disabled:opacity-70"
           />
         </div>
       </form>
