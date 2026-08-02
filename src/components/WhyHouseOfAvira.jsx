@@ -64,7 +64,7 @@ export default function WhyHouseOfAvira() {
   };
 
   return (
-    <section className="w-full bg-[#FAFAFA] py-24 md:py-32 overflow-hidden border-t border-[#000000]/10">
+    <section className="w-full bg-[#FAFAFA] pt-12 pb-24 md:pt-16 md:pb-32 overflow-hidden border-t border-[#000000]/10">
       <motion.div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         variants={containerVariants}
@@ -74,7 +74,7 @@ export default function WhyHouseOfAvira() {
       >
 
         {/* Minimalist Image Overlay Section */}
-        <motion.div className="w-full relative mb-32 md:mb-48 pt-10 flex flex-col items-center justify-center" variants={itemVariants}>
+        <motion.div className="w-full relative mb-32 md:mb-48 flex flex-col items-center justify-center" variants={itemVariants}>
           {/* 3D Swipable Carousel */}
           <div className="relative w-full max-w-5xl mx-auto h-[400px] sm:h-[500px] md:h-[600px] z-10 flex items-center justify-center">
             {carouselImages.map((src, index) => {

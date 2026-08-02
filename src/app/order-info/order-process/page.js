@@ -224,7 +224,7 @@ export default function OrderProcessPage() {
           {/* Step header */}
           <RevealSection className="mb-16 md:mb-24">
             <div className="flex items-end gap-6 md:gap-10">
-              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-black/[0.04] select-none">01</span>
+              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-black/[0.12] select-none">01</span>
               <div className="pb-4 md:pb-8">
                 <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Step One</p>
                 <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Securing Your Piece</h2>
@@ -330,7 +330,7 @@ export default function OrderProcessPage() {
           {/* Step header */}
           <RevealSection className="mb-16 md:mb-24">
             <div className="flex items-end gap-6 md:gap-10">
-              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-gray-100 select-none">02</span>
+              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-black/[0.12] select-none">02</span>
               <div className="pb-4 md:pb-8">
                 <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Step Two</p>
                 <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Bringing It Home</h2>
