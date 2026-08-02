@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap, Weight, Maximize, LayoutGrid, FileCheck, BarChart2, Calendar, CloudLightning, Map, Flame, ChevronRight, Info } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plane, Globe, Package, FileText, Receipt, Truck, ShieldCheck, Clock, AlertTriangle, ChevronDown, MessageCircle, Mail, Smartphone, Megaphone, Scale, Box, Sparkles, Heart, Zap, Weight, Maximize, LayoutGrid, FileCheck, BarChart2, Calendar, CloudLightning, Map, Flame, ChevronRight, Info, Instagram } from 'lucide-react';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 
@@ -379,7 +379,7 @@ export default function ShippingPage() {
             viewport={{ once: true, margin: '-50px' }}
           >
             {[
-              { label: 'Ferrari, Adidas, Nike etc.', sub: 'Premium & branded items', icon: Sparkles },
+              { label: 'Hello Kitty, Sanrio etc.', sub: 'Premium & branded items', icon: Sparkles },
               { label: 'Cosmetics & Beauty', sub: 'Beauty, skincare, makeup & more', icon: Heart },
               { label: 'Lighters', sub: 'All types of lighters', icon: Zap },
               { label: 'Restricted categories', sub: 'Products with shipping restrictions', icon: AlertTriangle },
@@ -417,10 +417,44 @@ export default function ShippingPage() {
       </section>
 
       {/* ═══════ SHIPPING UPDATES ═══════ */}
-      <section className="relative py-24 md:py-36 bg-[#FAFAFA] overflow-hidden">
+      <section className="relative pt-10 pb-24 md:pt-16 md:pb-36 bg-[#FAFAFA] overflow-hidden">
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#8A001A]/5 rounded-full blur-[180px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-16">
+          
+          {/* Instagram Notice */}
+          <RevealSection>
+            <div className="mb-16 md:mb-24 relative overflow-hidden rounded-3xl bg-white shadow-[0_10px_50px_rgba(0,0,0,0.06)] border border-[#E5E5E5] flex flex-col md:flex-row items-center justify-between p-8 md:p-12 group">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#8A001A]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-8 text-center md:text-left mb-8 md:mb-0">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[2px] shadow-lg shrink-0 group-hover:scale-105 transition-transform duration-500">
+                  <div className="w-full h-full bg-white rounded-full flex items-center justify-center">
+                    <Instagram className="w-9 h-9 text-[#ee2a7b]" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-perandory text-xl md:text-2xl lg:text-3xl uppercase text-black mb-2 tracking-wide">
+                    Instagram is our primary channel for updates
+                  </h3>
+                  <p className="text-gray-500 font-medium tracking-wide text-sm md:text-base">
+                    Follow us for real-time order drops, aesthetic finds, and behind the scenes.
+                  </p>
+                </div>
+              </div>
+
+              <a 
+                href="https://www.instagram.com/houseof.avira/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="relative z-10 whitespace-nowrap inline-flex items-center gap-3 px-8 py-4 bg-black text-white rounded-full font-bold uppercase tracking-widest text-sm hover:scale-105 hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] hover:shadow-[0_10px_30px_rgba(238,42,123,0.3)] transition-all duration-300"
+              >
+                Open Instagram
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </RevealSection>
+
           {/* Two-column layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
