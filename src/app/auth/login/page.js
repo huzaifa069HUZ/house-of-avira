@@ -7,6 +7,7 @@ import { auth, googleProvider } from '@/lib/firebase';
 import { signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { LiquidButton } from '@/components/ui/liquid-button';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -127,8 +128,8 @@ export default function Login() {
     return (
       <>
         <div className="text-center">
-          <h2 className="text-2xl font-serif tracking-tight text-[#000000]">Complete your Profile</h2>
-          <p className="mt-2 text-sm text-[#000000]/70">
+          <h2 className="text-2xl font-serif tracking-tight text-white">Complete your Profile</h2>
+          <p className="mt-2 text-sm text-white/70">
             Just a few more details to set up your account.
           </p>
         </div>
@@ -142,27 +143,27 @@ export default function Login() {
           
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Full Name</label>
+              <label className="block text-xs font-medium text-white/80 uppercase tracking-widest mb-1">Full Name</label>
               <input
                 type="text"
                 required
-                className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
+                className="appearance-none block w-full px-3 py-2 border border-white/20 bg-white/5 text-white rounded-sm shadow-sm placeholder-white/40 focus:outline-none focus:ring-white/50 focus:border-white/50 sm:text-sm transition-all"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
-            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Phone Number</label>
+            <label className="block text-xs font-medium text-white/80 uppercase tracking-widest mb-1">Phone Number</label>
             <div className="flex">
               <span
-                className="flex items-center justify-center w-[80px] px-3 py-2 border border-[#000000]/20 border-r-0 bg-transparent rounded-l-sm shadow-sm sm:text-sm text-center"
+                className="flex items-center justify-center w-[80px] px-3 py-2 border border-white/20 border-r-0 bg-white/5 text-white rounded-l-sm shadow-sm sm:text-sm text-center"
               >
                 +91
               </span>
               <input
                 type="tel"
                 required
-                className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-r-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
+                className="appearance-none block w-full px-3 py-2 border border-white/20 bg-white/5 text-white rounded-r-sm shadow-sm placeholder-white/40 focus:outline-none focus:ring-white/50 focus:border-white/50 sm:text-sm transition-all"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
                 placeholder="1234567890"
@@ -172,13 +173,12 @@ export default function Login() {
           </div>
 
           <div>
-            <button
+            <LiquidButton
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-[#FFFFFF] bg-[#000000] hover:bg-[#8A001A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000000] disabled:opacity-70 uppercase tracking-widest transition-colors"
-            >
-              {loading ? 'Saving...' : 'Complete Setup'}
-            </button>
+              label={loading ? 'Saving...' : 'Complete Setup'}
+              className="w-full h-[45px] text-sm font-bold text-white uppercase tracking-widest rounded-sm disabled:opacity-70"
+            />
           </div>
         </form>
       </>
@@ -188,10 +188,10 @@ export default function Login() {
   return (
     <>
       <div className="text-center">
-        <h2 className="text-2xl font-serif tracking-tight text-[#000000]">Sign in</h2>
-        <p className="mt-2 text-sm text-[#000000]/70">
+        <h2 className="text-2xl font-serif tracking-tight text-white">Sign in</h2>
+        <p className="mt-2 text-sm text-white/70">
           Or{' '}
-          <Link href="/auth/register" className="font-medium text-[#000000] underline hover:text-[#000000]/80">
+          <Link href="/auth/register" className="font-medium text-white underline hover:text-white/80 transition-colors">
             create a new account
           </Link>
         </p>
@@ -199,34 +199,34 @@ export default function Login() {
 
       <form className="mt-8 space-y-6" onSubmit={handleLogin}>
         {error && (
-          <div className="bg-red-50 text-red-500 p-3 rounded text-sm text-center">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-200 p-3 rounded text-sm text-center">
             {error}
           </div>
         )}
         {resetEmailSent && (
-          <div className="bg-green-50 text-green-600 p-3 rounded text-sm text-center">
+          <div className="bg-green-500/10 border border-green-500/20 text-green-200 p-3 rounded text-sm text-center">
             Password reset email sent! Please check your inbox and spam folder.
           </div>
         )}
         
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest mb-1">Email address</label>
+            <label className="block text-xs font-medium text-white/80 uppercase tracking-widest mb-1">Email address</label>
             <input
               type="email"
               required
-              className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
+              className="appearance-none block w-full px-3 py-2 border border-white/20 bg-white/5 text-white rounded-sm shadow-sm placeholder-white/40 focus:outline-none focus:ring-white/50 focus:border-white/50 sm:text-sm transition-all"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block text-xs font-medium text-[#000000]/80 uppercase tracking-widest">Password</label>
+              <label className="block text-xs font-medium text-white/80 uppercase tracking-widest">Password</label>
               <button
                 type="button"
                 onClick={handleResetPassword}
-                className="text-xs text-[#000000]/60 hover:text-[#000000] underline"
+                className="text-xs text-white/60 hover:text-white underline transition-colors"
               >
                 Forgot Password?
               </button>
@@ -234,7 +234,7 @@ export default function Login() {
             <input
               type="password"
               required
-              className="appearance-none block w-full px-3 py-2 border border-[#000000]/20 bg-transparent rounded-sm shadow-sm placeholder-[#000000]/40 focus:outline-none focus:ring-[#000000] focus:border-[#000000] sm:text-sm"
+              className="appearance-none block w-full px-3 py-2 border border-white/20 bg-white/5 text-white rounded-sm shadow-sm placeholder-white/40 focus:outline-none focus:ring-white/50 focus:border-white/50 sm:text-sm transition-all"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -242,23 +242,22 @@ export default function Login() {
         </div>
 
         <div>
-          <button
+          <LiquidButton
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-[#FFFFFF] bg-[#000000] hover:bg-[#8A001A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000000] disabled:opacity-70 uppercase tracking-widest transition-colors"
-          >
-            {loading ? 'Signing in...' : 'Sign in'}
-          </button>
+            label={loading ? 'Signing in...' : 'Sign in'}
+            className="w-full h-[45px] text-sm font-bold text-white uppercase tracking-widest rounded-sm disabled:opacity-70"
+          />
         </div>
       </form>
 
       <div className="mt-6">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#000000]/10" />
+            <div className="w-full border-t border-white/20" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-[#FFFFFF] text-[#000000]/60 uppercase tracking-widest text-[10px]">Or continue with</span>
+            <span className="px-2 bg-black/40 text-white/60 uppercase tracking-widest text-[10px] backdrop-blur-xl">Or continue with</span>
           </div>
         </div>
 
@@ -266,7 +265,7 @@ export default function Login() {
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex justify-center py-2.5 px-4 border border-[#000000]/20 rounded-sm shadow-sm bg-transparent text-sm font-medium text-[#000000] hover:bg-[#000000]/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000000] transition-colors"
+            className="w-full flex justify-center py-2.5 px-4 border border-white/20 rounded-sm shadow-sm bg-white/5 text-sm font-medium text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50 transition-colors"
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
