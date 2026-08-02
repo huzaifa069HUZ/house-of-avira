@@ -321,18 +321,18 @@ const CSS = `
   margin-bottom: 24px;
 }
 .trk-h1 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  font-family: var(--font-perandory), serif;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: normal;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
   margin: 0 0 20px;
   text-transform: uppercase;
 }
 .trk-h1-accent {
   color: #E11D48;
   display: inline-block;
-  -webkit-text-stroke: 0px;
+  font-style: italic;
 }
 .trk-subtitle {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
