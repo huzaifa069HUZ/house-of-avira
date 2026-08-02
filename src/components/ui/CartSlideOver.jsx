@@ -15,28 +15,52 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 const getCategoryMetrics = (item) => {
   const catStr = (item.subcategory || item.category || item.title || '').toLowerCase();
 
-  if (catStr.includes('shoe') || catStr.includes('sneaker') || catStr.includes('footwear') || catStr.includes('boot')) {
-    return { weight: 1200, duty: 0.35, igst: 0.18 };
-  } else if (catStr.includes('bag') || catStr.includes('purse') || catStr.includes('wallet')) {
-    return { weight: 800, duty: 0.20, igst: 0.18 };
-  } else if (catStr.includes('jacket') || catStr.includes('coat') || catStr.includes('blazer')) {
-    return { weight: 1000, duty: 0.25, igst: 0.18 };
-  } else if (catStr.includes('sweater') || catStr.includes('hoodie') || catStr.includes('sweatshirt')) {
-    return { weight: 700, duty: 0.20, igst: 0.18 };
-  } else if (catStr.includes('jeans') || catStr.includes('denim')) {
-    return { weight: 600, duty: 0.20, igst: 0.18 };
-  } else if (catStr.includes('trouser') || catStr.includes('pant')) {
-    return { weight: 500, duty: 0.20, igst: 0.18 };
-  } else if (catStr.includes('dress')) {
-    return { weight: 450, duty: 0.20, igst: 0.18 };
-  } else if (catStr.includes('shirt') || catStr.includes('top') || catStr.includes('t-shirt') || catStr.includes('tshirt')) {
-    return { weight: 250, duty: 0.20, igst: 0.18 };
-  } else if (catStr.includes('beauty') || catStr.includes('makeup') || catStr.includes('cosmetic')) {
-    return { weight: 150, duty: 0.20, igst: 0.18 };
-  } else if (catStr.includes('accessory') || catStr.includes('jewelry') || catStr.includes('watch') || catStr.includes('sunglass')) {
-    return { weight: 150, duty: 0.10, igst: 0.18 };
+  // HIGH DUTY items (special warning shown)
+  if (catStr.match(/toy|figurine|plush|hello kitty|sanrio|collectible|doll|action figure/)) { 
+    return { name: 'Toys/Collectibles', low: 750, high: 1500, dutyTag: 'high-duty', warning: 'Toys & collectibles attract ~70% import duty in India.' };
+  } else if (catStr.match(/lighter|zippo/)) { 
+    return { name: 'Lighters', low: 450, high: 900, dutyTag: 'high-duty', warning: 'Lighters have import restrictions and higher duties.' };
+  } else if (catStr.match(/electronic|gadget|tech|speaker|headphone/)) { 
+    return { name: 'Electronics', low: 550, high: 1100, dutyTag: 'high-duty', warning: 'Electronics may attract additional duties and BIS certification.' };
   }
-  return { weight: 500, duty: 0.20, igst: 0.18 }; // Default
+  
+  // Heavy items
+  if (catStr.match(/shoe|sneaker|footwear|boot|heel|sandal|slipper/)) {
+    return { name: 'Footwear', low: 550, high: 950, dutyTag: 'standard' };
+  } else if (catStr.match(/jacket|coat|blazer|puffer/)) {
+    return { name: 'Heavy Outerwear', low: 450, high: 800, dutyTag: 'standard' };
+  }
+  
+  // Medium items
+  if (catStr.match(/bag|purse|wallet|tote|backpack|clutch/)) {
+    return { name: 'Bags', low: 400, high: 700, dutyTag: 'standard' };
+  } else if (catStr.match(/sweater|hoodie|sweatshirt|cardigan/)) {
+    return { name: 'Sweaters/Hoodies', low: 350, high: 650, dutyTag: 'standard' };
+  } else if (catStr.match(/jeans|denim/)) {
+    return { name: 'Denim', low: 300, high: 600, dutyTag: 'standard' };
+  } else if (catStr.match(/trouser|pant|shorts|jogger/)) {
+    return { name: 'Bottoms', low: 300, high: 550, dutyTag: 'standard' };
+  } else if (catStr.match(/dress|skirt|co-ord|set/)) {
+    return { name: 'Dresses/Sets', low: 300, high: 550, dutyTag: 'standard' };
+  }
+  
+  // Light items — low weight, low duty
+  if (catStr.match(/shirt|top|t-shirt|tshirt|blouse|crop/)) {
+    return { name: 'Tops/Shirts', low: 180, high: 400, dutyTag: 'standard' };
+  } else if (catStr.match(/beauty|makeup|cosmetic|skincare|lipstick/)) {
+    return { name: 'Beauty/Cosmetics', low: 180, high: 400, dutyTag: 'standard' };
+  } else if (catStr.match(/accessory|jewelry|jewellery|earring|necklace|bracelet|ring/)) {
+    return { name: 'Jewelry/Accessories', low: 150, high: 350, dutyTag: 'standard' };
+  } else if (catStr.match(/perfume|fragrance/)) {
+    return { name: 'Perfume', low: 250, high: 500, dutyTag: 'standard' };
+  } else if (catStr.match(/sunglass|eyewear|glasses/)) {
+    return { name: 'Eyewear', low: 180, high: 400, dutyTag: 'standard' };
+  } else if (catStr.match(/watch/)) {
+    return { name: 'Watches', low: 300, high: 500, dutyTag: 'standard' };
+  }
+
+  // Default
+  return { name: 'General Item', low: 300, high: 600, dutyTag: 'standard' };
 };
 
 export default function CartSlideOver() {
@@ -46,7 +70,6 @@ export default function CartSlideOver() {
 
   // Shipping Estimator State
   const [showEstimator, setShowEstimator] = useState(false);
-  const [customWeight, setCustomWeight] = useState(0);
 
   // Consent Modal State
   const [showConsentModal, setShowConsentModal] = useState(false);
@@ -115,92 +138,51 @@ export default function CartSlideOver() {
     }
   };
 
-  const baseCartWeight = useMemo(() => {
-    return cart.reduce((total, item) => {
-      const { weight } = getCategoryMetrics(item);
-      return total + (weight * item.quantity);
-    }, 0);
-  }, [cart]);
-
-  // Sync customWeight only when cart content changes in a way that alters the base weight
-  useEffect(() => {
-    setCustomWeight(baseCartWeight);
-  }, [baseCartWeight]);
-
   const shippingCosts = useMemo(() => {
     if (cart.length === 0) return null;
 
-    // Unified approximate rate (per kg)
-    const unifiedRatePerKg = 850; // unified approximate rate
-    const modeRate = unifiedRatePerKg;
-
-    // Total physical weight vs volumetric weight
-    // We use the user-modified `customWeight` (in grams) for calculations
-    let intlShippingBase = (customWeight / 1000) * modeRate;
-
-    // We add a base fixed cost for handling/packaging per package
-    const handlingFee = 500;
-    intlShippingBase += handlingFee;
-
-    // We still give a range (e.g. +/- 15%) since rates fluctuate based on dimensional weight and fuel surcharges
-    const intlLow = intlShippingBase * 0.85;
-    const intlHigh = intlShippingBase * 1.15;
-
-    let customsLow = 0;
-    let customsHigh = 0;
+    let intlLow = 0;
+    let intlHigh = 0;
+    let hasHighDuty = false;
+    const perItemBreakdown = [];
 
     cart.forEach(item => {
-      const productVal = item.price ? Number(item.price) : 2000;
       const metrics = getCategoryMetrics(item);
-
-      const bcdRate = metrics.duty; // Basic Custom Duty
-      const swsRate = 0.10; // Social Welfare Surcharge (10% of BCD)
-      const igstRate = metrics.igst;
-
-      // Proportion of international shipping for this item based on base weights
-      const itemWeightProp = baseCartWeight > 0 ? (metrics.weight * item.quantity) / baseCartWeight : (1 / cart.length);
-      const itemIntlLow = intlLow * itemWeightProp;
-      const itemIntlHigh = intlHigh * itemWeightProp;
-
-      // Assessable Value = Product Value + Intl Shipping
-      const assessableLow = (productVal * item.quantity) + itemIntlLow;
-      const assessableHigh = (productVal * item.quantity) + itemIntlHigh;
-
-      const bcdLow = assessableLow * bcdRate;
-      const bcdHigh = assessableHigh * bcdRate;
-
-      const swsLow = bcdLow * swsRate;
-      const swsHigh = bcdHigh * swsRate;
-
-      const totalDutyLow = bcdLow + swsLow;
-      const totalDutyHigh = bcdHigh + swsHigh;
-
-      // Combine BCD, SWS, and IGST into a single Customs, Duties & Taxes category
-      const valueForIgstLow = assessableLow + totalDutyLow;
-      const valueForIgstHigh = assessableHigh + totalDutyHigh;
-
-      const itemGstLow = valueForIgstLow * igstRate;
-      const itemGstHigh = valueForIgstHigh * igstRate;
-
-      customsLow += totalDutyLow + itemGstLow;
-      customsHigh += totalDutyHigh + itemGstHigh;
+      const itemLow = metrics.low * item.quantity;
+      const itemHigh = metrics.high * item.quantity;
+      
+      intlLow += itemLow;
+      intlHigh += itemHigh;
+      
+      if (metrics.dutyTag === 'high-duty') {
+        hasHighDuty = true;
+      }
+      
+      perItemBreakdown.push({
+        id: item.cartItemId || item.id,
+        name: item.title,
+        quantity: item.quantity,
+        metrics: metrics,
+        totalLow: itemLow,
+        totalHigh: itemHigh
+      });
     });
 
-    // Domestic shipping fixed to 100-500 INR
+    // Domestic shipping fixed to 100-300 INR
     const domLow = 100;
-    const domHigh = 500;
+    const domHigh = 300;
 
     return {
-      intlLow: Math.round(intlLow),
-      intlHigh: Math.round(intlHigh),
-      customsLow: Math.round(customsLow),
-      customsHigh: Math.round(customsHigh),
-      domLow: Math.round(domLow),
-      domHigh: Math.round(domHigh),
-      totalLow: Math.round(intlLow + customsLow + domLow),
-      totalHigh: Math.round(intlHigh + customsHigh + domHigh)
+      intlLow,
+      intlHigh,
+      domLow,
+      domHigh,
+      totalLow: intlLow + domLow,
+      totalHigh: intlHigh + domHigh,
+      perItemBreakdown,
+      hasHighDuty
     };
-  }, [cart, customWeight, baseCartWeight]);
+  }, [cart]);
 
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
@@ -225,7 +207,7 @@ export default function CartSlideOver() {
             animate={{ opacity: 0.4 }}
             exit={{ opacity: 0 }}
             onClick={closeCart}
-            className="fixed inset-0 bg-black z-50 cursor-pointer"
+            className="fixed inset-0 bg-black z-[60] cursor-pointer"
           />
 
           {/* Slide Over Panel */}
@@ -234,7 +216,7 @@ export default function CartSlideOver() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col overflow-hidden border-none rounded-none"
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-[60] flex flex-col overflow-hidden border-none rounded-none"
             style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}
           >
             {/* Header */}
@@ -412,30 +394,34 @@ export default function CartSlideOver() {
                           exit={{ height: 0, opacity: 0 }}
                           className="px-3 py-3 border-t border-gray-100"
                         >
-                          <div className="space-y-3 mb-4">
-                            <div className="flex items-center justify-between gap-3 text-xs">
-                              <span className="text-gray-600 font-medium whitespace-nowrap">Est. Weight (g)</span>
-                              <input
-                                type="number"
-                                value={customWeight}
-                                onChange={(e) => setCustomWeight(parseInt(e.target.value) || 0)}
-                                className="w-20 text-right border border-gray-200 rounded px-2 py-1 outline-none focus:border-[#8A001A]"
-                              />
-                            </div>
+                          <div className="space-y-2 mb-3 max-h-32 overflow-y-auto pr-1 custom-scrollbar">
+                            {shippingCosts?.perItemBreakdown.map((item, idx) => (
+                              <div key={idx} className="flex flex-col gap-1 text-[11px]">
+                                <div className="flex justify-between items-start">
+                                  <span className="text-gray-600 line-clamp-1 flex-1 pr-2">
+                                    {item.quantity}× {item.name}
+                                  </span>
+                                  <span className="font-medium whitespace-nowrap">
+                                    <PriceDisplay basePrice={item.totalLow} /> - <PriceDisplay basePrice={item.totalHigh} />
+                                  </span>
+                                </div>
+                                {item.metrics.dutyTag === 'high-duty' && (
+                                  <span className="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded w-fit">
+                                    ⚠️ {item.metrics.warning}
+                                  </span>
+                                )}
+                              </div>
+                            ))}
                           </div>
 
                           {shippingCosts && (
-                            <div className="space-y-1.5 text-[11px] mb-3 border-t border-gray-100 pt-3">
+                            <div className="space-y-1.5 text-[11px] border-t border-gray-100 pt-3 mb-3">
                               <div className="flex justify-between text-gray-500">
-                                <span>Intl. Shipping & Handling</span>
+                                <span>Est. International + Customs</span>
                                 <span><PriceDisplay basePrice={shippingCosts.intlLow} /> - <PriceDisplay basePrice={shippingCosts.intlHigh} /></span>
                               </div>
                               <div className="flex justify-between text-gray-500">
-                                <span>Customs, Duties & Taxes</span>
-                                <span><PriceDisplay basePrice={shippingCosts.customsLow} /> - <PriceDisplay basePrice={shippingCosts.customsHigh} /></span>
-                              </div>
-                              <div className="flex justify-between text-gray-500">
-                                <span>Domestic Shipping</span>
+                                <span>Est. Domestic Delivery</span>
                                 <span><PriceDisplay basePrice={shippingCosts.domLow} /> - <PriceDisplay basePrice={shippingCosts.domHigh} /></span>
                               </div>
                               <div className="flex justify-between font-bold text-black border-t border-gray-100 pt-1.5 mt-1.5">
@@ -444,7 +430,9 @@ export default function CartSlideOver() {
                               </div>
                             </div>
                           )}
-                          <p className="text-[9px] text-[#8A001A] uppercase font-bold leading-tight text-center">This is an estimate. Actual shipping will be billed separately upon arrival.</p>
+                          <p className="text-[9px] text-[#8A001A] uppercase font-bold leading-tight text-center">
+                            ⓘ Estimates only. Actual charges depend on batch weight and customs assessment. Includes freight, duty, & GST.
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>

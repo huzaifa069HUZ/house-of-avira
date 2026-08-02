@@ -317,7 +317,7 @@ export default function Header() {
 
               {/* Desktop Logo Image - Increased */}
               <Link href="/" className="hidden lg:block">
-                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[80px] w-auto object-contain" />
+                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[160px] w-auto object-contain scale-125 origin-left" />
               </Link>
             </div>
 
