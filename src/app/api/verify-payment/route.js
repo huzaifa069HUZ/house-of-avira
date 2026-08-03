@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { adminDb } from '@/lib/firebase-admin';
-import { PRODUCT_PAYMENT_STATUS } from '@/lib/shipping-constants';
+import { PRODUCT_PAYMENT_STATUS, ORDER_STATUS } from '@/lib/shipping-constants';
 
 export async function POST(request) {
   try {
