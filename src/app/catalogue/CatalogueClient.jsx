@@ -673,13 +673,26 @@ export default function CatalogueClient() {
                   <span className="text-[11px] md:text-xs font-normal text-black uppercase truncate w-full">{product.name}</span>
                   <span className="text-xs md:text-[13px] text-black font-semibold mt-0.5"><PriceDisplay basePrice={product.price || 0} /></span>
                   
-                  {/* Swatches (Mock) */}
-                  <div className="flex items-center gap-1.5 mt-2 pl-0.5 pb-1">
-                    <div className="w-3.5 h-3.5 rounded-full bg-[#E5E5E5] border border-gray-300 ring-1 ring-black ring-offset-1"></div>
-                    <div className="w-3.5 h-3.5 rounded-full bg-[#111] border border-gray-300"></div>
-                    <div className="w-3.5 h-3.5 rounded-full bg-[#7A2A3C] border border-gray-300"></div>
-                    <div className="w-3.5 h-3.5 rounded-full bg-[#2A3C30] border border-gray-300"></div>
-                  </div>
+                  {/* Swatches */}
+                  {product.swatches && product.swatches.length > 0 && (
+                    <div className="flex items-center gap-1 mt-1.5 pl-0.5 pb-1">
+                      {product.swatches.slice(0, 3).map((swatch, idx) => (
+                        <div 
+                          key={idx} 
+                          className="w-3 h-3 rounded-full border border-black/20 flex items-center justify-center p-[1px]"
+                          style={swatch.active ? { borderColor: '#000000', borderWidth: '1.5px' } : {}}
+                        >
+                          <div 
+                            className="w-full h-full rounded-full" 
+                            style={{ backgroundColor: swatch.color || '#cccccc' }}
+                          />
+                        </div>
+                      ))}
+                      {product.extraColors > 0 && (
+                        <span className="text-[9px] text-neutral-500 font-bold ml-0.5">+{product.extraColors}</span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </Link>
             );

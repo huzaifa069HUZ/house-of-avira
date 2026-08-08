@@ -54,38 +54,15 @@ export default function ProductCard({ product }) {
     <div className="group flex flex-col gap-2 relative cursor-pointer w-full">
       {/* Image Container */}
       <div className={`relative aspect-[3/4] w-full overflow-hidden rounded-md bg-[#E5E0DA] ${product.inStock === false ? 'opacity-70' : ''}`}>
-        {product.images && product.images.length > 1 ? (
-          <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory hide-scrollbar style-hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <style jsx>{`
-              .style-hide-scrollbar::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            {product.images.map((img, idx) => (
-              <div key={idx} className="w-full h-full flex-shrink-0 snap-center relative">
-                <Link href={`/product/${product.slug || product.id}`} className="absolute inset-0 z-10">
-                  <span className="sr-only">View {name} {idx + 1}</span>
-                </Link>
-                <img
-                  src={img}
-                  alt={`${name} - Image ${idx + 1}`}
-                  className="h-full w-full object-cover object-center transition-transform duration-500"
-                />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <>
-            <Link href={`/product/${product.slug || product.id}`} className="absolute inset-0 z-10">
-              <span className="sr-only">View {name}</span>
-            </Link>
-            <img
-              src={imageUrl || (product.images && product.images[0])}
-              alt={name}
-              className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-            />
-          </>
-        )}
+        <Link href={`/product/${product.slug || product.id}`} className="absolute inset-0 z-10">
+          <span className="sr-only">View {name}</span>
+        </Link>
+        <img
+          src={imageUrl || (product.images && product.images[0])}
+          alt={name}
+          loading="lazy"
+          className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+        />
         
         {/* Out of Stock Overlay */}
         {product.inStock === false && (
@@ -140,37 +117,41 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Details Section */}
-      <div className="flex justify-between items-start pt-1">
+      <div className="flex flex-col gap-0.5 pt-1.5 w-full min-w-0 overflow-hidden">
+        {/* Title */}
+        <h3 className="text-[11px] font-semibold tracking-wide text-black uppercase leading-tight truncate w-full">
+          {name}
+        </h3>
         
-        {/* Left Side: Title and Price */}
-        <div className="flex flex-col gap-0.5 max-w-[70%]">
-          <h3 className="text-[11px] font-medium tracking-wide text-black uppercase leading-tight truncate">
-            {name}
-          </h3>
-          <p className="text-[11px] text-neutral-600 font-normal"><PriceDisplay basePrice={price} /></p>
-        </div>
-        
-        {/* Right Side: Swatches */}
-        {swatches && swatches.length > 0 && (
-          <div className="flex items-center gap-1 shrink-0 mt-0.5">
-            {swatches.map((swatch, idx) => (
-              <div 
-                key={idx} 
-                className="w-3.5 h-3.5 rounded-full border border-black/10 flex items-center justify-center p-[2px]"
-                style={swatch.active ? { borderColor: '#4285F4' } : {}}
-              >
+        {/* Price & Swatches Row */}
+        <div className="flex items-center justify-between gap-1 w-full min-w-0 mt-0.5">
+          <p className="text-[11px] text-neutral-600 font-medium shrink-0">
+            <PriceDisplay basePrice={price} />
+          </p>
+          
+          {/* Swatches (Clean, max 3) */}
+          {swatches && swatches.length > 0 && (
+            <div className="flex items-center gap-1 shrink-0 overflow-hidden">
+              {swatches.slice(0, 3).map((swatch, idx) => (
                 <div 
-                  className="w-full h-full rounded-full" 
-                  style={{ backgroundColor: swatch.color }}
-                />
-              </div>
-            ))}
-            {product.extraColors > 0 && (
-              <span className="text-[10px] text-neutral-600 font-medium ml-0.5">+{product.extraColors}</span>
-            )}
-          </div>
-        )}
-        
+                  key={idx} 
+                  className="w-3 h-3 rounded-full border border-black/20 flex items-center justify-center p-[1px] shrink-0"
+                  style={swatch.active ? { borderColor: '#000000', borderWidth: '1.5px' } : {}}
+                >
+                  <div 
+                    className="w-full h-full rounded-full" 
+                    style={{ backgroundColor: swatch.color || '#cccccc' }}
+                  />
+                </div>
+              ))}
+              {swatches.length > 3 && (
+                <span className="text-[9px] text-neutral-500 font-bold tracking-tight shrink-0 ml-0.5">
+                  +{swatches.length - 3}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
