@@ -61,7 +61,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="w-full bg-white text-black font-sans border-t border-gray-200">
+    <div id="contact-studio" className="w-full bg-white text-black font-sans border-t border-gray-200 scroll-mt-24">
       <div className="w-full h-full">
         <div className="flex flex-col lg:flex-row w-full h-full min-h-[800px] border-b border-gray-200">
           

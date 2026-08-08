@@ -231,7 +231,7 @@ export default function HomeClient() {
       </div>
 
       {/* New Arrivals Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20 w-full border-b border-[#000000]/10">
+      <section id="new-arrivals" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20 w-full border-b border-[#000000]/10 scroll-mt-20">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
           <div className="flex items-baseline gap-6 sm:gap-8 flex-wrap">
