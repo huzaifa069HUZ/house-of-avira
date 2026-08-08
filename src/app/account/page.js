@@ -224,13 +224,19 @@ export default function AccountPage() {
                     <input 
                       type="tel" 
                       value={editPhone} 
-                      onChange={(e) => setEditPhone(e.target.value)}
+                      onChange={(e) => setEditPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
                       className="w-full border-b border-black/20 pb-2 pl-3 outline-none focus:border-black text-sm font-dm-sans transition-colors bg-transparent"
                       placeholder="1234567890"
                     />
                   </div>
                 ) : (
-                  <p className="text-lg font-dm-sans text-[#000000]">{user.phone || user.phoneNumber || <span className="font-gambetta italic text-base text-black/40">No phone added</span>}</p>
+                  <p className="text-lg font-dm-sans text-[#000000]">
+                    {(user.phone && user.phone.trim() !== '+91' && user.phone.trim() !== '') || (user.phoneNumber && user.phoneNumber.trim() !== '') ? (
+                      user.phone || user.phoneNumber
+                    ) : (
+                      <span className="font-gambetta italic text-base text-black/40">No phone added</span>
+                    )}
+                  </p>
                 )}
               </div>
             </div>
