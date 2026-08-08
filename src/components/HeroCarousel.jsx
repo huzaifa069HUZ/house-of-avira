@@ -90,7 +90,7 @@ export default function HeroCarousel() {
   }, [mobileSlides]);
 
   return (
-    <section className="relative w-full h-[100dvh] md:h-[calc(100vh-32px)] -mt-[140px] overflow-hidden bg-black">
+    <section className="relative w-full h-[100dvh] md:h-[calc(100vh-32px)] -mt-[148px] overflow-hidden bg-black">
       {/* DESKTOP CAROUSEL */}
       <div className="hidden md:block w-full h-full">
         {defaultDesktopSlides.map((slide, index) => {
