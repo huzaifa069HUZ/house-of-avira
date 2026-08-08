@@ -1,4 +1,4 @@
-.avira-catalogue-container {
+﻿.avira-catalogue-container {
   max-width: 100%;
   overflow-x: hidden;
   background: #fff;
@@ -70,82 +70,46 @@
   font-weight: 800;
 }
 
-/* Product Grid — uniform rows, same visual as original */
+/* Masonry Grid */
 .avira-masonry-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  column-count: 2;
   column-gap: 8px;
-  row-gap: 24px;
   padding: 0 8px;
-  box-sizing: border-box;
-  width: 100%;
 }
 
 @media (min-width: 640px) {
-  .avira-masonry-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding: 0 16px;
-  }
+  .avira-masonry-grid { column-count: 3; }
 }
 
 @media (min-width: 1024px) {
-  .avira-masonry-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 0 24px;
-  }
+  .avira-masonry-grid { column-count: 4; }
 }
 
 @media (min-width: 1440px) {
-  .avira-masonry-grid {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
-    padding: 0 24px;
-  }
+  .avira-masonry-grid { column-count: 5; }
 }
 
-/* Grid Item — same look as original, no rounded corners added */
+/* Grid Item */
 .avira-masonry-item {
+  break-inside: avoid;
+  margin-bottom: 32px;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  display: block;
   cursor: pointer;
   background: transparent;
-  width: 100%;
-  box-sizing: border-box;
 }
 
-/* Image wrapper — natural height, no forced crop, no background fill */
 .avira-item-img-wrapper {
   position: relative;
   width: 100%;
-  overflow: hidden;
 }
 
-/* Fixed portrait height per breakpoint keeps left/right rows level */
-/* Mobile: ~56vw tall per column so portrait fashion shots fit */
 .avira-item-img {
   width: 100%;
-  height: 56vw;          /* ~same as original column-count visual */
-  max-height: 420px;
+  height: auto;
   display: block;
   object-fit: cover;
-  object-position: center center;
-}
-
-@media (min-width: 640px) {
-  .avira-item-img {
-    height: 40vw;
-    max-height: 360px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .avira-item-img {
-    height: 30vw;
-    max-height: 400px;
-  }
 }
 
 /* Overlays */
