@@ -125,13 +125,13 @@ export default function ProductCard({ product }) {
         
         {/* Price & Swatches Row */}
         <div className="flex items-center justify-between gap-1 w-full min-w-0 mt-0.5">
-          <p className="text-[11px] text-neutral-600 font-medium shrink-0">
+          <div className="text-[11px] text-neutral-600 font-medium truncate min-w-0">
             <PriceDisplay basePrice={price} />
-          </p>
+          </div>
           
           {/* Swatches (Clean, max 3) */}
           {swatches && swatches.length > 0 && (
-            <div className="flex items-center gap-1 shrink-0 overflow-hidden">
+            <div className="flex items-center gap-1 shrink-0">
               {swatches.slice(0, 3).map((swatch, idx) => (
                 <div 
                   key={idx} 

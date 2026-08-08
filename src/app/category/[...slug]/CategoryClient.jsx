@@ -45,18 +45,34 @@ export default function CategoryClient({ slug = [] }) {
   // Filter strictly by the route URL first
   const routeFilteredProducts = useMemo(() => {
     return products.filter(p => {
-      const dbMain = p.category?.toLowerCase().trim() || '';
       const urlMain = mainCategory.toLowerCase().trim();
 
       const matchMain = !urlMain || (() => {
+        // Check primary category string
+        const dbMain = p.category?.toLowerCase().trim() || '';
         if (dbMain === urlMain) return true;
-        const cleanDb = dbMain.replace(/[^a-z0-9]/g, '');
         const cleanUrl = urlMain.replace(/[^a-z0-9]/g, '');
+        const cleanDb = dbMain.replace(/[^a-z0-9]/g, '');
         if (cleanDb === cleanUrl) return true;
-        
+
+        // Check multi-category array (new products may have a `categories` array)
+        if (Array.isArray(p.categories)) {
+          const found = p.categories.some(cat => {
+            const catClean = (cat || '').toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+            return catClean === cleanUrl;
+          });
+          if (found) return true;
+        }
+
+        // Also check secondaryCategory field
+        if (p.secondaryCategory) {
+          const secClean = p.secondaryCategory.toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+          if (secClean === cleanUrl) return true;
+        }
+
         // Custom logic for Shop Your Look
         if (cleanUrl === 'shopyourlook' && p.sections?.includes('Shop Your Look')) return true;
-        
+
         return false;
       })();
 
