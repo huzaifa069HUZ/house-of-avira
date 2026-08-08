@@ -70,32 +70,32 @@
   font-weight: 800;
 }
 
-/* Masonry Grid */
+/* Product Grid — uniform rows, no misaligned columns */
 .avira-masonry-grid {
-  column-count: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   column-gap: 8px;
+  row-gap: 20px;
   padding: 0 8px;
 }
 
 @media (min-width: 640px) {
-  .avira-masonry-grid { column-count: 3; }
+  .avira-masonry-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 16px; }
 }
 
 @media (min-width: 1024px) {
-  .avira-masonry-grid { column-count: 4; }
+  .avira-masonry-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 0 24px; }
 }
 
 @media (min-width: 1440px) {
-  .avira-masonry-grid { column-count: 5; }
+  .avira-masonry-grid { grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 0 24px; }
 }
 
 /* Grid Item */
 .avira-masonry-item {
-  break-inside: avoid;
-  margin-bottom: 32px;
   position: relative;
-  overflow: hidden;
-  display: block;
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
   background: transparent;
 }
@@ -103,13 +103,18 @@
 .avira-item-img-wrapper {
   position: relative;
   width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #f0ebe5;
+  border-radius: 4px;
 }
 
 .avira-item-img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
+  object-position: center top;
 }
 
 /* Overlays */
