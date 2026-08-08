@@ -270,9 +270,9 @@ export default function CartSlideOver() {
 
                   {cart.map((item) => (
                     <div key={item.cartItemId || item.id} className="flex bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100/80 p-5 relative transition-all hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                      <div className="flex gap-6 w-full">
+                      <div className="flex gap-4 w-full">
                         {/* Image */}
-                        <div className="relative w-[100px] h-[135px] rounded-xl overflow-hidden bg-[#F5F5F7] flex-shrink-0 border border-gray-100/50 shadow-sm">
+                        <div className="relative w-[90px] sm:w-[100px] h-[120px] sm:h-[135px] rounded-xl overflow-hidden bg-[#F5F5F7] flex-shrink-0 border border-gray-100/50 shadow-sm">
                           {item.image ? (
                             <Image src={item.image} alt={item.title} fill className="object-cover" />
                           ) : (
@@ -281,10 +281,10 @@ export default function CartSlideOver() {
                         </div>
 
                         {/* Details */}
-                        <div className="flex flex-col flex-1 py-0.5">
-                          <div className="flex justify-between items-start w-full gap-3">
-                            <div className="flex flex-col gap-2 flex-1">
-                              <h3 className="text-[14px] text-gray-900 font-bold leading-snug line-clamp-2 tracking-tight">
+                        <div className="flex flex-col flex-1 py-0.5 min-w-0">
+                          <div className="flex justify-between items-start w-full gap-2 sm:gap-3">
+                            <div className="flex flex-col gap-2 flex-1 min-w-0">
+                              <h3 className="text-[13px] sm:text-[14px] text-gray-900 font-bold leading-snug line-clamp-2 tracking-tight">
                                 {item.title}
                               </h3>
                               <div className="flex items-center gap-2 mt-0.5">
