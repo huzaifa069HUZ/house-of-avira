@@ -66,6 +66,66 @@ export async function POST(request) {
 
     const now = new Date().toISOString();
 
+    if (!adminDb) {
+      console.error("Firebase Admin SDK is not initialized.");
+      return NextResponse.json(
+        { success: false, message: 'Server Configuration Error: Database not connected.' },
+        { status: 500 }
+      );
+    }
+
+    // ── Secure Backend Pricing Calculation ──
+    let secureSubtotal = 0;
+    const validatedItems = [];
+
+    // Fetch all products from Firestore to get accurate prices
+    for (const item of items) {
+      const productId = item.id || item.cartItemId;
+      if (!productId) {
+        return NextResponse.json({ success: false, message: 'Invalid item ID found.' }, { status: 400 });
+      }
+
+      const productRef = adminDb.collection('products').doc(productId);
+      const productSnap = await productRef.get();
+
+      if (!productSnap.exists) {
+        return NextResponse.json({ success: false, message: `Product ${item.title || item.name || productId} no longer exists.` }, { status: 404 });
+      }
+
+      const productData = productSnap.data();
+      const dbPrice = Number(productData.price) || 0;
+      const quantity = Number(item.quantity) || 1;
+
+      secureSubtotal += dbPrice * quantity;
+      
+      // Keep the item data but use the secure price
+      validatedItems.push({
+        ...item,
+        price: dbPrice, // Override with secure price
+        name: item.title || item.name || productData.name || 'Unknown Item'
+      });
+    }
+
+    // Apply Coupon if valid
+    let secureDiscount = 0;
+    if (coupon_code) {
+      const couponRef = adminDb.collection('coupons').doc(coupon_code);
+      const couponSnap = await couponRef.get();
+      
+      if (couponSnap.exists) {
+        const couponData = couponSnap.data();
+        if (couponData.active !== false) { // Default to active if not explicitly false
+          if (couponData.type === 'percentage') {
+            secureDiscount = (secureSubtotal * Number(couponData.discount)) / 100;
+          } else {
+            secureDiscount = Number(couponData.discount) || 0;
+          }
+        }
+      }
+    }
+
+    const securePayableAmount = Math.max(0, secureSubtotal - secureDiscount);
+
     // ── Build order document ──
     const orderData = {
       // Customer info
@@ -80,13 +140,13 @@ export async function POST(request) {
       shipping_address,
 
       // Items
-      items,
+      items: validatedItems,
       items_count,
 
       // Product payment
-      product_total: product_total || 0,
-      discount_amount: discount_amount || 0,
-      payable_amount,
+      product_total: secureSubtotal,
+      discount_amount: secureDiscount,
+      payable_amount: securePayableAmount,
       coupon_code: coupon_code || null,
       product_payment_status: PRODUCT_PAYMENT_STATUS.PENDING,
 
@@ -106,16 +166,7 @@ export async function POST(request) {
     };
 
     // Firebase Firestore throws an error if any field anywhere in the object tree is strictly 'undefined'.
-    // The easiest way to strip all undefined values deeply is to JSON serialize and parse.
     const cleanOrderData = JSON.parse(JSON.stringify(orderData));
-
-    if (!adminDb) {
-      console.error("Firebase Admin SDK is not initialized.");
-      return NextResponse.json(
-        { success: false, message: 'Server Configuration Error: Database not connected.' },
-        { status: 500 }
-      );
-    }
 
     const counterRef = adminDb.collection('counters').doc('orders');
     
@@ -147,13 +198,18 @@ export async function POST(request) {
     });
 
     // Determine amount in minor units (paise for INR). Minimum 100 paise.
-    const amountInPaise = Math.max(100, Math.round(payable_amount * 100));
+    const amountInPaise = Math.max(100, Math.round(securePayableAmount * 100));
 
     // Create order in Razorpay
     const razorpayOrder = await razorpay.orders.create({
       amount: amountInPaise,
       currency: 'INR',
       receipt: docRef.id,
+    });
+
+    // Save the razorpay_order_id back to Firestore for secure verification later
+    await adminDb.collection('orders').doc(newOrderId).update({
+      razorpay_order_id: razorpayOrder.id
     });
 
     // ── Send Emails ──
@@ -167,7 +223,7 @@ export async function POST(request) {
         customerName: customer_name,
         orderId: docRef.id,
         items,
-        payableAmount: payable_amount,
+        payableAmount: securePayableAmount,
         shippingAddress: shipping_address,
         currencySymbol
       });
@@ -179,7 +235,7 @@ export async function POST(request) {
         customerEmail: customer_email,
         items,
         itemsCount: items_count,
-        payableAmount: payable_amount,
+        payableAmount: securePayableAmount,
         currencySymbol
       });
     } catch (emailErr) {

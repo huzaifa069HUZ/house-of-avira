@@ -44,6 +44,13 @@ export async function POST(request) {
       );
     }
 
+    if (orderDoc.data().razorpay_order_id && orderDoc.data().razorpay_order_id !== razorpay_order_id) {
+      return NextResponse.json(
+        { success: false, message: 'Security verification failed: Order mismatch.' },
+        { status: 403 }
+      );
+    }
+
     if (orderDoc.data().product_payment_status === PRODUCT_PAYMENT_STATUS.CONFIRMED) {
       // Idempotency: Already confirmed, possibly by webhook
       return NextResponse.json({ success: true, message: 'Payment verified successfully.' });

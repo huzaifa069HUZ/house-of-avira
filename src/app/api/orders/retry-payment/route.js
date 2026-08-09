@@ -41,6 +41,10 @@ export async function POST(request) {
       receipt: orderId,
     });
 
+    await orderRef.update({
+      razorpay_order_id: razorpayOrder.id
+    });
+
     return NextResponse.json({
       success: true,
       db_order_id: orderId,

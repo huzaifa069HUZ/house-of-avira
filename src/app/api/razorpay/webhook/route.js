@@ -10,7 +10,7 @@ export async function POST(request) {
     // 1. Get raw body for webhook verification
     const rawBody = await request.text();
     const signature = request.headers.get('x-razorpay-signature');
-    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_KEY_SECRET;
 
     if (!signature || !secret) {
       console.error('Missing signature or webhook secret');
