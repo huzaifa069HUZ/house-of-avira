@@ -7,6 +7,7 @@ import WhyHouseOfAvira from '@/components/WhyHouseOfAvira';
 import CampaignAndGrid from '@/components/CampaignAndGrid';
 import PinterestFeed from '@/components/PinterestFeed';
 import TestimonialV2 from '@/components/ui/testimonial-v2';
+import ScrollMorphHero from '@/components/ui/scroll-morph-hero';
 
 import ContactForm from '@/components/ContactForm';
 import Link from 'next/link';
@@ -439,8 +440,10 @@ export default function HomeClient() {
         <HowItWorks />
       </div>
 
-
-
+      {/* Packaging Animation Section */}
+      <div className="w-full h-[600px] md:h-[800px] border-y-[3px] border-[#000000] relative">
+        <ScrollMorphHero />
+      </div>
 
       {/* Testimonials Section */}
       <TestimonialV2 />
