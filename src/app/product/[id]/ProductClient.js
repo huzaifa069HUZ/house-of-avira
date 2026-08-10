@@ -352,7 +352,8 @@ export default function ProductClient({ params: paramsPromise }) {
                       <button 
                         key={size} 
                         onClick={() => setSelectedSize(size)}
-                        className={`py-3.5 border text-xs font-medium transition-all ${selectedSize === size ? 'border-black bg-black text-white shadow-md' : 'border-neutral-200 text-black hover:border-black'}`}
+                        className={`py-3.5 border text-xs font-medium uppercase tracking-widest transition-all ${selectedSize === size ? 'border-black bg-black text-white shadow-md' : 'border-neutral-200 text-black hover:border-black'}`}
+                        style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontWeight: 500 }}
                       >
                         {size}
                       </button>
@@ -463,7 +464,7 @@ export default function ProductClient({ params: paramsPromise }) {
                 <p className="text-xs tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-sm" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                   * Please place an order only if you are comfortable with the international shipping process and charges.
                 </p>
-                <Link href="/shipping" className="bg-black text-white px-8 py-3.5 rounded-full text-[10px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm">
+                <Link href="/shipping" className="bg-black text-white px-8 py-3.5 rounded-full text-[12px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
                   READ FULL SHIPPING DETAILS
                 </Link>
               </div>
@@ -645,7 +646,7 @@ export default function ProductClient({ params: paramsPromise }) {
               <p className="text-sm tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-md" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 * Please place an order only if you are comfortable with the international shipping process and charges.
               </p>
-              <Link href="/shipping" className="bg-black text-white px-10 py-4 rounded-full text-[11px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm">
+              <Link href="/shipping" className="bg-black text-white px-10 py-4 rounded-full text-[13px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
                 READ FULL SHIPPING DETAILS
               </Link>
             </div>
@@ -687,8 +688,8 @@ export default function ProductClient({ params: paramsPromise }) {
 
         {/* You Might Like Section */}
         {relatedProducts.length > 0 && (
-          <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 mt-32 mb-12">
-            <h2 className="text-3xl md:text-5xl font-black text-center text-black uppercase tracking-wide mb-10" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>You Might Like</h2>
+          <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 mt-16 mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold text-center text-black uppercase tracking-widest mb-10" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>You Might Like</h2>
             <div className="flex overflow-x-auto gap-4 pb-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {relatedProducts.map((p) => (
                 <div key={p.id} className="min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] flex-none snap-start">
