@@ -78,29 +78,23 @@ export default function ProductClient({ params: paramsPromise }) {
           if (productData.sizes && productData.sizes.length > 0) setSelectedSize(productData.sizes[0]);
           if (productData.swatches && productData.swatches.length > 0) setSelectedColor(productData.swatches[0].color);
 
-          // Fetch Related Products
+          // Fetch Random Products for You Might Like
           try {
             const productsRef = collection(db, 'products');
-            let related = [];
-            if (productData.category) {
-              const relatedQ = query(productsRef, where('category', '==', productData.category), limit(6));
-              const relatedSnap = await getDocs(relatedQ);
-              related = relatedSnap.docs
-                .map(d => ({ id: d.id, ...d.data() }))
-                .filter(p => p.id !== productData.id)
-                .slice(0, 5);
+            const anyQ = query(productsRef, limit(30)); // fetch up to 30 to shuffle
+            const anySnap = await getDocs(anyQ);
+            
+            let allProducts = anySnap.docs
+              .map(d => ({ id: d.id, ...d.data() }))
+              .filter(p => p.id !== productData.id);
+            
+            // Shuffle array
+            for (let i = allProducts.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [allProducts[i], allProducts[j]] = [allProducts[j], allProducts[i]];
             }
             
-            if (related.length < 4) {
-              const anyQ = query(productsRef, limit(6));
-              const anySnap = await getDocs(anyQ);
-              const anyProducts = anySnap.docs
-                .map(d => ({ id: d.id, ...d.data() }))
-                .filter(p => p.id !== productData.id)
-                .slice(0, 5);
-              related = anyProducts;
-            }
-            setRelatedProducts(related);
+            setRelatedProducts(allProducts.slice(0, 15));
           } catch (err) {
             console.error("Error fetching related products", err);
           }
