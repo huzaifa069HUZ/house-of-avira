@@ -1,4 +1,4 @@
-﻿.avira-catalogue-container {
+.avira-catalogue-container {
   max-width: 100%;
   overflow-x: hidden;
   background: #fff;
@@ -70,32 +70,32 @@
   font-weight: 800;
 }
 
-/* Masonry Grid */
+/* Standard Grid (Replaced Masonry per user request) */
 .avira-masonry-grid {
-  column-count: 2;
-  column-gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 8px;
   padding: 0 8px;
 }
 
 @media (min-width: 640px) {
-  .avira-masonry-grid { column-count: 3; }
+  .avira-masonry-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 1024px) {
-  .avira-masonry-grid { column-count: 4; }
+  .avira-masonry-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (min-width: 1440px) {
-  .avira-masonry-grid { column-count: 5; }
+  .avira-masonry-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
 /* Grid Item */
 .avira-masonry-item {
-  break-inside: avoid;
-  margin-bottom: 32px;
   position: relative;
   overflow: hidden;
-  display: block;
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
   background: transparent;
 }
@@ -108,6 +108,7 @@
 .avira-item-img {
   width: 100%;
   height: auto;
+  aspect-ratio: 3/4;
   display: block;
   object-fit: cover;
 }
