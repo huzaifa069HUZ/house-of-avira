@@ -280,3 +280,26 @@ html {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* Footer Animated Underline */
+.footer-link-animate {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+.footer-link-animate::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+.footer-link-animate:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
