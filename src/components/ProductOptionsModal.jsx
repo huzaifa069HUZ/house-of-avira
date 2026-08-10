@@ -177,12 +177,14 @@ export default function ProductOptionsModal() {
                     <h3 className="text-[14px] font-bold text-[#111111]">Size:</h3>
                     <span className="text-[14px] text-neutral-500">{selectedSize || 'Select your size'}</span>
                   </div>
-                  <button 
-                    onClick={() => setShowSizeGuide(true)}
-                    className="flex items-center gap-1.5 text-[12px] text-neutral-500 hover:text-black font-medium transition-colors"
-                  >
-                    Size Guide <Ruler className="w-3.5 h-3.5" />
-                  </button>
+                  {product.sizeChartUrl && (
+                    <button 
+                      onClick={() => setShowSizeGuide(true)}
+                      className="flex items-center gap-1.5 text-[12px] text-neutral-500 hover:text-black font-medium transition-colors"
+                    >
+                      Size Guide <Ruler className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
                 
                 <div className="grid grid-cols-5 gap-2">

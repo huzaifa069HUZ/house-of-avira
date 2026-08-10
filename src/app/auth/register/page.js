@@ -30,7 +30,8 @@ export default function Register() {
       await updateProfile(user, { displayName: name });
       
       let role = 'customer';
-      if (['Orders.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com'].includes(user.email)) {
+      const allowedAdminEmails = ['orders.houseofavira@gmail.com', 'order.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com', 'huaifatabish9145@gmail.com'];
+      if (allowedAdminEmails.includes(user.email.toLowerCase())) {
         role = 'admin_owner';
       }
 

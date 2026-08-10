@@ -9,18 +9,22 @@ import { Ship } from 'lucide-react';
 export default function ShippingLayout({ children }) {
   const { user, role, loading } = useAuthStore();
   const router = useRouter();
-
+  const allowedEmails = ['orders.houseofavira@gmail.com', 'order.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com', 'huaifatabish9145@gmail.com'];
+  
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        router.push('/auth/login');
-      } else if (role !== 'admin_owner' && !['Orders.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com'].includes(user.email)) {
-        router.push('/');
+    const checkAccess = async () => {
+      if (!loading) {
+        if (!user) {
+          router.replace('/auth/login?redirect=/admin/shipping');
+        } else if (role !== 'admin_owner' && !allowedEmails.includes(user.email.toLowerCase())) {
+          router.replace('/');
+        }
       }
-    }
+    };
+    checkAccess();
   }, [user, role, loading, router]);
 
-  if (loading || !user || (role !== 'admin_owner' && !['Orders.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com'].includes(user.email))) {
+  if (loading || !user || (role !== 'admin_owner' && !allowedEmails.includes(user.email.toLowerCase()))) {
     return <div className="p-12 text-center text-neutral-500 uppercase tracking-widest text-sm">Verifying Access...</div>;
   }
 

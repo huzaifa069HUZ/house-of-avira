@@ -308,12 +308,14 @@ export default function ProductClient({ params: paramsPromise }) {
                 <div className="mb-10">
                   <div className="flex justify-between items-center mb-4">
                     <p className="text-[10px] uppercase tracking-widest font-bold text-black">Select Size</p>
-                    <button 
-                      onClick={() => setShowSizeGuide(true)}
-                      className="text-[10px] uppercase tracking-widest text-neutral-500 underline hover:text-black transition-colors"
-                    >
-                      Size Guide
-                    </button>
+                    {product.sizeChartUrl && (
+                      <button 
+                        onClick={() => setShowSizeGuide(true)}
+                        className="text-[10px] uppercase tracking-widest text-neutral-500 underline hover:text-black transition-colors"
+                      >
+                        Size Guide
+                      </button>
+                    )}
                   </div>
                   <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                     {product.sizes.map((size) => (
