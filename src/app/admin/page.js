@@ -137,7 +137,7 @@ export default function AdminDashboard() {
               }}
               className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 hover:border-[#0071e3] transition-colors cursor-pointer group"
             >
-              <h3 className="text-sm font-bold tracking-widest uppercase mb-2 text-black group-hover:text-[#0071e3] transition-colors">{item}</h3>
+              <h3 className="font-perandory text-sm font-bold tracking-widest uppercase mb-2 text-black group-hover:text-[#0071e3] transition-colors">{item}</h3>
               <p className="text-xs text-[#86868b]">Manage your {item.toLowerCase()} here.</p>
             </div>
           ))}
