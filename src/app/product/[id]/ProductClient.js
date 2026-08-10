@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use } from 'react';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight, Share2, X } from 'lucide-react';
 import ProductReviews from '@/components/product/ProductReviews';
+import ProductCard from '@/components/ProductCard';
 
 export default function ProductClient({ params: paramsPromise }) {
   const params = use(paramsPromise);
@@ -19,6 +20,7 @@ export default function ProductClient({ params: paramsPromise }) {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [showSizeGuide, setShowSizeGuide] = useState(false);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   // Swipe state
   const [touchStart, setTouchStart] = useState(null);
@@ -75,6 +77,34 @@ export default function ProductClient({ params: paramsPromise }) {
           setProduct(productData);
           if (productData.sizes && productData.sizes.length > 0) setSelectedSize(productData.sizes[0]);
           if (productData.swatches && productData.swatches.length > 0) setSelectedColor(productData.swatches[0].color);
+
+          // Fetch Related Products
+          try {
+            const productsRef = collection(db, 'products');
+            let related = [];
+            if (productData.category) {
+              const relatedQ = query(productsRef, where('category', '==', productData.category), limit(6));
+              const relatedSnap = await getDocs(relatedQ);
+              related = relatedSnap.docs
+                .map(d => ({ id: d.id, ...d.data() }))
+                .filter(p => p.id !== productData.id)
+                .slice(0, 5);
+            }
+            
+            if (related.length < 4) {
+              const anyQ = query(productsRef, limit(6));
+              const anySnap = await getDocs(anyQ);
+              const anyProducts = anySnap.docs
+                .map(d => ({ id: d.id, ...d.data() }))
+                .filter(p => p.id !== productData.id)
+                .slice(0, 5);
+              related = anyProducts;
+            }
+            setRelatedProducts(related);
+          } catch (err) {
+            console.error("Error fetching related products", err);
+          }
+
         } else {
           console.error("Product not found");
         }
@@ -166,10 +196,10 @@ export default function ProductClient({ params: paramsPromise }) {
       <main className="flex-1 w-full mx-auto pb-24 lg:pb-0">
         
         {/* Mobile Breadcrumbs */}
-        <div className="lg:hidden px-4 py-4 text-[10px] uppercase tracking-widest text-neutral-500 flex gap-2">
+        <div className="lg:hidden px-4 py-4 text-[10px] uppercase tracking-widest text-neutral-500 flex gap-2" style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontWeight: 500 }}>
           <span onClick={() => router.push('/')} className="cursor-pointer hover:text-black">Home</span>
           <span>/</span>
-          <span className="text-black font-medium truncate">{product.name}</span>
+          <span className="text-black truncate">{product.name}</span>
         </div>
 
         <div className="flex flex-col lg:flex-row w-full max-w-[1400px] mx-auto relative gap-x-8 lg:justify-center">
@@ -275,10 +305,10 @@ export default function ProductClient({ params: paramsPromise }) {
             <div className="lg:sticky lg:top-32 max-w-md mx-auto lg:mx-0">
               
               {/* Desktop Breadcrumbs */}
-              <div className="hidden lg:flex mb-8 text-[10px] uppercase tracking-widest text-neutral-500 gap-2">
+              <div className="hidden lg:flex mb-8 text-[10px] uppercase tracking-widest text-neutral-500 gap-2" style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontWeight: 500 }}>
                 <span onClick={() => router.push('/')} className="cursor-pointer hover:text-black transition-colors">Home</span>
                 <span>/</span>
-                <span className="text-black font-medium">{product.name}</span>
+                <span className="text-black">{product.name}</span>
               </div>
 
               <h1 className="text-2xl md:text-3xl font-medium text-black tracking-wide uppercase mb-3 leading-tight">{product.name}</h1>
@@ -287,7 +317,7 @@ export default function ProductClient({ params: paramsPromise }) {
               {/* Colors */}
               {product.swatches && product.swatches.length > 0 && (
                 <div className="mb-8">
-                  <p className="text-[10px] uppercase tracking-widest font-bold text-black mb-4">Color: <span className="font-normal text-neutral-500 ml-1">{selectedColor}</span></p>
+                  <p className="text-[10px] uppercase tracking-widest text-black mb-4" style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontWeight: 500 }}>Color: <span className="text-neutral-500 ml-1">{selectedColor}</span></p>
                   <div className="flex flex-wrap gap-3">
                     {product.swatches.map((swatch, idx) => (
                       <button 
@@ -307,7 +337,7 @@ export default function ProductClient({ params: paramsPromise }) {
               {product.sizes && product.sizes.length > 0 && (
                 <div className="mb-10">
                   <div className="flex justify-between items-center mb-4">
-                    <p className="text-[10px] uppercase tracking-widest font-bold text-black">Select Size</p>
+                    <p className="text-[10px] uppercase tracking-widest text-black" style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontWeight: 500 }}>Select Size</p>
                     {product.sizeChartUrl && (
                       <button 
                         onClick={() => setShowSizeGuide(true)}
@@ -651,6 +681,20 @@ export default function ProductClient({ params: paramsPromise }) {
                   </p>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* You Might Like Section */}
+        {relatedProducts.length > 0 && (
+          <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-8 mt-32 mb-12">
+            <h2 className="text-3xl md:text-5xl font-black text-center text-black uppercase tracking-wide mb-10" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>You Might Like</h2>
+            <div className="flex overflow-x-auto gap-4 pb-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {relatedProducts.map((p) => (
+                <div key={p.id} className="min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] flex-none snap-start">
+                  <ProductCard product={p} />
+                </div>
+              ))}
             </div>
           </div>
         )}

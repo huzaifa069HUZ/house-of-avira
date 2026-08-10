@@ -1,8 +1,13 @@
-import { Geist, Geist_Mono, Playfair_Display, Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Cormorant_Garamond, DM_Sans, Montserrat } from "next/font/google";
 import AuthProvider from "@/components/AuthProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -220,7 +225,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en-IN"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} ${dmSans.variable} ${montserrat.variable} h-full antialiased`}
     >
       <head>
         <script
