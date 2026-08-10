@@ -8,7 +8,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight, Share2 } from 'lucide-react';
+import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight, Share2, X } from 'lucide-react';
 import ProductReviews from '@/components/product/ProductReviews';
 
 export default function ProductClient({ params: paramsPromise }) {
@@ -18,6 +18,7 @@ export default function ProductClient({ params: paramsPromise }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   // Swipe state
   const [touchStart, setTouchStart] = useState(null);
@@ -307,7 +308,12 @@ export default function ProductClient({ params: paramsPromise }) {
                 <div className="mb-10">
                   <div className="flex justify-between items-center mb-4">
                     <p className="text-[10px] uppercase tracking-widest font-bold text-black">Select Size</p>
-                    <button className="text-[10px] uppercase tracking-widest text-neutral-500 underline hover:text-black transition-colors">Size Guide</button>
+                    <button 
+                      onClick={() => setShowSizeGuide(true)}
+                      className="text-[10px] uppercase tracking-widest text-neutral-500 underline hover:text-black transition-colors"
+                    >
+                      Size Guide
+                    </button>
                   </div>
                   <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                     {product.sizes.map((size) => (
@@ -616,6 +622,36 @@ export default function ProductClient({ params: paramsPromise }) {
 
           </div>
         </div>
+
+        {/* Size Guide Modal */}
+        {showSizeGuide && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowSizeGuide(false)}>
+            <div 
+              className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden relative shadow-2xl" 
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center p-4 border-b border-neutral-100">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-black">Size Guide</h3>
+                <button onClick={() => setShowSizeGuide(false)} className="p-2 bg-neutral-100 rounded-full text-black hover:bg-neutral-200 transition-colors">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="p-6 flex items-center justify-center min-h-[300px]">
+                {product.sizeChartUrl ? (
+                  <img 
+                    src={product.sizeChartUrl} 
+                    alt={`${product.name} Size Guide`} 
+                    className="max-w-full max-h-[70vh] object-contain"
+                  />
+                ) : (
+                  <p className="text-sm tracking-widest uppercase font-bold text-neutral-400">
+                    NO SIZE GUIDE FOR THIS PRODUCT
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Reviews Section */}
         <ProductReviews productId={product.id} />

@@ -260,6 +260,11 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   const [inStock, setInStock] = useState(true);
   const [bestSeller, setBestSeller] = useState(false);
 
+  // ── Size Chart State ──
+  const [sizeChartFile, setSizeChartFile] = useState(null);
+  const [sizeChartUrl, setSizeChartUrl] = useState('');
+  const sizeChartInputRef = useRef(null);
+
   // ── Image state ──
   // Each image item: { id, type: 'existing'|'new', src: string (url/blob), file: File|null, isManualCrop: bool, uploading: bool, uploaded: bool, uploadedUrl: string }
   const [imageItems, setImageItems] = useState([]);
@@ -297,6 +302,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       })) || []);
       setInStock(initialProduct.inStock !== false);
       setBestSeller(initialProduct.bestSeller || false);
+      setSizeChartUrl(initialProduct.sizeChartUrl || '');
 
       // Load existing images into unified imageItems list
       const existing = (initialProduct.images || [initialProduct.imageUrl].filter(Boolean)).map((url, idx) => ({
@@ -538,13 +544,23 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         }
       }
 
-      // 5. Build all categories array for multi-category support
+      // 5. Upload Size Chart if new file selected
+      let finalSizeChartUrl = sizeChartUrl;
+      if (sizeChartFile) {
+        const scForm = new FormData();
+        scForm.append('image', sizeChartFile);
+        scForm.append('manualCrop', 'false');
+        const scRes = await uploadSingleImage(scForm);
+        if (scRes.success) finalSizeChartUrl = scRes.url;
+      }
+
+      // 6. Build all categories array for multi-category support
       const allCategories = [category];
       if (secondaryCategory && secondaryCategory !== category) {
         allCategories.push(secondaryCategory);
       }
 
-      // 6. Build product data
+      // 7. Build product data
       const productData = {
         name,
         price: parseFloat(price),
@@ -560,6 +576,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         badge,
         imageUrl: finalImageUrls[0] || '',
         images: finalImageUrls,
+        sizeChartUrl: finalSizeChartUrl,
         sizes,
         swatches: swatchesArray,
         extraColors: swatchesArray.length > 3 ? swatchesArray.length - 3 : 0,
@@ -585,6 +602,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         setCategory(CATEGORY_DATA[0].title); setSecondaryCategory(''); setSubcategories([]); setAesthetic('');
         setSizes([]); setColors([]); setImageItems([]);
         setInStock(true); setBestSeller(false);
+        setSizeChartFile(null); setSizeChartUrl('');
       }
 
       if (onSuccess) {
@@ -861,6 +879,53 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
 
             {imageItems.length > 0 && (
               <p className="text-[11px] text-[#86868b] mt-3 text-center">Drag images to reorder · First image is the primary photo</p>
+            )}
+          </div>
+
+          {/* Size Chart Card */}
+          <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
+            <h3 className="text-base font-semibold text-black mb-1 flex items-center gap-2"><ImageIcon className="w-4 h-4 text-[#86868b]" /> Size Chart Image</h3>
+            <p className="text-xs text-[#86868b] mb-4">Upload a specific size guide for this product.</p>
+
+            {sizeChartUrl || sizeChartFile ? (
+              <div className="relative aspect-square sm:aspect-video rounded-lg overflow-hidden border border-[#d2d2d7] group shadow-sm bg-[#F5F5F7] flex items-center justify-center">
+                <img 
+                  src={sizeChartFile ? URL.createObjectURL(sizeChartFile) : sizeChartUrl} 
+                  alt="Size Chart" 
+                  className="max-w-full max-h-full object-contain pointer-events-none" 
+                />
+                {/* Remove button */}
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setSizeChartFile(null); setSizeChartUrl(''); }}
+                  className="absolute top-2 right-2 w-7 h-7 bg-white/90 hover:bg-[#ff3b30] hover:text-white text-black shadow-md rounded-full flex items-center justify-center transition-all backdrop-blur-md"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <div
+                onClick={() => sizeChartInputRef.current?.click()}
+                className="border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all border-[#d2d2d7] hover:border-[#0071e3] hover:bg-black/[0.02]"
+              >
+                <div className="w-10 h-10 rounded-full bg-[#F5F5F7] flex items-center justify-center mb-3">
+                  <UploadCloud className="w-5 h-5 text-[#0071e3]" />
+                </div>
+                <p className="text-[13px] font-semibold text-black">Click to upload size chart</p>
+                <p className="text-xs text-[#86868b] mt-1">Optional. PNG, JPG up to 5MB</p>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  className="hidden" 
+                  ref={sizeChartInputRef} 
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                      setSizeChartFile(file);
+                    }
+                  }} 
+                />
+              </div>
             )}
           </div>
 
