@@ -441,7 +441,7 @@ export default function HomeClient() {
       </div>
 
       {/* Packaging Animation Section */}
-      <div className="w-full h-[600px] md:h-[800px] border-y-[3px] border-[#000000] relative">
+      <div className="w-full border-y-[3px] border-[#000000] relative">
         <ScrollMorphHero />
       </div>
 
