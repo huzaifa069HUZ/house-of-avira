@@ -532,7 +532,26 @@ export default function CartSlideOver() {
                   </div>
 
                   <div className="border-t border-gray-100 px-6 py-6 bg-white shrink-0">
-                    <div className="text-center mb-4">
+                    <div className="flex flex-col items-center gap-3 mb-4">
+                      <label className="flex items-center gap-2 cursor-pointer text-[10px] text-gray-400 hover:text-gray-600 transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={allConsented}
+                          onChange={(e) => {
+                            const isChecked = e.target.checked;
+                            setConsents({
+                              c1: isChecked,
+                              c2: isChecked,
+                              c3: isChecked,
+                              c4: isChecked,
+                              c5: isChecked,
+                              c6: isChecked
+                            });
+                          }}
+                          className="w-4 h-4 accent-black rounded border-gray-300 cursor-pointer"
+                        />
+                        <span className="uppercase tracking-widest font-bold">I AGREE WITH ALL</span>
+                      </label>
                       <Link href="/order-info" onClick={closeCart} className="text-blue-600 font-bold text-sm hover:underline uppercase tracking-wide" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
                         Terms and Conditions
                       </Link>
