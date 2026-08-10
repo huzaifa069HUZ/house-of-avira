@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function HowItWorks() {
   return (
-    <section className="py-24 bg-[#FAFAFA] w-full border-t border-[#000000]/5 relative overflow-hidden">
+    <section className="pt-12 pb-24 md:py-24 bg-[#FAFAFA] w-full border-t border-[#000000]/5 relative overflow-hidden">
       <div className="max-w-2xl mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center">
         
         {/* Header */}

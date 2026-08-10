@@ -64,7 +64,7 @@ export default function WhyHouseOfAvira() {
   };
 
   return (
-    <section className="w-full bg-[#FAFAFA] pt-12 pb-24 md:pt-16 md:pb-32 overflow-hidden border-t border-[#000000]/10">
+    <section className="w-full bg-[#FAFAFA] pt-12 pb-12 md:pt-16 md:pb-32 overflow-hidden border-t border-[#000000]/10">
       <motion.div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         variants={containerVariants}
