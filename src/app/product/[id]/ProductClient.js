@@ -654,11 +654,11 @@ export default function ProductClient({ params: paramsPromise }) {
         {showSizeGuide && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-sm" onClick={() => setShowSizeGuide(false)}>
             <div 
-              className="bg-white rounded-3xl w-full max-w-3xl overflow-hidden relative shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] transform transition-all border border-white/20" 
+              className="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col relative shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] transform transition-all border border-white/20" 
               onClick={e => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex justify-between items-center p-6 border-b border-neutral-100 relative overflow-hidden">
+              <div className="flex justify-between items-center p-6 border-b border-neutral-100 relative overflow-hidden shrink-0 rounded-t-3xl">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A001A] to-red-400"></div>
                 <div className="flex items-center gap-3 relative z-10">
                   <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center">
@@ -674,15 +674,13 @@ export default function ProductClient({ params: paramsPromise }) {
               </div>
 
               {/* Body */}
-              <div className="bg-[#F8F9FA] p-4 md:p-8">
+              <div className="bg-[#F8F9FA] p-4 md:p-8 overflow-y-auto flex-1 rounded-b-3xl">
                 {product.sizeChartUrl ? (
-                  <div className="w-full aspect-[16/9] rounded-xl border border-neutral-200 bg-white shadow-sm overflow-hidden flex items-center justify-center p-2 bg-neutral-50/50">
-                    <img 
-                      src={product.sizeChartUrl} 
-                      alt={`${product.name} Size Guide`} 
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                  <img 
+                    src={product.sizeChartUrl} 
+                    alt={`${product.name} Size Guide`} 
+                    className="w-full h-auto object-contain rounded-xl border border-neutral-200 shadow-sm block mx-auto"
+                  />
                 ) : (
                   <div className="flex items-center justify-center min-h-[300px]">
                     <p className="text-sm tracking-widest uppercase font-bold text-neutral-400">
