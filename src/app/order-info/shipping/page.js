@@ -93,7 +93,7 @@ export default function ShippingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20">
           
           {/* Typography & CTA Column (Left) */}
-          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-30 pt-10 md:pt-0">
+          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-50 pt-10 md:pt-0">
             {/* Graphic Element */}
             <motion.div 
               initial={{ scaleX: 0 }}
@@ -119,7 +119,7 @@ export default function ShippingPage() {
                 initial={{ opacity: 0, rotate: -5, scale: 2 }}
                 animate={{ opacity: 0.9, rotate: -5, scale: 2 }}
                 transition={{ delay: 0.8, duration: 1 }}
-                className="font-aston-script text-3xl md:text-5xl text-[#8A001A] absolute -bottom-16 md:-bottom-24 right-10 md:-right-[10%] italic z-30 origin-left pointer-events-none"
+                className="font-aston-script text-3xl md:text-5xl text-[#8A001A] absolute -bottom-16 md:-bottom-24 right-10 md:-right-[10%] italic z-50 origin-left pointer-events-none whitespace-nowrap"
               >
                 Across the Globe
               </motion.span>
@@ -143,7 +143,7 @@ export default function ShippingPage() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:w-6/12 relative mt-8 md:mt-0 z-10"
+            className="w-full md:w-6/12 relative mt-8 md:mt-0 z-0"
           >
             {/* Asymmetrical Background Accent */}
             <div className="absolute top-4 md:top-16 -right-4 md:-right-12 w-full h-[90%] md:h-[110%] bg-[#F8F9FA] z-0" />
