@@ -202,8 +202,8 @@ export default function OrderProcessPage() {
           <RevealSection className="mb-12 md:mb-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div>
-                <p className="text-[#8A001A] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Step 01</p>
-                <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-[#111111] font-montserrat">Securing Your Piece</h2>
+                <p className="text-[#8A001A] text-2xl md:text-3xl font-aston-script mb-2">Step 01</p>
+                <h2 className="text-3xl md:text-5xl uppercase tracking-tighter text-[#111111] font-perandory">Securing Your Piece</h2>
               </div>
               <p className="text-neutral-500 text-sm max-w-md">
                 Your first payment covers the actual product price. We immediately begin sourcing and inspecting your item.
@@ -258,13 +258,13 @@ export default function OrderProcessPage() {
       </section>
 
       {/* ═══ STEP 02 ═══ */}
-      <section className="relative py-20 md:py-32 bg-white">
+      <section className="relative py-20 md:py-32 bg-white overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <RevealSection className="mb-12 md:mb-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div>
-                <p className="text-[#8A001A] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Step 02</p>
-                <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-[#111111] font-montserrat">Bringing It Home</h2>
+                <p className="text-[#8A001A] text-2xl md:text-3xl font-aston-script mb-2">Step 02</p>
+                <h2 className="text-3xl md:text-5xl uppercase tracking-tighter text-[#111111] font-perandory">Bringing It Home</h2>
               </div>
               <p className="text-neutral-500 text-sm max-w-md">
                 Once your piece reaches our international hub, we calculate the exact shipping and logistics costs for the final leg.
@@ -293,24 +293,38 @@ export default function OrderProcessPage() {
             </div>
           </RevealSection>
 
-          {/* Shipping Types Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
-            {[
-              { icon: Plane, title: 'Global Transit', subtitle: 'Calculations' },
-              { icon: Receipt, title: 'Customs', subtitle: 'Clearance' },
-              { icon: FileText, title: 'Import', subtitle: 'Charges' },
-              { icon: Truck, title: 'Final Mile', subtitle: 'Delivery' },
-              { icon: Package, title: 'Careful', subtitle: 'Handling' },
-            ].map(({ icon: Icon, title, subtitle }, i) => (
-              <RevealSection key={i} delay={0.1 * i}>
-                <div className="bg-white border border-neutral-200 rounded-xl p-6 flex flex-col items-center justify-center text-center h-full hover:border-[#8A001A]/30 hover:shadow-sm transition-all group">
-                  <Icon className="w-6 h-6 text-[#111111] mb-3 group-hover:text-[#8A001A] transition-colors" strokeWidth={1.5} />
-                  <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-500 group-hover:text-[#111111] transition-colors">
-                    {title}<br />{subtitle}
-                  </span>
-                </div>
-              </RevealSection>
-            ))}
+          {/* Shipping Types Grid - INFINITE MARQUEE */}
+          <div className="relative w-full overflow-hidden mt-12 py-4">
+             {/* Fade Gradients */}
+             <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+             <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+             
+             <motion.div 
+               className="flex gap-4 md:gap-6 w-max"
+               animate={{ x: ["0%", "-50%"] }}
+               transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+             >
+               {[
+                 { icon: Plane, title: 'Global Transit', subtitle: 'Calculations' },
+                 { icon: Receipt, title: 'Customs', subtitle: 'Clearance' },
+                 { icon: FileText, title: 'Import', subtitle: 'Charges' },
+                 { icon: Truck, title: 'Final Mile', subtitle: 'Delivery' },
+                 { icon: Package, title: 'Careful', subtitle: 'Handling' },
+                 // Duplicate for infinite loop
+                 { icon: Plane, title: 'Global Transit', subtitle: 'Calculations' },
+                 { icon: Receipt, title: 'Customs', subtitle: 'Clearance' },
+                 { icon: FileText, title: 'Import', subtitle: 'Charges' },
+                 { icon: Truck, title: 'Final Mile', subtitle: 'Delivery' },
+                 { icon: Package, title: 'Careful', subtitle: 'Handling' },
+               ].map(({ icon: Icon, title, subtitle }, i) => (
+                 <div key={i} className="bg-white border border-neutral-200 rounded-xl p-6 w-[200px] flex-shrink-0 flex flex-col items-center justify-center text-center hover:border-[#8A001A]/30 hover:shadow-sm transition-all group">
+                   <Icon className="w-6 h-6 text-[#111111] mb-3 group-hover:text-[#8A001A] transition-colors" strokeWidth={1.5} />
+                   <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-500 group-hover:text-[#111111] transition-colors">
+                     {title}<br />{subtitle}
+                   </span>
+                 </div>
+               ))}
+             </motion.div>
           </div>
         </div>
       </section>
