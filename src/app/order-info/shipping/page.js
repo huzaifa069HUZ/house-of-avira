@@ -93,7 +93,7 @@ export default function ShippingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20">
           
           {/* Typography & CTA Column (Left) */}
-          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-10 pt-10 md:pt-0">
+          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-30 pt-10 md:pt-0">
             {/* Graphic Element */}
             <motion.div 
               initial={{ scaleX: 0 }}
@@ -119,30 +119,22 @@ export default function ShippingPage() {
                 initial={{ opacity: 0, rotate: -5, scale: 2 }}
                 animate={{ opacity: 0.9, rotate: -5, scale: 2 }}
                 transition={{ delay: 0.8, duration: 1 }}
-                className="font-aston-script text-3xl md:text-5xl text-[#8A001A] absolute -bottom-16 md:-bottom-24 right-10 md:-right-[10%] italic z-20 origin-left pointer-events-none"
+                className="font-aston-script text-3xl md:text-5xl text-[#8A001A] absolute -bottom-16 md:-bottom-24 right-10 md:-right-[10%] italic z-30 origin-left pointer-events-none"
               >
                 Across the Globe
               </motion.span>
             </div>
             
-            {/* Supporting Text & CTA */}
+            {/* Supporting Text */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
               className="max-w-sm"
             >
-              <p className="text-neutral-500 text-sm md:text-base mb-8 leading-relaxed font-medium">
-                Precision logistics engineered for the modern brand. Elevate your supply chain with our curated network of global carriers.
+              <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-medium">
+                Experience seamless delivery tailored for you. Track your orders, understand shipping timelines, and enjoy a hassle-free journey from our store to your door.
               </p>
-              
-              <Link href="#start" className="inline-flex items-center justify-center border border-[#111] bg-white text-[#111] px-10 py-4 text-xs font-bold uppercase tracking-widest relative group text-center">
-                <span className="relative z-10 flex items-center gap-3">
-                  EXPLORE TIMELINES
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute top-1.5 left-1.5 w-full h-full border border-[#8A001A] bg-transparent -z-10 group-hover:top-0 group-hover:left-0 transition-all duration-200" />
-              </Link>
             </motion.div>
           </div>
 
@@ -151,7 +143,7 @@ export default function ShippingPage() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:w-6/12 relative mt-8 md:mt-0"
+            className="w-full md:w-6/12 relative mt-8 md:mt-0 z-10"
           >
             {/* Asymmetrical Background Accent */}
             <div className="absolute top-4 md:top-16 -right-4 md:-right-12 w-full h-[90%] md:h-[110%] bg-[#F8F9FA] z-0" />
@@ -160,10 +152,10 @@ export default function ShippingPage() {
             <div className="relative z-10 border border-[#111] p-2 bg-white transform md:-translate-y-8">
               <div className="aspect-[4/5] md:aspect-[3/4] w-full relative overflow-hidden bg-neutral-100">
                 <Image 
-                  src="/images/shipping-hero-bg.png" 
-                  alt="Editorial Logistics" 
+                  src="/images/modern-shipping-hero.jpg" 
+                  alt="Modern Shipping" 
                   fill 
-                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700" 
+                  className="w-full h-full object-cover transition-all duration-700" 
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />
