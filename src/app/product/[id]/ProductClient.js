@@ -652,43 +652,39 @@ export default function ProductClient({ params: paramsPromise }) {
 
         {/* Size Guide Modal */}
         {showSizeGuide && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-sm" onClick={() => setShowSizeGuide(false)}>
-            <div 
-              className="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col relative shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] transform transition-all border border-white/20" 
-              onClick={e => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="flex justify-between items-center p-6 border-b border-neutral-100 relative overflow-hidden shrink-0 rounded-t-3xl">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A001A] to-red-400"></div>
-                <div className="flex items-center gap-3 relative z-10">
-                  <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-[#8A001A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold uppercase tracking-widest text-black" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>Size Guide</h3>
+          <div className="fixed inset-0 z-50 flex flex-col bg-black/95 backdrop-blur-md" onClick={() => setShowSizeGuide(false)}>
+            {/* Header / Top Bar */}
+            <div className="flex justify-between items-center p-4 sm:p-6 w-full absolute top-0 left-0 z-10" onClick={e => e.stopPropagation()}>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#8A001A] flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
                 </div>
-                <button onClick={() => setShowSizeGuide(false)} className="p-2.5 bg-neutral-50 rounded-full text-neutral-500 hover:bg-red-50 hover:text-[#8A001A] transition-colors relative z-10">
-                  <X className="w-4 h-4" />
-                </button>
+                <h3 className="text-sm sm:text-lg font-bold uppercase tracking-widest text-white" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>Size Guide</h3>
               </div>
+              <button onClick={() => setShowSizeGuide(false)} className="p-2 sm:p-3 bg-white/10 rounded-full text-white hover:bg-[#8A001A] transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-              {/* Body */}
-              <div className="bg-[#F8F9FA] p-4 md:p-8 overflow-y-auto flex-1 rounded-b-3xl">
-                {product.sizeChartUrl ? (
+            {/* Body - Pure Image Viewer */}
+            <div className="flex-1 w-full h-full flex items-center justify-center p-0 sm:p-8 pt-20 pb-10 overflow-auto">
+              {product.sizeChartUrl ? (
+                <div className="w-full flex items-center justify-center overflow-x-auto custom-scrollbar h-full" onClick={e => e.stopPropagation()}>
                   <img 
                     src={product.sizeChartUrl} 
                     alt={`${product.name} Size Guide`} 
-                    className="w-full h-auto object-contain rounded-xl border border-neutral-200 shadow-sm block mx-auto"
+                    className="max-w-[150%] sm:max-w-full min-w-full w-auto h-auto object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]"
                   />
-                ) : (
-                  <div className="flex items-center justify-center min-h-[300px]">
-                    <p className="text-sm tracking-widest uppercase font-bold text-neutral-400">
-                      NO SIZE GUIDE FOR THIS PRODUCT
-                    </p>
-                  </div>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center min-h-[300px]" onClick={e => e.stopPropagation()}>
+                  <p className="text-sm tracking-widest uppercase font-bold text-white/50">
+                    NO SIZE GUIDE FOR THIS PRODUCT
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
