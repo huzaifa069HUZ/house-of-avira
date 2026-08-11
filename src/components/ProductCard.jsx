@@ -20,6 +20,7 @@ export default function ProductCard({ product }) {
 
   const handleWishlistClick = async (e) => {
     e.preventDefault(); // Prevent Link wrapper if this card gets wrapped
+    e.stopPropagation();
     if (!user) {
       router.push('/auth/login');
       return;
@@ -29,6 +30,7 @@ export default function ProductCard({ product }) {
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!user) {
       router.push('/auth/login');
       return;
@@ -54,15 +56,41 @@ export default function ProductCard({ product }) {
     <div className="group flex flex-col gap-2 relative cursor-pointer w-full">
       {/* Image Container */}
       <div className={`relative aspect-[3/4] w-full overflow-hidden rounded-md bg-[#E5E0DA] ${product.inStock === false ? 'opacity-70' : ''}`}>
-        <Link href={`/product/${product.slug || product.id}`} className="absolute inset-0 z-10">
-          <span className="sr-only">View {name}</span>
+        
+        {/* Mobile Swipe Container (also serves as the main link) */}
+        <Link 
+          href={`/product/${product.slug || product.id}`} 
+          className="absolute inset-0 z-10 flex overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {product.images && product.images.length > 0 ? (
+            product.images.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt={`${name} ${idx + 1}`}
+                loading="lazy"
+                className="w-full h-full flex-shrink-0 snap-center object-cover object-center pointer-events-none"
+              />
+            ))
+          ) : (
+            <img
+              src={imageUrl || (product.images && product.images[0])}
+              alt={name}
+              loading="lazy"
+              className="w-full h-full flex-shrink-0 snap-center object-cover object-center pointer-events-none"
+            />
+          )}
         </Link>
-        <img
-          src={imageUrl || (product.images && product.images[0])}
-          alt={name}
-          loading="lazy"
-          className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-        />
+
+        {/* Desktop Hover Effect (only applies if multiple images exist) */}
+        {product.images && product.images.length > 1 && (
+          <img
+            src={product.images[1]}
+            alt={`${name} secondary`}
+            loading="lazy"
+            className="hidden md:block absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-[15] pointer-events-none"
+          />
+        )}
         
         {/* Out of Stock Overlay */}
         {product.inStock === false && (

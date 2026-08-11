@@ -103,7 +103,7 @@ export default function ProductOptionsModal() {
                   {product.name || product.title}
                 </h2>
                 <div className="text-[15px] sm:text-[17px] font-semibold text-neutral-900 mb-2">
-                  <PriceDisplay amount={product.price} />
+                  <PriceDisplay basePrice={product.price} />
                 </div>
               </div>
             </div>
