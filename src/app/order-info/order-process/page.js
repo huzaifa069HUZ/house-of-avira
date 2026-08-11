@@ -95,313 +95,196 @@ export default function OrderProcessPage() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div ref={containerRef} className="relative bg-[#161616] text-white overflow-hidden" style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}>
+    <div ref={containerRef} className="relative bg-[#FFFFFF] text-[#111111] overflow-hidden" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>
 
       {/* ═══ PROGRESS BAR ═══ */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#8A001A] via-[#c4002a] to-[#8A001A] z-[9999] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-[#8A001A] z-[9999] origin-left"
         style={{ scaleX }}
       />
 
-      {/* ═══ HERO — FULL VIEWPORT CINEMATIC ═══ */}
-      <section ref={heroRef} className="relative h-[100vh] flex items-center justify-center overflow-hidden">
-        {/* Parallax background */}
-        <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
-          <Image
-            src="/images/order-hero-bg.png"
-            alt="Luxury fashion"
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#161616]" />
-        </motion.div>
-
-        {/* Floating decorative elements */}
-        <FloatingIcon delay={0} className="top-[15%] left-[8%] opacity-20">
-          <Sparkles className="w-8 h-8 text-[#8A001A]" />
-        </FloatingIcon>
-        <FloatingIcon delay={1.5} className="top-[25%] right-[10%] opacity-15">
-          <Heart className="w-6 h-6 text-[#8A001A]" />
-        </FloatingIcon>
-        <FloatingIcon delay={3} className="bottom-[30%] left-[15%] opacity-10">
-          <Globe className="w-10 h-10 text-white" />
+      {/* ═══ HERO — GEN-Z EDITORIAL ═══ */}
+      <section ref={heroRef} className="relative pt-32 pb-20 md:pt-48 md:pb-32 bg-white flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        {/* Floating decorative elements - subtle */}
+        <FloatingIcon delay={0} className="top-[20%] left-[10%] opacity-20">
+          <Sparkles className="w-6 h-6 text-[#8A001A]" />
         </FloatingIcon>
 
-        {/* Hero Content */}
         <motion.div
-          className="relative z-10 text-center px-4 max-w-5xl"
-          style={{ opacity: heroOpacity }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="mb-8"
         >
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-6"
-          >
-            <Link href="/order-info" className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm tracking-widest uppercase">
-              <ArrowLeft className="w-4 h-4" />
-              Return to Overview
-            </Link>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, letterSpacing: '0.5em' }}
-            animate={{ opacity: 1, letterSpacing: '0.3em' }}
-            transition={{ delay: 0.5, duration: 1.2 }}
-            className="text-[#8A001A] text-xs md:text-sm uppercase tracking-[0.3em] mb-4 font-bold"
-          >
-            The House of Avira Experience
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-perandory text-5xl md:text-7xl lg:text-[6rem] uppercase leading-[0.95] mb-4"
-          >
-            YOUR JOURNEY
-            <br />
-            <span className="text-[#8A001A]">WITH US</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="font-aston-script text-[#c4a87c] text-3xl md:text-5xl mb-8"
-          >
-            Personal & Transparent
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.3, duration: 1 }}
-            className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-          >
-            We want you to feel confident at every stage of your order. Follow your piece from selection to doorstep.
-          </motion.p>
+          <Link href="/order-info" className="inline-flex items-center gap-2 text-neutral-500 hover:text-black transition-colors text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Info
+          </Link>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-[#8A001A] text-[10px] md:text-xs uppercase tracking-[0.3em] mb-4 font-bold"
         >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/40">Scroll to explore</span>
-          <ChevronDown className="w-5 h-5 text-white/40" />
-        </motion.div>
+          How It Works
+        </motion.p>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-[#111111] mb-6 max-w-4xl leading-[1.1] font-montserrat"
+        >
+          From Our Screen <br/> To Your Doorstep
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="text-neutral-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed"
+        >
+          A transparent, two-step journey. We handle the sourcing, quality checks, and international transit. You just track the magic.
+        </motion.p>
       </section>
 
       {/* ═══ TRUST STATS BAR ═══ */}
-      <section ref={statsRef} className="relative py-16 md:py-20 border-y border-white/10 bg-[#161616]">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <section ref={statsRef} className="relative py-12 md:py-16 border-y border-neutral-100 bg-[#F8F9FA]">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10 text-center">
           {[
             { target: 500, suffix: '+', label: 'Happy Customers' },
             { target: 15, suffix: '+', label: 'Countries Served' },
             { target: 100, suffix: '%', label: 'Transparency' },
             { target: 24, suffix: '/7', label: 'Support Available' },
           ].map((stat, i) => (
-            <RevealSection key={i} delay={i * 0.15}>
-              <div className="text-4xl md:text-5xl font-perandory text-white mb-2">
+            <RevealSection key={i} delay={i * 0.1}>
+              <div className="text-3xl md:text-4xl font-bold text-[#111111] mb-1 font-montserrat">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} inView={statsInView} />
               </div>
-              <p className="text-xs uppercase tracking-[0.2em] text-white/40">{stat.label}</p>
+              <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-400">{stat.label}</p>
             </RevealSection>
           ))}
         </div>
       </section>
 
-      {/* ═══ STEP 01 — SECURING YOUR PIECE ═══ */}
-      <section className="relative py-24 md:py-36 bg-[#FAFAFA] text-[#1a1a1a]">
-        {/* Subtle radial glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#8A001A]/5 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 md:px-16">
-          {/* Step header */}
-          <RevealSection className="mb-16 md:mb-24">
-            <div className="flex items-end gap-6 md:gap-10">
-              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-black/[0.12] select-none">01</span>
-              <div className="pb-4 md:pb-8">
-                <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Step One</p>
-                <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Securing Your Piece</h2>
+      {/* ═══ STEP 01 ═══ */}
+      <section className="relative py-20 md:py-32 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <RevealSection className="mb-12 md:mb-20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div>
+                <p className="text-[#8A001A] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Step 01</p>
+                <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-[#111111] font-montserrat">Securing Your Piece</h2>
               </div>
+              <p className="text-neutral-500 text-sm max-w-md">
+                Your first payment covers the actual product price. We immediately begin sourcing and inspecting your item.
+              </p>
             </div>
           </RevealSection>
 
-          <RevealLine className="mb-16" />
-
-          {/* Content cards */}
-          <div className="grid grid-cols-1 max-w-4xl mx-auto gap-8 mb-20">
-              <RevealSection delay={0.3}>
-                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
-                  <h3 className="font-perandory text-xl md:text-2xl uppercase tracking-wider mb-5 group-hover:text-[#8A001A] transition-colors">THE PRODUCT VALUE</h3>
-                  <p className="text-gray-600 leading-relaxed mb-6">Your journey begins with the selection of your curated piece. This first payment covers the actual product price as listed on our website.</p>
-                  <div className="flex items-center gap-3 text-[#8A001A]">
-                    <div className="w-8 h-px bg-[#8A001A]" />
-                    <p className="font-semibold text-sm uppercase tracking-wider">What happens next?</p>
-                  </div>
-                  <p className="text-gray-500 mt-3 text-sm leading-relaxed">Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <RevealSection delay={0.2}>
+              <div className="bg-[#F8F9FA] rounded-2xl p-8 md:p-10 h-full border border-neutral-100 hover:border-neutral-200 transition-colors">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm mb-6">
+                  <Package className="w-5 h-5 text-[#111111]" />
                 </div>
-              </RevealSection>
-
-              <RevealSection delay={0.45}>
-                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 md:p-10 hover:border-[#8A001A]/30 transition-all duration-500 group">
-                  <h3 className="font-perandory text-xl md:text-2xl uppercase tracking-wider mb-5 group-hover:text-[#8A001A] transition-colors">WHAT&apos;S INCLUDED NOW</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">Priority Handling</p>
-                      <ul className="space-y-3">
-                        {['Sourcing & Procurement', 'Initial Quality Check'].map((item, i) => (
-                          <motion.li
-                            key={i}
-                            className="flex items-center gap-3"
-                            whileHover={{ x: 5 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <Check className="w-4 h-4 text-[#8A001A] flex-shrink-0" />
-                            <span className="text-gray-600 text-sm">{item}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">Peace of Mind</p>
-                      <ul className="space-y-3">
-                        {['Reservation Protection', 'Dedicated Order Support'].map((item, i) => (
-                          <motion.li
-                            key={i}
-                            className="flex items-center gap-3"
-                            whileHover={{ x: 5 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <Check className="w-4 h-4 text-[#8A001A] flex-shrink-0" />
-                            <span className="text-gray-600 text-sm">{item}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </RevealSection>
-            </div>
-        </div>
-      </section>
-
-      {/* ═══ CINEMATIC DIVIDER — PARALLAX IMAGE ═══ */}
-      <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
-        <motion.div
-          className="absolute inset-0"
-          style={{ y: useTransform(scrollYProgress, [0.25, 0.45], [0, -80]) }}
-        >
-          <Image
-            src="/ACROSS THE GLOBE.png"
-            alt="Global shipping"
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/50" />
-        </motion.div>
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <RevealSection>
-            <p className="text-xs uppercase tracking-[0.4em] text-white/50 mb-4">Your piece is on its way</p>
-            <h2 className="font-perandory text-4xl md:text-6xl lg:text-7xl uppercase mb-4">ACROSS THE GLOBE</h2>
-            <p className="font-aston-script text-[#c4a87c] text-2xl md:text-4xl">Directly to your doorstep</p>
-          </RevealSection>
-        </div>
-      </section>
-
-      {/* ═══ STEP 02 — BRINGING IT HOME ═══ */}
-      <section className="relative py-24 md:py-36 bg-white text-[#1a1a1a] overflow-hidden">
-        <Image
-          src="/images/section-effect.png"
-          alt="Bringing It Home Background"
-          fill
-          className="object-cover opacity-60"
-          sizes="100vw"
-        />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#8A001A]/5 rounded-full blur-[200px] pointer-events-none" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-16">
-          {/* Step header */}
-          <RevealSection className="mb-16 md:mb-24">
-            <div className="flex items-end gap-6 md:gap-10">
-              <span className="font-perandory text-[8rem] md:text-[12rem] leading-none text-black/[0.12] select-none">02</span>
-              <div className="pb-4 md:pb-8">
-                <p className="text-[#8A001A] text-xs font-bold uppercase tracking-[0.3em] mb-2">Step Two</p>
-                <h2 className="font-perandory text-3xl md:text-5xl lg:text-6xl uppercase">Bringing It Home</h2>
+                <h3 className="text-lg font-bold uppercase tracking-wide text-[#111111] mb-4">Sourcing & Quality</h3>
+                <p className="text-neutral-600 text-sm leading-relaxed mb-6">
+                  Once confirmed, our team begins the dedicated process of securing your item and preparing it for its international transit. Every piece goes through a strict quality check.
+                </p>
+                <ul className="space-y-3">
+                  {['Dedicated Procurement', 'Initial Quality Inspection', 'Reservation Protection'].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <div className="w-4 h-4 rounded-full bg-[#8A001A]/10 flex items-center justify-center flex-shrink-0">
+                        <Check className="w-2.5 h-2.5 text-[#8A001A]" />
+                      </div>
+                      <span className="text-neutral-600 text-sm font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          </RevealSection>
-
-          <RevealLine className="mb-16" />
-
-          <RevealSection>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl leading-relaxed mb-16">
-              Once your curated piece arrives at our international warehouse, we calculate the final logistics and delivery costs specifically for your order.
-            </p>
-          </RevealSection>
-
-          {/* The shipping payment - cinematic card */}
-          <RevealSection delay={0.2} className="mb-20">
-            <div className="relative rounded-2xl overflow-hidden bg-[#FDFBF7] shadow-[0_8px_40px_rgb(0,0,0,0.08)] hover:shadow-[0_12px_50px_rgba(138,0,26,0.15)] transition-shadow duration-500">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/10 via-transparent to-[#8A001A]/5" />
-              <div className="relative p-10 md:p-16 text-center border border-black/5 rounded-2xl">
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                  className="absolute top-6 right-6 opacity-10"
-                >
-                  <Globe className="w-16 h-16 text-[#8A001A]" />
-                </motion.div>
-                <h3 className="font-aston-script text-4xl md:text-6xl text-[#8A001A] mb-6 capitalize">The shipping payment</h3>
-                <p className="text-gray-700 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
-                  A detailed cost breakdown for shipping and logistics will be sent directly to your{' '}
-                  <span className="text-[#8A001A] font-bold uppercase tracking-wider">WhatsApp and Email</span>.
-                  Payment of this second payment is required to secure your final delivery.
+            </RevealSection>
+            
+            <RevealSection delay={0.3}>
+              <div className="bg-white border border-neutral-200 rounded-2xl p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-center">
+                <h3 className="font-aston-script text-3xl md:text-4xl text-[#8A001A] mb-4 text-center">What's included?</h3>
+                <p className="text-neutral-500 text-sm text-center leading-relaxed">
+                  Your piece is now secured. We handle the heavy lifting across borders so you don't have to worry about a thing until it reaches our hub.
                 </p>
               </div>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ EDITORIAL DIVIDER ═══ */}
+      <section className="py-16 md:py-24 bg-[#111111] text-center px-4 overflow-hidden relative">
+         <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] [background-size:24px_24px]" />
+         <RevealSection>
+           <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter text-white font-montserrat">
+             ACROSS THE GLOBE
+           </h2>
+           <p className="text-white/50 text-[10px] md:text-xs mt-4 tracking-[0.3em] uppercase">Directly to your doorstep</p>
+         </RevealSection>
+      </section>
+
+      {/* ═══ STEP 02 ═══ */}
+      <section className="relative py-20 md:py-32 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <RevealSection className="mb-12 md:mb-20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div>
+                <p className="text-[#8A001A] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Step 02</p>
+                <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight text-[#111111] font-montserrat">Bringing It Home</h2>
+              </div>
+              <p className="text-neutral-500 text-sm max-w-md">
+                Once your piece reaches our international hub, we calculate the exact shipping and logistics costs for the final leg.
+              </p>
             </div>
           </RevealSection>
 
-          {/* Shipping Types Grid — animated icons */}
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mb-20"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-50px' }}
-          >
+          <RevealSection delay={0.2} className="mb-16">
+            <div className="bg-[#F8F9FA] border border-neutral-100 rounded-2xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center gap-10">
+              
+              <div className="flex-1 relative z-10">
+                <div className="inline-flex items-center justify-center p-2 bg-[#8A001A]/10 rounded-lg mb-6">
+                  <Receipt className="w-5 h-5 text-[#8A001A]" />
+                </div>
+                <h3 className="text-2xl font-bold text-[#111111] mb-4 font-montserrat">The Shipping Payment</h3>
+                <p className="text-neutral-600 text-sm leading-relaxed mb-6 max-w-md">
+                  A detailed cost breakdown for shipping, customs, and final delivery will be sent directly to your <span className="font-bold text-[#111111]">WhatsApp and Email</span>. Payment of this second invoice secures the final dispatch to your door.
+                </p>
+              </div>
+              
+              <div className="w-full md:w-1/3 flex justify-center">
+                 <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border border-dashed border-neutral-300 flex items-center justify-center animate-spin" style={{ animationDuration: '8s' }}>
+                    <Plane className="w-8 h-8 text-neutral-300" />
+                 </div>
+              </div>
+            </div>
+          </RevealSection>
+
+          {/* Shipping Types Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
             {[
               { icon: Plane, title: 'Global Transit', subtitle: 'Calculations' },
-              { icon: Receipt, title: 'Customs &', subtitle: 'Clearance Services' },
-              { icon: FileText, title: 'Statutory Import', subtitle: 'Charges' },
+              { icon: Receipt, title: 'Customs', subtitle: 'Clearance' },
+              { icon: FileText, title: 'Import', subtitle: 'Charges' },
               { icon: Truck, title: 'Final Mile', subtitle: 'Delivery' },
-              { icon: Package, title: 'Careful Handling', subtitle: '& Logistics' },
+              { icon: Package, title: 'Careful', subtitle: 'Handling' },
             ].map(({ icon: Icon, title, subtitle }, i) => (
-              <motion.div
-                key={i}
-                variants={staggerItem}
-                whileHover={{ y: -8, borderColor: 'rgba(138, 0, 26, 0.4)' }}
-                className="bg-[#111] border border-white/5 shadow-[0_4px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(138,0,26,0.15)] rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-500 group h-44 md:h-52"
-              >
-                <motion.div
-                  whileHover={{ rotate: 15, scale: 1.2 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <Icon className="w-8 h-8 md:w-10 md:h-10 mb-4 text-[#8A001A] group-hover:text-[#c4002a] transition-colors" />
-                </motion.div>
-                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-white/50 group-hover:text-white transition-colors">
-                  {title}<br />{subtitle}
-                </span>
-              </motion.div>
+              <RevealSection key={i} delay={0.1 * i}>
+                <div className="bg-white border border-neutral-200 rounded-xl p-6 flex flex-col items-center justify-center text-center h-full hover:border-[#8A001A]/30 hover:shadow-sm transition-all group">
+                  <Icon className="w-6 h-6 text-[#111111] mb-3 group-hover:text-[#8A001A] transition-colors" strokeWidth={1.5} />
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-500 group-hover:text-[#111111] transition-colors">
+                    {title}<br />{subtitle}
+                  </span>
+                </div>
+              </RevealSection>
             ))}
-          </motion.div>
-
+          </div>
         </div>
       </section>
 
