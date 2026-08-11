@@ -104,50 +104,77 @@ export default function OrderProcessPage() {
       />
 
       {/* ═══ HERO — GEN-Z EDITORIAL ═══ */}
-      <section ref={heroRef} className="relative pt-32 pb-20 md:pt-48 md:pb-32 bg-white flex flex-col items-center justify-center text-center px-4 overflow-hidden">
-        {/* Floating decorative elements - subtle */}
-        <FloatingIcon delay={0} className="top-[20%] left-[10%] opacity-20">
-          <Sparkles className="w-6 h-6 text-[#8A001A]" />
-        </FloatingIcon>
+      <section ref={heroRef} className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white flex flex-col md:flex-row items-center max-w-7xl mx-auto px-4 gap-12 overflow-hidden">
+        {/* Left Side: Text */}
+        <div className="flex-1 w-full relative z-10 pt-10 md:pt-0">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mb-8"
+          >
+            <Link href="/order-info" className="inline-flex items-center gap-2 text-neutral-500 hover:text-black transition-colors text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Back to Info
+            </Link>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.6 }}
-          className="mb-8"
-        >
-          <Link href="/order-info" className="inline-flex items-center gap-2 text-neutral-500 hover:text-black transition-colors text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Back to Info
-          </Link>
-        </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-[#8A001A] text-[10px] md:text-xs uppercase tracking-[0.3em] mb-4 font-bold"
+          >
+            How It Works
+          </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="text-[#8A001A] text-[10px] md:text-xs uppercase tracking-[0.3em] mb-4 font-bold"
-        >
-          How It Works
-        </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-5xl md:text-6xl lg:text-[5.5rem] font-perandory uppercase tracking-tight text-[#111111] mb-2 leading-[0.9]"
+          >
+            YOUR JOURNEY <br /> <span className="text-neutral-300">WITH US</span>
+          </motion.h1>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-[#111111] mb-6 max-w-4xl leading-[1.1] font-montserrat"
-        >
-          From Our Screen <br/> To Your Doorstep
-        </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="font-aston-script text-[#8A001A] text-4xl md:text-5xl mb-8 -mt-2 ml-4 md:ml-12"
+          >
+            From Screen to Doorstep
+          </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="text-neutral-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed"
-        >
-          A transparent, two-step journey. We handle the sourcing, quality checks, and international transit. You just track the magic.
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+            className="text-neutral-500 text-sm md:text-base max-w-md leading-relaxed"
+          >
+            A transparent, two-step journey. We handle the sourcing, quality checks, and international transit. You just track the magic.
+          </motion.p>
+        </div>
+
+        {/* Right Side: Editorial Image */}
+        <div className="flex-1 w-full h-[50vh] md:h-[75vh] relative rounded-[2rem] overflow-hidden shadow-2xl border border-neutral-100">
+           <motion.div 
+             className="absolute inset-0"
+             initial={{ scale: 1.1, opacity: 0 }}
+             animate={{ scale: 1, opacity: 1 }}
+             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+           >
+             <Image
+               src="/images/genz-hero.jpg"
+               alt="Modern Editorial"
+               fill
+               className="object-cover"
+               priority
+             />
+             {/* Subtle vignette/overlay */}
+             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+           </motion.div>
+        </div>
       </section>
 
       {/* ═══ TRUST STATS BAR ═══ */}
