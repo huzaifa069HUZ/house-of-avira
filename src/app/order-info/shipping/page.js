@@ -88,105 +88,96 @@ export default function ShippingPage() {
         style={{ scaleX }}
       />
 
-      {/* ═══════ HERO — FULL VIEWPORT CINEMATIC ═══════ */}
-      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
-        {/* Parallax background */}
-        <motion.div className="absolute inset-0" style={{ y: heroY, scale: heroScale }}>
-          <Image
-            src="/images/shipping-hero-bg.png"
-            alt="Shipping and delivery"
-            fill
-            className="hidden md:block object-cover"
-            priority
-            sizes="100vw"
-          />
-          <Image
-            src="/images/mob-hero-ship.png"
-            alt="Shipping and delivery mobile"
-            fill
-            className="block md:hidden object-cover"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
-        </motion.div>
+      {/* ═══════ HERO — MINIMALIST EDITORIAL ═══════ */}
+      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-24 md:pt-0">
+        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20">
+          
+          {/* Typography & CTA Column (Left) */}
+          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-10 pt-10 md:pt-0">
+            {/* Graphic Element */}
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="w-12 h-[2px] bg-[#8A001A] mb-8 origin-left" 
+            />
+            
+            <div className="relative mb-24 md:mb-32">
+              {/* Main Heading */}
+              <motion.h1 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="font-perandory text-[64px] md:text-8xl lg:text-[110px] text-[#111111] uppercase leading-[0.85] tracking-tighter max-w-[80%] md:max-w-full break-words relative z-10"
+              >
+                SHIPPING<br/>
+                &amp; DELIVERY
+              </motion.h1>
+              
+              {/* Subtitle (Overlapping Cursive) */}
+              <motion.span 
+                initial={{ opacity: 0, rotate: -5, scale: 2 }}
+                animate={{ opacity: 0.9, rotate: -5, scale: 2 }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="font-aston-script text-3xl md:text-5xl text-[#8A001A] absolute -bottom-16 md:-bottom-24 right-10 md:-right-[10%] italic z-20 origin-left pointer-events-none"
+              >
+                Across the Globe
+              </motion.span>
+            </div>
+            
+            {/* Supporting Text & CTA */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="max-w-sm"
+            >
+              <p className="text-neutral-500 text-sm md:text-base mb-8 leading-relaxed font-medium">
+                Precision logistics engineered for the modern brand. Elevate your supply chain with our curated network of global carriers.
+              </p>
+              
+              <Link href="#start" className="inline-flex items-center justify-center border border-[#111] bg-white text-[#111] px-10 py-4 text-xs font-bold uppercase tracking-widest relative group text-center">
+                <span className="relative z-10 flex items-center gap-3">
+                  EXPLORE TIMELINES
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute top-1.5 left-1.5 w-full h-full border border-[#8A001A] bg-transparent -z-10 group-hover:top-0 group-hover:left-0 transition-all duration-200" />
+              </Link>
+            </motion.div>
+          </div>
 
-        {/* Floating decorative elements */}
-        <FloatingIcon delay={0} className="top-[15%] left-[8%] opacity-20">
-          <Plane className="w-8 h-8 text-[#8A001A]" />
-        </FloatingIcon>
-        <FloatingIcon delay={1.5} className="top-[20%] right-[10%] opacity-15">
-          <Globe className="w-6 h-6 text-white" />
-        </FloatingIcon>
-        <FloatingIcon delay={3} className="bottom-[35%] left-[12%] opacity-10">
-          <Package className="w-10 h-10 text-[#8A001A]" />
-        </FloatingIcon>
-
-        {/* Hero Content */}
-        <motion.div
-          className="relative z-10 text-center px-4 max-w-5xl"
-          style={{ opacity: heroOpacity }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-6"
+          {/* Image Container Column (Right) */}
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full md:w-6/12 relative mt-8 md:mt-0"
           >
-            <Link href="/order-info" className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm tracking-widest uppercase">
-              <ArrowLeft className="w-4 h-4" />
-              Return to Overview
-            </Link>
+            {/* Asymmetrical Background Accent */}
+            <div className="absolute top-4 md:top-16 -right-4 md:-right-12 w-full h-[90%] md:h-[110%] bg-[#F8F9FA] z-0" />
+            
+            {/* Main Image Wrapper */}
+            <div className="relative z-10 border border-[#111] p-2 bg-white transform md:-translate-y-8">
+              <div className="aspect-[4/5] md:aspect-[3/4] w-full relative overflow-hidden bg-neutral-100">
+                <Image 
+                  src="/images/shipping-hero-bg.png" 
+                  alt="Editorial Logistics" 
+                  fill 
+                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700" 
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+                
+                {/* Image Overlay Tag */}
+                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm border border-[#111] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#111] flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#8A001A] animate-pulse" />
+                  LIVE TRACKING
+                </div>
+              </div>
+            </div>
           </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, letterSpacing: '0.5em' }}
-            animate={{ opacity: 1, letterSpacing: '0.3em' }}
-            transition={{ delay: 0.5, duration: 1.2 }}
-            className="text-[#8A001A] text-xs md:text-sm uppercase tracking-[0.3em] mb-4 font-bold"
-          >
-            House of Avira Logistics
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-perandory text-5xl md:text-7xl lg:text-[6rem] uppercase leading-[0.95] mb-4 text-white"
-          >
-            SHIPPING
-            <br />
-            <span className="text-[#8A001A]">& DELIVERY</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="font-aston-script text-[#c4a87c] text-3xl md:text-5xl mb-8"
-          >
-            Across the Globe
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.3, duration: 1 }}
-            className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-          >
-            Understanding your shipping journey from our warehouse to your doorstep — with complete transparency.
-          </motion.p>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/40">Scroll to explore</span>
-          <ChevronDown className="w-5 h-5 text-white/40" />
-        </motion.div>
+          
+        </div>
       </section>
 
       {/* ═══════ SECTION 01 — INTERNATIONAL SHIPPING ═══════ */}
