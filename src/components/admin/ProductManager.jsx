@@ -549,7 +549,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       if (sizeChartFile) {
         const scForm = new FormData();
         scForm.append('image', sizeChartFile);
-        scForm.append('manualCrop', 'false');
+        scForm.append('manualCrop', 'true'); // bypass 3:4 auto-crop
         const scRes = await uploadSingleImage(scForm);
         if (scRes.success) finalSizeChartUrl = scRes.url;
       }
