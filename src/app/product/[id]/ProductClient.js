@@ -676,12 +676,11 @@ export default function ProductClient({ params: paramsPromise }) {
               {/* Body */}
               <div className="bg-[#F8F9FA] p-4 md:p-8">
                 {product.sizeChartUrl ? (
-                  <div className="w-full rounded-xl border border-neutral-200 bg-white shadow-sm overflow-hidden flex items-center justify-center p-2">
+                  <div className="w-full aspect-[16/9] rounded-xl border border-neutral-200 bg-white shadow-sm overflow-hidden flex items-center justify-center p-2 bg-neutral-50/50">
                     <img 
                       src={product.sizeChartUrl} 
                       alt={`${product.name} Size Guide`} 
-                      className="w-full h-auto object-contain block mx-auto"
-                      style={{ maxHeight: '70vh' }}
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 ) : (
