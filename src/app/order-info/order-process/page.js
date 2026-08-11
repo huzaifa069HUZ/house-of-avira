@@ -202,7 +202,7 @@ export default function OrderProcessPage() {
           <RevealSection className="mb-12 md:mb-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div>
-                <p className="text-[#8A001A] text-2xl md:text-3xl font-aston-script mb-2">Step 01</p>
+                <p className="text-[#8A001A] text-2xl md:text-3xl font-aston-script mb-2">Step One</p>
                 <h2 className="text-3xl md:text-5xl uppercase tracking-tighter text-[#111111] font-perandory">Securing Your Piece</h2>
               </div>
               <p className="text-neutral-500 text-sm max-w-md">
@@ -263,7 +263,7 @@ export default function OrderProcessPage() {
           <RevealSection className="mb-12 md:mb-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div>
-                <p className="text-[#8A001A] text-2xl md:text-3xl font-aston-script mb-2">Step 02</p>
+                <p className="text-[#8A001A] text-2xl md:text-3xl font-aston-script mb-2">Step Two</p>
                 <h2 className="text-3xl md:text-5xl uppercase tracking-tighter text-[#111111] font-perandory">Bringing It Home</h2>
               </div>
               <p className="text-neutral-500 text-sm max-w-md">
