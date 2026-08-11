@@ -652,28 +652,49 @@ export default function ProductClient({ params: paramsPromise }) {
 
         {/* Size Guide Modal */}
         {showSizeGuide && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowSizeGuide(false)}>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-sm" onClick={() => setShowSizeGuide(false)}>
             <div 
-              className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden relative shadow-2xl" 
+              className="bg-white rounded-3xl w-full max-w-3xl overflow-hidden relative shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] transform transition-all border border-white/20" 
               onClick={e => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center p-4 border-b border-neutral-100">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-black">Size Guide</h3>
-                <button onClick={() => setShowSizeGuide(false)} className="p-2 bg-neutral-100 rounded-full text-black hover:bg-neutral-200 transition-colors">
+              {/* Header */}
+              <div className="flex justify-between items-center p-6 border-b border-neutral-100 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A001A] to-red-400"></div>
+                <div className="flex items-center gap-3 relative z-10">
+                  <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-[#8A001A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold uppercase tracking-widest text-black" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>Size Guide</h3>
+                </div>
+                <button onClick={() => setShowSizeGuide(false)} className="p-2.5 bg-neutral-50 rounded-full text-neutral-500 hover:bg-red-50 hover:text-[#8A001A] transition-colors relative z-10">
                   <X className="w-4 h-4" />
                 </button>
               </div>
-              <div className="p-6 flex items-center justify-center min-h-[300px]">
+
+              {/* Body */}
+              <div className="bg-[#F8F9FA] p-4 md:p-8">
                 {product.sizeChartUrl ? (
-                  <img 
-                    src={product.sizeChartUrl} 
-                    alt={`${product.name} Size Guide`} 
-                    className="max-w-full max-h-[70vh] object-contain"
-                  />
+                  <div className="w-full flex flex-col gap-3">
+                    <div className="md:hidden flex items-center justify-center gap-2 text-[10px] text-[#8A001A] font-bold tracking-widest uppercase opacity-80 mb-1">
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                      Swipe to view full chart
+                    </div>
+                    <div className="w-full overflow-x-auto rounded-xl border border-neutral-200 bg-white shadow-sm [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                      <img 
+                        src={product.sizeChartUrl} 
+                        alt={`${product.name} Size Guide`} 
+                        className="min-w-[600px] md:min-w-full w-full h-auto object-contain block mx-auto"
+                      />
+                    </div>
+                  </div>
                 ) : (
-                  <p className="text-sm tracking-widest uppercase font-bold text-neutral-400">
-                    NO SIZE GUIDE FOR THIS PRODUCT
-                  </p>
+                  <div className="flex items-center justify-center min-h-[300px]">
+                    <p className="text-sm tracking-widest uppercase font-bold text-neutral-400">
+                      NO SIZE GUIDE FOR THIS PRODUCT
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
