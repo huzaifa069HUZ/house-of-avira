@@ -676,18 +676,13 @@ export default function ProductClient({ params: paramsPromise }) {
               {/* Body */}
               <div className="bg-[#F8F9FA] p-4 md:p-8">
                 {product.sizeChartUrl ? (
-                  <div className="w-full flex flex-col gap-3">
-                    <div className="md:hidden flex items-center justify-center gap-2 text-[10px] text-[#8A001A] font-bold tracking-widest uppercase opacity-80 mb-1">
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-                      Swipe to view full chart
-                    </div>
-                    <div className="w-full overflow-x-auto rounded-xl border border-neutral-200 bg-white shadow-sm [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                      <img 
-                        src={product.sizeChartUrl} 
-                        alt={`${product.name} Size Guide`} 
-                        className="min-w-[600px] md:min-w-full w-full h-auto object-contain block mx-auto"
-                      />
-                    </div>
+                  <div className="w-full rounded-xl border border-neutral-200 bg-white shadow-sm overflow-hidden flex items-center justify-center p-2">
+                    <img 
+                      src={product.sizeChartUrl} 
+                      alt={`${product.name} Size Guide`} 
+                      className="w-full h-auto object-contain block mx-auto"
+                      style={{ maxHeight: '70vh' }}
+                    />
                   </div>
                 ) : (
                   <div className="flex items-center justify-center min-h-[300px]">
