@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useQuickAddStore } from '@/store/quickAddStore';
 import { useCartStore } from '@/store/cartStore';
+import { useRouter } from 'next/navigation';
 import { X, Ruler, ShoppingCart } from 'lucide-react';
 import PriceDisplay from '@/components/PriceDisplay';
 
 export default function ProductOptionsModal() {
-  const { isOpen, product, closeQuickAdd } = useQuickAddStore();
+  const router = useRouter();
+  const { isOpen, product, closeQuickAdd, preselectedColor, preselectedSize } = useQuickAddStore();
   const { addToCart } = useCartStore();
 
   const [selectedColor, setSelectedColor] = useState(null);
@@ -19,15 +21,20 @@ export default function ProductOptionsModal() {
   useEffect(() => {
     if (isOpen && product) {
       if (product.swatches && product.swatches.length > 0) {
-        const defaultColor = product.swatches.find(s => s.active) || product.swatches[0];
-        setSelectedColor(defaultColor);
+        if (preselectedColor) {
+          const preColor = typeof preselectedColor === 'string' ? product.swatches.find(s => s.color === preselectedColor) : null;
+          setSelectedColor(preColor || preselectedColor);
+        } else {
+          const defaultColor = product.swatches.find(s => s.active) || product.swatches[0];
+          setSelectedColor(defaultColor);
+        }
       } else {
         setSelectedColor(null);
       }
-      setSelectedSize(null);
+      setSelectedSize(preselectedSize || null);
       setQuantity(1);
     }
-  }, [isOpen, product]);
+  }, [isOpen, product, preselectedColor, preselectedSize]);
 
   if (!isOpen || !product) return null;
 
@@ -57,6 +64,31 @@ export default function ProductOptionsModal() {
     
     if (success) {
       closeQuickAdd();
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (!canAddToCart) return;
+    setIsAdding(true);
+    
+    const selectedImage = selectedColor?.imageUrl || product.imageUrl || (product.images && product.images[0]);
+    
+    const success = await addToCart({
+      id: product.id,
+      title: product.name || product.title,
+      price: product.price,
+      image: selectedImage,
+      color: selectedColor?.colorName || selectedColor?.color || null,
+      size: selectedSize || null,
+      quantity: quantity,
+      availableSizes: product.sizes || []
+    });
+
+    setIsAdding(false);
+    
+    if (success) {
+      closeQuickAdd();
+      router.push('/checkout');
     }
   };
 
@@ -261,6 +293,7 @@ export default function ProductOptionsModal() {
             </button>
             
             <button
+              onClick={handleBuyNow}
               disabled={!canAddToCart || isAdding}
               className="w-full bg-white font-bold text-[15px] py-3.5 rounded-xl border-[1.5px] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ borderColor: brandRed, color: brandRed }}

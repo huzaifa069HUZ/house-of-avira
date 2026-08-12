@@ -9,6 +9,7 @@ import { useCartStore } from '@/store/cartStore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight, Share2, X } from 'lucide-react';
+import { useQuickAddStore } from '@/store/quickAddStore';
 import ProductReviews from '@/components/product/ProductReviews';
 import ProductCard from '@/components/ProductCard';
 
@@ -31,9 +32,18 @@ export default function ProductClient({ params: paramsPromise }) {
   const { wishlist, toggleWishlist } = useWishlistStore();
   const { addToCart } = useCartStore();
 
+  const { openQuickAdd } = useQuickAddStore();
+
+  const hasOptions = (product?.swatches && product.swatches.length > 0) || (product?.sizes && product.sizes.length > 0);
+
   const handleAddToCart = async () => {
     if (!user) {
       router.push('/auth/login');
+      return;
+    }
+    
+    if (hasOptions) {
+      openQuickAdd(product, selectedColor, selectedSize);
       return;
     }
     
@@ -49,6 +59,35 @@ export default function ProductClient({ params: paramsPromise }) {
       color: selectedSwatch?.colorName || selectedColor,
       availableSizes: product.sizes || []
     });
+  };
+
+  const handleBuyNow = async () => {
+    if (!user) {
+      router.push('/auth/login');
+      return;
+    }
+    
+    if (hasOptions) {
+      openQuickAdd(product, selectedColor, selectedSize);
+      return;
+    }
+    
+    const selectedSwatch = product.swatches?.find(s => s.color === selectedColor);
+    const productImage = selectedSwatch?.imageUrl || images[0];
+    
+    const success = await addToCart({
+      id: product.id,
+      title: product.name,
+      price: product.price,
+      image: productImage,
+      size: selectedSize,
+      color: selectedSwatch?.colorName || selectedColor,
+      availableSizes: product.sizes || []
+    });
+
+    if (success) {
+      router.push('/checkout');
+    }
   };
 
   useEffect(() => {
@@ -360,7 +399,7 @@ export default function ProductClient({ params: paramsPromise }) {
               <div className="flex flex-col gap-3 mb-10">
                 {product.inStock !== false ? (
                   <>
-                    <button onClick={handleAddToCart} className="w-full bg-black text-white uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center min-h-[56px] shadow-lg hover:shadow-xl hover:-translate-y-0.5" style={{ fontFamily: '"Mona Sans", sans-serif' }}>
+                    <button onClick={handleBuyNow} className="w-full bg-black text-white uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center min-h-[56px] shadow-lg hover:shadow-xl hover:-translate-y-0.5" style={{ fontFamily: '"Mona Sans", sans-serif' }}>
                       BUY NOW
                     </button>
                     <div className="flex gap-3">
