@@ -116,10 +116,10 @@ export default function ShippingPage() {
               
               {/* Subtitle (Overlapping Cursive) */}
               <motion.span 
-                initial={{ opacity: 0, rotate: -5, scale: 2 }}
-                animate={{ opacity: 0.9, rotate: -5, scale: 2 }}
+                initial={{ opacity: 0, rotate: -5, y: 10 }}
+                animate={{ opacity: 0.9, rotate: -5, y: 0 }}
                 transition={{ delay: 0.8, duration: 1 }}
-                className="font-aston-script text-3xl md:text-5xl text-[#8A001A] absolute -bottom-16 md:-bottom-24 right-10 md:-right-[10%] italic z-50 origin-left pointer-events-none whitespace-nowrap"
+                className="font-aston-script text-[45px] sm:text-[55px] md:text-[90px] text-[#8A001A] absolute -bottom-10 md:-bottom-24 right-0 md:-right-[10%] italic z-50 pointer-events-none whitespace-nowrap"
               >
                 Across the Globe
               </motion.span>
