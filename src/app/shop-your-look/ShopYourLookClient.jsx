@@ -101,9 +101,12 @@ function ShopAestheticContent() {
     const arr = p.sections?.map(sec => sec.toLowerCase()) || [];
     return s === 'shop your aesthetic' || s === 'shop your look' || arr.includes('shop your aesthetic') || arr.includes('shop your look');
   });
-  const curatedAesthetics = curatedAestheticsRaw.filter(p => 
-    p.aesthetic?.toLowerCase() === activeAesthetic.toLowerCase()
-  );
+  const curatedAesthetics = curatedAestheticsRaw.filter(p => {
+    if (Array.isArray(p.aesthetic)) {
+      return p.aesthetic.some(a => a.toLowerCase() === activeAesthetic.toLowerCase());
+    }
+    return p.aesthetic?.toLowerCase() === activeAesthetic.toLowerCase();
+  });
   const curatedItems = curatedAesthetics;
 
   return (

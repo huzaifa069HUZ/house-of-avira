@@ -253,7 +253,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   const [category, setCategory] = useState(CATEGORY_DATA[0].title);
   const [secondaryCategory, setSecondaryCategory] = useState('');
   const [subcategories, setSubcategories] = useState([]);
-  const [aesthetic, setAesthetic] = useState('');
+  const [aesthetic, setAesthetic] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [sizeInput, setSizeInput] = useState('');
   const [colors, setColors] = useState([]);
@@ -291,7 +291,8 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       setCategory(initialProduct.category || CATEGORY_DATA[0].title);
       setSecondaryCategory(initialProduct.secondaryCategory || '');
       setSubcategories(initialProduct.subcategories || (initialProduct.subcategory ? [initialProduct.subcategory] : []));
-      setAesthetic(initialProduct.aesthetic || '');
+      const initialAesthetic = initialProduct.aesthetic;
+      setAesthetic(Array.isArray(initialAesthetic) ? initialAesthetic : (initialAesthetic ? [initialAesthetic] : []));
       setSizes(initialProduct.sizes || []);
       setColors(initialProduct.swatches?.map((s, idx) => ({
         id: Date.now() + idx,
@@ -335,7 +336,8 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         setCategory(draft.category || CATEGORY_DATA[0].title);
         setSecondaryCategory(draft.secondaryCategory || '');
         setSubcategories(draft.subcategories || []);
-        setAesthetic(draft.aesthetic || '');
+        const initialAesthetic = draft.aesthetic;
+        setAesthetic(Array.isArray(initialAesthetic) ? initialAesthetic : (initialAesthetic ? [initialAesthetic] : []));
         setSizes(draft.sizes || []);
         setInStock(draft.inStock !== false);
         setBestSeller(draft.bestSeller || false);
@@ -572,7 +574,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         secondaryCategory: secondaryCategory || '',
         subcategories,
         subcategory: subcategories[0] || '',
-        aesthetic: sections.includes('Shop Your Look') || sections.includes('Shop your aesthetic') ? aesthetic : '',
+        aesthetic: sections.includes('Shop Your Look') || sections.includes('Shop your aesthetic') ? aesthetic : [],
         badge,
         imageUrl: finalImageUrls[0] || '',
         images: finalImageUrls,
@@ -599,7 +601,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         // Clear form + draft
         clearDraft();
         setName(''); setPrice(''); setDescription(''); setSections(['New Arrivals']); setBadge('');
-        setCategory(CATEGORY_DATA[0].title); setSecondaryCategory(''); setSubcategories([]); setAesthetic('');
+        setCategory(CATEGORY_DATA[0].title); setSecondaryCategory(''); setSubcategories([]); setAesthetic([]);
         setSizes([]); setColors([]); setImageItems([]);
         setInStock(true); setBestSeller(false);
         setSizeChartFile(null); setSizeChartUrl('');
@@ -955,21 +957,25 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                     }} className="accent-[#0071e3] w-4 h-4 cursor-pointer" /> Shop Your Look
                   </label>
                   {sections.includes('Shop Your Look') && (
-                    <div className="pl-6 mt-1">
-                      <select value={aesthetic} onChange={(e) => setAesthetic(e.target.value)} className="w-full px-3 py-2 bg-white border border-[#d2d2d7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none">
-                        <option value="">Select Look</option>
-                        <option value="casual">Casual</option>
-                        <option value="summer">Summer</option>
-                        <option value="festivals / concerts">Festivals / Concerts</option>
-                        <option value="trendy">Trendy</option>
-                        <option value="babydoll / coquette">Babydoll / Coquette</option>
-                        <option value="dark feminine">Dark Feminine</option>
-                        <option value="office siren">Office Siren</option>
-                        <option value="y2k">Y2K</option>
-                        <option value="streetwear">Streetwear</option>
-                        <option value="elegant chic">Elegant Chic</option>
-                        <option value="opiúm">Opiúm</option>
-                      </select>
+                    <div className="pl-6 mt-1 flex flex-col gap-2">
+                      {[
+                        'casual', 'summer', 'festivals / concerts', 'trendy',
+                        'babydoll / coquette', 'dark feminine', 'office siren',
+                        'y2k', 'streetwear', 'elegant chic', 'opiúm'
+                      ].map(option => (
+                        <label key={option} className="flex items-center gap-2 text-sm cursor-pointer text-[#333333]">
+                          <input 
+                            type="checkbox" 
+                            checked={aesthetic.includes(option)} 
+                            onChange={(e) => {
+                              if (e.target.checked) setAesthetic([...aesthetic, option]);
+                              else setAesthetic(aesthetic.filter(a => a !== option));
+                            }} 
+                            className="accent-[#0071e3] w-4 h-4 cursor-pointer" 
+                          /> 
+                          <span className="capitalize">{option}</span>
+                        </label>
+                      ))}
                     </div>
                   )}
                 </div>
