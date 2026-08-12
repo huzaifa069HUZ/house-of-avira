@@ -55,7 +55,11 @@ const subCategoryMeta = {
   'men/tops': { title: "Imported Tops & T-shirts for Men India", desc: "Shop premium imported men's tops — oversized tees, polo shirts, graphic tees & streetwear from international brands." },
   'men/pants-jeans': { title: "Imported Pants & Jeans for Men India", desc: "Discover imported men's pants, jeans & joggers. Premium quality cargo pants, straight-fit jeans & trending styles." },
   'men/jackets': { title: "Imported Jackets for Men India", desc: "Premium imported men's jackets — bombers, denim, leather & outerwear. Old money & streetwear aesthetics." },
-  'footwear/heels': { title: "Imported Heels for Women India", desc: "Shop luxury imported heels — stilettos, block heels, kitten heels & platform heels. Pinterest-inspired footwear delivered to India." },
+  'footwear/heels': { 
+    title: "Imported Heels & Stilettos India — Pinterest Aesthetics & Premium Footwear", 
+    desc: "Shop luxury imported heels at House of Avira. Discover trending stilettos, platform heels, kitten heels, and Y2K aesthetic footwear. Premium quality, internationally sourced, and delivered across India.",
+    keywords: ["imported heels India", "buy stilettos online India", "pinterest aesthetic heels", "Y2K heels online", "platform heels India", "luxury imported footwear", "korean aesthetic heels", "party wear heels"]
+  },
   'footwear/boots': { title: "Imported Boots India", desc: "Premium imported boots — ankle boots, combat boots, Chelsea boots & knee-highs from international fashion." },
   'footwear/shoes': { title: "Imported Shoes India", desc: "Shop imported shoes — sneakers, loafers, oxfords & casual shoes. Premium international footwear delivered to India." },
   'footwear/flats': { title: "Imported Flats India", desc: "Comfortable imported flats — ballet flats, mules, slides & slip-ons. Premium quality at House of Avira." },
@@ -90,6 +94,7 @@ function getCategoryInfo(slugArray) {
       name: subMeta.title.split(' | ')[0],
       title: `${subMeta.title} | House of Avira`,
       description: subMeta.desc,
+      keywords: subMeta.keywords,
       breadcrumbs,
     };
   }
