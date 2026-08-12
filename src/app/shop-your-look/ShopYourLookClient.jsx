@@ -116,7 +116,7 @@ function ShopAestheticContent() {
                 <button 
                   key={tab}
                   onClick={() => setActiveAesthetic(tab)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors capitalize ${activeAesthetic === tab ? 'bg-[#000000] text-white' : 'border border-[#000000] text-[#000000] hover:bg-[#000000]/5'}`}
+                  className={`px-6 py-2.5 rounded-full font-perandory text-sm md:text-base whitespace-nowrap transition-colors uppercase tracking-wider ${activeAesthetic === tab ? 'bg-[#000000] text-white' : 'border border-[#000000] text-[#000000] hover:bg-[#000000]/5'}`}
                 >
                   {tab}
                 </button>
