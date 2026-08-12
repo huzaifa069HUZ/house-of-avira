@@ -96,6 +96,7 @@ export default function CategoryClient({ slug = [] }) {
         if (cleanDb === cleanUrl) return true;
         
         // Custom mappings for common subcategory name mismatches
+        if (urlSub === 'bottoms' && (dbSub === 'pants / jeans' || dbSub === 'pants/jeans' || dbSub === 'pants' || dbSub === 'jeans' || dbSub === 'skirts' || dbSub === 'shorts')) return true;
         if (urlSub === 'pants-jeans' && (dbSub === 'pants / jeans' || dbSub === 'pants/jeans' || dbSub === 'pants' || dbSub === 'jeans')) return true;
         if (urlSub === 'beach-wear' && dbSub === 'beach wear') return true;
         if (urlSub === 'hair' && dbSub === 'hair accessories') return true;
