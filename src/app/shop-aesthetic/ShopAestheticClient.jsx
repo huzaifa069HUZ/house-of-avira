@@ -108,7 +108,7 @@ function ShopAestheticContent() {
   const curatedAesthetics = curatedAestheticsRaw.filter(p => 
     p.aesthetic?.toLowerCase() === activeAesthetic.toLowerCase()
   );
-  const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts.slice(0, 5);
+  const curatedItems = curatedAesthetics;
 
   return (
     <div className="pt-24 min-h-screen bg-white">
@@ -133,19 +133,14 @@ function ShopAestheticContent() {
         </div>
 
         {/* Seamless Grid */}
-        <div className="w-full border-t border-b border-[#000000]/20">
-          <div className="grid grid-cols-2 md:grid-cols-5 w-full">
-            {curatedItems.map((item, idx) => (
-              <Link href={`/product/${item.slug || item.id}`} key={item.id || idx} className="border-r border-[#000000]/20 group cursor-pointer flex flex-col relative bg-white block">
-                {/* Image Block */}
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#FFFFFF]">
-                  <img src={item.imageUrl || item.img} alt={item.name || item.title} className="w-full h-full object-cover" />
-
-                  {idx < 2 && (
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[11px] font-semibold text-[#000000]">
-                      Selling Fast
-                    </div>
-                  )}
+        <div className="w-full border-t border-b border-[#000000]/20 min-h-[300px]">
+          {curatedItems.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-5 w-full">
+              {curatedItems.map((item, idx) => (
+                <Link href={`/product/${item.slug || item.id}`} key={item.id || idx} className="border-r border-[#000000]/20 group cursor-pointer flex flex-col relative bg-white block">
+                  {/* Image Block */}
+                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#FFFFFF]">
+                    <img src={item.imageUrl || item.img} alt={item.name || item.title} className="w-full h-full object-cover" />
 
                   {/* Hover Size Selector */}
                   <div className="absolute bottom-0 left-0 w-full bg-white/80 backdrop-blur-md p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center">
@@ -181,6 +176,12 @@ function ShopAestheticContent() {
               </Link>
             ))}
           </div>
+          ) : (
+            <div className="py-20 px-4 text-center w-full flex flex-col items-center justify-center">
+              <p className="font-perandory text-xl md:text-2xl text-[#000000] uppercase tracking-wider mb-2">NO PRODUCTS ADDED</p>
+              <p className="font-[family-name:var(--font-dm-sans)] text-sm md:text-base text-gray-500 uppercase tracking-widest">PLEASE TRY AGAIN WHEN PRODUCTS ARE RESTOCKED</p>
+            </div>
+          )}
         </div>
       </section>
     </div>
