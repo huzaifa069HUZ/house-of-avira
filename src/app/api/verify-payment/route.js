@@ -64,6 +64,37 @@ export async function POST(request) {
       updated_at: new Date().toISOString(),
     });
 
+    // ── Send Emails ──
+    try {
+      const orderData = orderDoc.data();
+      const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
+      const currencySymbol = '₹';
+      
+      // Send to customer
+      await sendOrderConfirmationEmail({
+        customerEmail: orderData.customer_email,
+        customerName: orderData.customer_name,
+        orderId: db_order_id,
+        items: orderData.items,
+        payableAmount: orderData.payable_amount,
+        shippingAddress: orderData.shipping_address,
+        currencySymbol
+      });
+      
+      // Send to admin
+      await sendAdminOrderNotificationEmail({
+        orderId: db_order_id,
+        customerName: orderData.customer_name,
+        customerEmail: orderData.customer_email,
+        items: orderData.items,
+        itemsCount: orderData.items_count,
+        payableAmount: orderData.payable_amount,
+        currencySymbol
+      });
+    } catch (emailErr) {
+      console.error('Failed to send order emails on payment verification:', emailErr);
+    }
+
     return NextResponse.json({ success: true, message: 'Payment verified successfully.' });
   } catch (error) {
     console.error('Error verifying payment:', error);

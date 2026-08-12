@@ -212,36 +212,8 @@ export async function POST(request) {
       razorpay_order_id: razorpayOrder.id
     });
 
-    // ── Send Emails ──
-    try {
-      const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
-      const currencySymbol = '₹';
-      
-      // Send to customer
-      await sendOrderConfirmationEmail({
-        customerEmail: customer_email,
-        customerName: customer_name,
-        orderId: docRef.id,
-        items,
-        payableAmount: securePayableAmount,
-        shippingAddress: shipping_address,
-        currencySymbol
-      });
-      
-      // Send to admin
-      await sendAdminOrderNotificationEmail({
-        orderId: docRef.id,
-        customerName: customer_name,
-        customerEmail: customer_email,
-        items,
-        itemsCount: items_count,
-        payableAmount: securePayableAmount,
-        currencySymbol
-      });
-    } catch (emailErr) {
-      console.error('Failed to send order emails:', emailErr);
-      // We don't fail the order creation if emails fail
-    }
+    // Note: Emails are no longer sent here. They are sent securely in the verify-payment route 
+    // after Razorpay confirms the payment, to prevent sending emails before payment is actually captured.
 
     return NextResponse.json(
       { 

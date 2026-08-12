@@ -82,10 +82,34 @@ export async function POST(request) {
 
         console.log(`Webhook: Order ${orderDoc.id} confirmed via payment.captured`);
         
-        // TODO: Send Payment Receipt email (Wave 4)
-        // if (orderData.customer_email) {
-        //   await sendPaymentReceipt({ id: orderDoc.id, ...orderData }, paymentDetails, razorpayPaymentId);
-        // }
+        // ── Send Emails (Fallback if verify-payment missed it) ──
+        try {
+          const { sendOrderConfirmationEmail, sendAdminOrderNotificationEmail } = await import('@/lib/email-service');
+          const currencySymbol = '₹';
+          
+          await sendOrderConfirmationEmail({
+            customerEmail: orderData.customer_email,
+            customerName: orderData.customer_name,
+            orderId: orderDoc.id,
+            items: orderData.items,
+            payableAmount: orderData.payable_amount,
+            shippingAddress: orderData.shipping_address,
+            currencySymbol
+          });
+          
+          await sendAdminOrderNotificationEmail({
+            orderId: orderDoc.id,
+            customerName: orderData.customer_name,
+            customerEmail: orderData.customer_email,
+            items: orderData.items,
+            itemsCount: orderData.items_count,
+            payableAmount: orderData.payable_amount,
+            currencySymbol
+          });
+        } catch (emailErr) {
+          console.error(`Webhook: Failed to send order emails for ${orderDoc.id}:`, emailErr);
+        }
+
       } else {
         console.log(`Webhook: Order ${orderDoc.id} already confirmed, skipping update.`);
       }
