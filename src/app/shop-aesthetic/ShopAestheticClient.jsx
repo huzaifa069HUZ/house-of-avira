@@ -129,7 +129,6 @@ function ShopAestheticContent() {
                 </button>
               ))}
             </div>
-            <button className="border border-[#000000] text-[#000000] px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap hover:bg-[#000000]/5 transition-colors hidden md:block">Shop Best Sellers</button>
           </div>
         </div>
 
