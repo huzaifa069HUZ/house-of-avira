@@ -100,8 +100,14 @@ function ShopAestheticContent() {
     await toggleWishlist(product);
   };
 
-  const curatedAestheticsRaw = products.filter(p => p.sections?.includes('Shop your aesthetic') || p.section === 'Shop your aesthetic');
-  const curatedAesthetics = curatedAestheticsRaw.filter(p => p.aesthetic === activeAesthetic);
+  const curatedAestheticsRaw = products.filter(p => {
+    const s = p.section?.toLowerCase() || '';
+    const arr = p.sections?.map(sec => sec.toLowerCase()) || [];
+    return s === 'shop your aesthetic' || s === 'shop your look' || arr.includes('shop your aesthetic') || arr.includes('shop your look');
+  });
+  const curatedAesthetics = curatedAestheticsRaw.filter(p => 
+    p.aesthetic?.toLowerCase() === activeAesthetic.toLowerCase()
+  );
   const curatedItems = curatedAesthetics.length > 0 ? curatedAesthetics : dummyProducts.slice(0, 5);
 
   return (
