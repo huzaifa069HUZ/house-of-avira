@@ -391,7 +391,7 @@ export default function OrderProcessPage() {
       {/* ═══ CINEMATIC DELIVERY IMAGE DIVIDER ═══ */}
       <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
         <motion.div
-          className="absolute inset-0"
+          className="absolute -top-[100px] -bottom-[100px] left-0 right-0"
           style={{ y: useTransform(scrollYProgress, [0.6, 0.8], [0, -60]) }}
         >
           <Image
