@@ -83,7 +83,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center py-8 border-t border-white/10 text-xs text-neutral-500 font-lato max-w-[1400px] mx-auto gap-4 relative z-10">
           <div className="flex gap-6 order-2 md:order-1">
             <Link href="/privacy-policy" className="hover:text-white transition-colors footer-link-animate">Privacy Policy</Link>
-            <Link href="/terms-of-service" className="hover:text-white transition-colors footer-link-animate">Terms of Service</Link>
+            <Link href="/order-info/policies" className="hover:text-white transition-colors footer-link-animate">Terms of Service</Link>
           </div>
           
           <p className="order-3 md:order-2">© {new Date().getFullYear()} House of Avira. All rights reserved.</p>
