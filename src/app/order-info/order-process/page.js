@@ -286,7 +286,7 @@ export default function OrderProcessPage() {
 
       {/* ═══ EDITORIAL DIVIDER ═══ */}
       <section className="py-16 md:py-24 text-center px-4 overflow-hidden relative">
-         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/images/global.png)' }} />
+         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/images/gemini-map-globe.png)' }} />
          <div className="absolute inset-0 bg-black/60" />
          <RevealSection className="relative z-10">
            <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter text-white font-montserrat">
