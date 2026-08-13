@@ -36,10 +36,10 @@ export default function Footer() {
               <h5 className="font-perandory text-[10px] md:text-xs uppercase tracking-[0.2em] mb-6 text-neutral-500">Support</h5>
               <ul className="space-y-4 text-sm font-lato text-neutral-300">
                 <li><Link href="/track-order" className="hover:text-white transition-colors footer-link-animate">Track Order</Link></li>
+                <li><Link href="/how-it-works" className="hover:text-white transition-colors footer-link-animate">How It Works</Link></li>
                 <li><Link href="/order-info" className="hover:text-white transition-colors footer-link-animate">Ordering Guide</Link></li>
                 <li><Link href="/order-info/shipping" className="hover:text-white transition-colors footer-link-animate">Shipping &amp; Customs</Link></li>
                 <li><Link href="/policy" className="hover:text-white transition-colors footer-link-animate">Policies</Link></li>
-                <li><Link href="/shipping#faq" className="hover:text-white transition-colors footer-link-animate">FAQ</Link></li>
                 <li><Link href="/#contact-studio" className="hover:text-white transition-colors footer-link-animate">Contact Studio</Link></li>
               </ul>
             </div>
