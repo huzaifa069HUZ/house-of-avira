@@ -89,11 +89,11 @@ export default function ShippingPage() {
       />
 
       {/* ═══════ HERO — MINIMALIST EDITORIAL ═══════ */}
-      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-24 md:pt-0">
-        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20">
+      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-32 md:pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20 mt-12 md:mt-20">
           
           {/* Typography & CTA Column (Left) */}
-          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-50 pt-10 md:pt-0">
+          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-50">
             {/* Graphic Element */}
             <motion.div 
               initial={{ scaleX: 0 }}
@@ -152,8 +152,8 @@ export default function ShippingPage() {
             <div className="relative z-10 border border-[#111] p-2 bg-white transform md:-translate-y-8">
               <div className="aspect-[4/5] md:aspect-[3/4] w-full relative overflow-hidden bg-neutral-100">
                 <Image 
-                  src="/images/modern-shipping-hero.jpg" 
-                  alt="Modern Shipping" 
+                  src="/images/order process new.png" 
+                  alt="Order Process" 
                   fill 
                   className="w-full h-full object-cover transition-all duration-700" 
                   sizes="(max-width: 768px) 100vw, 50vw"
