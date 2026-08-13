@@ -459,7 +459,7 @@ export default function CartSlideOver() {
                     </div>
                     <div className="w-full mb-3 space-y-1.5 flex flex-col items-end overflow-hidden">
                       <p className="font-sans text-[8px] sm:text-[9px] whitespace-nowrap overflow-hidden text-ellipsis font-bold text-red-500 uppercase tracking-tight text-right w-full">
-                        * THIS PRICE IS AN ESTIMATE AND MIGHT GO HIGHER AS PER CUSTOM DUTY AND TAXES.
+                        * THIS PRICE IS AN ESTIMATE AND MIGHT GO HIGHER OR LOWER AS PER CUSTOM DUTY AND TAXES.
                       </p>
                       <Link href="/shipping" onClick={closeCart} className="font-sans text-[10px] font-bold text-blue-600 hover:text-blue-800 underline uppercase tracking-tight">
                         KNOW MORE ABOUT SHIPPING
