@@ -8,7 +8,7 @@ import { db } from '@/lib/firebase';
 const defaultDesktopSlides = [
   {
     id: 1,
-    desktopImage: '/newpchero.png',
+    desktopImage: '/zara-hero.png',
     title: 'NEW\nDROP',
     subtitle: 'CURATED AESTHETICS',
     link: '/category/women',
@@ -16,14 +16,6 @@ const defaultDesktopSlides = [
   },
   {
     id: 2,
-    desktopImage: '/pchero.png',
-    title: '',
-    subtitle: '',
-    link: '/category/women',
-    textPosition: 'right'
-  },
-  {
-    id: 3,
     desktopImage: '/banner.png',
     title: '',
     subtitle: '',
@@ -31,7 +23,7 @@ const defaultDesktopSlides = [
     textPosition: 'right'
   },
   {
-    id: 4,
+    id: 3,
     desktopImage: '/banner2.png',
     title: '',
     subtitle: '',
