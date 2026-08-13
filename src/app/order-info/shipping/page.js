@@ -89,11 +89,11 @@ export default function ShippingPage() {
       />
 
       {/* ═══════ HERO — MINIMALIST EDITORIAL ═══════ */}
-      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-40 md:pt-48 pb-16">
-        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20 mt-24 md:mt-32">
+      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-8 md:pt-12 pb-16">
+        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20">
           
           {/* Typography & CTA Column (Left) */}
-          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-50">
+          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-10">
             {/* Graphic Element */}
             <motion.div 
               initial={{ scaleX: 0 }}
@@ -119,7 +119,7 @@ export default function ShippingPage() {
                 initial={{ opacity: 0, rotate: -5, y: 10 }}
                 animate={{ opacity: 0.9, rotate: -5, y: 0 }}
                 transition={{ delay: 0.8, duration: 1 }}
-                className="font-aston-script text-[45px] sm:text-[55px] md:text-[90px] text-[#8A001A] absolute -bottom-10 md:-bottom-24 right-0 md:-right-[10%] italic z-50 pointer-events-none whitespace-nowrap"
+                className="font-aston-script text-[45px] sm:text-[55px] md:text-[90px] text-[#8A001A] absolute -bottom-10 md:-bottom-24 right-0 md:-right-[10%] italic z-10 pointer-events-none whitespace-nowrap"
               >
                 Across the Globe
               </motion.span>
