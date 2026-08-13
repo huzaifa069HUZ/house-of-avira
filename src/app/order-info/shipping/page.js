@@ -89,8 +89,8 @@ export default function ShippingPage() {
       />
 
       {/* ═══════ HERO — MINIMALIST EDITORIAL ═══════ */}
-      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-32 md:pt-32 pb-16">
-        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20 mt-12 md:mt-20">
+      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-40 md:pt-48 pb-16">
+        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20 mt-24 md:mt-32">
           
           {/* Typography & CTA Column (Left) */}
           <div className="w-full md:w-5/12 flex flex-col justify-center relative z-50">
