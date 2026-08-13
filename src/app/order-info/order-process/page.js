@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package, ShieldCheck, Globe, Clock, Heart, Sparkles, ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import Script from 'next/script';
 import { motion, useScroll, useTransform, useInView, useSpring, AnimatePresence } from 'framer-motion';
 import { GradientBackground } from '@/components/ui/gradient-background';
 import { TextEffect } from '@/components/ui/text-effect';
@@ -95,19 +96,9 @@ export default function OrderProcessPage() {
   /* ── Smooth spring for progress bar ── */
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  useEffect(() => {
-    // Dynamically load the Lottie player script only on the client side
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js';
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   return (
     <div ref={containerRef} className="relative bg-[#FFFFFF] text-[#111111] overflow-hidden" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>
+      <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" strategy="afterInteractive" />
 
       {/* ═══ PROGRESS BAR ═══ */}
       <motion.div
@@ -300,7 +291,7 @@ export default function OrderProcessPage() {
               
               <div className="w-full md:w-1/3 flex justify-center">
                  <lottie-player 
-                   src="https://lottie.host/efeb2b1c-ab48-49f4-bf8c-b2e14ba788e3/nC6ZCpxNax.json" 
+                   src="/videos/shipping-animation.json" 
                    background="transparent" 
                    speed="1" 
                    style={{ width: '300px', height: '300px' }} 
