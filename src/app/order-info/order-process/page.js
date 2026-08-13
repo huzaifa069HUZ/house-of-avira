@@ -250,9 +250,10 @@ export default function OrderProcessPage() {
       </section>
 
       {/* ═══ EDITORIAL DIVIDER ═══ */}
-      <section className="py-16 md:py-24 bg-[#111111] text-center px-4 overflow-hidden relative">
-         <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] [background-size:24px_24px]" />
-         <RevealSection>
+      <section className="py-16 md:py-24 text-center px-4 overflow-hidden relative">
+         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/images/global.png)' }} />
+         <div className="absolute inset-0 bg-black/60" />
+         <RevealSection className="relative z-10">
            <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter text-white font-montserrat">
              ACROSS THE GLOBE
            </h2>
