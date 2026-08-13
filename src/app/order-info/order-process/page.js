@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package, ShieldCheck, Globe, Clock, Heart, Sparkles, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package, ShieldCheck, Globe, Clock, Heart, Sparkles, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
 import { motion, useScroll, useTransform, useInView, useSpring, AnimatePresence } from 'framer-motion';
@@ -86,6 +86,9 @@ export default function OrderProcessPage() {
   const heroRef = useRef(null);
   const statsRef = useRef(null);
   const statsInView = useInView(statsRef, { once: true });
+  
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const heroVideos = ['/videos/package-animation.mp4', '/videos/import-veo-video.mp4'];
 
   /* ── Parallax scroll values ── */
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
@@ -158,25 +161,57 @@ export default function OrderProcessPage() {
           </motion.p>
         </div>
 
-        {/* Right Side: Editorial Image */}
-        <div className="flex-1 w-full h-[50vh] md:h-[75vh] relative rounded-[2rem] overflow-hidden shadow-2xl border border-neutral-100">
-           <motion.div 
-             className="absolute inset-0"
-             initial={{ scale: 1.1, opacity: 0 }}
-             animate={{ scale: 1, opacity: 1 }}
-             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-           >
-             <video
-               src="/videos/package-animation.mp4"
-               autoPlay
-               loop
-               muted
-               playsInline
-               className="object-cover w-full h-full"
-             />
-             {/* Subtle vignette/overlay */}
-             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-           </motion.div>
+        {/* Right Side: Editorial Image/Video Carousel */}
+        <div className="flex-1 w-full h-[50vh] md:h-[75vh] relative rounded-[2rem] overflow-hidden shadow-2xl border border-neutral-100 group">
+           <AnimatePresence mode="wait">
+             <motion.div 
+               key={activeVideoIndex}
+               className="absolute inset-0"
+               initial={{ opacity: 0, scale: 1.05 }}
+               animate={{ opacity: 1, scale: 1 }}
+               exit={{ opacity: 0, scale: 0.95 }}
+               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+             >
+               <video
+                 src={heroVideos[activeVideoIndex]}
+                 autoPlay
+                 loop
+                 muted
+                 playsInline
+                 className="object-cover w-full h-full"
+               />
+               {/* Subtle vignette/overlay */}
+               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+             </motion.div>
+           </AnimatePresence>
+
+           {/* Carousel Controls */}
+           <div className="absolute inset-x-0 bottom-6 flex justify-center items-center gap-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             <button 
+               onClick={() => setActiveVideoIndex((prev) => (prev - 1 + heroVideos.length) % heroVideos.length)}
+               className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:bg-white/40 transition-colors"
+               aria-label="Previous video"
+             >
+               <ChevronLeft className="w-5 h-5" />
+             </button>
+             <div className="flex gap-2">
+               {heroVideos.map((_, idx) => (
+                 <button 
+                   key={idx} 
+                   onClick={() => setActiveVideoIndex(idx)}
+                   className={`w-2 h-2 rounded-full transition-all duration-300 ${activeVideoIndex === idx ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80'}`}
+                   aria-label={`Go to video ${idx + 1}`}
+                 />
+               ))}
+             </div>
+             <button 
+               onClick={() => setActiveVideoIndex((prev) => (prev + 1) % heroVideos.length)}
+               className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:bg-white/40 transition-colors"
+               aria-label="Next video"
+             >
+               <ChevronRight className="w-5 h-5" />
+             </button>
+           </div>
         </div>
       </section>
 
