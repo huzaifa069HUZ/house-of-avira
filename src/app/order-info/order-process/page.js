@@ -182,7 +182,7 @@ export default function OrderProcessPage() {
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10 text-center">
           {[
             { target: 500, suffix: '+', label: 'Happy Customers' },
-            { target: 15, suffix: '+', label: 'Countries Served' },
+            { target: 30, suffix: 'k+', label: 'Insta Followers' },
             { target: 100, suffix: '%', label: 'Transparency' },
             { target: 24, suffix: '/7', label: 'Support Available' },
           ].map((stat, i) => (
