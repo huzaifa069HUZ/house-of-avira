@@ -93,12 +93,28 @@ export default function OrderProcessPage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 1.1]);
 
+  const lottieContainer = useRef(null);
+  const [lottieLoaded, setLottieLoaded] = useState(false);
+
+  useEffect(() => {
+    if (lottieLoaded && lottieContainer.current && window.lottie) {
+      const animation = window.lottie.loadAnimation({
+        container: lottieContainer.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '/videos/shipping-animation.json'
+      });
+      return () => animation.destroy();
+    }
+  }, [lottieLoaded]);
+
   /* ── Smooth spring for progress bar ── */
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
     <div ref={containerRef} className="relative bg-[#FFFFFF] text-[#111111] overflow-hidden" style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}>
-      <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" strategy="afterInteractive" />
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" strategy="afterInteractive" onLoad={() => setLottieLoaded(true)} />
 
       {/* ═══ PROGRESS BAR ═══ */}
       <motion.div
@@ -290,14 +306,7 @@ export default function OrderProcessPage() {
               </div>
               
               <div className="w-full md:w-1/3 flex justify-center">
-                 <lottie-player 
-                   src="/videos/shipping-animation.json" 
-                   background="transparent" 
-                   speed="1" 
-                   style={{ width: '300px', height: '300px' }} 
-                   loop 
-                   autoplay
-                 ></lottie-player>
+                 <div ref={lottieContainer} style={{ width: '300px', height: '300px' }}></div>
               </div>
             </div>
           </RevealSection>
