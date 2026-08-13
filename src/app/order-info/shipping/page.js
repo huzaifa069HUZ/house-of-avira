@@ -193,7 +193,11 @@ export default function ShippingPage() {
           {/* Key Point — dark featured card */}
           <RevealSection delay={0.1} className="mb-16">
             <div className="relative rounded-2xl overflow-hidden bg-[#111] shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/10 via-transparent to-[#8A001A]/5" />
+              <div 
+                className="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-overlay"
+                style={{ backgroundImage: 'url(/images/global.png)' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#8A001A]/20 via-[#111]/60 to-[#111]/80" />
               <div className="relative p-10 md:p-16 border border-white/10 rounded-2xl">
                 <p className="font-perandory text-2xl md:text-3xl text-white leading-[1.4] mb-4 uppercase tracking-wide">
                   Shipping charges are <span className="text-[#8A001A]">completely separate</span> from the product price.
