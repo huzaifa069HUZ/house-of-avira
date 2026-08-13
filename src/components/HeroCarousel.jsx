@@ -9,8 +9,8 @@ const defaultDesktopSlides = [
   {
     id: 1,
     desktopImage: '/zara-hero.png',
-    title: 'NEW\nDROP',
-    subtitle: 'CURATED AESTHETICS',
+    title: '',
+    subtitle: '',
     link: '/category/women',
     textPosition: 'left'
   },
