@@ -169,7 +169,8 @@ export function TextEffect({
       {trigger && (
         <MotionTag
           initial='hidden'
-          animate='visible'
+          whileInView='visible'
+          viewport={{ once: true, margin: '-50px' }}
           exit='exit'
           aria-label={ariaLabel}
           variants={delayedContainerVariants}
