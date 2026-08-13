@@ -286,7 +286,7 @@ export default function OrderProcessPage() {
               </div>
               
               <div className="w-full md:w-1/3 flex justify-center">
-                 <video src="/videos/shipping-animation.webm" style={{ width: '300px', height: '300px', objectFit: 'contain' }} autoPlay loop muted playsInline />
+                 <iframe src="https://lottie.host/embed/efeb2b1c-ab48-49f4-bf8c-b2e14ba788e3/nC6ZCpxNax.json" style={{ width: '300px', height: '300px', border: 'none' }} title="Shipping Animation"></iframe>
               </div>
             </div>
           </RevealSection>
