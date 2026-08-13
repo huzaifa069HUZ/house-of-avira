@@ -115,7 +115,7 @@ export default function OrderProcessPage() {
       />
 
       {/* ═══ HERO — GEN-Z EDITORIAL ═══ */}
-      <section ref={heroRef} className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white flex flex-col md:flex-row items-center max-w-7xl mx-auto px-4 gap-12 overflow-hidden">
+      <section ref={heroRef} className="relative pt-16 pb-16 md:pt-20 md:pb-24 bg-white flex flex-col md:flex-row items-center max-w-7xl mx-auto px-4 gap-12 overflow-hidden">
         {/* Left Side: Text */}
         <div className="flex-1 w-full relative z-10 pt-10 md:pt-0">
           <motion.div
@@ -175,12 +175,13 @@ export default function OrderProcessPage() {
              animate={{ scale: 1, opacity: 1 }}
              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
            >
-             <Image
-               src="/images/genz-hero.jpg"
-               alt="Modern Editorial"
-               fill
-               className="object-cover"
-               priority
+             <video
+               src="/videos/package-animation.mp4"
+               autoPlay
+               loop
+               muted
+               playsInline
+               className="object-cover w-full h-full"
              />
              {/* Subtle vignette/overlay */}
              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
