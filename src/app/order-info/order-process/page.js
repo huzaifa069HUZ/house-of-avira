@@ -6,6 +6,7 @@ import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package, ShieldCheck
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring, AnimatePresence } from 'framer-motion';
 import { GradientBackground } from '@/components/ui/gradient-background';
+import { TextEffect } from '@/components/ui/text-effect';
 /* ─── Animated Counter ─── */
 function AnimatedCounter({ target, suffix = '', inView }) {
   const [count, setCount] = useState(0);
@@ -350,9 +351,14 @@ export default function OrderProcessPage() {
       <GradientBackground className="py-24 md:py-36" overlay={true} overlayOpacity={0.6}>
         <div className="max-w-7xl mx-auto px-4 md:px-16 w-full relative z-10">
           <RevealSection className="mb-16">
-            <h3 className="font-perandory text-2xl md:text-3xl uppercase tracking-wider text-center mb-12">
+            <TextEffect 
+              as="h3" 
+              per="word" 
+              preset="blur" 
+              className="font-perandory text-2xl md:text-3xl uppercase tracking-wider text-center mb-12 text-white drop-shadow-md"
+            >
               What happens once we calculate the final costs?
-            </h3>
+            </TextEffect>
           </RevealSection>
 
           <div className="relative max-w-4xl mx-auto">
