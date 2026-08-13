@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Script from 'next/script';
 import { ArrowLeft, Check, Plane, Receipt, FileText, Truck, Package, ShieldCheck, Globe, Clock, Heart, Sparkles, ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring, AnimatePresence } from 'framer-motion';
@@ -286,9 +287,8 @@ export default function OrderProcessPage() {
               </div>
               
               <div className="w-full md:w-1/3 flex justify-center">
-                 <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border border-dashed border-neutral-300 flex items-center justify-center animate-spin" style={{ animationDuration: '8s' }}>
-                    <Plane className="w-8 h-8 text-neutral-300" />
-                 </div>
+                 <Script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.4/dist/dotlottie-wc.js" type="module" strategy="lazyOnload" />
+                 <dotlottie-wc src="https://lottie.host/7d858615-9ccc-4fed-84fc-f22fad489442/Df371hGtlS.json" style={{ width: '300px', height: '300px' }} autoplay loop></dotlottie-wc>
               </div>
             </div>
           </RevealSection>
