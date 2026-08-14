@@ -43,8 +43,8 @@ function FaqItem({ question, answer }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="border-b border-neutral-200">
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
+      <button
+        onClick={() => setIsOpen(!isOpen)}
         className="w-full text-left py-6 flex justify-between items-center focus:outline-none group"
       >
         <span className="font-perandory text-xl md:text-2xl text-black pr-8 group-hover:text-[#8A001A] transition-colors">{question}</span>
@@ -77,11 +77,23 @@ export default function HowItWorksPage() {
   const faqs = [
     {
       question: "Why isn't shipping included in the product price?",
-      answer: "Because our products are imported from international suppliers, shipping costs fluctuate daily based on international freight rates, package weight, dimensions, and customs duties. Charging it separately ensures you only pay the exact shipping cost for your specific order without any hidden markups."
+      answer: `Shipping charges are kept separate because they are not controlled by us and can fluctuate based on factors such as your location, package weight, dimensions, carrier rates, customs, and other applicable charges.
+
+(We’ve explained this in more detail on that “Shipping & Charges” page — please link this section to that page.)
+
+While we may provide an estimated shipping calculator for reference, the final amount can only be confirmed once the actual shipment is processed. We cannot guarantee an exact shipping cost beforehand.
+
+Including a fluctuating shipping cost in the product MRP would mean constantly changing our product prices, which would create confusion for both us and our customers. That is why we clearly display the product price and shipping charges separately.`
     },
     {
       question: "Can I cancel my order if shipping is too high?",
-      answer: "No. Once an order is placed and the product price is paid, it cannot be canceled, refunded, or exchanged. By placing an order, you agree to pay the international and domestic shipping charges when they are calculated."
+      answer: `We completely understand that shipping costs can sometimes be higher than expected. This is exactly why we’ve explained the entire shipping process clearly and included the relevant information on every product page. We kindly ask you to read through these details before placing an order and proceed only if you’re comfortable with the process.
+
+Shipping costs are determined by several factors that are outside our control, including package weight and dimensions, shipping rates, customs clearance, duties, taxes, the type of product, and other applicable charges. A complete breakdown of the applicable charges will be provided when the shipping amount is confirmed.
+
+Since these charges are determined by external shipping and customs processes and are not set by us, orders cannot be cancelled solely because the final shipping cost is higher than expected once the order has been placed.
+
+We want everything to be as transparent as possible.`
     },
     {
       question: "How long does delivery usually take?",
@@ -95,7 +107,7 @@ export default function HowItWorksPage() {
 
   return (
     <div ref={containerRef} className="relative bg-[#FAFAFA] text-[#1a1a1a] overflow-hidden" style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}>
-      
+
       {/* ═══ PROGRESS BAR ═══ */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[3px] bg-[#8A001A] z-[9999] origin-left"
@@ -112,7 +124,7 @@ export default function HowItWorksPage() {
               Back to Home
             </Link>
           </motion.div>
-          
+
           <div className="max-w-4xl">
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-5xl md:text-7xl lg:text-[6rem] font-perandory text-black uppercase tracking-tight leading-[0.95] mb-6">
               The Avira <span className="text-[#8A001A] font-aston-script lowercase text-6xl md:text-8xl tracking-normal">Experience</span>
@@ -186,7 +198,7 @@ export default function HowItWorksPage() {
               </div>
               <h3 className="font-perandory text-2xl uppercase tracking-tight mb-4">3. Domestic Dispatch</h3>
               <p className="text-neutral-500 font-light leading-relaxed">
-                The batch arrives in India and clears customs. Before we dispatch your specific item to your local address via Shiprocket, you pay the final <strong className="text-black">Domestic Delivery Charge</strong>. Your item is then delivered!
+                The batch arrives in India and clears customs. Before we dispatch your specific item to your local address via India post, we pay the final <strong className="text-black">Domestic Delivery Charge</strong>. Your item is then delivered!
               </p>
             </RevealSection>
           </div>
@@ -209,7 +221,11 @@ export default function HowItWorksPage() {
                 <CheckCircle2 className="w-6 h-6" /> Why we don't include shipping in the MRP
               </h3>
               <p className="text-neutral-400 font-light text-lg leading-relaxed pl-10 border-l border-[#8A001A]/30 ml-3">
-                Most fast-fashion brands hide shipping costs by inflating the product price. We refuse to do this. We believe you should pay exactly what the product is worth. Because international freight depends heavily on the volume and weight of the final combined batch, predicting exact shipping costs at checkout is impossible without overcharging you. We calculate shipping at cost when the batch is ready.
+                Shipping costs are charged separately from the product MRP because they vary depending on several factors. For domestic shipping, the cost mainly depends on your location, as well as the product’s weight and dimensions.
+
+                For international shipping, there are additional factors such as customs clearance, duties, taxes, carrier charges, and other fluctuating costs. Since these charges can change frequently, including them in the product price would mean constantly changing our MRPs.
+
+                Therefore, we keep the product price and shipping charges separate. Please note that shipping and related charges are not controlled by us and are paid directly to the respective shipping and logistics companies..
               </p>
             </RevealSection>
 
@@ -218,7 +234,9 @@ export default function HowItWorksPage() {
                 <Plane className="w-6 h-6" /> International Shipping (Leg 1)
               </h3>
               <p className="text-neutral-400 font-light text-lg leading-relaxed pl-10 border-l border-[#8A001A]/30 ml-3">
-                This covers the journey from our foreign supplier to our Indian fulfillment center. This cost includes air or sea freight charges, foreign handling fees, and Indian import customs duties. This is generally the more expensive portion of shipping, especially for heavier items like boots or large bags.
+                This covers the entire process of getting your order from our international sourcing team to India. It includes the shipping and applicable taxes/charges involved on the international side, followed by customs clearance, import duties, taxes, and other applicable charges when the shipment arrives in India.
+
+                Since these costs vary depending on the shipment, product, weight, dimensions, customs requirements, and current rates, they are charged separately from the product price.
               </p>
             </RevealSection>
 
@@ -227,7 +245,11 @@ export default function HowItWorksPage() {
                 <Package className="w-6 h-6" /> Domestic Shipping (Leg 2)
               </h3>
               <p className="text-neutral-400 font-light text-lg leading-relaxed pl-10 border-l border-[#8A001A]/30 ml-3">
-                Once your item safely clears Indian customs and reaches our warehouse, we repackage it for local transit. The domestic shipping charge simply covers standard courier fees (via Delhivery, BlueDart, etc.) to get the package from our warehouse to your specific pincode.
+                Domestic orders are primarily shipped through India Post, India’s government-operated postal service.
+
+                Domestic shipping charges are calculated based on the shipment from our warehouse to your doorstep and may vary depending on your location, along with the weight and dimensions of your package.
+
+                Once your order has been dispatched, tracking details and shipping updates will be shared through our Instagram Stories, WhatsApp GC, and SMS/email notifications, wherever applicable. Please make sure to check these channels for your tracking information and delivery updates.
               </p>
             </RevealSection>
           </div>
@@ -251,7 +273,7 @@ export default function HowItWorksPage() {
               ))}
             </div>
           </RevealSection>
-          
+
           <RevealSection delay={0.3} className="mt-16 text-center">
             <p className="text-neutral-500 font-light mb-6">Still have questions about how Avira works?</p>
             <a href="mailto:houseofavira@gmail.com" className="inline-block border border-black text-black px-8 py-3 rounded-full uppercase tracking-widest text-xs font-bold hover:bg-black hover:text-white transition-colors">
