@@ -6,7 +6,7 @@ import HowItWorks from '@/components/HowItWorks';
 import WhyHouseOfAvira from '@/components/WhyHouseOfAvira';
 import CampaignAndGrid from '@/components/CampaignAndGrid';
 import PinterestFeed from '@/components/PinterestFeed';
-import TestimonialV2 from '@/components/ui/testimonial-v2';
+
 import LiveProducts from '@/components/LiveProducts';
 
 import ContactForm from '@/components/ContactForm';
@@ -445,8 +445,6 @@ export default function HomeClient() {
         <LiveProducts />
       </div>
 
-      {/* Testimonials Section */}
-      <TestimonialV2 />
 
       {/* Contact Us Section */}
       <ContactForm />
