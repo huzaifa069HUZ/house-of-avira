@@ -7,7 +7,8 @@ const VIDEOS = [
   '/videos/live/AQNgA8ZYAHN06pa6ZAZK4VPSlsQkYkJQKlqfgEvntMGlKXUI-DUcaNtC5MP3BRr8YaMHHU2lG49rHzfHd2KKchHMmI1_QEAKJfkWZ5w.mp4',
   '/videos/live/AQNh57rGPM02voe9NJ577TMdXvOkJI69pS8l82NfEH8Po46UGoM93pz_2U-0yy3a8gIU3t2xpLSe7AhrbVNNi1v0D4wOumrVC8xy0nQ.mp4',
   '/videos/live/AQPtoiJKfqyS8vneKByTWlsIRn2H01Jsszh_a5F9bU1JV5Uaw_cQopTrSKxQ6eiABMwZnWZ8wJc_2xG5GgVFFSVh--kAOfUGrAa0_Ms.mp4',
-  '/videos/live/WhatsApp Video 2026-06-19 at 6.14.17 PM.mp4'
+  '/videos/live/live-vid-1.mp4',
+  '/videos/live/live-vid-2.mp4'
 ];
 
 export default function LiveProducts() {
