@@ -15,8 +15,8 @@ export default function LiveProducts() {
     <section className="py-16 md:py-24 bg-[#FFFFFF] border-y-[3px] border-[#000000] overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center text-center mb-10 md:mb-16">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-perandory font-bold text-[#000000] uppercase tracking-tighter">
-            Live Products From Avira
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-perandory font-bold text-[#000000] uppercase tracking-normal">
+            LIVE VIDEOS FROM AVIRA
           </h2>
           <p className="mt-4 text-sm md:text-base font-bold tracking-[0.2em] uppercase text-neutral-500" style={{ fontFamily: 'var(--font-dm-sans)' }}>
             Real Videos. Real Quality.
