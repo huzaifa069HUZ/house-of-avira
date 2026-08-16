@@ -30,6 +30,9 @@ export default async function sitemap() {
     { path: '/order-info/policies', changeFreq: 'monthly', priority: 0.8 },
     { path: '/order-info/shipping', changeFreq: 'monthly', priority: 0.8 },
     { path: '/order-info/order-process', changeFreq: 'monthly', priority: 0.8 },
+    { path: '/auth/login', changeFreq: 'monthly', priority: 0.7 },
+    { path: '/auth/register', changeFreq: 'monthly', priority: 0.7 },
+    { path: '/wishlist', changeFreq: 'daily', priority: 0.8 },
     // Women
     { path: '/category/women', changeFreq: 'weekly', priority: 0.9 },
     { path: '/category/women/tops', changeFreq: 'weekly', priority: 0.8 },

@@ -3,7 +3,7 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/api/', '/account/', '/checkout/', '/auth/', '/order-success/', '/shipping-success/', '/wishlist/'],
+      disallow: ['/admin/', '/api/', '/account/', '/checkout/', '/order-success/', '/shipping-success/'],
     },
     sitemap: 'https://houseofavira.shop/sitemap.xml',
   }
