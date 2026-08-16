@@ -25,6 +25,11 @@ export default async function sitemap() {
   const routes = [
     { path: '', changeFreq: 'daily', priority: 1.0 },
     { path: '/catalogue', changeFreq: 'daily', priority: 0.9 },
+    { path: '/how-it-works', changeFreq: 'monthly', priority: 0.8 },
+    { path: '/privacy-policy', changeFreq: 'monthly', priority: 0.8 },
+    { path: '/order-info/policies', changeFreq: 'monthly', priority: 0.8 },
+    { path: '/order-info/shipping', changeFreq: 'monthly', priority: 0.8 },
+    { path: '/order-info/order-process', changeFreq: 'monthly', priority: 0.8 },
     // Women
     { path: '/category/women', changeFreq: 'weekly', priority: 0.9 },
     { path: '/category/women/tops', changeFreq: 'weekly', priority: 0.8 },
