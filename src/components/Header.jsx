@@ -488,7 +488,7 @@ export default function Header() {
                       <div key={child.title} className="relative group/sub">
                         <Link 
                           href={child.href}
-                          className="flex justify-between items-center px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000]"
+                          className="flex justify-between items-center px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] capitalize"
                         >
                           {child.title}
                           {child.subChildren && <ChevronRight className="w-3 h-3" />}
@@ -501,7 +501,7 @@ export default function Header() {
                               <Link 
                                 key={subChild.title}
                                 href={subChild.href}
-                                className="block px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000]"
+                                className="block px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] capitalize"
                               >
                                 {subChild.title}
                               </Link>
@@ -575,20 +575,20 @@ export default function Header() {
                         <div key={child.title}>
                           {child.subChildren ? (
                             <details className="group/sub [&_summary::-webkit-details-marker]:hidden">
-                              <summary className="flex justify-between items-center py-3 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 cursor-pointer list-none">
+                              <summary className="flex justify-between items-center py-3 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 cursor-pointer list-none capitalize">
                                 {child.title}
                                 <ChevronRight className="w-3 h-3 transition-transform group-open/sub:rotate-90 text-[#000000]/40" />
                               </summary>
                               <div className="pl-4 pb-2 flex flex-col gap-2 border-l border-[#000000]/10 ml-1">
                                 {child.subChildren.map(subChild => (
-                                    <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/60 block hover:text-[#000000]">
+                                    <Link key={subChild.title} href={subChild.href} onClick={() => setIsMobileMenuOpen(false)} className="py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/60 block hover:text-[#000000] capitalize">
                                     {subChild.title}
                                   </Link>
                                 ))}
                               </div>
                             </details>
                           ) : (
-                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 block hover:text-[#000000]">
+                            <Link href={child.href} onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 block hover:text-[#000000] capitalize">
                               {child.title}
                             </Link>
                           )}
