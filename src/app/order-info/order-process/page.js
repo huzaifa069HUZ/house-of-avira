@@ -284,14 +284,14 @@ export default function OrderProcessPage() {
                 </p>
               </div>
               
-              <div className="w-full md:w-1/3 flex justify-center">
+              <div className="w-full md:w-[45%] flex justify-center">
                  <video 
                    src="/videos/motion-animated-shipping.mp4" 
                    autoPlay 
                    loop 
                    muted 
                    playsInline 
-                   className="w-[300px] max-w-full rounded-2xl"
+                   className="w-[380px] md:w-[420px] max-w-full rounded-2xl shadow-md border border-neutral-100"
                  />
               </div>
             </div>
