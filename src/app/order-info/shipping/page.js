@@ -420,7 +420,6 @@ export default function ShippingPage() {
                     <p className="text-[12px] md:text-[13px] text-[#888888]">{item.sub}</p>
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-[#c62828] mr-2 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
               </motion.div>
             ))}
           </motion.div>
