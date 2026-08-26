@@ -76,36 +76,57 @@ export default function CategoryClient({ slug = [] }) {
         return false;
       })();
 
-      const dbSub = p.subcategory?.toLowerCase().trim() || '';
+      const isShopYourLook = mainCategory.toLowerCase().replace(/[^a-z0-9]/g, '') === 'shopyourlook';
+      const urlMainClean = mainCategory.toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+
+      const allDbSubs = [];
+      const dbPrimaryClean = (p.category || '').toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+      const dbSecondaryClean = (p.secondaryCategory || '').toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+
+      // Include primary subcategories if we are in the primary category's route (or Shop Your Look)
+      if (isShopYourLook || !urlMainClean || dbPrimaryClean === urlMainClean) {
+        if (p.subcategory) allDbSubs.push(p.subcategory.toLowerCase().trim());
+        if (Array.isArray(p.subcategories)) p.subcategories.forEach(s => allDbSubs.push((s || '').toLowerCase().trim()));
+      }
+      
+      // Include secondary subcategories if we are in the secondary category's route (or Shop Your Look)
+      if (isShopYourLook || !urlMainClean || dbSecondaryClean === urlMainClean) {
+        if (Array.isArray(p.secondarySubcategories)) p.secondarySubcategories.forEach(s => allDbSubs.push((s || '').toLowerCase().trim()));
+      }
+
       const urlSub = subCategory.toLowerCase().trim();
 
       const matchSub = !urlSub || (() => {
-        if (dbSub === urlSub) return true;
-        
         // Custom logic for Shop Your Look
-        const urlMainClean = mainCategory.toLowerCase().replace(/[^a-z0-9]/g, '');
-        if (urlMainClean === 'shopyourlook') {
+        if (isShopYourLook) {
             const cleanAesthetic = (p.aesthetic || '').toLowerCase().replace(/[^a-z0-9]/g, '');
             const cleanUrl = urlSub.replace(/[^a-z0-9]/g, '');
             if (cleanAesthetic === cleanUrl) return true;
         }
         
-        // Normalize spaces/dashes/slashes
-        const cleanDb = dbSub.replace(/[^a-z0-9]/g, '');
         const cleanUrl = urlSub.replace(/[^a-z0-9]/g, '');
-        if (cleanDb === cleanUrl) return true;
-        
-        // Custom mappings for common subcategory name mismatches
-        if (urlSub === 'bottoms' && (dbSub === 'pants / jeans' || dbSub === 'pants/jeans' || dbSub === 'pants' || dbSub === 'jeans' || dbSub === 'skirts' || dbSub === 'shorts')) return true;
-        if (urlSub === 'pants-jeans' && (dbSub === 'pants / jeans' || dbSub === 'pants/jeans' || dbSub === 'pants' || dbSub === 'jeans')) return true;
-        if (urlSub === 'beach-wear' && dbSub === 'beach wear') return true;
-        if (urlSub === 'hair' && dbSub === 'hair accessories') return true;
-        if (urlSub === 'nails' && dbSub === 'nails and nail art supplies') return true;
-        if (urlSub === 'mini-bags' && dbSub === 'mini bags') return true;
-        if (urlSub === 'shoulder-bags' && (dbSub === 'shoulder bags' || dbSub === 'sholder bags' || dbSub === 'shoulder Bags' || dbSub === 'sholder Bags')) return true;
-        if (urlSub === 'phone-cases' && dbSub === 'phone cases') return true;
-        
-        return false;
+
+        return allDbSubs.some(dbSub => {
+          if (dbSub === urlSub) return true;
+          
+          // Normalize spaces/dashes/slashes
+          const cleanDb = dbSub.replace(/[^a-z0-9]/g, '');
+          if (cleanDb === cleanUrl) return true;
+          
+          // Custom mappings for common subcategory name mismatches
+          if (urlSub === 'bottoms' && (dbSub === 'pants / jeans' || dbSub === 'pants/jeans' || dbSub === 'pants' || dbSub === 'jeans' || dbSub === 'skirts' || dbSub === 'shorts')) return true;
+          if (urlSub === 'pants-jeans' && (dbSub === 'pants / jeans' || dbSub === 'pants/jeans' || dbSub === 'pants' || dbSub === 'jeans')) return true;
+          if (urlSub === 'beach-wear' && dbSub === 'beach wear') return true;
+          if (urlSub === 'hair' && dbSub === 'hair accessories') return true;
+          if (urlSub === 'nails' && dbSub === 'nails and nail art supplies') return true;
+          if (urlSub === 'mini-bags' && dbSub === 'mini bags') return true;
+          if (urlSub === 'shoulder-bags' && (dbSub === 'shoulder bags' || dbSub === 'sholder bags' || dbSub === 'shoulder bags' || dbSub === 'sholder bags')) return true;
+          if (urlSub === 'phone-cases' && dbSub === 'phone cases') return true;
+          if (urlSub === 'room-decor' && dbSub === 'room decor') return true;
+          if (urlSub === 'keychains' && (dbSub === 'keychains' || dbSub === 'keychains / bag charms')) return true;
+          
+          return false;
+        });
       })();
 
       return matchMain && matchSub;

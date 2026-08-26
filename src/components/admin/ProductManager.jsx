@@ -253,6 +253,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
   const [category, setCategory] = useState(CATEGORY_DATA[0].title);
   const [secondaryCategory, setSecondaryCategory] = useState('');
   const [subcategories, setSubcategories] = useState([]);
+  const [secondarySubcategories, setSecondarySubcategories] = useState([]);
   const [aesthetic, setAesthetic] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [sizeInput, setSizeInput] = useState('');
@@ -291,6 +292,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
       setCategory(initialProduct.category || CATEGORY_DATA[0].title);
       setSecondaryCategory(initialProduct.secondaryCategory || '');
       setSubcategories(initialProduct.subcategories || (initialProduct.subcategory ? [initialProduct.subcategory] : []));
+      setSecondarySubcategories(initialProduct.secondarySubcategories || []);
       const initialAesthetic = initialProduct.aesthetic;
       setAesthetic(Array.isArray(initialAesthetic) ? initialAesthetic : (initialAesthetic ? [initialAesthetic] : []));
       setSizes(initialProduct.sizes || []);
@@ -336,6 +338,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         setCategory(draft.category || CATEGORY_DATA[0].title);
         setSecondaryCategory(draft.secondaryCategory || '');
         setSubcategories(draft.subcategories || []);
+        setSecondarySubcategories(draft.secondarySubcategories || []);
         const initialAesthetic = draft.aesthetic;
         setAesthetic(Array.isArray(initialAesthetic) ? initialAesthetic : (initialAesthetic ? [initialAesthetic] : []));
         setSizes(draft.sizes || []);
@@ -350,7 +353,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
     if (initialProduct) return;
     const timer = setTimeout(() => {
       try {
-        const draft = { name, price, description, sections, badge, category, secondaryCategory, subcategories, aesthetic, sizes, inStock, bestSeller };
+        const draft = { name, price, description, sections, badge, category, secondaryCategory, subcategories, secondarySubcategories, aesthetic, sizes, inStock, bestSeller };
         if (name || price || description) {
           localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
         }
@@ -573,6 +576,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         categories: allCategories, // multi-category support
         secondaryCategory: secondaryCategory || '',
         subcategories,
+        secondarySubcategories,
         subcategory: subcategories[0] || '',
         aesthetic: sections.includes('Shop Your Look') || sections.includes('Shop your aesthetic') ? aesthetic : [],
         badge,
@@ -601,7 +605,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
         // Clear form + draft
         clearDraft();
         setName(''); setPrice(''); setDescription(''); setSections(['New Arrivals']); setBadge('');
-        setCategory(CATEGORY_DATA[0].title); setSecondaryCategory(''); setSubcategories([]); setAesthetic([]);
+        setCategory(CATEGORY_DATA[0].title); setSecondaryCategory(''); setSubcategories([]); setSecondarySubcategories([]); setAesthetic([]);
         setSizes([]); setColors([]); setImageItems([]);
         setInStock(true); setBestSeller(false);
         setSizeChartFile(null); setSizeChartUrl('');
@@ -993,11 +997,33 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
               <div>
                 <label className="block text-sm font-medium text-black mb-1">Also Show In <span className="text-[#86868b] font-normal">(optional)</span></label>
                 <p className="text-[11px] text-[#86868b] mb-1.5">Product will appear in both categories automatically.</p>
-                <select value={secondaryCategory} onChange={e => setSecondaryCategory(e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none">
+                <select value={secondaryCategory} onChange={e => { setSecondaryCategory(e.target.value); setSecondarySubcategories([]); }} className="w-full px-4 py-2.5 bg-white border border-[#d2d2d7] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all text-sm cursor-pointer appearance-none">
                   <option value="">None</option>
                   {CATEGORY_DATA.filter(c => c.title !== category).map(c => <option key={c.title} value={c.title}>{c.title}</option>)}
                 </select>
               </div>
+
+              {/* Secondary Subcategory */}
+              {secondaryCategory && (
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">Secondary Subcategory</label>
+                  <div className="flex flex-col gap-2 mt-2 max-h-48 overflow-y-auto p-3 bg-white border border-[#d2d2d7] rounded-xl">
+                    {(CATEGORY_DATA.find(c => c.title === secondaryCategory)?.children || []).map(sub => (
+                      <label key={sub} className="flex items-center gap-2 text-sm cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={secondarySubcategories.includes(sub)}
+                          onChange={(e) => {
+                            if (e.target.checked) setSecondarySubcategories([...secondarySubcategories, sub]);
+                            else setSecondarySubcategories(secondarySubcategories.filter(s => s !== sub));
+                          }}
+                          className="accent-[#0071e3] w-4 h-4 cursor-pointer"
+                        /> {sub}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Subcategory */}
               <div>
