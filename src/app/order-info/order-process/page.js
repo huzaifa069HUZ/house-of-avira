@@ -364,7 +364,7 @@ export default function OrderProcessPage() {
             {[
               { num: '01', title: 'Your Total', desc: 'We compile the exact shipping, customs, and delivery charges specific to your order and destination.' },
               { num: '02', title: 'The Details', desc: 'A transparent breakdown is sent to your WhatsApp and email — every line item clearly explained.' },
-              { num: '03', title: 'The Timeline', desc: 'Estimated delivery windows are shared, so you know exactly when to expect your curated piece.' },
+              { num: '03', title: 'The Timeline', desc: 'We share an estimated delivery date with you, so you know exactly when your order will arrive.' },
             ].map((step, i) => (
               <RevealSection key={i} delay={i * 0.2} className="mb-12 last:mb-0">
                 <div className={`flex items-start gap-8 md:gap-12 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
