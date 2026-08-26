@@ -116,14 +116,14 @@ export default function Chatbot() {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4 bg-[#FAFAFA]">
+        <div className="flex-1 min-h-0 overflow-y-auto p-5 flex flex-col gap-4 bg-[#FAFAFA] font-dm-sans">
           {messages.map((msg, idx) => (
             <div 
               key={idx} 
               className={`flex flex-col max-w-[85%] ${msg.role === 'user' ? 'self-end items-end' : 'self-start items-start'}`}
             >
               <div 
-                className={`px-4 py-3 rounded-2xl text-[13px] leading-relaxed shadow-sm ${
+                className={`px-4 py-3 rounded-2xl text-[13.5px] leading-relaxed shadow-sm ${
                   msg.role === 'user' 
                     ? 'bg-black text-white rounded-br-sm' 
                     : 'bg-white text-black border border-gray-100 rounded-bl-sm'
@@ -160,7 +160,7 @@ export default function Chatbot() {
         )}
 
         {/* Input Area */}
-        <div className="p-4 bg-white border-t border-gray-100">
+        <div className="p-4 bg-white border-t border-gray-100 font-dm-sans">
           <form 
             onSubmit={(e) => { e.preventDefault(); sendMessage(input); }}
             className="flex items-center relative"
@@ -171,7 +171,7 @@ export default function Chatbot() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything..."
               disabled={isLoading}
-              className="w-full pl-5 pr-12 py-3.5 bg-[#F5F5F7] border-none rounded-full text-[13px] text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all disabled:opacity-50"
+              className="w-full pl-5 pr-12 py-3.5 bg-[#F5F5F7] border-none rounded-full text-[13.5px] text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all disabled:opacity-50"
             />
             <button
               type="submit"
