@@ -122,6 +122,7 @@ export const metadata = {
 };
 
 import ProductOptionsModal from "@/components/ProductOptionsModal";
+import Chatbot from "@/components/Chatbot";
 
 export default function RootLayout({ children }) {
   const jsonLd = {
@@ -239,6 +240,7 @@ export default function RootLayout({ children }) {
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
           <ProductOptionsModal />
+          <Chatbot />
         </AuthProvider>
       </body>
     </html>
