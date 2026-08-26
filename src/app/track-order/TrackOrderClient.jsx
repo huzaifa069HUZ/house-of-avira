@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const STATUS_STEPS = ['Pending', 'Confirmed', 'Shipped', 'Delivered'];
 const STATUS_CONFIG = {
@@ -13,15 +14,22 @@ const STATUS_CONFIG = {
 };
 
 export default function TrackOrderClient() {
-  const [orderId, setOrderId] = useState('');
-  const [contact, setContact] = useState('');
+  const searchParams = useSearchParams();
+  const [orderId, setOrderId] = useState(searchParams?.get('orderId') || '');
+  const [contact, setContact] = useState(searchParams?.get('contact') || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [order, setOrder] = useState(null);
   const [searched, setSearched] = useState(false);
 
+  useEffect(() => {
+    if (searchParams?.get('orderId') && searchParams?.get('contact')) {
+      handleTrack(new Event('submit'));
+    }
+  }, []);
+
   const handleTrack = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setError('');
     setOrder(null);
     setSearched(true);

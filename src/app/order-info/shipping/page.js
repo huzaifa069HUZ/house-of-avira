@@ -130,7 +130,7 @@ export default function ShippingPage() {
                   initial={{ opacity: 0, rotate: -5, y: 10 }}
                   animate={{ opacity: 0.9, rotate: -5, y: 0 }}
                   transition={{ delay: 0.8, duration: 1 }}
-                  className="font-aston-script text-[45px] sm:text-[60px] md:text-[80px] lg:text-[95px] text-[#8A001A] absolute -bottom-10 md:-bottom-16 left-12 md:left-[120px] italic whitespace-nowrap drop-shadow-sm"
+                  className="font-aston-script text-[45px] sm:text-[60px] md:text-[70px] lg:text-[85px] text-[#8A001A] absolute -bottom-10 md:-bottom-12 left-8 md:left-[40px] lg:left-[60px] italic whitespace-nowrap drop-shadow-sm z-10"
                 >
                   Across the Globe
                 </motion.span>
@@ -170,38 +170,34 @@ export default function ShippingPage() {
                 </div>
 
                 {/* Form */}
-                <div className="space-y-4">
+                <form action="/track-order" method="GET" className="space-y-4">
                   <div className="relative">
                     <input 
                       type="text" 
-                      placeholder="Tracking Number" 
+                      name="orderId"
+                      required
+                      placeholder="Order ID (e.g. #HOA001)" 
                       className="w-full px-5 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A1C20]/20 focus:border-[#5A1C20] text-sm bg-white transition-all shadow-sm"
                     />
                   </div>
                   <div className="relative">
                     <input 
                       type="text" 
-                      placeholder="Tracking Number" 
-                      className="w-full px-5 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A1C20]/20 focus:border-[#5A1C20] text-sm bg-white transition-all shadow-sm"
-                    />
-                  </div>
-                  <div className="relative">
-                    <input 
-                      type="text" 
-                      placeholder="Tracking Number" 
+                      name="contact"
+                      required
+                      placeholder="Phone No. or Email" 
                       className="w-full px-5 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A1C20]/20 focus:border-[#5A1C20] text-sm bg-white transition-all shadow-sm"
                     />
                   </div>
 
                   <div className="flex items-center gap-1.5 text-[11px] text-gray-500 pt-2 pb-4">
-                    <span>Available up to 10 tracking number.</span>
-                    <button className="text-[#5A1C20] font-bold hover:underline transition-all">Add New Input</button>
+                    <span>Enter details used during checkout.</span>
                   </div>
 
-                  <Link href="/track-order" className="w-full flex items-center justify-center bg-[#5A1C20] text-white py-4 rounded-xl font-bold tracking-wide shadow-[0_8px_20px_rgba(90,28,32,0.2)] hover:bg-[#4a171a] hover:shadow-[0_10px_25px_rgba(90,28,32,0.3)] transition-all transform hover:-translate-y-0.5">
+                  <button type="submit" className="w-full flex items-center justify-center bg-[#5A1C20] text-white py-4 rounded-xl font-bold tracking-wide shadow-[0_8px_20px_rgba(90,28,32,0.2)] hover:bg-[#4a171a] hover:shadow-[0_10px_25px_rgba(90,28,32,0.3)] transition-all transform hover:-translate-y-0.5">
                     Track Order
-                  </Link>
-                </div>
+                  </button>
+                </form>
               </div>
             </motion.div>
 

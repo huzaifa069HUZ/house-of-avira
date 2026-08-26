@@ -11,6 +11,12 @@ export const metadata = {
   },
 };
 
+import { Suspense } from 'react';
+
 export default function TrackOrderPage() {
-  return <TrackOrderClient />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#F5F0E8]" />}>
+      <TrackOrderClient />
+    </Suspense>
+  );
 }
