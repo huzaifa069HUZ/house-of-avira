@@ -16,7 +16,7 @@ const defaultDesktopSlides = [
   },
   {
     id: 2,
-    desktopImage: '/banner.png',
+    desktopImage: '/images/hero-2-new.png',
     title: '',
     subtitle: '',
     link: '/category/women',
@@ -24,7 +24,15 @@ const defaultDesktopSlides = [
   },
   {
     id: 3,
-    desktopImage: '/banner2.png',
+    desktopImage: '/images/hero-3-new.png',
+    title: '',
+    subtitle: '',
+    link: '/catalogue',
+    textPosition: 'right'
+  },
+  {
+    id: 4,
+    desktopImage: '/images/hero-4-new.png',
     title: '',
     subtitle: '',
     link: '/catalogue',
