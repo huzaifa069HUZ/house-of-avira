@@ -161,57 +161,22 @@ export default function OrderProcessPage() {
           </motion.p>
         </div>
 
-        {/* Right Side: Editorial Image/Video Carousel */}
-        <div className="flex-1 w-full h-[50vh] md:h-[75vh] relative rounded-[2rem] overflow-hidden shadow-2xl border border-neutral-100 group">
-           <AnimatePresence mode="wait">
-             <motion.div 
-               key={activeVideoIndex}
-               className="absolute inset-0"
-               initial={{ opacity: 0, scale: 1.05 }}
-               animate={{ opacity: 1, scale: 1 }}
-               exit={{ opacity: 0, scale: 0.95 }}
-               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-             >
-               <video
-                 src={heroVideos[activeVideoIndex]}
-                 autoPlay
-                 loop
-                 muted
-                 playsInline
-                 className="object-cover w-full h-full"
-               />
-               {/* Subtle vignette/overlay */}
-               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-             </motion.div>
-           </AnimatePresence>
-
-           {/* Carousel Controls */}
-           <div className="absolute inset-x-0 bottom-6 flex justify-center items-center gap-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-             <button 
-               onClick={() => setActiveVideoIndex((prev) => (prev - 1 + heroVideos.length) % heroVideos.length)}
-               className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:bg-white/40 transition-colors"
-               aria-label="Previous video"
-             >
-               <ChevronLeft className="w-5 h-5" />
-             </button>
-             <div className="flex gap-2">
-               {heroVideos.map((_, idx) => (
-                 <button 
-                   key={idx} 
-                   onClick={() => setActiveVideoIndex(idx)}
-                   className={`w-2 h-2 rounded-full transition-all duration-300 ${activeVideoIndex === idx ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80'}`}
-                   aria-label={`Go to video ${idx + 1}`}
-                 />
-               ))}
-             </div>
-             <button 
-               onClick={() => setActiveVideoIndex((prev) => (prev + 1) % heroVideos.length)}
-               className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:bg-white/40 transition-colors"
-               aria-label="Next video"
-             >
-               <ChevronRight className="w-5 h-5" />
-             </button>
+        {/* Right Side: Editorial Image */}
+        <div className="flex-1 w-full h-[50vh] md:h-[75vh] relative rounded-[2rem] overflow-hidden shadow-2xl border border-neutral-100 group bg-neutral-100">
+           <Image
+             src="/images/order process new.png"
+             alt="Order Process Live Tracking"
+             fill
+             className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+             priority
+           />
+           {/* Image Overlay Tag */}
+           <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm border border-[#111] px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[#111] flex items-center gap-3 shadow-lg rounded-sm">
+             <span className="w-2.5 h-2.5 rounded-full bg-[#8A001A] animate-pulse" />
+             LIVE TRACKING
            </div>
+           {/* Subtle vignette/overlay */}
+           <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
         </div>
       </section>
 

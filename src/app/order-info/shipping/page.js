@@ -89,86 +89,123 @@ export default function ShippingPage() {
       />
 
       {/* ═══════ HERO — MINIMALIST EDITORIAL ═══════ */}
-      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center overflow-hidden bg-white pt-8 md:pt-12 pb-16">
-        <div className="max-w-7xl mx-auto px-4 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20">
-          
-          {/* Typography & CTA Column (Left) */}
-          <div className="w-full md:w-5/12 flex flex-col justify-center relative z-10">
-            {/* Graphic Element */}
-            <motion.div 
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-12 h-[2px] bg-[#8A001A] mb-8 origin-left" 
+      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center p-4 pt-24 md:pt-28">
+        <div className="relative w-full h-full min-h-[85vh] md:min-h-[90vh] rounded-[32px] overflow-hidden bg-white shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/shipping_hero_bg.jpg"
+              alt="Shipping Port"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
             />
-            
-            <div className="relative mb-24 md:mb-32">
-              {/* Main Heading */}
-              <motion.h1 
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className="font-perandory text-[64px] md:text-8xl lg:text-[110px] text-[#111111] uppercase leading-[0.85] tracking-tighter max-w-[80%] md:max-w-full break-words relative z-10"
-              >
-                SHIPPING<br/>
-                &amp; DELIVERY
-              </motion.h1>
-              
-              {/* Subtitle (Overlapping Cursive) */}
-              <motion.span 
-                initial={{ opacity: 0, rotate: -5, y: 10 }}
-                animate={{ opacity: 0.9, rotate: -5, y: 0 }}
-                transition={{ delay: 0.8, duration: 1 }}
-                className="font-aston-script text-[45px] sm:text-[55px] md:text-[90px] text-[#8A001A] absolute -bottom-10 md:-bottom-24 right-0 md:-right-[10%] italic z-10 pointer-events-none whitespace-nowrap"
-              >
-                Across the Globe
-              </motion.span>
-            </div>
-            
-            {/* Supporting Text */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="max-w-sm"
-            >
-              <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-medium">
-                Experience seamless delivery tailored for you. Track your orders, understand shipping timelines, and enjoy a hassle-free journey from our store to your door.
-              </p>
-            </motion.div>
+            {/* Gradient overlay for readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/60 to-black/20" />
           </div>
 
-          {/* Image Container Column (Right) */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:w-6/12 relative mt-8 md:mt-0 z-0"
-          >
-            {/* Asymmetrical Background Accent */}
-            <div className="absolute top-4 md:top-16 -right-4 md:-right-12 w-full h-[90%] md:h-[110%] bg-[#F8F9FA] z-0" />
+          <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 pt-12 md:pt-0">
             
-            {/* Main Image Wrapper */}
-            <div className="relative z-10 border border-[#111] p-2 bg-white transform md:-translate-y-8">
-              <div className="aspect-[4/5] md:aspect-[3/4] w-full relative overflow-hidden bg-neutral-100">
-                <Image 
-                  src="/images/order process new.png" 
-                  alt="Order Process" 
-                  fill 
-                  className="w-full h-full object-cover transition-all duration-700" 
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                />
+            {/* Left side text */}
+            <div className="w-full md:w-[55%] flex flex-col items-start pb-10 md:pb-0">
+              <motion.div 
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="w-12 h-1 bg-[#8A001A] mb-6 md:mb-10 origin-left" 
+              />
+              
+              <div className="relative w-full">
+                <motion.h1 
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                  className="font-perandory text-[55px] sm:text-[75px] md:text-[90px] lg:text-[110px] text-[#111111] uppercase leading-[0.85] tracking-tighter w-full"
+                >
+                  SHIPPING<br/>
+                  &amp; DELIVERY
+                </motion.h1>
+                <motion.span 
+                  initial={{ opacity: 0, rotate: -5, y: 10 }}
+                  animate={{ opacity: 0.9, rotate: -5, y: 0 }}
+                  transition={{ delay: 0.8, duration: 1 }}
+                  className="font-aston-script text-[45px] sm:text-[60px] md:text-[80px] lg:text-[95px] text-[#8A001A] absolute -bottom-10 md:-bottom-16 left-12 md:left-[120px] italic whitespace-nowrap drop-shadow-sm"
+                >
+                  Across the Globe
+                </motion.span>
+              </div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+                className="mt-20 md:mt-28 max-w-[420px]"
+              >
+                <p className="text-neutral-800 text-sm md:text-[15px] leading-relaxed font-medium bg-white/30 backdrop-blur-sm p-3 rounded-lg md:bg-transparent md:backdrop-blur-none md:p-0">
+                  Experience seamless delivery tailored for you. Track your orders, understand shipping timelines, and enjoy a hassle-free journey from our store to your door.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Right side tracking card */}
+            <motion.div 
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full md:w-[440px] shrink-0 pb-12 md:pb-0"
+            >
+              <div className="bg-white/95 backdrop-blur-xl rounded-[28px] p-6 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-white">
                 
-                {/* Image Overlay Tag */}
-                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm border border-[#111] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#111] flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#8A001A] animate-pulse" />
-                  LIVE TRACKING
+                {/* Tabs */}
+                <div className="flex bg-[#F5F5F7] rounded-full p-1.5 mb-8 shadow-inner border border-gray-100/50">
+                  <button className="flex-1 bg-[#5A1C20] text-white py-2.5 px-4 rounded-full text-[13px] font-bold tracking-wide flex items-center justify-center gap-2 shadow-md">
+                    <Package className="w-4 h-4" />
+                    Tracking Package
+                  </button>
+                  <button className="flex-1 text-gray-500 hover:text-gray-900 py-2.5 px-4 rounded-full text-[13px] font-bold tracking-wide flex items-center justify-center gap-2 transition-colors">
+                    <Truck className="w-4 h-4" />
+                    Shipping Rates
+                  </button>
+                </div>
+
+                {/* Form */}
+                <div className="space-y-4">
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      placeholder="Tracking Number" 
+                      className="w-full px-5 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A1C20]/20 focus:border-[#5A1C20] text-sm bg-white transition-all shadow-sm"
+                    />
+                  </div>
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      placeholder="Tracking Number" 
+                      className="w-full px-5 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A1C20]/20 focus:border-[#5A1C20] text-sm bg-white transition-all shadow-sm"
+                    />
+                  </div>
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      placeholder="Tracking Number" 
+                      className="w-full px-5 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A1C20]/20 focus:border-[#5A1C20] text-sm bg-white transition-all shadow-sm"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-[11px] text-gray-500 pt-2 pb-4">
+                    <span>Available up to 10 tracking number.</span>
+                    <button className="text-[#5A1C20] font-bold hover:underline transition-all">Add New Input</button>
+                  </div>
+
+                  <Link href="/track-order" className="w-full flex items-center justify-center bg-[#5A1C20] text-white py-4 rounded-xl font-bold tracking-wide shadow-[0_8px_20px_rgba(90,28,32,0.2)] hover:bg-[#4a171a] hover:shadow-[0_10px_25px_rgba(90,28,32,0.3)] transition-all transform hover:-translate-y-0.5">
+                    Track Order
+                  </Link>
                 </div>
               </div>
-            </div>
-          </motion.div>
-          
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
