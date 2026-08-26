@@ -285,7 +285,14 @@ export default function OrderProcessPage() {
               </div>
               
               <div className="w-full md:w-1/3 flex justify-center">
-                 <Image src="/images/shipping-animation.svg" width={300} height={300} alt="Shipping Process Animation" priority />
+                 <video 
+                   src="/videos/motion-animated-shipping.mp4" 
+                   autoPlay 
+                   loop 
+                   muted 
+                   playsInline 
+                   className="w-[300px] max-w-full rounded-2xl"
+                 />
               </div>
             </div>
           </RevealSection>
