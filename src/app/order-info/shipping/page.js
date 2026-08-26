@@ -94,15 +94,13 @@ export default function ShippingPage() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/shipping_hero_bg.jpg"
+              src="/images/order-hero-bg.png"
               alt="Shipping Port"
               fill
               className="object-cover"
               sizes="100vw"
               priority
             />
-            {/* Gradient overlay for readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/60 to-black/20" />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 w-full flex flex-col md:flex-row items-center justify-between gap-12 pt-12 md:pt-0">
