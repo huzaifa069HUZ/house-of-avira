@@ -103,8 +103,8 @@ export default function Chatbot() {
               <MessageSquareText className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h3 className="font-semibold text-sm tracking-wide">Avira Assistant</h3>
-              <p className="text-[10px] text-white/70 uppercase tracking-widest">AI Support</p>
+              <h3 className="font-perandory text-lg tracking-wide leading-none pt-1">Avira Assistant</h3>
+              <p className="text-[9px] text-white/70 uppercase tracking-widest mt-0.5">AI Support</p>
             </div>
           </div>
           <button 
