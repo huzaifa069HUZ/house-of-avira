@@ -148,7 +148,7 @@ export default function OrderProcessPage() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="font-aston-script text-[#8A001A] text-4xl md:text-5xl mb-8 -mt-2 ml-4 md:ml-12"
           >
-            From Screen to Doorstep
+            from your screen to your doorstep
           </motion.p>
 
           <motion.p
