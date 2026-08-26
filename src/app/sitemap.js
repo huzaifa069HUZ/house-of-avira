@@ -71,6 +71,7 @@ export default async function sitemap() {
     { path: '/category/accessories/jewellery/earings', changeFreq: 'weekly', priority: 0.7 },
     { path: '/category/accessories/nails', changeFreq: 'weekly', priority: 0.7 },
     { path: '/category/accessories/keychains', changeFreq: 'weekly', priority: 0.7 },
+    { path: '/category/accessories/room-decor', changeFreq: 'weekly', priority: 0.7 },
     // Collectibles
     { path: '/category/collectibles', changeFreq: 'weekly', priority: 0.8 },
     { path: '/category/collectibles/sanrio', changeFreq: 'weekly', priority: 0.7 },

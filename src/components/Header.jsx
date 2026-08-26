@@ -82,6 +82,7 @@ const menuData = [
       },
       { title: "nails and nail art supplies", href: "/category/accessories/nails" },
       { title: "keychains", href: "/category/accessories/keychains" },
+      { title: "room decor", href: "/category/accessories/room-decor" },
     ]
   },
   {
