@@ -89,7 +89,7 @@ export default function ShippingPage() {
       />
 
       {/* ═══════ HERO — MINIMALIST EDITORIAL ═══════ */}
-      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center p-4 pt-24 md:pt-28">
+      <section className="relative min-h-[90vh] md:min-h-[100vh] flex items-center justify-center p-4 pt-16 md:pt-20">
         <div className="relative w-full h-full min-h-[85vh] md:min-h-[90vh] rounded-[32px] overflow-hidden bg-white shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
@@ -119,7 +119,7 @@ export default function ShippingPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-perandory text-[55px] sm:text-[75px] md:text-[90px] lg:text-[110px] text-[#111111] uppercase leading-[0.85] tracking-tighter w-full"
+                  className="font-perandory text-[55px] sm:text-[75px] md:text-[85px] lg:text-[100px] text-[#111111] uppercase leading-[0.85] tracking-tighter w-full"
                 >
                   SHIPPING<br/>
                   &amp; DELIVERY
@@ -128,7 +128,7 @@ export default function ShippingPage() {
                   initial={{ opacity: 0, rotate: -5, y: 10 }}
                   animate={{ opacity: 0.9, rotate: -5, y: 0 }}
                   transition={{ delay: 0.8, duration: 1 }}
-                  className="font-aston-script text-[45px] sm:text-[60px] md:text-[70px] lg:text-[85px] text-[#8A001A] absolute -bottom-10 md:-bottom-12 left-8 md:left-[40px] lg:left-[60px] italic whitespace-nowrap drop-shadow-sm z-10"
+                  className="font-aston-script text-[45px] sm:text-[55px] md:text-[60px] lg:text-[75px] text-[#8A001A] absolute -bottom-10 md:-bottom-12 left-2 md:left-4 lg:left-8 italic whitespace-nowrap drop-shadow-sm z-10"
                 >
                   Across the Globe
                 </motion.span>
@@ -138,9 +138,9 @@ export default function ShippingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="mt-20 md:mt-28 max-w-[420px]"
+                className="mt-20 md:mt-24 max-w-[420px]"
               >
-                <p className="text-neutral-800 text-sm md:text-[15px] leading-relaxed font-medium bg-white/30 backdrop-blur-sm p-3 rounded-lg md:bg-transparent md:backdrop-blur-none md:p-0">
+                <p className="text-white text-sm md:text-[15px] leading-relaxed font-medium bg-black/40 backdrop-blur-sm p-3 rounded-lg drop-shadow-md border border-white/10">
                   Experience seamless delivery tailored for you. Track your orders, understand shipping timelines, and enjoy a hassle-free journey from our store to your door.
                 </p>
               </motion.div>
