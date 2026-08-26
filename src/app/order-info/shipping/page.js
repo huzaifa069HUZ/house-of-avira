@@ -94,7 +94,7 @@ export default function ShippingPage() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/order-hero-bg.png"
+              src="/images/order-hero-bg-new.png"
               alt="Shipping Port"
               fill
               className="object-cover"
@@ -155,16 +155,12 @@ export default function ShippingPage() {
             >
               <div className="bg-white/95 backdrop-blur-xl rounded-[28px] p-6 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-white">
                 
-                {/* Tabs */}
+                {/* Header */}
                 <div className="flex bg-[#F5F5F7] rounded-full p-1.5 mb-8 shadow-inner border border-gray-100/50">
-                  <button className="flex-1 bg-[#5A1C20] text-white py-2.5 px-4 rounded-full text-[13px] font-bold tracking-wide flex items-center justify-center gap-2 shadow-md">
+                  <div className="w-full bg-[#5A1C20] text-white py-2.5 px-4 rounded-full text-[13px] font-bold tracking-wide flex items-center justify-center gap-2 shadow-md">
                     <Package className="w-4 h-4" />
                     Tracking Package
-                  </button>
-                  <button className="flex-1 text-gray-500 hover:text-gray-900 py-2.5 px-4 rounded-full text-[13px] font-bold tracking-wide flex items-center justify-center gap-2 transition-colors">
-                    <Truck className="w-4 h-4" />
-                    Shipping Rates
-                  </button>
+                  </div>
                 </div>
 
                 {/* Form */}
