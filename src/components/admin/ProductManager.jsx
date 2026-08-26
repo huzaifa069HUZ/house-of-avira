@@ -34,11 +34,11 @@ const CATEGORY_DATA = [
   },
   {
     title: "Accessories",
-    children: ["phone cases", "hair accessories", "belts", "jewellery", "nails and nail art supplies"]
+    children: ["phone cases", "hair accessories", "belts", "jewellery", "nails and nail art supplies", "keychains / bag charms", "room decor"]
   },
   {
     title: "Collectibles",
-    children: ["Sanrio", "Nagano Characters", "Miffy", "Other Characters", "Blind Boxes"]
+    children: ["Sanrio", "Nagano Characters", "Miffy", "Other Characters"]
   },
   {
     title: "Pets",

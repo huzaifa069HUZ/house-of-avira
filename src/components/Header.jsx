@@ -81,7 +81,7 @@ const menuData = [
         ]
       },
       { title: "nails and nail art supplies", href: "/category/accessories/nails" },
-      { title: "keychains", href: "/category/accessories/keychains" },
+      { title: "keychains / bag charms", href: "/category/accessories/keychains" },
       { title: "room decor", href: "/category/accessories/room-decor" },
     ]
   },
@@ -93,7 +93,6 @@ const menuData = [
       { title: "Nagano Characters", href: "/category/collectibles/nagano" },
       { title: "Miffy", href: "/category/collectibles/miffy" },
       { title: "Other Characters", href: "/category/collectibles/other" },
-      { title: "Blind Boxes", href: "/category/collectibles/blind-boxes" },
     ]
   },
   {

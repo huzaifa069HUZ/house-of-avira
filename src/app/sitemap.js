@@ -78,7 +78,6 @@ export default async function sitemap() {
     { path: '/category/collectibles/nagano', changeFreq: 'weekly', priority: 0.7 },
     { path: '/category/collectibles/miffy', changeFreq: 'weekly', priority: 0.7 },
     { path: '/category/collectibles/other', changeFreq: 'weekly', priority: 0.7 },
-    { path: '/category/collectibles/blind-boxes', changeFreq: 'weekly', priority: 0.7 },
     // Pets
     { path: '/category/pets', changeFreq: 'weekly', priority: 0.7 },
     { path: '/category/pets/cats', changeFreq: 'weekly', priority: 0.6 },
