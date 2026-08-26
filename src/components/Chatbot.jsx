@@ -89,7 +89,7 @@ export default function Chatbot() {
         className={`fixed bottom-6 right-6 z-[100] w-14 h-14 bg-black text-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center transition-transform duration-300 hover:scale-105 active:scale-95 ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
         aria-label="Open AI Assistant"
       >
-        <Sparkles className="w-6 h-6" />
+        <Sparkles className="w-6 h-6 text-[#8A001A]" />
       </button>
 
       {/* Chat Window */}
