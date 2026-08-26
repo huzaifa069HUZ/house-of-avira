@@ -170,11 +170,6 @@ export default function OrderProcessPage() {
              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
              priority
            />
-           {/* Image Overlay Tag */}
-           <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm border border-[#111] px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[#111] flex items-center gap-3 shadow-lg rounded-sm">
-             <span className="w-2.5 h-2.5 rounded-full bg-[#8A001A] animate-pulse" />
-             LIVE TRACKING
-           </div>
            {/* Subtle vignette/overlay */}
            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
         </div>
