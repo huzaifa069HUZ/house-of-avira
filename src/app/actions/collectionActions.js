@@ -8,7 +8,7 @@ export async function fetchCollections() {
   const snapshot = await adminDb.collection('collections').get();
   const docs = snapshot.docs.map(doc => {
     const data = doc.data();
-    return {
+    return JSON.parse(JSON.stringify({
       id: doc.id,
       title: data.title || '',
       slug: data.slug || '',
@@ -16,7 +16,7 @@ export async function fetchCollections() {
       productIds: data.productIds || [],
       createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
       updatedAt: data.updatedAt?.toDate?.()?.toISOString() || null
-    };
+    }));
   });
   return docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 }
@@ -27,7 +27,7 @@ export async function fetchCollectionBySlug(slug) {
   if (snapshot.empty) return null;
   const doc = snapshot.docs[0];
   const data = doc.data();
-  return {
+  return JSON.parse(JSON.stringify({
     id: doc.id,
     title: data.title || '',
     slug: data.slug || '',
@@ -35,7 +35,7 @@ export async function fetchCollectionBySlug(slug) {
     productIds: data.productIds || [],
     createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
     updatedAt: data.updatedAt?.toDate?.()?.toISOString() || null
-  };
+  }));
 }
 
 export async function fetchProductsByIds(productIds) {
@@ -62,10 +62,10 @@ export async function fetchProductsByIds(productIds) {
         }
       }
       
-      return { 
+      return JSON.parse(JSON.stringify({ 
         id: doc.id, 
         ...safeData
-      };
+      }));
     });
 }
 
