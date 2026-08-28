@@ -1,13 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import ProductCard from '@/components/ProductCard';
 import { Loader2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { fetchCollectionBySlug, fetchProductsByIds } from '@/app/actions/collectionActions';
 
 export default function CollectionClient({ slug }) {
   const [collectionData, setCollectionData] = useState(null);
@@ -18,28 +17,20 @@ export default function CollectionClient({ slug }) {
   useEffect(() => {
     async function fetchCollection() {
       try {
-        // Fetch collection by slug
-        const q = query(collection(db, 'collections'), where('slug', '==', slug));
-        const querySnapshot = await getDocs(q);
+        // Fetch collection securely via Server Action
+        const colData = await fetchCollectionBySlug(slug);
         
-        if (querySnapshot.empty) {
+        if (!colData) {
           setNotFoundState(true);
           setLoading(false);
           return;
         }
 
-        const colData = querySnapshot.docs[0].data();
         setCollectionData(colData);
 
-        // Fetch products by IDs
+        // Fetch products by IDs via Server Action
         if (colData.productIds && colData.productIds.length > 0) {
-          const productPromises = colData.productIds.map(id => getDoc(doc(db, 'products', id)));
-          const productDocs = await Promise.all(productPromises);
-          
-          const fetchedProducts = productDocs
-            .filter(doc => doc.exists())
-            .map(doc => ({ id: doc.id, ...doc.data() }));
-            
+          const fetchedProducts = await fetchProductsByIds(colData.productIds);
           setProducts(fetchedProducts);
         }
       } catch (error) {

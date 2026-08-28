@@ -1,16 +1,13 @@
 import CollectionClient from './CollectionClient';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { fetchCollectionBySlug } from '@/app/actions/collectionActions';
 
 export async function generateMetadata({ params }) {
   const { slug } = params;
 
   try {
-    const q = query(collection(db, 'collections'), where('slug', '==', slug));
-    const querySnapshot = await getDocs(q);
+    const colData = await fetchCollectionBySlug(slug);
     
-    if (!querySnapshot.empty) {
-      const colData = querySnapshot.docs[0].data();
+    if (colData) {
       return {
         title: `${colData.title} | House of Avira`,
         description: colData.description || `Shop the exclusive ${colData.title} collection at House of Avira.`,
