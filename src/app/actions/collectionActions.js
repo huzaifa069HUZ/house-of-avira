@@ -6,7 +6,18 @@ import { revalidatePath } from 'next/cache';
 export async function fetchCollections() {
   if (!adminDb) throw new Error("Admin DB not initialized");
   const snapshot = await adminDb.collection('collections').get();
-  const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate()?.toISOString() || null }));
+  const docs = snapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      title: data.title || '',
+      slug: data.slug || '',
+      description: data.description || '',
+      productIds: data.productIds || [],
+      createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
+      updatedAt: data.updatedAt?.toDate?.()?.toISOString() || null
+    };
+  });
   return docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 }
 
@@ -15,7 +26,16 @@ export async function fetchCollectionBySlug(slug) {
   const snapshot = await adminDb.collection('collections').where('slug', '==', slug).limit(1).get();
   if (snapshot.empty) return null;
   const doc = snapshot.docs[0];
-  return { id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate()?.toISOString() || null };
+  const data = doc.data();
+  return {
+    id: doc.id,
+    title: data.title || '',
+    slug: data.slug || '',
+    description: data.description || '',
+    productIds: data.productIds || [],
+    createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
+    updatedAt: data.updatedAt?.toDate?.()?.toISOString() || null
+  };
 }
 
 export async function fetchProductsByIds(productIds) {
@@ -31,10 +51,20 @@ export async function fetchProductsByIds(productIds) {
     .filter(doc => doc.exists)
     .map(doc => {
       const data = doc.data();
+      
+      // Convert all Timestamp objects to ISO strings to prevent Next.js Server Action serialization errors
+      const safeData = {};
+      for (const key in data) {
+        if (data[key] && typeof data[key].toDate === 'function') {
+          safeData[key] = data[key].toDate().toISOString();
+        } else {
+          safeData[key] = data[key];
+        }
+      }
+      
       return { 
         id: doc.id, 
-        ...data, 
-        createdAt: data.createdAt?.toDate?.()?.toISOString() || null 
+        ...safeData
       };
     });
 }
