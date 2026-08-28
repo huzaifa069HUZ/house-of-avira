@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { Loader2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { fetchCollectionBySlug, fetchProductsByIds } from '@/app/actions/collectionActions';
+import { db } from '@/lib/firebase';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 export default function CollectionClient({ slug }) {
   const [collectionData, setCollectionData] = useState(null);
@@ -15,20 +16,39 @@ export default function CollectionClient({ slug }) {
   useEffect(() => {
     async function fetchCollection() {
       try {
-        // Fetch collection securely via Server Action
-        const colData = await fetchCollectionBySlug(slug);
-        
-        if (!colData) {
+        // Fetch collection by slug using Client SDK
+        const colQuery = query(
+          collection(db, 'collections'),
+          where('slug', '==', slug)
+        );
+        const colSnapshot = await getDocs(colQuery);
+
+        if (colSnapshot.empty) {
           setNotFoundState(true);
           setLoading(false);
           return;
         }
 
+        const colDoc = colSnapshot.docs[0];
+        const colData = { id: colDoc.id, ...colDoc.data() };
         setCollectionData(colData);
 
-        // Fetch products by IDs via Server Action
+        // Fetch products by their IDs
         if (colData.productIds && colData.productIds.length > 0) {
-          const fetchedProducts = await fetchProductsByIds(colData.productIds);
+          const productPromises = colData.productIds.map(async (productId) => {
+            try {
+              const productRef = doc(db, 'products', productId);
+              const productSnap = await getDoc(productRef);
+              if (productSnap.exists()) {
+                return { id: productSnap.id, ...productSnap.data() };
+              }
+              return null;
+            } catch {
+              return null;
+            }
+          });
+
+          const fetchedProducts = (await Promise.all(productPromises)).filter(Boolean);
           setProducts(fetchedProducts);
         }
       } catch (error) {

@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { Plus, Trash2, Edit2, Loader2, Save, X, Search, CheckSquare, Square, Link as LinkIcon, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
-import { fetchCollections, createCollection, updateCollection, deleteCollection } from '@/app/actions/collectionActions';
 
 export default function CollectionManager() {
   const [collections, setCollections] = useState([]);
@@ -28,8 +27,14 @@ export default function CollectionManager() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      // Fetch collections securely via Server Action
-      const cols = await fetchCollections();
+      // Fetch collections using Client SDK
+      const colSnap = await getDocs(collection(db, 'collections'));
+      const cols = colSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      cols.sort((a, b) => {
+        const aTime = a.createdAt?.seconds || 0;
+        const bTime = b.createdAt?.seconds || 0;
+        return bTime - aTime;
+      });
       setCollections(cols);
     } catch (error) {
       console.error("Error fetching collections:", error);
@@ -70,9 +75,16 @@ export default function CollectionManager() {
       };
 
       if (isEditing && currentId) {
-        await updateCollection(currentId, collectionData);
+        await updateDoc(doc(db, 'collections', currentId), {
+          ...collectionData,
+          updatedAt: Timestamp.now()
+        });
       } else {
-        await createCollection(collectionData);
+        await addDoc(collection(db, 'collections'), {
+          ...collectionData,
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now()
+        });
       }
 
       // Reset and refetch
@@ -85,7 +97,7 @@ export default function CollectionManager() {
       await fetchData();
     } catch (error) {
       console.error("Error saving collection:", error);
-      alert("Failed to save collection. Check server logs.");
+      alert("Failed to save collection. Check console for details.");
     } finally {
       setSaving(false);
     }
@@ -102,7 +114,7 @@ export default function CollectionManager() {
   const handleDelete = async (id, title) => {
     if (window.confirm(`Are you sure you want to delete collection "${title}"?`)) {
       try {
-        await deleteCollection(id);
+        await deleteDoc(doc(db, 'collections', id));
         setCollections(prev => prev.filter(c => c.id !== id));
       } catch (error) {
         console.error("Error deleting collection:", error);
