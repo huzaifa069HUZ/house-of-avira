@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { Loader2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { fetchCollectionBySlug, fetchProductsByIds } from '@/app/actions/collectionActions';
 
 export default function CollectionClient({ slug }) {
@@ -50,19 +48,15 @@ export default function CollectionClient({ slug }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
-        <Header />
         <main className="flex-grow flex items-center justify-center">
           <Loader2 className="w-8 h-8 animate-spin text-[#8A001A]" />
         </main>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
-      <Header />
-      
       <main className="flex-grow pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -92,8 +86,6 @@ export default function CollectionClient({ slug }) {
 
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
