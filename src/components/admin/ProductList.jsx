@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, orderBy, query, deleteDoc, doc } from 'firebase/firestore';
-import { Edit2, PackageX, Loader2, Trash2 } from 'lucide-react';
+import { Edit2, PackageX, Loader2, Trash2, Search } from 'lucide-react';
 import { deleteImageFromCloudinary } from '@/app/actions/uploadActions';
 
 export default function ProductList({ onEdit }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     async function fetchProducts() {
@@ -45,10 +46,15 @@ export default function ProductList({ onEdit }) {
       } catch (error) {
         console.error("Error deleting product:", error);
         alert("Failed to delete product.");
-        // optionally refetch products here to restore state on failure
       }
     }
   };
+
+  const filteredProducts = products.filter(product => 
+    product.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    product.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.section?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (loading) {
     return (
@@ -71,20 +77,40 @@ export default function ProductList({ onEdit }) {
 
   return (
     <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] overflow-hidden border border-[#d2d2d7]/50">
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-[#F5F5F7] text-[#86868b] text-[11px] uppercase tracking-wider font-semibold border-b border-[#d2d2d7]">
-            <tr>
-              <th className="px-6 py-4 rounded-tl-2xl">Product</th>
-              <th className="px-6 py-4">Price</th>
-              <th className="px-6 py-4">Category</th>
-              <th className="px-6 py-4">Section</th>
-              <th className="px-6 py-4">Status</th>
-              <th className="px-6 py-4 text-right rounded-tr-2xl">Action</th>
-            </tr>
-          </thead>
+      <div className="p-4 border-b border-[#d2d2d7]/50 flex items-center bg-[#F5F5F7]/30">
+        <div className="relative w-full max-w-md">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-4 w-4 text-[#86868b]" />
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search products by name, category, or section..."
+            className="block w-full pl-10 pr-3 py-2 border border-[#d2d2d7] rounded-lg leading-5 bg-white placeholder-[#86868b] focus:outline-none focus:ring-1 focus:ring-[#0071e3] focus:border-[#0071e3] sm:text-sm transition-colors"
+          />
+        </div>
+      </div>
+      
+      {filteredProducts.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <p className="text-sm text-[#86868b]">No products match your search.</p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-[#F5F5F7] text-[#86868b] text-[11px] uppercase tracking-wider font-semibold border-b border-[#d2d2d7]">
+              <tr>
+                <th className="px-6 py-4">Product</th>
+                <th className="px-6 py-4">Price</th>
+                <th className="px-6 py-4">Category</th>
+                <th className="px-6 py-4">Section</th>
+                <th className="px-6 py-4">Status</th>
+                <th className="px-6 py-4 text-right">Action</th>
+              </tr>
+            </thead>
           <tbody className="divide-y divide-[#d2d2d7]/50">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id} className="hover:bg-[#F5F5F7]/50 transition-colors group">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-4">
@@ -141,6 +167,7 @@ export default function ProductList({ onEdit }) {
           </tbody>
         </table>
       </div>
+      )}
     </div>
   );
 }
