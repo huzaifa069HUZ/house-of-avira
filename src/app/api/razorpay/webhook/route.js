@@ -101,10 +101,12 @@ export async function POST(request) {
             orderId: orderDoc.id,
             customerName: orderData.customer_name,
             customerEmail: orderData.customer_email,
+            customerPhone: orderData.customer_phone || (orderData.shipping_address && orderData.shipping_address.phone),
             items: orderData.items,
             itemsCount: orderData.items_count,
             payableAmount: orderData.payable_amount,
-            currencySymbol
+            currencySymbol,
+            shippingAddress: orderData.shipping_address
           });
         } catch (emailErr) {
           console.error(`Webhook: Failed to send order emails for ${orderDoc.id}:`, emailErr);

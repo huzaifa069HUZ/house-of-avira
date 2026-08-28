@@ -206,7 +206,7 @@ export function generateOrderConfirmationHtml({ customerName, orderId, items, pa
 }
 
 // ── Admin Order Notification Email ──
-export function generateAdminNotificationHtml({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol = '₹' }) {
+export function generateAdminNotificationHtml({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol = '₹', shippingAddress, customerPhone }) {
   const itemsList = items?.map(item => `
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
@@ -218,6 +218,26 @@ export function generateAdminNotificationHtml({ orderId, customerName, customerE
       </td>
     </tr>
   `).join('') || '';
+
+  const addressHtml = shippingAddress ? `
+    <tr>
+      <td style="color: #888888; padding: 12px 0 6px 0; vertical-align: top;">Shipping Details</td>
+      <td style="color: #000000; text-align: right; font-weight: 500; padding: 12px 0 6px 0;">
+        ${shippingAddress.firstName} ${shippingAddress.lastName}<br>
+        ${shippingAddress.addressLine1}<br>
+        ${shippingAddress.addressLine2 ? `${shippingAddress.addressLine2}<br>` : ''}
+        ${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.pincode}<br>
+        ${shippingAddress.country}
+      </td>
+    </tr>
+  ` : '';
+
+  const phoneHtml = (customerPhone || (shippingAddress && shippingAddress.phone)) ? `
+    <tr>
+      <td style="color: #888888; padding: 6px 0; border-bottom: 2px solid #e8e8e8;">Phone</td>
+      <td style="color: #000000; text-align: right; font-weight: 600; border-bottom: 2px solid #e8e8e8;">${customerPhone || shippingAddress.phone}</td>
+    </tr>
+  ` : '';
 
   const content = `
     <h2 style="font-size: 20px; font-weight: 500; color: #000000; margin: 0 0 16px 0;">
@@ -234,8 +254,13 @@ export function generateAdminNotificationHtml({ orderId, customerName, customerE
           <td style="color: #000000; text-align: right; font-weight: 600;">${customerName}</td>
         </tr>
         <tr>
-          <td style="color: #888888; padding: 6px 0; border-bottom: 2px solid #e8e8e8;">Email</td>
-          <td style="color: #000000; text-align: right; font-weight: 600; border-bottom: 2px solid #e8e8e8;">${customerEmail}</td>
+          <td style="color: #888888; padding: 6px 0; ${(customerPhone || (shippingAddress && shippingAddress.phone)) || shippingAddress ? '' : 'border-bottom: 2px solid #e8e8e8;'}">Email</td>
+          <td style="color: #000000; text-align: right; font-weight: 600; ${(customerPhone || (shippingAddress && shippingAddress.phone)) || shippingAddress ? '' : 'border-bottom: 2px solid #e8e8e8;'}">${customerEmail}</td>
+        </tr>
+        ${phoneHtml}
+        ${addressHtml}
+        <tr>
+          <td colspan="2" style="border-bottom: 2px solid #e8e8e8; padding-top: 6px;"></td>
         </tr>
         ${itemsList}
         <tr style="border-top: 1px solid #e8e8e8;">
@@ -306,16 +331,16 @@ export async function sendOrderConfirmationEmail({ customerEmail, customerName, 
   await transporter.sendMail(mailOptions);
 }
 
-export async function sendAdminOrderNotificationEmail({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol }) {
+export async function sendAdminOrderNotificationEmail({ orderId, customerName, customerEmail, customerPhone, items, itemsCount, payableAmount, currencySymbol, shippingAddress }) {
   const transporter = createTransporter();
-  const html = generateAdminNotificationHtml({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol });
+  const html = generateAdminNotificationHtml({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol, shippingAddress, customerPhone });
 
   const mailOptions = {
     from: `"House of Avira" <${BRAND.email}>`,
     to: 'houseofavira@gmail.com', // Explicitly to admin
     subject: `New Order Received — ${orderId}`,
     html,
-    text: `New order ${orderId} received from ${customerName} (${customerEmail}). Items: ${itemsCount}. Amount: ${currencySymbol || '₹'}${payableAmount}.`
+    text: `New order ${orderId} received from ${customerName} (${customerEmail}). Phone: ${customerPhone || (shippingAddress && shippingAddress.phone) || 'N/A'}. Items: ${itemsCount}. Amount: ${currencySymbol || '₹'}${payableAmount}.`
   };
 
   await transporter.sendMail(mailOptions);
