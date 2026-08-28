@@ -1,11 +1,13 @@
 'use server';
 
 import { adminDb } from '@/lib/firebase-admin';
+import { revalidatePath } from 'next/cache';
 
 export async function fetchCollections() {
   if (!adminDb) throw new Error("Admin DB not initialized");
-  const snapshot = await adminDb.collection('collections').orderBy('createdAt', 'desc').get();
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate()?.toISOString() || null }));
+  const snapshot = await adminDb.collection('collections').get();
+  const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate()?.toISOString() || null }));
+  return docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 }
 
 export async function fetchCollectionBySlug(slug) {
@@ -44,6 +46,7 @@ export async function createCollection(data) {
     createdAt: new Date(),
     updatedAt: new Date()
   });
+  revalidatePath('/admin');
   return ref.id;
 }
 
@@ -53,11 +56,13 @@ export async function updateCollection(id, data) {
     ...data,
     updatedAt: new Date()
   });
+  revalidatePath('/admin');
   return true;
 }
 
 export async function deleteCollection(id) {
   if (!adminDb) throw new Error("Admin DB not initialized");
   await adminDb.collection('collections').doc(id).delete();
+  revalidatePath('/admin');
   return true;
 }
