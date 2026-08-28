@@ -31,16 +31,20 @@ export default function CollectionManager() {
       const colQ = query(collection(db, 'collections'), orderBy('createdAt', 'desc'));
       const colSnap = await getDocs(colQ);
       setCollections(colSnap.docs.map(d => ({ id: d.id, ...d.data() })));
+    } catch (error) {
+      console.error("Error fetching collections:", error);
+    }
 
+    try {
       // Fetch products for selection
       const prodQ = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
       const prodSnap = await getDocs(prodQ);
       setAllProducts(prodSnap.docs.map(d => ({ id: d.id, ...d.data() })));
     } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
+      console.error("Error fetching products:", error);
     }
+    
+    setLoading(false);
   };
 
   const generateSlug = (text) => {
@@ -116,10 +120,11 @@ export default function CollectionManager() {
     );
   };
 
-  const filteredProducts = allProducts.filter(p => 
-    p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.category?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = allProducts.filter(p => {
+    const nameMatch = (p.name || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const categoryMatch = (p.category || '').toLowerCase().includes(searchQuery.toLowerCase());
+    return nameMatch || categoryMatch;
+  });
 
   if (loading) {
     return (
