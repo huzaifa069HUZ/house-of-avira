@@ -8,11 +8,12 @@ import CouponManager from '@/components/admin/CouponManager';
 import BannerManager from '@/components/admin/BannerManager';
 import OrderManager from '@/components/admin/OrderManager';
 import AddManualOrder from '@/components/admin/AddManualOrder';
-import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon, Ship, ShoppingBag } from 'lucide-react';
+import CollectionManager from '@/components/admin/CollectionManager';
+import { LayoutDashboard, Plus, Package, BarChart3, Ticket, ImageIcon, Ship, ShoppingBag, ListVideo } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
-  const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit', 'orders', 'add-order'
+  const [currentView, setCurrentView] = useState('list'); // 'list', 'add', 'edit', 'orders', 'add-order', 'collections'
   const [editingProduct, setEditingProduct] = useState(null);
   const router = useRouter();
 
@@ -56,13 +57,18 @@ export default function AdminDashboard() {
     setCurrentView('banners');
   };
 
+  const handleCollections = () => {
+    setEditingProduct(null);
+    setCurrentView('collections');
+  };
+
   const handleShipping = () => {
     router.push('/admin/shipping');
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-screen bg-[#F5F5F7]">
-      <div className="border-b border-[#d2d2d7] pb-6 mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full min-h-screen bg-[#F5F5F7]">
+      <div className="border-b border-[#d2d2d7] pb-6 mb-8 flex flex-col xl:flex-row xl:justify-between xl:items-end gap-4">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight text-black flex items-center gap-3">
             <LayoutDashboard className="w-8 h-8 text-[#0071e3]" />
@@ -72,7 +78,7 @@ export default function AdminDashboard() {
         </div>
         
         {/* Apple-style Segmented Control for Tabs */}
-        <div className="flex flex-wrap sm:flex-nowrap gap-1 sm:gap-0 bg-[#e5e5ea] p-1 rounded-lg w-full sm:w-fit justify-start">
+        <div className="flex flex-wrap gap-1 bg-[#e5e5ea] p-1 rounded-lg w-full xl:w-fit justify-start">
           <button 
             onClick={handleList}
             className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'list' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}
@@ -93,6 +99,13 @@ export default function AdminDashboard() {
           >
             <ShoppingBag className="w-4 h-4" />
             Orders
+          </button>
+          <button 
+            onClick={handleCollections}
+            className={`flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${currentView === 'collections' ? 'bg-white text-black shadow-sm' : 'text-[#86868b] hover:text-black'}`}
+          >
+            <ListVideo className="w-4 h-4" />
+            Collections
           </button>
           <button 
             onClick={handleShipping}
@@ -126,14 +139,15 @@ export default function AdminDashboard() {
       </div>
 
       {currentView === 'list' && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          {['Orders', 'Shipping', 'Customers', 'Analytics'].map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+          {['Orders', 'Collections', 'Shipping', 'Customers', 'Analytics'].map((item) => (
             <div 
               key={item} 
               onClick={() => {
                 if (item === 'Analytics') handleAnalytics();
                 else if (item === 'Shipping') handleShipping();
                 else if (item === 'Orders') handleOrders();
+                else if (item === 'Collections') handleCollections();
               }}
               className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-[#d2d2d7]/50 hover:border-[#0071e3] transition-colors cursor-pointer group"
             >
@@ -148,6 +162,7 @@ export default function AdminDashboard() {
         {currentView === 'list' && <ProductList onEdit={handleEdit} />}
         {currentView === 'orders' && <OrderManager onAddOrder={handleAddOrder} />}
         {currentView === 'add-order' && <AddManualOrder onSuccess={handleOrders} onCancel={handleOrders} />}
+        {currentView === 'collections' && <CollectionManager />}
         {(currentView === 'add' || currentView === 'edit') && (
           <ProductManager 
             initialProduct={editingProduct} 
