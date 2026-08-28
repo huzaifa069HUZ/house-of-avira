@@ -155,11 +155,22 @@ export function generatePaymentReceivedHtml({ customerName, orderId, amount, cur
 export function generateOrderConfirmationHtml({ customerName, orderId, items, payableAmount, shippingAddress, currencySymbol = '₹' }) {
   const itemsList = items.map(item => `
     <tr>
-      <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-        <span style="font-weight: 600; color: #000000;">${item.name || item.title || 'Unknown Item'}</span><br>
-        <span style="font-size: 12px; color: #888888;">Qty: ${item.quantity || 1}</span>
+      <td style="padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="width: 60px; vertical-align: top;">
+              <img src="${item.image || 'https://via.placeholder.com/60?text=No+Image'}" alt="${item.name || item.title || 'Product Image'}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />
+            </td>
+            <td style="vertical-align: top; padding-left: 12px;">
+              <span style="font-weight: 600; color: #000000; display: block; margin-bottom: 4px;">${item.name || item.title || 'Unknown Item'}</span>
+              ${item.size ? `<span style="font-size: 12px; color: #555555; display: block;">Size: ${item.size}</span>` : ''}
+              ${item.color ? `<span style="font-size: 12px; color: #555555; display: block;">Color: ${item.color}</span>` : ''}
+              <span style="font-size: 12px; color: #888888; display: block; margin-top: 4px;">Qty: ${item.quantity || 1}</span>
+            </td>
+          </tr>
+        </table>
       </td>
-      <td style="text-align: right; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-weight: 500;">
+      <td style="text-align: right; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-weight: 500; vertical-align: top;">
         ${currencySymbol}${(item.price * (item.quantity || 1)).toLocaleString()}
       </td>
     </tr>
@@ -209,11 +220,22 @@ export function generateOrderConfirmationHtml({ customerName, orderId, items, pa
 export function generateAdminNotificationHtml({ orderId, customerName, customerEmail, items, itemsCount, payableAmount, currencySymbol = '₹', shippingAddress, customerPhone }) {
   const itemsList = items?.map(item => `
     <tr>
-      <td style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
-        <span style="font-weight: 600; color: #000000;">${item.name || item.title || 'Unknown Item'}</span><br>
-        <span style="font-size: 12px; color: #888888;">Qty: ${item.quantity || 1}</span>
+      <td style="padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="width: 60px; vertical-align: top;">
+              <img src="${item.image || 'https://via.placeholder.com/60?text=No+Image'}" alt="${item.name || item.title || 'Product Image'}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />
+            </td>
+            <td style="vertical-align: top; padding-left: 12px;">
+              <span style="font-weight: 600; color: #000000; display: block; margin-bottom: 4px;">${item.name || item.title || 'Unknown Item'}</span>
+              ${item.size ? `<span style="font-size: 12px; color: #555555; display: block;">Size: ${item.size}</span>` : ''}
+              ${item.color ? `<span style="font-size: 12px; color: #555555; display: block;">Color: ${item.color}</span>` : ''}
+              <span style="font-size: 12px; color: #888888; display: block; margin-top: 4px;">Qty: ${item.quantity || 1}</span>
+            </td>
+          </tr>
+        </table>
       </td>
-      <td style="text-align: right; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-weight: 500;">
+      <td style="text-align: right; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-weight: 500; vertical-align: top;">
         ${currencySymbol}${(item.price * (item.quantity || 1)).toLocaleString()}
       </td>
     </tr>
