@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { Loader2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 export default function CollectionClient({ slug }) {
   const [collectionData, setCollectionData] = useState(null);
@@ -16,41 +14,23 @@ export default function CollectionClient({ slug }) {
   useEffect(() => {
     async function fetchCollection() {
       try {
-        // Fetch collection by slug using Client SDK
-        const colQuery = query(
-          collection(db, 'collections'),
-          where('slug', '==', slug)
-        );
-        const colSnapshot = await getDocs(colQuery);
-
-        if (colSnapshot.empty) {
+        const res = await fetch(`/api/collections/${slug}`);
+        
+        if (res.status === 404) {
           setNotFoundState(true);
           setLoading(false);
           return;
         }
 
-        const colDoc = colSnapshot.docs[0];
-        const colData = { id: colDoc.id, ...colDoc.data() };
-        setCollectionData(colData);
-
-        // Fetch products by their IDs
-        if (colData.productIds && colData.productIds.length > 0) {
-          const productPromises = colData.productIds.map(async (productId) => {
-            try {
-              const productRef = doc(db, 'products', productId);
-              const productSnap = await getDoc(productRef);
-              if (productSnap.exists()) {
-                return { id: productSnap.id, ...productSnap.data() };
-              }
-              return null;
-            } catch {
-              return null;
-            }
-          });
-
-          const fetchedProducts = (await Promise.all(productPromises)).filter(Boolean);
-          setProducts(fetchedProducts);
+        if (!res.ok) {
+          console.error("Failed to fetch collection:", await res.text());
+          setLoading(false);
+          return;
         }
+
+        const data = await res.json();
+        setCollectionData(data.collection);
+        setProducts(data.products || []);
       } catch (error) {
         console.error("Error fetching collection:", error);
       } finally {

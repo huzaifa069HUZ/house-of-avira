@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, query, orderBy, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { Plus, Trash2, Edit2, Loader2, Save, X, Search, CheckSquare, Square, Link as LinkIcon, ExternalLink } from 'lucide-react';
-import Link from 'next/link';
 
 export default function CollectionManager() {
   const [collections, setCollections] = useState([]);
@@ -27,21 +26,20 @@ export default function CollectionManager() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      // Fetch collections using Client SDK
-      const colSnap = await getDocs(collection(db, 'collections'));
-      const cols = colSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-      cols.sort((a, b) => {
-        const aTime = a.createdAt?.seconds || 0;
-        const bTime = b.createdAt?.seconds || 0;
-        return bTime - aTime;
-      });
-      setCollections(cols);
+      // Fetch collections via API route (uses Admin SDK server-side)
+      const res = await fetch('/api/collections');
+      if (res.ok) {
+        const cols = await res.json();
+        setCollections(cols);
+      } else {
+        console.error("Failed to fetch collections:", await res.text());
+      }
     } catch (error) {
       console.error("Error fetching collections:", error);
     }
 
     try {
-      // Fetch products for selection
+      // Fetch products for selection (reads are allowed by Firestore rules)
       const prodQ = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
       const prodSnap = await getDocs(prodQ);
       setAllProducts(prodSnap.docs.map(d => ({ id: d.id, ...d.data() })));
@@ -67,7 +65,7 @@ export default function CollectionManager() {
     const slug = generateSlug(title);
 
     try {
-      const collectionData = {
+      const data = {
         title,
         slug,
         description,
@@ -75,16 +73,25 @@ export default function CollectionManager() {
       };
 
       if (isEditing && currentId) {
-        await updateDoc(doc(db, 'collections', currentId), {
-          ...collectionData,
-          updatedAt: Timestamp.now()
+        const res = await fetch('/api/collections', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: currentId, ...data }),
         });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Failed to update');
+        }
       } else {
-        await addDoc(collection(db, 'collections'), {
-          ...collectionData,
-          createdAt: Timestamp.now(),
-          updatedAt: Timestamp.now()
+        const res = await fetch('/api/collections', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
         });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Failed to create');
+        }
       }
 
       // Reset and refetch
@@ -97,7 +104,7 @@ export default function CollectionManager() {
       await fetchData();
     } catch (error) {
       console.error("Error saving collection:", error);
-      alert("Failed to save collection. Check console for details.");
+      alert("Failed to save collection: " + (error?.message || "Unknown error"));
     } finally {
       setSaving(false);
     }
@@ -111,10 +118,14 @@ export default function CollectionManager() {
     setIsEditing(true);
   };
 
-  const handleDelete = async (id, title) => {
-    if (window.confirm(`Are you sure you want to delete collection "${title}"?`)) {
+  const handleDelete = async (id, colTitle) => {
+    if (window.confirm(`Are you sure you want to delete collection "${colTitle}"?`)) {
       try {
-        await deleteDoc(doc(db, 'collections', id));
+        const res = await fetch(`/api/collections?id=${id}`, { method: 'DELETE' });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Failed to delete');
+        }
         setCollections(prev => prev.filter(c => c.id !== id));
       } catch (error) {
         console.error("Error deleting collection:", error);
