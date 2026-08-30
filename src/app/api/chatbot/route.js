@@ -23,11 +23,10 @@ export async function POST(req) {
 
     // Start a streaming chat session
     const responseStream = await ai.models.generateContentStream({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-3.7-flash',
       contents: contents,
       config: {
         systemInstruction: SYSTEM_PROMPT,
-        temperature: 0.3, // Low temperature for factual consistency with policies
       }
     });
 
