@@ -76,8 +76,10 @@ export default function Chatbot() {
   };
 
   const formatMessageContent = (content) => {
-    // Simple formatter to handle bolding and basic line breaks without a heavy markdown parser
-    let formatted = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Simple formatter to handle bolding, links, and basic line breaks without a heavy markdown parser
+    let formatted = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; text-underline-offset: 2px; font-weight: 500;">$1</a>');
+    formatted = formatted.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<a href="mailto:$1" style="text-decoration: underline; text-underline-offset: 2px; font-weight: 500;">$1</a>');
+    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     return <div dangerouslySetInnerHTML={{ __html: formatted.replace(/\n/g, '<br />') }} />;
   };
 

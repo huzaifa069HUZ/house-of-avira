@@ -7,6 +7,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useCurrencyStore } from '@/store/currencyStore';
 import { useCartStore } from '@/store/cartStore';
+import { useRecentlyViewedStore } from '@/store/recentlyViewedStore';
 import CartSlideOver from '@/components/ui/CartSlideOver';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { db } from '@/lib/firebase';
@@ -146,6 +147,7 @@ export default function Header() {
   const { user } = useAuthStore();
   const { wishlist } = useWishlistStore();
   const { cart, openCart } = useCartStore();
+  const { recentlyViewed } = useRecentlyViewedStore();
   const { currency } = useCurrencyStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -385,10 +387,6 @@ export default function Header() {
                       />
                     </div>
 
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-1 border-b border-black/5 pb-2">
-                      {searchQuery ? 'Search Results' : 'Suggested Products'}
-                    </div>
-
                     {isSearching ? (
                       <div className="flex justify-center items-center py-8">
                         <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
@@ -402,31 +400,101 @@ export default function Header() {
                           </div>
                         )}
                       </div>
+                    ) : searchQuery ? (
+                      <>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-1 border-b border-black/5 pb-2">
+                          Search Results
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          {filteredProducts.map((product, idx) => (
+                            <Link 
+                              href={`/product/${product.slug || product.id}`} 
+                              key={product.id}
+                              onClick={handleSearchSubmit}
+                              className={`flex items-center gap-4 p-2 rounded-xl transition-colors group border ${selectedIndex === idx ? 'bg-[#FAFAFA] border-black/10' : 'hover:bg-[#FAFAFA] border-transparent hover:border-black/5'}`}
+                            >
+                              <div className="w-14 h-16 bg-neutral-100 rounded-md overflow-hidden flex-shrink-0 relative">
+                                {product.imageUrl || (product.images && product.images[0]) ? (
+                                  <img src={product.imageUrl || product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                                    <ShoppingBag className="w-4 h-4" />
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex flex-col flex-1 overflow-hidden">
+                                <span className="text-[11px] font-bold uppercase tracking-widest truncate">{product.name}</span>
+                                <span className="text-[10px] text-neutral-500 capitalize truncate">{product.category}</span>
+                                <span className="text-xs font-medium mt-1 text-[#8A001A]"><PriceDisplay basePrice={product.price || 0} /></span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </>
                     ) : (
-                      <div className="flex flex-col gap-2">
-                        {(searchQuery ? filteredProducts : allProducts.slice(0, 4)).map((product, idx) => (
-                          <Link 
-                            href={`/product/${product.slug || product.id}`} 
-                            key={product.id}
-                            onClick={handleSearchSubmit}
-                            className={`flex items-center gap-4 p-2 rounded-xl transition-colors group border ${selectedIndex === idx ? 'bg-[#FAFAFA] border-black/10' : 'hover:bg-[#FAFAFA] border-transparent hover:border-black/5'}`}
-                          >
-                            <div className="w-14 h-16 bg-neutral-100 rounded-md overflow-hidden flex-shrink-0 relative">
-                              {product.imageUrl ? (
-                                <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                              ) : (
-                                <div className="w-full h-full flex items-center justify-center text-neutral-400">
-                                  <ShoppingBag className="w-4 h-4" />
+                      <div className="flex flex-col gap-4">
+                        {recentlyViewed && recentlyViewed.length > 0 && (
+                          <div>
+                            <div className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-2 border-b border-black/5 pb-2">
+                              Recently Viewed
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              {recentlyViewed.slice(0, 3).map((product, idx) => (
+                                <Link 
+                                  href={`/product/${product.slug || product.id}`} 
+                                  key={`recent-${product.id}`}
+                                  onClick={handleSearchSubmit}
+                                  className={`flex items-center gap-4 p-2 rounded-xl transition-colors group border hover:bg-[#FAFAFA] border-transparent hover:border-black/5`}
+                                >
+                                  <div className="w-14 h-16 bg-neutral-100 rounded-md overflow-hidden flex-shrink-0 relative">
+                                    {product.imageUrl || (product.images && product.images[0]) ? (
+                                      <img src={product.imageUrl || product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                                        <ShoppingBag className="w-4 h-4" />
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="flex flex-col flex-1 overflow-hidden">
+                                    <span className="text-[11px] font-bold uppercase tracking-widest truncate">{product.name}</span>
+                                    <span className="text-[10px] text-neutral-500 capitalize truncate">{product.category}</span>
+                                    <span className="text-xs font-medium mt-1 text-[#8A001A]"><PriceDisplay basePrice={product.price || 0} /></span>
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        <div>
+                          <div className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-2 border-b border-black/5 pb-2">
+                            Suggested Products
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            {allProducts.slice(0, 4).map((product, idx) => (
+                              <Link 
+                                href={`/product/${product.slug || product.id}`} 
+                                key={`suggested-${product.id}`}
+                                onClick={handleSearchSubmit}
+                                className={`flex items-center gap-4 p-2 rounded-xl transition-colors group border ${selectedIndex === idx ? 'bg-[#FAFAFA] border-black/10' : 'hover:bg-[#FAFAFA] border-transparent hover:border-black/5'}`}
+                              >
+                                <div className="w-14 h-16 bg-neutral-100 rounded-md overflow-hidden flex-shrink-0 relative">
+                                  {product.imageUrl || (product.images && product.images[0]) ? (
+                                    <img src={product.imageUrl || product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                                      <ShoppingBag className="w-4 h-4" />
+                                    </div>
+                                  )}
                                 </div>
-                              )}
-                            </div>
-                            <div className="flex flex-col flex-1 overflow-hidden">
-                              <span className="text-[11px] font-bold uppercase tracking-widest truncate">{product.name}</span>
-                              <span className="text-[10px] text-neutral-500 capitalize truncate">{product.category}</span>
-                              <span className="text-xs font-medium mt-1 text-[#8A001A]"><PriceDisplay basePrice={product.price || 0} /></span>
-                            </div>
-                          </Link>
-                        ))}
+                                <div className="flex flex-col flex-1 overflow-hidden">
+                                  <span className="text-[11px] font-bold uppercase tracking-widest truncate">{product.name}</span>
+                                  <span className="text-[10px] text-neutral-500 capitalize truncate">{product.category}</span>
+                                  <span className="text-xs font-medium mt-1 text-[#8A001A]"><PriceDisplay basePrice={product.price || 0} /></span>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     )}
                     

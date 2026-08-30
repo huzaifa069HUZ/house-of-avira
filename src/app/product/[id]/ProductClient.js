@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Heart, ChevronLeft, ChevronRight, AlertTriangle, Tag, Globe, Truck, ArrowDown, Package, FileText, ArrowRight, Share2, X } from 'lucide-react';
 import { useQuickAddStore } from '@/store/quickAddStore';
+import { useRecentlyViewedStore } from '@/store/recentlyViewedStore';
 import ProductReviews from '@/components/product/ProductReviews';
 import ProductCard from '@/components/ProductCard';
 
@@ -33,6 +34,7 @@ export default function ProductClient({ params: paramsPromise }) {
   const { addToCart } = useCartStore();
 
   const { openQuickAdd } = useQuickAddStore();
+  const { addRecentlyViewed } = useRecentlyViewedStore();
 
   const hasOptions = (product?.swatches && product.swatches.length > 0) || (product?.sizes && product.sizes.length > 0);
 
@@ -114,6 +116,7 @@ export default function ProductClient({ params: paramsPromise }) {
 
         if (productData) {
           setProduct(productData);
+          addRecentlyViewed(productData);
           if (productData.sizes && productData.sizes.length > 0) setSelectedSize(productData.sizes[0]);
           if (productData.swatches && productData.swatches.length > 0) setSelectedColor(productData.swatches[0].color);
 
