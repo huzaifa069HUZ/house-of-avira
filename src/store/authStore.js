@@ -29,7 +29,7 @@ export const useAuthStore = create((set, get) => ({
             // Also handle the special admin email case just in case the document is missing
             let role = 'customer';
             const allowedAdminEmails = ['orders.houseofavira@gmail.com', 'order.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com', 'huaifatabish9145@gmail.com'];
-            if (allowedAdminEmails.includes(firebaseUser.email.toLowerCase())) {
+            if (firebaseUser.email && allowedAdminEmails.includes(firebaseUser.email.toLowerCase())) {
               role = 'admin_owner';
             }
             

@@ -14,7 +14,7 @@ export default function AdminLayout({ children }) {
       if (!loading) {
         if (!user) {
           router.replace('/auth/login?redirect=/admin');
-        } else if (role !== 'admin_owner' && !allowedEmails.includes(user.email.toLowerCase())) {
+        } else if (role !== 'admin_owner' && (!user.email || !allowedEmails.includes(user.email.toLowerCase()))) {
           router.replace('/');
         }
       }
@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
     checkAccess();
   }, [user, role, loading, router]);
 
-  if (loading || !user || (role !== 'admin_owner' && !allowedEmails.includes(user.email.toLowerCase()))) {
+  if (loading || !user || (role !== 'admin_owner' && (!user.email || !allowedEmails.includes(user.email.toLowerCase())))) {
     return <div className="p-12 text-center text-neutral-500 uppercase tracking-widest text-sm">Verifying Access...</div>;
   }
 
