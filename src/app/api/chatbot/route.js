@@ -58,6 +58,6 @@ export async function POST(req) {
 
   } catch (error) {
     console.error('Chatbot API Error:', error);
-    return Response.json({ error: 'Internal Server Error' }, { status: 500 });
+    return Response.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
   }
 }

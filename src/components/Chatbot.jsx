@@ -46,7 +46,14 @@ export default function Chatbot() {
         body: JSON.stringify({ messages: apiMessages })
       });
 
-      if (!response.ok) throw new Error('Network response was not ok');
+      if (!response.ok) {
+        let errMessage = 'Network response was not ok';
+        try {
+          const errData = await response.json();
+          if (errData.error) errMessage = errData.error;
+        } catch (e) {}
+        throw new Error(errMessage);
+      }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -58,18 +65,20 @@ export default function Chatbot() {
       while (!done) {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
-        const chunkValue = decoder.decode(value, { stream: true });
-        assistantContent += chunkValue;
-        
-        setMessages(prev => {
-          const newMessages = [...prev];
-          newMessages[newMessages.length - 1].content = assistantContent;
-          return newMessages;
-        });
+        if (value) {
+          const chunkValue = decoder.decode(value, { stream: !doneReading });
+          assistantContent += chunkValue;
+          
+          setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1].content = assistantContent;
+            return newMessages;
+          });
+        }
       }
     } catch (error) {
       console.error("Chat error:", error);
-      setMessages(prev => [...prev, { role: 'assistant', content: "I'm so sorry, I'm having a little trouble connecting right now. Please try again in a moment! 🤍" }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: `I'm so sorry, I'm having a little trouble connecting right now. Please try again in a moment! 🤍 (Error: ${error.message})` }]);
     } finally {
       setIsLoading(false);
     }
