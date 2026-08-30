@@ -64,7 +64,7 @@ const COLOR_MAP = {
 
 const getColorHex = (colorName) => {
   if (!colorName) return '#000000';
-  if (colorName.startsWith('#')) return colorName;
+  if (colorName.startsWith('#')) return colorName.toLowerCase();
   const lower = colorName.toLowerCase();
   return COLOR_MAP[lower] || null;
 };
@@ -161,19 +161,30 @@ export default function CatalogueClient() {
   }, [categoryFilteredProducts]);
 
   const availableColors = useMemo(() => {
-    const colors = new Set();
+    const colorMap = new Map();
     categoryFilteredProducts.forEach(p => {
       if (p.swatches) {
         p.swatches.forEach(s => {
-          const colorVal = s.name || s.color;
-          if (colorVal) {
-            const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-            colors.add(formatted);
+          let name = (s.colorName || s.name || '').trim();
+          let hex = (s.color || '').trim();
+          
+          if (!name && hex) name = hex;
+          if (!name) return;
+          
+          const formatted = name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+          
+          let computedHex = getColorHex(formatted);
+          if (!computedHex && hex.startsWith('#')) computedHex = hex.toLowerCase();
+          if (!computedHex) computedHex = formatted.toLowerCase(); // fallback
+          
+          // Only overwrite if we don't have a good name yet
+          if (!colorMap.has(computedHex) || colorMap.get(computedHex).startsWith('#')) {
+             colorMap.set(computedHex, formatted);
           }
         });
       }
     });
-    return Array.from(colors);
+    return Array.from(colorMap.values()).sort();
   }, [categoryFilteredProducts]);
 
   // Apply user filters and sort
