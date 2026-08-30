@@ -199,13 +199,26 @@ export default function CatalogueClient() {
       result = result.filter(p => p.sizes && p.sizes.some(s => selectedSizes.includes(s)));
     }
 
-    // Filter Color (Match by swatch name or hex code loosely)
+    // Filter Color (Match by mapping to the same deduplicated computed hex/name as availableColors)
     if (selectedColors.length > 0) {
       result = result.filter(p => p.swatches && p.swatches.some(s => {
-        const colorVal = s.name || s.color;
-        if (!colorVal) return false;
-        const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-        return selectedColors.includes(formatted);
+        let name = (s.colorName || s.name || '').trim();
+        let hex = (s.color || '').trim();
+        if (!name && hex) name = hex;
+        if (!name) return false;
+        
+        const formatted = name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        let computedHex = getColorHex(formatted);
+        if (!computedHex && hex.startsWith('#')) computedHex = hex.toLowerCase();
+        if (!computedHex) computedHex = formatted.toLowerCase();
+
+        // Check if ANY of the selected colors map to the same computedHex
+        return selectedColors.some(selectedColor => {
+          let selHex = getColorHex(selectedColor);
+          if (!selHex && selectedColor.startsWith('#')) selHex = selectedColor.toLowerCase();
+          if (!selHex) selHex = selectedColor.toLowerCase();
+          return computedHex === selHex;
+        });
       }));
     }
 
