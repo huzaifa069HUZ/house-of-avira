@@ -1,8 +1,6 @@
 import { GoogleGenAI } from '@google/genai';
 import { SYSTEM_PROMPT } from '@/data/chatbot-prompt';
 
-// Initialize the Gemini API client
-// Note: GoogleGenAI automatically picks up process.env.GEMINI_API_KEY if not explicitly passed
 const ai = new GoogleGenAI({});
 
 export async function POST(req) {
@@ -14,29 +12,28 @@ export async function POST(req) {
       return Response.json({ error: 'Messages array is required' }, { status: 400 });
     }
 
-    // Prepare contents array for the SDK
-    // The google/genai SDK expects { role: 'user' | 'model', parts: [{ text: '...' }] }
-    const contents = messages.map((msg) => ({
-      role: msg.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: msg.content }],
-    }));
+    // Convert message history to a flat string transcript for the Interactions API
+    const input = messages.map(msg => 
+      `${msg.role === 'assistant' ? 'Assistant' : 'User'}: ${msg.content}`
+    ).join('\n\n') + '\n\nAssistant:';
 
-    // Start a streaming chat session
-    const responseStream = await ai.models.generateContentStream({
-      model: 'gemini-3.7-flash',
-      contents: contents,
-      config: {
-        systemInstruction: SYSTEM_PROMPT,
-      }
+    // Start a streaming chat session using the Interactions API
+    const responseStream = await ai.interactions.create({
+      model: 'gemini-3.6-flash',
+      input: input,
+      system_instruction: SYSTEM_PROMPT,
+      stream: true,
     });
 
     // Create a ReadableStream to stream the response back to the client
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          for await (const chunk of responseStream) {
-            if (chunk.text) {
-              controller.enqueue(new TextEncoder().encode(chunk.text));
+          for await (const event of responseStream) {
+            if (event.event_type === "step.delta" && event.delta && event.delta.type === "text") {
+              if (event.delta.text) {
+                controller.enqueue(new TextEncoder().encode(event.delta.text));
+              }
             }
           }
         } catch (error) {
