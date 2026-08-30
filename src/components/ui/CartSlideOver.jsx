@@ -207,7 +207,7 @@ export default function CartSlideOver() {
             animate={{ opacity: 0.4 }}
             exit={{ opacity: 0 }}
             onClick={closeCart}
-            className="fixed inset-0 bg-black z-[60] cursor-pointer"
+            className="fixed inset-0 bg-black z-[200] cursor-pointer"
           />
 
           {/* Slide Over Panel */}
@@ -216,7 +216,7 @@ export default function CartSlideOver() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-[60] flex flex-col overflow-hidden border-none rounded-none"
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-[200] flex flex-col overflow-hidden border-none rounded-none"
             style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}
           >
             {/* Header */}
