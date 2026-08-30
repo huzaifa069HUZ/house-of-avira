@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export default function AdminLayout({ children }) {
   const { user, role, loading } = useAuthStore();
   const router = useRouter();
-  const allowedEmails = ['orders.houseofavira@gmail.com', 'order.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com', 'huaifatabish9145@gmail.com'];
+  const allowedEmails = ['huzaifatabish9145@gmail.com', 'houseofavira@gmail.com', 'orders.houseofavira@gmail.com'];
   
   useEffect(() => {
     const checkAccess = async () => {
