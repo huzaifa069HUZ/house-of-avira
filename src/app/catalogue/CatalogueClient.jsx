@@ -177,14 +177,16 @@ export default function CatalogueClient() {
           if (!computedHex && hex.startsWith('#')) computedHex = hex.toLowerCase();
           if (!computedHex) computedHex = formatted.toLowerCase(); // fallback
           
+          let finalBgHex = hex.startsWith('#') ? hex : (getColorHex(formatted) || '#FAFAFA');
+
           // Only overwrite if we don't have a good name yet
-          if (!colorMap.has(computedHex) || colorMap.get(computedHex).startsWith('#')) {
-             colorMap.set(computedHex, formatted);
+          if (!colorMap.has(computedHex) || colorMap.get(computedHex).name.startsWith('#')) {
+             colorMap.set(computedHex, { name: formatted, bgHex: finalBgHex });
           }
         });
       }
     });
-    return Array.from(colorMap.values()).sort();
+    return Array.from(colorMap.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [categoryFilteredProducts]);
 
   // Apply user filters and sort
@@ -419,8 +421,8 @@ export default function CatalogueClient() {
                       className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-5"
                     >
                       <div className="flex flex-wrap gap-3">
-                        {availableColors.map(color => {
-                          const hex = getColorHex(color);
+                        {availableColors.map(colorObj => {
+                          const { name: color, bgHex: hex } = colorObj;
                           return (
                             <button 
                               key={color}
@@ -428,7 +430,7 @@ export default function CatalogueClient() {
                               title={color}
                               className={`w-8 h-8 rounded-full border border-black/10 transition-all flex items-center justify-center active:scale-95`}
                               style={{ 
-                                backgroundColor: hex || '#FAFAFA', 
+                                backgroundColor: hex, 
                                 ...(selectedColors.includes(color) ? {boxShadow: `0 0 0 2px white, 0 0 0 4px black`} : {}) 
                               }}
                             >
@@ -584,8 +586,8 @@ export default function CatalogueClient() {
                   <div>
                     <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-500 mb-4">Color</h3>
                     <div className="flex flex-wrap gap-4">
-                      {availableColors.map(color => {
-                        const hex = getColorHex(color);
+                      {availableColors.map(colorObj => {
+                        const { name: color, bgHex: hex } = colorObj;
                         return (
                           <button 
                             key={color}
@@ -593,7 +595,7 @@ export default function CatalogueClient() {
                             title={color}
                             className={`w-10 h-10 rounded-full border border-black/10 transition-all flex items-center justify-center active:scale-95`}
                             style={{ 
-                              backgroundColor: hex || '#FAFAFA', 
+                              backgroundColor: hex, 
                               ...(selectedColors.includes(color) ? {boxShadow: `0 0 0 2px white, 0 0 0 4px black`} : {}) 
                             }}
                           >
