@@ -25,7 +25,9 @@ const getCategoryMetrics = (item) => {
   }
   
   // Heavy items
-  if (catStr.match(/shoe|sneaker|footwear|boot|heel|sandal|slipper/)) {
+  if (catStr.match(/boot|heel/)) {
+    return { name: 'Heels/Boots', low: 600, high: 2800, dutyTag: 'standard' };
+  } else if (catStr.match(/shoe|sneaker|footwear|sandal|slipper/)) {
     return { name: 'Footwear', low: 550, high: 950, dutyTag: 'standard' };
   } else if (catStr.match(/jacket|coat|blazer|puffer/)) {
     return { name: 'Heavy Outerwear', low: 450, high: 800, dutyTag: 'standard' };
@@ -45,7 +47,9 @@ const getCategoryMetrics = (item) => {
   }
   
   // Light items — low weight, low duty
-  if (catStr.match(/shirt|top|t-shirt|tshirt|blouse|crop/)) {
+  if (catStr.match(/keychain|key chain|keyring/)) {
+    return { name: 'Keychain', low: 80, high: 200, dutyTag: 'standard' };
+  } else if (catStr.match(/shirt|top|t-shirt|tshirt|blouse|crop/)) {
     return { name: 'Tops/Shirts', low: 180, high: 400, dutyTag: 'standard' };
   } else if (catStr.match(/beauty|makeup|cosmetic|skincare|lipstick/)) {
     return { name: 'Beauty/Cosmetics', low: 180, high: 400, dutyTag: 'standard' };
