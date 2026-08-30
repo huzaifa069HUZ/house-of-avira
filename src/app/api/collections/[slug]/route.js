@@ -7,7 +7,8 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: 'Admin DB not initialized' }, { status: 500 });
     }
 
-    const { slug } = params;
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
 
     // Fetch collection by slug
     const colSnapshot = await adminDb.collection('collections')

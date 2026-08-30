@@ -5,6 +5,7 @@ export const metadata = {
   description: 'Shop our exclusive collections at House of Avira.',
 };
 
-export default function CollectionPage({ params }) {
-  return <CollectionClient slug={params.slug} />;
+export default async function CollectionPage({ params }) {
+  const resolvedParams = await params;
+  return <CollectionClient slug={resolvedParams.slug} />;
 }
