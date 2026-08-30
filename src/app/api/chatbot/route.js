@@ -23,7 +23,7 @@ export async function POST(req) {
 
     // Start a streaming chat session
     const responseStream = await ai.models.generateContentStream({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.0-flash',
       contents: contents,
       config: {
         systemInstruction: SYSTEM_PROMPT,
