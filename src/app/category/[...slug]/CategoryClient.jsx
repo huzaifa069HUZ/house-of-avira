@@ -66,12 +66,8 @@ export default function CategoryClient({ slug = [] }) {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-        const querySnapshot = await getDocs(q);
-        const productsList = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        const res = await fetch('/api/products');
+        const productsList = await res.json();
         setProducts(productsList);
       } catch (error) {
         console.error("Error fetching products:", error);

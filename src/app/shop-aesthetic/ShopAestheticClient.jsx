@@ -68,12 +68,8 @@ function ShopAestheticContent() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-        const querySnapshot = await getDocs(q);
-        const fetchedProducts = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        const res = await fetch('/api/products');
+        const fetchedProducts = await res.json();
 
         if (fetchedProducts.length > 0) {
           setProducts(fetchedProducts);

@@ -142,12 +142,8 @@ export default function HomeClient() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-        const querySnapshot = await getDocs(q);
-        const fetchedProducts = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        const res = await fetch('/api/products', { next: { revalidate: 60 } });
+        const fetchedProducts = await res.json();
 
         // If empty, fall back to dummy data so layout isn't broken
         if (fetchedProducts.length > 0) {

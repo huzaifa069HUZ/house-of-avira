@@ -193,12 +193,8 @@ export default function Header() {
     if (allProducts.length === 0 && !isSearching) {
       setIsSearching(true);
       try {
-        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-        const querySnapshot = await getDocs(q);
-        const productsList = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        const res = await fetch('/api/products');
+        const productsList = await res.json();
         setAllProducts(productsList);
       } catch (error) {
         console.error("Error fetching products:", error);

@@ -127,8 +127,10 @@ export const metadata = {
   },
 };
 
-import ProductOptionsModal from "@/components/ProductOptionsModal";
-import Chatbot from "@/components/Chatbot";
+import dynamic from 'next/dynamic';
+
+const ProductOptionsModal = dynamic(() => import("@/components/ProductOptionsModal"), { ssr: false });
+const Chatbot = dynamic(() => import("@/components/Chatbot"), { ssr: false });
 
 export default function RootLayout({ children }) {
   const jsonLd = {

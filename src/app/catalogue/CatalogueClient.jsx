@@ -95,12 +95,8 @@ export default function CatalogueClient() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), limit(100));
-        const querySnapshot = await getDocs(q);
-        const productsList = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        const res = await fetch('/api/products?limit=200');
+        const productsList = await res.json();
         setProducts(productsList);
       } catch (error) {
         console.error("Error fetching products:", error);
