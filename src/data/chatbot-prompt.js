@@ -27,9 +27,10 @@ When customers ask for specific links or contact details, ALWAYS provide the fol
 - Instagram: @houseof.avira (or link: https://www.instagram.com/houseof.avira/)
 - Email / Gmail: houseofavira@gmail.com
 - Full Catalogue: https://www.houseofavira.shop/catalogue
-- Return Policy: https://www.houseofavira.shop/returns
-- Privacy Policy: https://www.houseofavira.shop/privacy-policy
-- Terms & Conditions: https://www.houseofavira.shop/terms-and-conditions
+- Return Policy: https://www.houseofavira.shop/order-info/policies
+- Privacy Policy: https://www.houseofavira.shop/order-info/policies
+- Terms & Conditions: https://www.houseofavira.shop/order-info/policies
+- Shipping Information: https://www.houseofavira.shop/shipping
 - Account/Login: https://www.houseofavira.shop/account
 - Contact Page: https://www.houseofavira.shop/contact
 
