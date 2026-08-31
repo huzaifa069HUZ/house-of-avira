@@ -479,7 +479,7 @@ export default function CategoryClient({ slug = [] }) {
                         </button>
                       );
                     })}
-                  </div></div>
+                  </div>
               </div>
             )}
 
