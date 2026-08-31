@@ -1,12 +1,13 @@
 import { GoogleGenAI } from '@google/genai';
 import { SYSTEM_PROMPT } from '@/data/chatbot-prompt';
 
-const ai = new GoogleGenAI({});
-
 export const runtime = 'edge';
 
 export async function POST(req) {
   try {
+    // Initialize inside the request handler to avoid Edge runtime build errors
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    
     const body = await req.json();
     const { messages } = body;
 
