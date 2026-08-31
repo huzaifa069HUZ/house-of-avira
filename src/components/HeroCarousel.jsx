@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -100,9 +101,12 @@ export default function HeroCarousel() {
               key={slide.id}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             >
-              <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url('${slide.desktopImage}')` }}
+              <Image 
+                src={slide.desktopImage}
+                alt={slide.title || 'House of Avira'}
+                fill
+                priority={index === 0}
+                className="object-cover object-center"
               />
               <div className="absolute inset-0 bg-black/20"></div>
               
@@ -147,9 +151,12 @@ export default function HeroCarousel() {
               key={slide.id}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             >
-              <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url('${slide.mobileImage || slide.imageUrl}')` }}
+              <Image 
+                src={slide.mobileImage || slide.imageUrl}
+                alt="House of Avira Banner"
+                fill
+                priority={index === 0}
+                className="object-cover object-center"
               />
               <div className="absolute inset-0 bg-black/20"></div>
               

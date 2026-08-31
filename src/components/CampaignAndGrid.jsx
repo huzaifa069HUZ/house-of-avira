@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function CampaignAndGrid() {
 
@@ -17,7 +18,7 @@ export default function CampaignAndGrid() {
       <div className="sticky top-0 h-[80vh] md:h-[100vh] w-full z-0 overflow-hidden">
         <section className="w-full h-full relative">
           <div className="w-full h-full origin-bottom">
-            <img src="/final section.png" alt="Campaign" className="w-full h-full object-cover" />
+            <Image src="/final section.png" alt="Campaign" fill sizes="100vw" className="object-cover" />
           </div>
           <div className="absolute inset-0 bg-black/20" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
@@ -41,11 +42,13 @@ export default function CampaignAndGrid() {
               key={idx}
               className={`w-full md:w-1/4 flex flex-col md:justify-end border-b md:border-b-0 border-r md:border-r-0 border-[#000000]/10 block`}
             >
-              <div className={`w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden ${item.bg}`}>
-                <img
+              <div className={`relative w-full aspect-[4/5] md:h-full flex items-center justify-center overflow-hidden ${item.bg}`}>
+                <Image
                   src={item.img}
                   alt={item.title}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
               {/* Mobile text (hidden on desktop) */}

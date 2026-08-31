@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
@@ -64,31 +65,35 @@ export default function ProductCard({ product }) {
         >
           {product.images && product.images.length > 0 ? (
             product.images.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                alt={`${name} ${idx + 1}`}
-                loading="lazy"
-                className="w-full h-full flex-shrink-0 snap-center object-cover object-center pointer-events-none"
-              />
+              <div key={idx} className="relative w-full h-full flex-shrink-0 snap-center">
+                <Image
+                  src={img}
+                  alt={`${name} ${idx + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover object-center pointer-events-none"
+                />
+              </div>
             ))
           ) : (
-            <img
+            <Image
               src={imageUrl || (product.images && product.images[0])}
               alt={name}
-              loading="lazy"
-              className="w-full h-full flex-shrink-0 snap-center object-cover object-center pointer-events-none"
+              fill
+              sizes="(max-width: 768px) 50vw, 25vw"
+              className="object-cover object-center pointer-events-none"
             />
           )}
         </Link>
 
         {/* Desktop Hover Effect (only applies if multiple images exist) */}
         {product.images && product.images.length > 1 && (
-          <img
+          <Image
             src={product.images[1]}
             alt={`${name} secondary`}
-            loading="lazy"
-            className="hidden md:block absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-[15] pointer-events-none"
+            fill
+            sizes="(max-width: 768px) 50vw, 25vw"
+            className="hidden md:block object-cover object-center opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-[15] pointer-events-none"
           />
         )}
         

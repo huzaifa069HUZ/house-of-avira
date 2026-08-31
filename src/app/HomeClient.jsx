@@ -11,6 +11,7 @@ import LiveProducts from '@/components/LiveProducts';
 
 import ContactForm from '@/components/ContactForm';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
@@ -295,7 +296,7 @@ export default function HomeClient() {
             { img: '/images/looks/trendy.png', title: 'TRENDY' }
           ].map((look, idx) => (
             <Link href={`/shop-your-look?category=${encodeURIComponent(look.title.toLowerCase())}`} key={idx} className="relative group overflow-hidden block w-full h-[60vh] md:h-full cursor-pointer">
-              <img src={look.img} alt={look.title} className="w-full h-full object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
+              <Image src={look.img} alt={look.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:from-black/60 md:via-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
                 <span className="text-white text-lg md:text-xl font-perandory font-bold tracking-widest uppercase">{look.title}</span>
@@ -328,12 +329,13 @@ export default function HomeClient() {
               href={cat.link}
               className="relative aspect-[3/4] block overflow-hidden bg-gray-200 group cursor-pointer"
             >
-              <img
-                src={cat.img}
-                alt={cat.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
+              <Image
+                  src={cat.img}
+                  alt={cat.title}
+                  fill
+                  sizes="(max-width: 768px) 25vw, 15vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
               {/* Dark Overlay Gradient (bottom only) */}
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-90 transition-opacity duration-300" />
               
@@ -365,11 +367,12 @@ export default function HomeClient() {
                 href={`/shop-aesthetic?category=${encodeURIComponent(cat.title)}`}
                 className="relative aspect-[3/4] block overflow-hidden bg-gray-100 group cursor-pointer rounded-2xl md:rounded-none transition-all hover:ring-2 hover:ring-[#000000]"
               >
-                <img
+                <Image
                   src={cat.img}
                   alt={cat.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
+                  fill
+                  sizes="(max-width: 768px) 25vw, 15vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 {/* Dark Overlay Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
