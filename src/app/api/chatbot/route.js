@@ -22,7 +22,7 @@ export async function POST(req) {
 
     // Start a streaming chat session using the Interactions API
     const responseStream = await ai.interactions.create({
-      model: 'gemini-3.7-flash',
+      model: 'gemini-3.5-flash-lite',
       input: input,
       system_instruction: SYSTEM_PROMPT,
       stream: true,

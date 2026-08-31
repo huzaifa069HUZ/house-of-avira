@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Sparkles, X, Send, Minimize2, ChevronDown, MessageSquareText } from 'lucide-react';
+import { ThinkingOrb } from 'thinking-orbs';
 
 const PREFILLED_QUESTIONS = [
   "WHY IS SHIPPING CHARGED SEPARATELY?",
@@ -146,10 +147,8 @@ export default function Chatbot() {
           ))}
           
           {isLoading && (
-            <div className="self-start px-4 py-3 bg-white border border-gray-100 rounded-2xl rounded-bl-sm shadow-sm flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            <div className="self-start flex items-center justify-center">
+              <ThinkingOrb state="composing" size={64} speed={1.80} />
             </div>
           )}
           <div ref={messagesEndRef} />
