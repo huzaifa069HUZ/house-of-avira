@@ -105,6 +105,8 @@ export default function HeroCarousel() {
                 src={slide.desktopImage}
                 alt={slide.title || 'House of Avira'}
                 fill
+                sizes="100vw"
+                quality={60}
                 priority={index === 0}
                 className="object-cover object-center"
               />
@@ -155,6 +157,8 @@ export default function HeroCarousel() {
                 src={slide.mobileImage || slide.imageUrl}
                 alt="House of Avira Banner"
                 fill
+                sizes="100vw"
+                quality={60}
                 priority={index === 0}
                 className="object-cover object-center"
               />
