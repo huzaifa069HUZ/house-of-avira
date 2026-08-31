@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useChatbotStore } from '@/store/chatbotStore';
 
 const GsapImageStack = dynamic(() => import('@/components/ui/gsap-image-stack'), { 
   ssr: false,
@@ -61,6 +62,7 @@ const TimelineItem = ({ step, idx }) => {
 };
 
 export default function ShippingClient() {
+  const openChatbot = useChatbotStore(state => state.openChatbot);
   const [activeSection, setActiveSection] = useState('how-it-works');
   const [openFaq, setOpenFaq] = useState(null);
   const heroRef = useRef(null);
@@ -657,10 +659,10 @@ export default function ShippingClient() {
             Our team is always happy to help. DM us on Instagram or use our AI assistant — we'll make sure you have everything you need before placing your order.
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4 max-w-md mx-auto">
-            <a href="#" className="bg-[#8A001A] text-white px-6 py-3.5 rounded-lg text-[13px] font-medium hover:bg-[#B86B5E] transition-colors flex items-center justify-center gap-2">
-              <Sparkles className="w-4 h-4" /> USE OUR CHATBOT
-            </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="bg-transparent border border-[#FFFFFF]/30 text-[#FFFFFF] px-6 py-3.5 rounded-lg text-[13px] font-medium hover:border-[#FFFFFF]/60 transition-colors flex items-center justify-center gap-2">
+            <button onClick={openChatbot} className="bg-[#8A001A] text-white px-6 py-3.5 rounded-lg text-[13px] font-medium hover:bg-[#B86B5E] transition-colors flex items-center justify-center gap-2">
+              <MessageSquareText className="w-4 h-4" /> Use our Chatbot
+            </button>
+            <a href="https://www.instagram.com/houseofavira" target="_blank" rel="noopener noreferrer" className="bg-transparent border border-[#FFFFFF]/30 text-[#FFFFFF] px-6 py-3.5 rounded-lg text-[13px] font-medium hover:border-[#FFFFFF]/60 transition-colors flex items-center justify-center gap-2">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg> DM on Instagram
             </a>
           </div>

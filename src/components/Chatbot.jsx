@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Sparkles, X, Send, Minimize2, ChevronDown, MessageSquareText } from 'lucide-react';
 import { ThinkingOrb } from 'thinking-orbs';
+import { useChatbotStore } from '@/store/chatbotStore';
 
 const PREFILLED_QUESTIONS = [
   "WHY IS SHIPPING CHARGED SEPARATELY?",
@@ -11,7 +12,11 @@ const PREFILLED_QUESTIONS = [
 ];
 
 export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useChatbotStore(state => state.isOpen);
+  const openChatbot = useChatbotStore(state => state.openChatbot);
+  const closeChatbot = useChatbotStore(state => state.closeChatbot);
+  const setIsOpen = (val) => val ? openChatbot() : closeChatbot();
+  
   const [messages, setMessages] = useState([
     { role: 'assistant', content: "Hi! Welcome to House of Avira. I'm the AI chatbot to help you find your perfect fit 💖" }
   ]);
