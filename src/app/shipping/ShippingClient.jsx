@@ -16,7 +16,7 @@ import {
   Route, Plane, Tag, Shield, HelpCircle, 
   Store, Home, UserRound, Ship, Weight, Award, 
   Landmark, MapPin, Package, Gem, Droplet, Box, 
-  Footprints, ChevronDown, Sparkles, Heart, Calculator, Truck
+  Footprints, ChevronDown, Sparkles, Heart, Calculator, Truck, MessageSquareText
 } from 'lucide-react';
 
 const FadeIn = ({ children, delay = 0, className = "" }) => (
