@@ -7,6 +7,46 @@ import { Loader2, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import Link from 'next/link';
 
+const COLOR_MAP = {
+  black: '#000000',
+  white: '#ffffff',
+  red: '#ff0000',
+  blue: '#0000ff',
+  green: '#008000',
+  yellow: '#ffff00',
+  purple: '#800080',
+  orange: '#ffa500',
+  pink: '#ffc0cb',
+  brown: '#a52a2a',
+  grey: '#808080',
+  gray: '#808080',
+  silver: '#c0c0c0',
+  gold: '#ffd700',
+  navy: '#000080',
+  beige: '#f5f5dc',
+  maroon: '#800000',
+  olive: '#808000',
+  teal: '#008080',
+  cyan: '#00ffff',
+  magenta: '#ff00ff',
+  cream: '#fffdd0',
+  mustard: '#ffdb58',
+  burgundy: '#800020',
+  charcoal: '#36454f',
+  peach: '#ffdab9',
+  lavender: '#e6e6fa',
+  mint: '#98ff98',
+  coral: '#ff7f50',
+  rust: '#b7410e',
+};
+
+const getColorHex = (colorName) => {
+  if (!colorName) return '#000000';
+  if (colorName.startsWith('#')) return colorName.toLowerCase();
+  const lower = colorName.toLowerCase();
+  return COLOR_MAP[lower] || null;
+};
+
 export default function CategoryClient({ slug = [] }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -143,19 +183,31 @@ export default function CategoryClient({ slug = [] }) {
   }, [routeFilteredProducts]);
 
   const availableColors = useMemo(() => {
-    const colors = new Set();
+    const colorMap = new Map();
     routeFilteredProducts.forEach(p => {
       if (p.swatches) {
         p.swatches.forEach(s => {
-          const colorVal = s.name || s.color;
-          if (colorVal) {
-            const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-            colors.add(formatted);
+          let name = (s.colorName || s.name || '').trim();
+          let hex = (s.color || '').trim();
+          
+          if (!name && hex) name = hex;
+          if (!name) return;
+          
+          const formatted = name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+          
+          let computedHex = getColorHex(formatted);
+          if (!computedHex && hex.startsWith('#')) computedHex = hex.toLowerCase();
+          if (!computedHex) computedHex = formatted.toLowerCase(); // fallback
+          
+          let finalBgHex = hex.startsWith('#') ? hex : (getColorHex(formatted) || '#FAFAFA');
+
+          if (!colorMap.has(computedHex) || colorMap.get(computedHex).name.startsWith('#')) {
+             colorMap.set(computedHex, { name: formatted, bgHex: finalBgHex });
           }
         });
       }
     });
-    return Array.from(colors);
+    return Array.from(colorMap.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [routeFilteredProducts]);
 
   // Apply user filters and sort
@@ -167,13 +219,25 @@ export default function CategoryClient({ slug = [] }) {
       result = result.filter(p => p.sizes && p.sizes.some(s => selectedSizes.includes(s)));
     }
 
-    // Filter Color (Match by swatch name or hex code loosely)
+    // Filter Color (Match by mapping to the same deduplicated computed hex/name as availableColors)
     if (selectedColors.length > 0) {
       result = result.filter(p => p.swatches && p.swatches.some(s => {
-        const colorVal = s.name || s.color;
-        if (!colorVal) return false;
-        const formatted = colorVal.trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-        return selectedColors.includes(formatted);
+        let name = (s.colorName || s.name || '').trim();
+        let hex = (s.color || '').trim();
+        if (!name && hex) name = hex;
+        if (!name) return false;
+        
+        const formatted = name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        let computedHex = getColorHex(formatted);
+        if (!computedHex && hex.startsWith('#')) computedHex = hex.toLowerCase();
+        if (!computedHex) computedHex = formatted.toLowerCase();
+
+        return selectedColors.some(selectedColor => {
+          let selHex = getColorHex(selectedColor);
+          if (!selHex && selectedColor.startsWith('#')) selHex = selectedColor.toLowerCase();
+          if (!selHex) selHex = selectedColor.toLowerCase();
+          return computedHex === selHex;
+        });
       }));
     }
 
@@ -298,22 +362,21 @@ export default function CategoryClient({ slug = [] }) {
                 </button>
                 {activeDropdown === 'desktop_color' && (
                   <div className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-4 animate-in fade-in slide-in-from-top-2">
-                    <div className="flex flex-wrap gap-2">
-                      {availableColors.map(color => (
-                        <button 
-                          key={color}
-                          onClick={() => toggleColor(color)}
-                          className={`px-3 py-2 text-[11px] font-bold rounded-lg border transition-colors flex items-center gap-2 ${selectedColors.includes(color) ? 'bg-black text-white border-black' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
-                        >
-                          {/* If color is a hex code, show color circle, otherwise just text */}
-                          {color.startsWith('#') && (
-                            <span className="w-3 h-3 rounded-full border border-black/20" style={{ backgroundColor: color }} />
-                          )}
-                          {color.startsWith('#') ? 'Color' : color}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                      <div className="flex flex-wrap gap-2">
+                        {availableColors.map(colorObj => {
+                          const { name: color, bgHex: hex } = colorObj;
+                          return (
+                            <button 
+                              key={color}
+                              onClick={() => toggleColor(color)}
+                              className={`px-3 py-2 text-[11px] font-bold rounded-lg border transition-colors flex items-center gap-2 ${selectedColors.includes(color) ? 'bg-black text-white border-black' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
+                            >
+                              <span className="w-3 h-3 rounded-full border border-black/20" style={{ backgroundColor: hex || '#FAFAFA' }} />
+                              <span className="capitalize">{color.startsWith('#') ? 'Color' : color}</span>
+                            </button>
+                          );
+                        })}
+                      </div></div>
                 )}
               </div>
             )}
@@ -406,20 +469,21 @@ export default function CategoryClient({ slug = [] }) {
             {availableColors.length > 0 && (
               <div>
                 <h3 className="text-xs font-bold tracking-widest uppercase text-neutral-500 mb-4">Color</h3>
-                <div className="flex flex-wrap gap-3">
-                  {availableColors.map(color => (
-                    <button 
-                      key={color}
-                      onClick={() => toggleColor(color)}
-                      className={`px-4 py-3 text-[11px] font-bold rounded-2xl border transition-colors flex items-center gap-2 ${selectedColors.includes(color) ? 'bg-black text-white border-black' : 'bg-[#FAFAFA] text-black border-transparent'}`}
-                    >
-                      {color.startsWith('#') && (
-                        <span className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: color }} />
-                      )}
-                      {color.startsWith('#') ? 'Color' : color}
-                    </button>
-                  ))}
-                </div>
+                  <div className="flex flex-wrap gap-3">
+                    {availableColors.map(colorObj => {
+                      const { name: color, bgHex: hex } = colorObj;
+                      return (
+                        <button 
+                          key={color}
+                          onClick={() => toggleColor(color)}
+                          className={`px-4 py-3 text-[11px] font-bold rounded-2xl border transition-colors flex items-center gap-2 ${selectedColors.includes(color) ? 'bg-black text-white border-black' : 'bg-[#FAFAFA] text-black border-transparent'}`}
+                        >
+                          <span className="w-4 h-4 rounded-full border border-black/10" style={{ backgroundColor: hex || '#FAFAFA' }} />
+                          <span className="capitalize">{color.startsWith('#') ? 'Color' : color}</span>
+                        </button>
+                      );
+                    })}
+                  </div></div>
               </div>
             )}
 

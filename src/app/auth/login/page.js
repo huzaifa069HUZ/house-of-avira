@@ -100,7 +100,7 @@ export default function Login() {
     try {
         const userDocRef = doc(db, 'users', googleUser.uid);
         let role = 'customer';
-        const allowedAdminEmails = ['orders.houseofavira@gmail.com', 'order.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com', 'huaifatabish9145@gmail.com'];
+        const allowedAdminEmails = ['huzaifatabish9145@gmail.com', 'houseofavira@gmail.com', 'orders.houseofavira@gmail.com'];
         if (allowedAdminEmails.includes(googleUser.email.toLowerCase())) {
           role = 'admin_owner';
         }

@@ -251,7 +251,7 @@ export default function AccountPage() {
               </Link>
 
               {/* Safe check for all admin emails including typos provided by user */}
-              {(role === 'admin_owner' || (user?.email && ['orders.houseofavira@gmail.com', 'order.houseofavira@gmail.com', 'huzaifatabish9145@gmail.com', 'huaifatabish9145@gmail.com'].includes(user.email.toLowerCase()))) && (
+              {(role === 'admin_owner' || (user?.email && ['huzaifatabish9145@gmail.com', 'houseofavira@gmail.com', 'orders.houseofavira@gmail.com'].includes(user.email.toLowerCase()))) && (
                 <Link href="/admin" className="mt-4 flex items-center justify-center font-perandory text-sm text-white bg-black px-5 py-3.5 uppercase tracking-widest hover:bg-black/80 transition-colors">
                   Admin Dashboard
                 </Link>
