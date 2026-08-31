@@ -3,6 +3,8 @@ import { SYSTEM_PROMPT } from '@/data/chatbot-prompt';
 
 const ai = new GoogleGenAI({});
 
+export const runtime = 'edge';
+
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -19,7 +21,7 @@ export async function POST(req) {
 
     // Start a streaming chat session using the Interactions API
     const responseStream = await ai.interactions.create({
-      model: 'gemini-3.6-flash',
+      model: 'gemini-3.7-flash',
       input: input,
       system_instruction: SYSTEM_PROMPT,
       stream: true,
