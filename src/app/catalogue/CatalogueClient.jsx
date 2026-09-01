@@ -169,6 +169,33 @@ const sortSizes = (a, b) => {
     return Array.from(sizes).sort(sortSizes);
   }, [categoryFilteredProducts]);
 
+  
+  const groupedSizes = useMemo(() => {
+    const groups = {
+      'Apparel': [],
+      'Phone Models': [],
+      'Couples': [],
+      'Tech / Cables': [],
+      'Other': []
+    };
+    
+    availableSizes.forEach(size => {
+      const s = size.toLowerCase();
+      if (s.includes('iphone') || s.includes('samsung') || s.includes('pixel')) {
+        groups['Phone Models'].push(size);
+      } else if (s.includes('female') || s.includes('male')) {
+        groups['Couples'].push(size);
+      } else if (s.includes('cable') || s.includes('c-type') || s.includes('type c') || s.includes('usb')) {
+        groups['Tech / Cables'].push(size);
+      } else if (SIZE_ORDER[size.toUpperCase()] !== undefined || s.endsWith('xl') || s === 'one size' || s === 'free size') {
+        groups['Apparel'].push(size);
+      } else {
+        groups['Other'].push(size);
+      }
+    });
+    return Object.entries(groups).filter(([_, items]) => items.length > 0);
+  }, [availableSizes]);
+
   const availableColors = useMemo(() => {
     const colorMap = new Map();
     categoryFilteredProducts.forEach(p => {
@@ -395,61 +422,24 @@ const sortSizes = (a, b) => {
                       exit={{ opacity: 0, y: 10 }}
                       className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-4"
                     >
-                      <div className="grid grid-cols-3 gap-2">
-                        {availableSizes.map(size => (
-                          <button 
-                            key={size}
-                            onClick={() => toggleSize(size)}
-                            className={`py-2 text-[11px] font-bold rounded-lg border transition-all active:scale-95 ${selectedSizes.includes(size) ? 'bg-black text-white border-black shadow-md' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
-                          >
-                            {size}
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
-            
-            {/* Color Dropdown */}
-            {availableColors.length > 0 && (
-              <div className="relative">
-                <button 
-                  onClick={() => toggleDropdown('desktop_color')}
-                  className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-black hover:opacity-70 transition-opacity"
-                >
-                  Color {selectedColors.length > 0 && <span className="bg-black text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px]">{selectedColors.length}</span>} <ChevronDown className={`w-3 h-3 transition-transform ${activeDropdown === 'desktop_color' ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {activeDropdown === 'desktop_color' && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 mt-4 w-64 bg-white/95 backdrop-blur-xl border border-black/5 shadow-2xl rounded-2xl overflow-hidden p-5"
-                    >
-                      <div className="flex flex-wrap gap-3">
-                        {availableColors.map(colorObj => {
-                          const { name: color, bgHex: hex } = colorObj;
-                          return (
-                            <button 
-                              key={color}
-                              onClick={() => toggleColor(color)}
-                              title={color}
-                              className={`w-8 h-8 rounded-full border border-black/10 transition-all flex items-center justify-center active:scale-95`}
-                              style={{ 
-                                backgroundColor: hex, 
-                                ...(selectedColors.includes(color) ? {boxShadow: `0 0 0 2px white, 0 0 0 4px black`} : {}) 
-                              }}
-                            >
-                              {selectedColors.includes(color) && (
-                                <Check className={`w-4 h-4 ${hex && hex.toLowerCase() === '#ffffff' ? 'text-black' : 'text-white'}`} />
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
+                      <div className="flex flex-col gap-4 max-h-[300px] overflow-y-auto hide-scrollbar pr-1">
+                          {groupedSizes.map(([groupName, sizes]) => (
+                            <div key={groupName}>
+                              <h4 className="text-[9px] font-bold tracking-widest uppercase text-neutral-400 mb-2">{groupName}</h4>
+                              <div className="grid grid-cols-3 gap-2">
+                                {sizes.map(size => (
+                                  <button 
+                                    key={size}
+                                    onClick={() => toggleSize(size)}
+                                    className={`py-2 text-[10px] font-bold rounded-lg border transition-all active:scale-95 ${selectedSizes.includes(size) ? 'bg-black text-white border-black shadow-md' : 'bg-transparent text-black border-black/10 hover:border-black/30'}`}
+                                  >
+                                    {size}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -576,44 +566,23 @@ const sortSizes = (a, b) => {
                 {availableSizes.length > 0 && (
                   <div>
                     <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-500 mb-4">Size</h3>
-                    <div className="grid grid-cols-4 gap-3">
-                      {availableSizes.map(size => (
-                        <button 
-                          key={size}
-                          onClick={() => toggleSize(size)}
-                          className={`py-3 text-[13px] font-bold rounded-2xl border transition-all active:scale-95 ${selectedSizes.includes(size) ? 'bg-black text-white border-black shadow-md' : 'bg-white text-black border-neutral-200 hover:border-black/30'}`}
-                        >
-                          {size}
-                        </button>
+                    <div className="flex flex-col gap-6">
+                      {groupedSizes.map(([groupName, sizes]) => (
+                        <div key={groupName}>
+                          <h4 className="text-[10px] font-bold tracking-widest uppercase text-neutral-400 mb-3">{groupName}</h4>
+                          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                            {sizes.map(size => (
+                              <button 
+                                key={size}
+                                onClick={() => toggleSize(size)}
+                                className={`py-3 px-1 text-[10px] font-bold rounded-2xl border transition-all active:scale-95 ${selectedSizes.includes(size) ? 'bg-black text-white border-black shadow-md' : 'bg-[#FAFAFA] text-black border-transparent'}`}
+                              >
+                                {size}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
                       ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Colors */}
-                {availableColors.length > 0 && (
-                  <div>
-                    <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-500 mb-4">Color</h3>
-                    <div className="flex flex-wrap gap-4">
-                      {availableColors.map(colorObj => {
-                        const { name: color, bgHex: hex } = colorObj;
-                        return (
-                          <button 
-                            key={color}
-                            onClick={() => toggleColor(color)}
-                            title={color}
-                            className={`w-10 h-10 rounded-full border border-black/10 transition-all flex items-center justify-center active:scale-95`}
-                            style={{ 
-                              backgroundColor: hex, 
-                              ...(selectedColors.includes(color) ? {boxShadow: `0 0 0 2px white, 0 0 0 4px black`} : {}) 
-                            }}
-                          >
-                            {selectedColors.includes(color) && (
-                              <Check className={`w-5 h-5 ${hex && hex.toLowerCase() === '#ffffff' ? 'text-black' : 'text-white'}`} />
-                            )}
-                          </button>
-                        );
-                      })}
                     </div>
                   </div>
                 )}
