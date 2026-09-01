@@ -44,7 +44,7 @@ const aestheticsCards = [
   { title: "y2k", img: "/elegant-chic.png" },
   { title: "streetwear", img: "/streetwear.png" },
   { title: "elegant chic", img: "/y2k.png" },
-  { title: "opiúm", img: "/dark-feminine.png" },
+  { title: "grunge", img: "/dark-feminine.png" },
   { title: "Summer vacation", img: "/summer-vacation.png" }
 ];
 
@@ -69,7 +69,7 @@ export default function HomeClient() {
     'y2k',
     'streetwear',
     'elegant chic',
-    'opiúm'
+    'grunge'
   ];
   const [activeAesthetic, setActiveAesthetic] = useState(aestheticsTabs[0]);
   const [activeTab, setActiveTab] = useState('new'); // 'new' or 'best'
@@ -287,7 +287,7 @@ export default function HomeClient() {
         <div className="w-full grid grid-cols-1 md:grid-cols-4 aspect-auto md:aspect-[4/1.5] lg:aspect-[4/1.8]">
           {[
             { img: '/images/looks/casual.jpg', title: 'CASUAL' },
-            { img: '/images/looks/summer.png', title: 'SUMMER' },
+            { img: '/images/looks/summer.png', title: 'SUMMER VACATION' },
             { img: '/images/looks/festival-concerts.png', title: 'FESTIVALS / CONCERTS' },
             { img: '/images/looks/trendy.png', title: 'TRENDY' }
           ].map((look, idx) => (

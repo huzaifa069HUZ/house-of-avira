@@ -17,7 +17,7 @@ const aestheticsTabs = [
   'y2k',
   'streetwear',
   'elegant chic',
-  'opiúm',
+  'grunge',
   'Summer vacation'
 ];
 

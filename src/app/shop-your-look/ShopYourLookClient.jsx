@@ -12,7 +12,7 @@ import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 const aestheticsTabs = [
   'casual',
-  'summer',
+  'summer vacation',
   'festivals / concerts',
   'trendy'
 ];

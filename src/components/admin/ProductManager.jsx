@@ -974,9 +974,9 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                   {sections.includes('Shop Your Look') && (
                     <div className="pl-6 mt-1 flex flex-col gap-2">
                       {[
-                        'casual', 'summer', 'festivals / concerts', 'trendy',
+                        'casual', 'summer vacation', 'festivals / concerts', 'trendy',
                         'babydoll / coquette', 'dark feminine', 'office siren',
-                        'y2k', 'streetwear', 'elegant chic', 'opiúm'
+                        'y2k', 'streetwear', 'elegant chic', 'grunge'
                       ].map(option => (
                         <label key={option} className="flex items-center gap-2 text-sm cursor-pointer text-[#333333]">
                           <input 
