@@ -47,6 +47,19 @@ const getColorHex = (colorName) => {
   return COLOR_MAP[lower] || null;
 };
 
+const SIZE_ORDER = {
+  "XXS": 1, "XS": 2, "S": 3, "SMALL": 3,
+  "M": 4, "MEDIUM": 4, "L": 5, "LARGE": 5,
+  "XL": 6, "1X": 6, "2XL": 7, "XXL": 7, "3XL": 8, "XXXL": 8, "4XL": 9, "5XL": 10
+};
+
+const sortSizes = (a, b) => {
+  const aVal = SIZE_ORDER[a.toUpperCase()] || 99;
+  const bVal = SIZE_ORDER[b.toUpperCase()] || 99;
+  if (aVal !== bVal) return aVal - bVal;
+  return a.localeCompare(b);
+};
+
 export default function CategoryClient({ slug = [] }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,13 +68,22 @@ export default function CategoryClient({ slug = [] }) {
   const subCategory = slug[1]?.toLowerCase() || '';
 
   // Filter & Sort States
-  const [activeSort, setActiveSort] = useState('newest'); // newest, price_asc, price_desc
+  const [activeSort, setActiveSort] = useState('newest');
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
   
   // Mobile UI States
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // 'sort', 'size', 'color'
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  // Reset filters when route (slug) changes
+  useEffect(() => {
+    setSelectedSizes([]);
+    setSelectedColors([]);
+    setActiveSort('newest');
+    setShowMobileFilters(false);
+    setActiveDropdown(null);
+  }, [mainCategory, subCategory]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -175,7 +197,7 @@ export default function CategoryClient({ slug = [] }) {
     routeFilteredProducts.forEach(p => {
       if (p.sizes) p.sizes.forEach(s => sizes.add(s));
     });
-    return Array.from(sizes).sort();
+    return Array.from(sizes).sort(sortSizes);
   }, [routeFilteredProducts]);
 
   const availableColors = useMemo(() => {

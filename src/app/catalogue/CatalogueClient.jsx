@@ -148,12 +148,25 @@ export default function CatalogueClient() {
   }, [baseProducts, activeCategory]);
 
   // Extract available unique sizes and colors dynamically from the category-filtered items
+const SIZE_ORDER = {
+  "XXS": 1, "XS": 2, "S": 3, "SMALL": 3,
+  "M": 4, "MEDIUM": 4, "L": 5, "LARGE": 5,
+  "XL": 6, "1X": 6, "2XL": 7, "XXL": 7, "3XL": 8, "XXXL": 8, "4XL": 9, "5XL": 10
+};
+
+const sortSizes = (a, b) => {
+  const aVal = SIZE_ORDER[a.toUpperCase()] || 99;
+  const bVal = SIZE_ORDER[b.toUpperCase()] || 99;
+  if (aVal !== bVal) return aVal - bVal;
+  return a.localeCompare(b);
+};
+
   const availableSizes = useMemo(() => {
     const sizes = new Set();
     categoryFilteredProducts.forEach(p => {
       if (p.sizes) p.sizes.forEach(s => sizes.add(s));
     });
-    return Array.from(sizes).sort();
+    return Array.from(sizes).sort(sortSizes);
   }, [categoryFilteredProducts]);
 
   const availableColors = useMemo(() => {
