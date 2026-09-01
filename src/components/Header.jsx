@@ -54,7 +54,7 @@ const menuData = [
     children: [
       { title: "Handbags", href: "/category/bags/handbags" },
       { title: "mini bags", href: "/category/bags/mini-bags" },
-      { title: "sholder Bags", href: "/category/bags/shoulder-bags" },
+      { title: "Shoulder Bags", href: "/category/bags/shoulder-bags" },
     ]
   },
   {
@@ -63,23 +63,13 @@ const menuData = [
     children: [
       { 
         title: "phone cases", 
-        href: "/category/accessories/phone-cases",
-        subChildren: [
-          { title: "iphone", href: "/category/accessories/phone-cases/iphone" },
-          { title: "Android", href: "/category/accessories/phone-cases/android" },
-        ]
+        href: "/category/accessories/phone-cases"
       },
       { title: "hair accessories", href: "/category/accessories/hair" },
       { title: "belts", href: "/category/accessories/belts" },
       { 
         title: "jewellery", 
-        href: "/category/accessories/jewellery",
-        subChildren: [
-          { title: "necklace", href: "/category/accessories/jewellery/necklace" },
-          { title: "rings", href: "/category/accessories/jewellery/rings" },
-          { title: "bracelets", href: "/category/accessories/jewellery/bracelets" },
-          { title: "earings", href: "/category/accessories/jewellery/earings" },
-        ]
+        href: "/category/accessories/jewellery"
       },
       { title: "nails and nail art supplies", href: "/category/accessories/nails" },
       { title: "keychains / bag charms", href: "/category/accessories/keychains" },
