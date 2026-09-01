@@ -974,7 +974,7 @@ export default function ProductManager({ initialProduct = null, onSuccess }) {
                   {sections.includes('Shop Your Look') && (
                     <div className="pl-6 mt-1 flex flex-col gap-2">
                       {[
-                        'casual', 'summer vacation', 'festivals / concerts', 'trendy',
+                        'casual', 'summer', 'Summer vacation', 'festivals / concerts', 'trendy',
                         'babydoll / coquette', 'dark feminine', 'office siren',
                         'y2k', 'streetwear', 'elegant chic', 'grunge'
                       ].map(option => (

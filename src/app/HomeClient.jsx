@@ -287,7 +287,7 @@ export default function HomeClient() {
         <div className="w-full grid grid-cols-1 md:grid-cols-4 aspect-auto md:aspect-[4/1.5] lg:aspect-[4/1.8]">
           {[
             { img: '/images/looks/casual.jpg', title: 'CASUAL' },
-            { img: '/images/looks/summer.png', title: 'SUMMER VACATION' },
+            { img: '/images/looks/summer.png', title: 'SUMMER' },
             { img: '/images/looks/festival-concerts.png', title: 'FESTIVALS / CONCERTS' },
             { img: '/images/looks/trendy.png', title: 'TRENDY' }
           ].map((look, idx) => (
