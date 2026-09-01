@@ -8,7 +8,7 @@ const CACHE_TTL = 60 * 1000; // 60 seconds
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const maxItems = parseInt(searchParams.get('limit') || '200', 10);
+  const maxItems = parseInt(searchParams.get('limit') || '1000', 10);
 
   const now = Date.now();
   
@@ -23,7 +23,7 @@ export async function GET(request) {
   }
 
   try {
-    const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), limit(500));
+    const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), limit(1000));
     const querySnapshot = await getDocs(q);
     const products = querySnapshot.docs.map(doc => ({
       id: doc.id,
