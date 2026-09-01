@@ -92,9 +92,20 @@ export default function Chatbot() {
 
   const formatMessageContent = (content) => {
     // Simple formatter to handle bolding, links, and basic line breaks without a heavy markdown parser
-    let formatted = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; text-underline-offset: 2px; font-weight: 500;">$1</a>');
+    let formatted = content;
+    
+    // 1. Handle markdown links: [text](url)
+    formatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; text-underline-offset: 2px; font-weight: 500;">$1</a>');
+    
+    // 2. Handle raw URLs that aren't already in an href attribute
+    formatted = formatted.replace(/(^|[^="'])(https?:\/\/[^\s)*\]"']+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; text-underline-offset: 2px; font-weight: 500;">$2</a>');
+    
+    // 3. Handle emails
     formatted = formatted.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<a href="mailto:$1" style="text-decoration: underline; text-underline-offset: 2px; font-weight: 500;">$1</a>');
+    
+    // 4. Handle bolding
     formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
     return <div dangerouslySetInnerHTML={{ __html: formatted.replace(/\n/g, '<br />') }} />;
   };
 
