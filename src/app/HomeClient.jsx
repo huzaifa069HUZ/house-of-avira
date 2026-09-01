@@ -31,9 +31,9 @@ const categories = [
   { title: "T-shirts", img: "/images/categories/tshirts.png", link: "/category/women/t-shirts" },
   { title: "Co-ords", img: "/images/categories/co-ords.png", link: "/category/women/co-ords" },
   { title: "Homewear", img: "/images/categories/homewear.png", link: "/category/women/homewear" },
-  { title: "Bags", img: "/images/categories/bags.jfif", link: "/category/bags" },
+  { title: "Bags", img: "/images/categories/bags.jpg", link: "/category/bags" },
   { title: "Jewellery", img: "/images/categories/jewellery.png", link: "/category/accessories/jewellery" },
-  { title: "Accessories", img: "/images/categories/accessories.jfif", link: "/category/accessories" },
+  { title: "Accessories", img: "/images/categories/accessories.jpg", link: "/category/accessories" },
   { title: "Beauty", img: "/images/categories/beauty.png", link: "/category/accessories/nails" }
 ];
 
@@ -286,7 +286,7 @@ export default function HomeClient() {
         {/* Images Grid */}
         <div className="w-full grid grid-cols-1 md:grid-cols-4 aspect-auto md:aspect-[4/1.5] lg:aspect-[4/1.8]">
           {[
-            { img: '/images/looks/casual.jfif', title: 'CASUAL' },
+            { img: '/images/looks/casual.jpg', title: 'CASUAL' },
             { img: '/images/looks/summer.png', title: 'SUMMER' },
             { img: '/images/looks/festival-concerts.png', title: 'FESTIVALS / CONCERTS' },
             { img: '/images/looks/trendy.png', title: 'TRENDY' }
