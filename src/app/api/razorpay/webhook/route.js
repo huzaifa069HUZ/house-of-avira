@@ -135,9 +135,6 @@ export async function POST(request) {
           console.log(`Webhook: Order ${orderDoc.id} marked as failed via payment.failed`);
         }
       }
-    }
-
-
     } else if (event.event === 'payment_link.paid') {
       const paymentLinkEntity = event.payload.payment_link.entity;
       const razorpayPaymentLinkId = paymentLinkEntity.id;
