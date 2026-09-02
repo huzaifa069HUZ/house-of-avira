@@ -167,7 +167,7 @@ export default function AccountPage() {
         </div>
         <button 
           onClick={handleLogout}
-          className="mt-6 md:mt-0 px-8 py-2.5 border border-[#8A001A] text-[#8A001A] text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#8A001A] hover:text-white transition-colors shadow-sm"
+          className="mt-6 md:mt-0 px-8 py-2.5 border border-[#8A001A] text-[#8A001A] text-[10px] sm:text-xs font-bold font-dm-sans tracking-[0.2em] uppercase hover:bg-[#8A001A] hover:text-white transition-colors shadow-sm"
         >
           Sign Out
         </button>
@@ -180,7 +180,7 @@ export default function AccountPage() {
             <div className="flex justify-between items-center mb-8 border-b border-black/5 pb-4">
               <h2 className="text-3xl lg:text-4xl font-perandory tracking-tight text-[#000000]">Personal Details</h2>
               {!isEditing ? (
-                <button onClick={() => setIsEditing(true)} className="text-[10px] uppercase tracking-widest text-[#000000]/50 hover:text-[#000000] flex items-center gap-1.5 transition-colors font-bold">
+                <button onClick={() => setIsEditing(true)} className="text-[10px] uppercase tracking-widest text-[#000000]/50 hover:text-[#000000] flex items-center gap-1.5 transition-colors font-bold font-dm-sans">
                   <Edit2 className="w-3 h-3" /> Edit
                 </button>
               ) : (
