@@ -44,29 +44,29 @@ const defaultDesktopSlides = [
 export default function HeroCarousel() {
   const [currentDesktopSlide, setCurrentDesktopSlide] = useState(0);
   const [currentMobileSlide, setCurrentMobileSlide] = useState(0);
-  const [mobileSlides, setMobileSlides] = useState([{
-    id: 'fixed_banner_1',
-    mobileImage: '/banner-mob.png',
-    link: '/catalogue'
-  }]);
+  const [mobileSlides, setMobileSlides] = useState([]);
 
   useEffect(() => {
     async function fetchMobileBanners() {
       try {
-        const q = query(collection(db, 'mobile_banners'), orderBy('createdAt', 'desc'));
+        const q = query(collection(db, 'mobile_banners'));
         const querySnapshot = await getDocs(q);
-        const fetchedBanners = querySnapshot.docs.map(doc => ({
+        let fetchedBanners = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }));
         
-        const fixedBanner = {
-          id: 'fixed_banner_1',
-          mobileImage: '/banner-mob.png',
-          link: '/catalogue'
-        };
+        // Sort by order field if it exists, otherwise by createdAt desc
+        fetchedBanners.sort((a, b) => {
+          if (a.order !== undefined && b.order !== undefined) {
+            return a.order - b.order;
+          }
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
         
-        setMobileSlides([fixedBanner, ...fetchedBanners]);
+        setMobileSlides(fetchedBanners);
       } catch (error) {
         console.error("Error fetching mobile banners:", error);
       }
