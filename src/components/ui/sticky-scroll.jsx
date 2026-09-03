@@ -10,9 +10,9 @@ const StickyScroll = forwardRef(({ products = [], children }, ref) => {
 
   // Explicitly use the requested 3 images for the center column
   const centerCol = [
-    { id: 'static-might1', src: '/might-interest-you-1.png' },
-    { id: 'static-might2', src: '/might-interest-you-2.jpg' },
-    { id: 'static-product5', src: '/product5.png' }
+    { id: 'static-might1', src: '/best-seller-combo-1.webp' },
+    { id: 'static-might2', src: '/best-seller-combo-2.webp' },
+    { id: 'static-product5', src: '/best-seller-combo-3.webp' }
   ];
 
   // Distribute all fetched products to the left and right columns
