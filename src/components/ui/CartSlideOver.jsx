@@ -556,9 +556,14 @@ export default function CartSlideOver() {
                         />
                         <span className="uppercase tracking-widest font-bold">I AGREE WITH ALL</span>
                       </label>
-                      <Link href="/order-info" onClick={closeCart} className="text-blue-600 font-bold text-sm hover:underline uppercase tracking-wide" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
-                        Terms and Conditions
-                      </Link>
+                      <div className="flex flex-col items-center gap-2 mb-2 w-full">
+                          <Link href="/order-info" onClick={closeCart} className="text-[#007BFF] font-bold text-[11px] hover:underline uppercase tracking-wider" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
+                            Terms and Conditions
+                          </Link>
+                          <Link href="/quick-note" onClick={closeCart} className="text-[#8A001A] font-bold text-[10px] sm:text-[11px] hover:underline uppercase tracking-widest text-center" style={{ fontFamily: 'var(--font-dm-sans, "DM Sans", sans-serif)' }}>
+                            Why we ask you to confirm these details?
+                          </Link>
+                        </div>
                     </div>
                     <button
                       onClick={handleProceed}
