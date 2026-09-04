@@ -307,7 +307,7 @@ export default function Header() {
 
                 {/* Desktop Logo Image - Increased */}
                 <Link href="/" className="hidden lg:block relative z-10 flex-shrink-0">
-                  <img src="/LOGO.png" alt="House of Avira Logo" className="h-[200px] w-auto object-contain scale-[1.15] translate-y-6 origin-left" />
+                  <img src="/LOGO.png" alt="House of Avira Logo" className="h-[180px] w-auto object-contain scale-110 origin-left" />
                 </Link>
               </div>
 
@@ -321,7 +321,7 @@ export default function Header() {
                 {/* Desktop Navigation Links */}
                 <nav className="hidden lg:flex justify-center gap-6 xl:gap-8 items-center h-full pointer-events-auto">
                   {menuData.filter(item => !item.hideOnDesktop).map((item) => (
-                    <div key={item.title} className="relative group flex items-center h-full py-6">
+                    <div key={item.title} className="relative group flex items-center h-full py-6 whitespace-nowrap">
                       <Link 
                         href={item.href} 
                         className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-[13px] xl:text-[14px] leading-[14px] font-dm-sans font-normal transition-colors ${textClass}`}
@@ -373,9 +373,9 @@ export default function Header() {
                   {/* Expanded Search Bar / Icon */}
                   <div className="hidden sm:flex items-center justify-end relative h-9">
                     <div 
-                      className={`absolute right-0 flex items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
+                      className={`absolute right-0 flex items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden z-50 ${
                         isSearchExpanded 
-                          ? `w-[240px] border rounded-full px-3 py-1.5 h-full ${isHome && !isScrolled ? 'border-white/50 bg-transparent text-white' : 'border-[#000000]/30 bg-transparent text-[#000000]'}` 
+                          ? `w-[300px] lg:w-[400px] border rounded-full px-3 py-1.5 h-full shadow-lg ${isHome && !isScrolled ? 'border-white/30 bg-black/40 backdrop-blur-md text-white' : 'border-[#000000]/10 bg-white text-[#000000]'}` 
                           : `w-9 h-9 rounded-full border border-transparent ${textClass}`
                       }`}
                     >
@@ -698,6 +698,8 @@ export default function Header() {
     </header>
   );
 }
+
+
 
 
 
