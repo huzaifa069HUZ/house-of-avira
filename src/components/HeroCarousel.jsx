@@ -9,7 +9,7 @@ import { db } from '@/lib/firebase';
 const defaultDesktopSlides = [
   {
     id: 1,
-    desktopImage: '/zara-hero.png',
+    desktopImage: '/new-hero-for-avira-pc.png',
     title: '',
     subtitle: '',
     link: '/category/women',
@@ -25,7 +25,7 @@ const defaultDesktopSlides = [
   },
   {
     id: 3,
-    desktopImage: '/images/hero-3-new.png',
+    desktopImage: '/hero3pcnewe.webp',
     title: '',
     subtitle: '',
     link: '/catalogue',
