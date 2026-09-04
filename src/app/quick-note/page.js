@@ -13,63 +13,46 @@ export default function QuickNotePage() {
       <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 lg:p-16 rounded-3xl shadow-sm border border-black/5">
         
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-perandory font-bold tracking-tight text-black mb-6">
-            A quick note before you place your order
+            A little note before you check out 🤍
           </h1>
           <div className="w-16 h-0.5 bg-[#8A001A] mx-auto mb-6"></div>
-          <p className="text-gray-600 font-dm-sans text-lg leading-relaxed">
-            We want your shopping experience to be as exciting and stress-free as possible. 
-            Because we operate a little differently from traditional fast-fashion stores, 
-            we ask you to confirm a few details at checkout. Here is why.
+        </div>
+
+        {/* Content Section - Letter Format */}
+        <div className="space-y-6 font-dm-sans text-[15px] md:text-[16px] text-gray-700 leading-relaxed max-w-2xl mx-auto">
+          <p>
+            We know there are a few confirmations below, so we just wanted to explain why we ask you to go through them.
+          </p>
+          
+          <p>
+            House of Avira works a little differently from a regular store. We operate on a pre-order basis, which means the products you see on our website aren't sitting in a warehouse waiting to be shipped. When you place an order, we source that product specifically for you. 🫶🏻
+          </p>
+          
+          <p>
+            Because each order involves international sourcing, shipping, customs, taxes and careful packaging, we need to make sure you're comfortable with how the process works before we begin arranging your order. These confirmations are simply our way of being completely transparent with you from the very beginning — there are no hidden terms or surprises later.
+          </p>
+          
+          <p>
+            We'll keep you updated throughout the process, and before your order is dispatched, we'll also share pictures/videos wherever applicable so you know what's being sent to you. We take a lot of care with every order because, just like you, we want your package to reach you safely and exactly as expected. 🤍
+          </p>
+          
+          <p>
+            You're also not locked in immediately — cancellations can be requested within the initial cancellation window, before your order moves further into the sourcing process. After that point, since your product has already been arranged specifically for you, cancellations, refunds and exchanges generally aren't possible unless there is an issue from our end.
+          </p>
+          
+          <p>
+            So please take a moment to read the confirmations below. If you're happy with our pre-order process, simply tick the boxes and you're all set! ✨
+          </p>
+          
+          <p className="font-bold pt-4 text-black text-center text-lg md:text-xl font-perandory">
+            Thank you for trusting us and choosing to shop with House of Avira. Every order is genuinely sourced with you in mind. 🤍
           </p>
         </div>
 
-        {/* Content Section */}
-        <div className="space-y-12 font-dm-sans text-gray-700">
-          
-          {/* Point 1 */}
-          <section className="group">
-            <h2 className="text-xl md:text-2xl font-perandory font-bold tracking-widest uppercase text-black mb-4 flex items-center gap-3">
-              <span className="text-[#8A001A]">01.</span> The Pre-Order Model
-            </h2>
-            <p className="leading-relaxed text-[15px] md:text-[16px] text-gray-600">
-              House of Avira operates predominantly on a <strong>pre-order basis</strong>. This means that instead of holding massive amounts of inventory that could go to waste, we curate and produce pieces specifically for the orders we receive. This helps us remain sustainable and offer you exclusive, high-quality aesthetics without the fast-fashion markup. Because the items are crafted or sourced after you order, they aren't available for immediate next-day dispatch.
-            </p>
-          </section>
-
-          {/* Point 2 */}
-          <section className="group">
-            <h2 className="text-xl md:text-2xl font-perandory font-bold tracking-widest uppercase text-black mb-4 flex items-center gap-3">
-              <span className="text-[#8A001A]">02.</span> Delivery Timelines
-            </h2>
-            <p className="leading-relaxed text-[15px] md:text-[16px] text-gray-600">
-              We ask you to acknowledge that delivery timelines are <strong>estimates</strong>. Since our items are often imported or made-to-order, factors like international customs, freight delays, or production schedules are outside of our direct control. We work tirelessly to get your pieces to you as fast as possible, but we want you to have realistic expectations so you aren't left wondering where your package is!
-            </p>
-          </section>
-
-          {/* Point 3 */}
-          <section className="group">
-            <h2 className="text-xl md:text-2xl font-perandory font-bold tracking-widest uppercase text-black mb-4 flex items-center gap-3">
-              <span className="text-[#8A001A]">03.</span> Shipping Charges
-            </h2>
-            <p className="leading-relaxed text-[15px] md:text-[16px] text-gray-600">
-              We split the payment process to make things transparent. When you checkout, you are only paying for the <strong>products</strong>. Once your curated pieces arrive at our local fulfillment center and are thoroughly quality-checked, we will calculate the exact shipping cost based on the total weight of your package. We will then send you a secure link to pay the shipping fee right before final dispatch. We ask you to tick those boxes so you know this step is coming and there are no surprise fees!
-            </p>
-          </section>
-        </div>
-
-        {/* Reassurance & Links Section */}
+        {/* Helpful Resources Section */}
         <div className="mt-16 pt-10 border-t border-gray-100">
-          <div className="bg-[#8A001A]/5 rounded-2xl p-6 md:p-8 text-center mb-10">
-            <h3 className="text-xl font-perandory font-bold text-[#8A001A] mb-3">Shop with Absolute Confidence</h3>
-            <p className="text-sm text-gray-600 font-dm-sans leading-relaxed">
-              We are a community-first brand. We ask for these confirmations not to scare you, but to ensure complete transparency. 
-              We want you to know exactly how we work so you can sit back, relax, and look forward to receiving your new favorite pieces!
-            </p>
-          </div>
-
-          {/* Helpful Links Grid */}
           <h4 className="text-sm font-bold tracking-widest uppercase text-black text-center mb-6 font-dm-sans">Helpful Resources</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <Link href="/how-it-works" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-xl hover:border-[#8A001A] hover:shadow-sm transition-all group">
