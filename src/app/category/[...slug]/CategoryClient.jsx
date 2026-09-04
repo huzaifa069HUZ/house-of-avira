@@ -1,4 +1,5 @@
 'use client';
+import { LumaSpin } from '@/components/ui/luma-spin';
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { db } from '@/lib/firebase';
@@ -537,4 +538,5 @@ export default function CategoryClient({ slug = [] }) {
     </div>
   );
 }
+
 

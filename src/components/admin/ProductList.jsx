@@ -1,4 +1,5 @@
 'use client';
+import { LumaSpin } from '@/components/ui/luma-spin';
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
@@ -171,4 +172,5 @@ export default function ProductList({ onEdit }) {
     </div>
   );
 }
+
 
