@@ -1,12 +1,12 @@
 'use client';
-import { ShoppingBag, Globe, Warehouse, Truck } from 'lucide-react';
+import { ShoppingBag, Globe, Warehouse, Truck, Plane } from 'lucide-react';
 
 export default function OrderJourneyTimeline() {
   const steps = [
-    { icon: ShoppingBag, title: "You Order", desc: "Secure your piece" },
-    { icon: Globe, title: "We Source It", desc: "Globally curated for you" },
-    { icon: Warehouse, title: "Quality Check", desc: "Inspected at our hub" },
-    { icon: Truck, title: "Delivered", desc: "Shipped to your door" }
+    { icon: ShoppingBag, title: "Order Collection", desc: "" },
+    { icon: Globe, title: "Intl. Freight", desc: "& Custom Clearance" },
+    { icon: Warehouse, title: "Domestic Hub", desc: "Arrives at our India warehouse & we pack it" },
+    { icon: Truck, title: "Delivery", desc: "Shipped to your doorstep in India" }
   ];
 
   return (
@@ -47,6 +47,12 @@ export default function OrderJourneyTimeline() {
             
             {/* Connecting Line */}
             <div className="absolute top-6 left-12 right-12 h-[1px] bg-black/10 z-0" />
+
+            {/* 2-4 Weeks Airplane Badge (Between Step 2 and 3) */}
+            <div className="absolute top-[24px] left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 py-1.5 flex items-center gap-1.5 z-10 border border-[#8A001A]/30 rounded-full shadow-sm text-[8px] md:text-[9px] font-bold text-[#8A001A] tracking-widest uppercase">
+              <Plane className="w-3 h-3 md:w-3.5 md:h-3.5" strokeWidth={2.5} />
+              <span>2-4 WEEKS</span>
+            </div>
             
             {steps.map((step, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center w-1/4 px-1 group snap-center">
@@ -54,8 +60,10 @@ export default function OrderJourneyTimeline() {
                   <step.icon className="w-5 h-5 text-[#8A001A]" strokeWidth={1.5} />
                 </div>
                 <div className="text-center">
-                  <p className="text-[10px] md:text-[11px] font-bold tracking-wider uppercase text-black font-dm-sans mb-1">{step.title}</p>
-                  <p className="text-[9px] md:text-[10px] text-gray-500 font-dm-sans leading-snug max-w-[110px] mx-auto">{step.desc}</p>
+                  <p className="text-[10px] md:text-[11px] font-bold tracking-wider uppercase text-black font-dm-sans mb-1 leading-tight max-w-[90px] mx-auto">{step.title}</p>
+                  {step.desc && (
+                    <p className="text-[9px] md:text-[10px] text-gray-500 font-dm-sans leading-snug max-w-[120px] mx-auto mt-1">{step.desc}</p>
+                  )}
                 </div>
               </div>
             ))}
