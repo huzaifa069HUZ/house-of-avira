@@ -458,13 +458,7 @@ export default function HomeClient() {
             <button type="button" className="font-[family-name:var(--font-dm-sans)] text-xs uppercase tracking-widest text-[#000000] font-medium hover:opacity-60 transition-opacity text-left md:text-right">{t.archive.subscribe}</button>
           </form>
           
-          <div className="mt-8">
-            <Link href="https://chat.whatsapp.com/CHEwNJz4QXQJ9RiDQ7OxD3" target="_blank" rel="noopener noreferrer">
-              <span className="inline-block text-[#8A001A] font-[family-name:var(--font-dm-sans)] font-bold text-sm md:text-base uppercase tracking-widest animate-pulse hover:opacity-80 transition-opacity">
-                Join our WhatsApp community for order updates
-              </span>
-            </Link>
-          </div>
+
         </div>
       </section>
 

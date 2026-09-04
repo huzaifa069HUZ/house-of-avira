@@ -95,7 +95,7 @@ export default function CatalogueClient() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch('/api/products?limit=200');
+        const res = await fetch('/api/products');
         const productsList = await res.json();
         setProducts(productsList);
       } catch (error) {
