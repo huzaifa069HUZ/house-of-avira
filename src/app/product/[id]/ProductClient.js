@@ -450,17 +450,6 @@ export default function ProductClient({ params: paramsPromise }) {
                       />
                     </button>
                   </div>
-                      
-                      {/* Animated Batch Badge */}
-                      <div className="w-full mt-3 flex items-center justify-center gap-3 bg-[#E8F5E9]/50 border border-[#10B981]/20 px-4 py-3 rounded-xl shadow-sm relative overflow-hidden">
-                        <div className="relative flex items-center justify-center w-3 h-3 shrink-0">
-                          <div className="absolute w-full h-full bg-[#10B981] rounded-full animate-ping opacity-75"></div>
-                          <div className="relative w-2 h-2 bg-[#10B981] rounded-full"></div>
-                        </div>
-                        <span className="text-[10px] md:text-[11px] font-bold tracking-widest uppercase text-[#1B5E20] font-dm-sans text-center">
-                          Batch is Live — Order now to be included
-                        </span>
-                      </div>
                 )}
               </div>
 
@@ -522,13 +511,16 @@ export default function ProductClient({ params: paramsPromise }) {
               </div>
 
               {/* Shipping Warning Box */}
-              <div className="mt-6 border border-neutral-200 rounded-xl p-6 bg-neutral-50 flex flex-col items-center justify-center text-center gap-5">
-                <p className="text-xs tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-sm" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                  * Please place an order only if you are comfortable with the international shipping process and charges.
-                </p>
-                <Link href="/shipping" className="bg-black text-white px-8 py-3.5 rounded-full text-[12px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
-                  READ FULL SHIPPING DETAILS
-                </Link>
+              <div className="mt-6 border border-neutral-200 rounded-xl overflow-hidden relative">
+                <img src="/shipping-bg-product-page.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-15" />
+                <div className="relative z-10 p-6 flex flex-col items-center justify-center text-center gap-5">
+                  <p className="text-xs tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-sm" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                    * Please place an order only if you are comfortable with the international shipping process and charges.
+                  </p>
+                  <Link href="/shipping" className="bg-black text-white px-8 py-3.5 rounded-full text-[12px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
+                    READ FULL SHIPPING DETAILS
+                  </Link>
+                </div>
               </div>
 
               </div>
@@ -704,13 +696,16 @@ export default function ProductClient({ params: paramsPromise }) {
             </div>
 
             {/* Shipping Warning Box */}
-            <div className="border border-neutral-200 rounded-[2rem] p-8 bg-neutral-50 flex flex-col items-center justify-center text-center gap-5">
-              <p className="text-sm tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-md" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
-                * Please place an order only if you are comfortable with the international shipping process and charges.
-              </p>
-              <Link href="/shipping" className="bg-black text-white px-10 py-4 rounded-full text-[13px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
-                READ FULL SHIPPING DETAILS
-              </Link>
+            <div className="border border-neutral-200 rounded-[2rem] overflow-hidden relative">
+              <img src="/shipping-bg-product-page.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-15" />
+              <div className="relative z-10 p-8 flex flex-col items-center justify-center text-center gap-5">
+                <p className="text-sm tracking-widest leading-loose uppercase font-bold text-neutral-600 max-w-md" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                  * Please place an order only if you are comfortable with the international shipping process and charges.
+                </p>
+                <Link href="/shipping" className="bg-black text-white px-10 py-4 rounded-full text-[13px] tracking-widest uppercase font-bold hover:bg-neutral-800 transition-colors shadow-sm" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
+                  READ FULL SHIPPING DETAILS
+                </Link>
+              </div>
             </div>
 
 
