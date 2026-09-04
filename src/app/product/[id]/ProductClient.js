@@ -641,6 +641,10 @@ export default function ProductClient({ params: paramsPromise }) {
           {/* Right: Scrolling Details */}
           <div className="w-[55%] flex flex-col gap-12 pt-4">
             
+            
+            {/* Order Journey Timeline */}
+            <OrderJourneyTimeline />
+
             {/* Accordion Details */}
             <div className="bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100">
               <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Product Details</h3>
