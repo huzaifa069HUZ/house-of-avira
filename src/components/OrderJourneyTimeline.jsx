@@ -1,11 +1,11 @@
 'use client';
-import { ShoppingBag, Globe, PackageCheck, Truck } from 'lucide-react';
+import { ShoppingBag, Globe, CheckCircle, Truck } from 'lucide-react';
 
 export default function OrderJourneyTimeline() {
   const steps = [
     { icon: ShoppingBag, title: "Order Placed", desc: "You secure your piece" },
     { icon: Globe, title: "Global Sourcing", desc: "We procure it internationally" },
-    { icon: PackageCheck, title: "Quality Check", desc: "Arrives at our hub for inspection" },
+    { icon: CheckCircle, title: "Quality Check", desc: "Arrives at our hub for inspection" },
     { icon: Truck, title: "Dispatched", desc: "Shipped securely to your doorstep" }
   ];
 

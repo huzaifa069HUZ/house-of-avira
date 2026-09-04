@@ -13,6 +13,8 @@ import { useQuickAddStore } from '@/store/quickAddStore';
 import { useRecentlyViewedStore } from '@/store/recentlyViewedStore';
 import ProductReviews from '@/components/product/ProductReviews';
 import ProductCard from '@/components/ProductCard';
+import OrderJourneyTimeline from '@/components/OrderJourneyTimeline';
+
 
 export default function ProductClient({ params: paramsPromise }) {
   const params = use(paramsPromise);
