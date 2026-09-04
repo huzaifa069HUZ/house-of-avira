@@ -147,6 +147,7 @@ export default function Header() {
   const [allProducts, setAllProducts] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const searchRef = useRef(null);
   
@@ -282,69 +283,149 @@ export default function Header() {
       {/* Main Header */}
       <div className={`border-b transition-all duration-300 ${headerBgClass}`}>
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-24 relative">
-            {/* Left Area (Desktop: Logo, Mobile: Hamburger & Wishlist) */}
-            <div className="flex items-center flex-1 lg:flex-none">
-              {/* Mobile Hamburger */}
-              <button 
-                onClick={() => setIsMobileMenuOpen(true)}
-                className={`${textClass} transition-colors lg:hidden mr-4`}
-              >
-                <Menu className="w-6 h-6" />
-              </button>
-
-              {/* Mobile Wishlist */}
-              <Link href="/wishlist" className={`${textClass} transition-colors relative lg:hidden mr-4`} aria-label="Wishlist">
-                <Heart className="w-5 h-5" />
-                {wishlist.length > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                    {wishlist.length}
-                  </span>
-                )}
-              </Link>
-
-              {/* Desktop Logo Image - Increased */}
-              <Link href="/" className="hidden lg:block relative z-10">
-                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[200px] w-auto object-contain scale-[1.15] translate-y-6 origin-left" />
-              </Link>
-            </div>
-
-            {/* Center Area (Desktop: Text Title, Mobile: Logo Image) */}
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
-              {/* Mobile Logo Image - Increased by 80% */}
-              <Link href="/" className="lg:hidden block mt-1 pointer-events-auto">
-                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[162px] w-auto object-contain" />
-              </Link>
-            </div>
-
-            {/* Right Side: Search, Account, Cart */}
-            <div className="flex items-center justify-end gap-4 md:gap-6 flex-1 lg:flex-none">
-              {/* Search */}
-              <div className="flex items-center relative" ref={searchRef}>
-                {/* Search Pill - Hidden on smallest mobile, icon only on small screens */}
-                <div className={`hidden sm:flex items-center border rounded-full px-3 py-1.5 transition-colors ${isHome && !isScrolled ? 'border-white/50 text-white focus-within:border-white' : 'border-[#000000]/30 text-[#000000] focus-within:border-[#000000]'}`}>
-                  <Search className="w-4 h-4 mr-2" />
-                  <input 
-                    type="text" 
-                    placeholder="Search" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onFocus={handleSearchFocus}
-                    onKeyDown={handleKeyDown}
-                    className="bg-transparent outline-none w-24 md:w-32 lg:w-48 text-sm placeholder:text-current opacity-80 font-dm-sans"
-                  />
-                </div>
+                                  <div className="flex justify-between items-center h-20 md:h-24 relative w-full">
+              {/* Left Area (Desktop: Logo, Mobile: Hamburger & Wishlist) */}
+              <div className="flex items-center flex-shrink-0 w-auto lg:w-1/4">
+                {/* Mobile Hamburger */}
                 <button 
-                  className={`${textClass} transition-colors sm:hidden`}
-                  onClick={() => {
-                    setShowSearchDropdown(true);
-                    handleSearchFocus();
-                  }}
+                  onClick={() => setIsMobileMenuOpen(true)}
+                  className={`${textClass} transition-colors lg:hidden mr-4`}
                 >
-                  <Search className="w-5 h-5" />
+                  <Menu className="w-6 h-6" />
                 </button>
 
-                {/* Search Dropdown / Fullscreen Mobile Search */}
+                {/* Mobile Wishlist */}
+                <Link href="/wishlist" className={`${textClass} transition-colors relative lg:hidden mr-4`} aria-label="Wishlist">
+                  <Heart className="w-5 h-5" />
+                  {wishlist.length > 0 && (
+                    <span className="absolute -top-1.5 -right-2 bg-[#8A001A] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                      {wishlist.length}
+                    </span>
+                  )}
+                </Link>
+
+                {/* Desktop Logo Image - Increased */}
+                <Link href="/" className="hidden lg:block relative z-10 flex-shrink-0">
+                  <img src="/LOGO.png" alt="House of Avira Logo" className="h-[200px] w-auto object-contain scale-[1.15] translate-y-6 origin-left" />
+                </Link>
+              </div>
+
+              {/* Center Area (Navigation Links on Desktop, Logo on Mobile) */}
+              <div className="flex items-center justify-center flex-1 lg:w-2/4">
+                {/* Mobile Logo Image - Increased by 80% */}
+                <Link href="/" className="lg:hidden block pointer-events-auto mt-1">
+                  <img src="/LOGO.png" alt="House of Avira Logo" className="h-[162px] w-auto object-contain" />
+                </Link>
+                
+                {/* Desktop Navigation Links */}
+                <nav className="hidden lg:flex justify-center gap-6 xl:gap-8 items-center h-full pointer-events-auto">
+                  {menuData.filter(item => !item.hideOnDesktop).map((item) => (
+                    <div key={item.title} className="relative group flex items-center h-full py-6">
+                      <Link 
+                        href={item.href} 
+                        className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-[13px] xl:text-[14px] leading-[14px] font-dm-sans font-normal transition-colors ${textClass}`}
+                      >
+                        {item.title}
+                      </Link>
+                      
+                      {/* Dropdown 1 */}
+                      {item.children && (
+                        <div className="absolute top-full left-0 hidden group-hover:block w-48 bg-[#FFFFFF] shadow-lg border border-[#000000]/10 pt-2 pb-2">
+                          {item.children.map(child => (
+                            <div key={child.title} className="relative group/sub">
+                              <Link 
+                                href={child.href}
+                                className="flex justify-between items-center px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] capitalize"
+                              >
+                                {child.title}
+                                {child.subChildren && <ChevronRight className="w-3 h-3" />}
+                              </Link>
+                              
+                              {/* Dropdown 2 (Sub-children) */}
+                              {child.subChildren && (
+                                <div className="absolute top-0 left-full hidden group-hover/sub:block w-40 bg-[#FFFFFF] shadow-lg border border-[#000000]/10 py-2 -ml-1">
+                                  {child.subChildren.map(subChild => (
+                                    <Link 
+                                      key={subChild.title}
+                                      href={subChild.href}
+                                      className="block px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] capitalize"
+                                    >
+                                      {subChild.title}
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Right Side: Search, Account, Cart */}
+              <div className="flex items-center justify-end gap-3 md:gap-5 lg:w-1/4">
+                {/* Search */}
+                <div className="flex items-center relative" ref={searchRef}>
+                  
+                  {/* Expanded Search Bar / Icon */}
+                  <div className="hidden sm:flex items-center justify-end relative h-9">
+                    <div 
+                      className={`absolute right-0 flex items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
+                        isSearchExpanded 
+                          ? `w-[240px] border rounded-full px-3 py-1.5 h-full ${isHome && !isScrolled ? 'border-white/50 bg-transparent text-white' : 'border-[#000000]/30 bg-transparent text-[#000000]'}` 
+                          : `w-9 h-9 rounded-full border border-transparent ${textClass}`
+                      }`}
+                    >
+                      <button 
+                        onClick={(e) => { 
+                          if (!isSearchExpanded) { e.preventDefault(); setIsSearchExpanded(true); handleSearchFocus(); } 
+                        }}
+                        className={`flex items-center justify-center h-full flex-shrink-0 z-10 transition-colors ${isSearchExpanded ? 'w-auto mr-2' : 'w-full hover:bg-black/5 rounded-full'}`}
+                      >
+                        <Search className="w-4 h-4 md:w-5 md:h-5" />
+                      </button>
+                      <input 
+                        type="text" 
+                        placeholder="Search" 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onFocus={() => { setIsSearchExpanded(true); handleSearchFocus(); }}
+                        onBlur={() => { if (!searchQuery) setIsSearchExpanded(false); }}
+                        onKeyDown={handleKeyDown}
+                        className={`bg-transparent outline-none text-sm font-dm-sans h-full flex-1 transition-all duration-300 ${
+                          isSearchExpanded ? 'opacity-100' : 'opacity-0 pointer-events-none w-0'
+                        } ${isHome && !isScrolled ? 'placeholder:text-white/70' : 'placeholder:text-black/50'}`}
+                      />
+                      {isSearchExpanded && (
+                        <button 
+                          onClick={(e) => { 
+                            e.stopPropagation(); 
+                            setIsSearchExpanded(false); 
+                            setShowSearchDropdown(false); 
+                            setSearchQuery(''); 
+                          }} 
+                          className="ml-1 flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity p-1"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Mobile Search Icon */}
+                  <button 
+                    className={`${textClass} transition-colors sm:hidden`}
+                    onClick={() => {
+                      setShowSearchDropdown(true);
+                      handleSearchFocus();
+                    }}
+                  >
+                    <Search className="w-5 h-5" />
+                  </button>
+
+                  {/* Search Dropdown / Fullscreen Mobile Search */}{/* Search Dropdown / Fullscreen Mobile Search */}{/* Search Dropdown / Fullscreen Mobile Search */}
                 {showSearchDropdown && (
                   <div className="fixed inset-0 sm:absolute sm:inset-auto sm:top-[120%] sm:right-0 w-[100vw] h-[100vh] sm:h-auto sm:w-[400px] sm:max-h-[70vh] overflow-y-auto bg-white sm:border border-black/10 sm:shadow-2xl sm:rounded-2xl p-4 sm:p-4 z-[100] animate-in fade-in sm:slide-in-from-top-2 flex flex-col gap-4 text-black cursor-default font-dm-sans">
                     {/* Mobile Close Header */}
@@ -520,51 +601,7 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Navigation Links - Desktop Only */}
-          <nav className="hidden lg:flex justify-center gap-8 h-12">
-            {menuData.filter(item => !item.hideOnDesktop).map((item) => (
-              <div key={item.title} className="relative group flex items-center h-full">
-                <Link 
-                  href={item.href} 
-                  className={item.customClass ? `${item.customClass} transition-colors hover:opacity-80` : `text-[14px] leading-[14px] font-dm-sans font-normal transition-colors ${textClass}`}
-                >
-                  {item.title}
-                </Link>
-                
-                {/* Dropdown 1 */}
-                {item.children && (
-                  <div className="absolute top-full left-0 hidden group-hover:block w-48 bg-[#FFFFFF] shadow-lg border border-[#000000]/10 pt-2 pb-2">
-                    {item.children.map(child => (
-                      <div key={child.title} className="relative group/sub">
-                        <Link 
-                          href={child.href}
-                          className="flex justify-between items-center px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] capitalize"
-                        >
-                          {child.title}
-                          {child.subChildren && <ChevronRight className="w-3 h-3" />}
-                        </Link>
-                        
-                        {/* Dropdown 2 (Sub-children) */}
-                        {child.subChildren && (
-                          <div className="absolute top-0 left-full hidden group-hover/sub:block w-40 bg-[#FFFFFF] shadow-lg border border-[#000000]/10 py-2 -ml-1">
-                            {child.subChildren.map(subChild => (
-                              <Link 
-                                key={subChild.title}
-                                href={subChild.href}
-                                className="block px-4 py-2 text-[14px] leading-[14px] font-dm-sans font-normal text-[#000000]/80 hover:bg-[#000000]/5 hover:text-[#000000] capitalize"
-                              >
-                                {subChild.title}
-                              </Link>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
+          
         </div>
       </div>
 
@@ -660,3 +697,5 @@ export default function Header() {
     </header>
   );
 }
+
+
