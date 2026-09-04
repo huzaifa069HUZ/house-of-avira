@@ -18,26 +18,21 @@ export default function OrderJourneyTimeline() {
       </div>
 
       <div className="relative z-10">
-        {/* Header with Micro-animation & Soft Gradient */}
+        
+        {/* Clean Header - No Background Pill */}
         <div className="flex justify-center mb-12 mt-2">
-          <div className="relative group cursor-default">
-            {/* Animated blurred gradient background */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-orange-200 via-neutral-100 to-green-200 rounded-full blur-md opacity-60 group-hover:opacity-100 transition duration-1000 group-hover:duration-300 animate-pulse"></div>
+          <div className="relative inline-flex items-center justify-center gap-3 md:gap-4 px-2">
+            <Globe className="w-4 h-4 md:w-5 md:h-5 text-neutral-400 shrink-0" strokeWidth={1.5} />
             
-            {/* Main Pill */}
-            <div className="relative inline-flex items-center justify-center gap-3 md:gap-4 px-6 md:px-8 py-3.5 rounded-full bg-[#8A001A]/[0.03] backdrop-blur-sm border border-[#8A001A]/10 shadow-sm">
-              <Globe className="w-4 h-4 md:w-5 md:h-5 text-[#8A001A]/70 shrink-0 group-hover:text-[#8A001A] transition-colors duration-500" strokeWidth={1.5} />
-              
-              <h3 className="flex items-center gap-2 text-xs md:text-[15px] uppercase tracking-[0.15em] md:tracking-[0.2em] font-bold text-neutral-800" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
-                GLOBAL FASHION <span className="text-[#8A001A] text-sm md:text-lg font-sans">→</span> US <span className="text-[#8A001A] text-sm md:text-lg font-sans">→</span> YOU
-              </h3>
-              
-              <img 
-                src="/indian-flag.png" 
-                alt="India Flag" 
-                className="w-5 md:w-6 h-auto shrink-0 object-contain drop-shadow-sm group-hover:rotate-6 group-hover:scale-110 transition-all duration-300 origin-bottom-right" 
-              />
-            </div>
+            <h3 className="flex items-center gap-2 text-xs md:text-[15px] uppercase tracking-[0.15em] md:tracking-[0.2em] font-bold text-neutral-800" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
+              GLOBAL FASHION <span className="text-[#8A001A] text-sm md:text-lg font-sans">→</span> US <span className="text-[#8A001A] text-sm md:text-lg font-sans">→</span> YOU
+            </h3>
+            
+            <img 
+              src="/indian-flag.png" 
+              alt="India Flag" 
+              className="w-5 md:w-6 h-auto shrink-0 object-contain drop-shadow-sm" 
+            />
           </div>
         </div>
         
@@ -46,17 +41,21 @@ export default function OrderJourneyTimeline() {
           <div className="flex items-start justify-between min-w-[480px] md:min-w-0 relative px-2">
             
             {/* Connecting Line */}
-            <div className="absolute top-6 left-12 right-12 h-[1px] bg-black/10 z-0" />
+            <div className="absolute top-6 left-12 right-12 h-[1px] bg-black/15 z-0" />
 
-            {/* 2-4 Weeks Airplane Badge (Between Step 2 and 3) */}
-            <div className="absolute top-[24px] left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 py-1.5 flex items-center gap-1.5 z-10 border border-[#8A001A]/30 rounded-full shadow-sm text-[8px] md:text-[9px] font-bold text-[#8A001A] tracking-widest uppercase">
-              <Plane className="w-3 h-3 md:w-3.5 md:h-3.5" strokeWidth={2.5} />
-              <span>2-4 WEEKS</span>
+            {/* 2-4 Weeks Airplane Line Design */}
+            <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col items-center z-10 w-32">
+              <div className="bg-white/80 backdrop-blur-sm px-3 absolute top-0 -translate-y-1/2 flex justify-center text-[#8A001A]">
+                <Plane className="w-4 h-4 md:w-5 md:h-5 rotate-45" strokeWidth={1.5} />
+              </div>
+              <span className="text-[8.5px] md:text-[10px] font-bold text-[#8A001A]/90 tracking-[0.15em] uppercase font-dm-sans mt-5 bg-white/50 px-2 rounded-full">
+                2-4 WEEKS
+              </span>
             </div>
             
             {steps.map((step, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center w-1/4 px-1 group snap-center">
-                <div className="w-12 h-12 bg-white rounded-full border border-[#8A001A] shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
+                <div className="w-12 h-12 bg-white rounded-full border border-[#8A001A] shadow-sm flex items-center justify-center mb-4 transition-transform duration-300 hover:-translate-y-1">
                   <step.icon className="w-5 h-5 text-[#8A001A]" strokeWidth={1.5} />
                 </div>
                 <div className="text-center">
