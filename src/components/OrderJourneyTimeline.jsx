@@ -25,8 +25,8 @@ export default function OrderJourneyTimeline() {
             <div className="absolute -inset-1 bg-gradient-to-r from-orange-200 via-neutral-100 to-green-200 rounded-full blur-md opacity-60 group-hover:opacity-100 transition duration-1000 group-hover:duration-300 animate-pulse"></div>
             
             {/* Main Pill */}
-            <div className="relative inline-flex items-center justify-center gap-3 md:gap-4 px-6 md:px-8 py-3.5 rounded-full bg-white/95 backdrop-blur-sm border border-neutral-100 shadow-sm">
-              <Globe className="w-4 h-4 md:w-5 md:h-5 text-neutral-500 shrink-0 group-hover:text-blue-500 transition-colors duration-500" strokeWidth={1.5} />
+            <div className="relative inline-flex items-center justify-center gap-3 md:gap-4 px-6 md:px-8 py-3.5 rounded-full bg-[#8A001A]/[0.03] backdrop-blur-sm border border-[#8A001A]/10 shadow-sm">
+              <Globe className="w-4 h-4 md:w-5 md:h-5 text-[#8A001A]/70 shrink-0 group-hover:text-[#8A001A] transition-colors duration-500" strokeWidth={1.5} />
               
               <h3 className="flex items-center gap-2 text-xs md:text-[15px] uppercase tracking-[0.15em] md:tracking-[0.2em] font-bold text-neutral-800" style={{ fontFamily: 'var(--font-perandory), "Perandory", serif' }}>
                 GLOBAL FASHION <span className="text-[#8A001A] text-sm md:text-lg font-sans">→</span> US <span className="text-[#8A001A] text-sm md:text-lg font-sans">→</span> YOU
