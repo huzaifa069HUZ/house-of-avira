@@ -5,6 +5,7 @@ import { useAuthStore } from '@/store/authStore';
 import ProductCard from '@/components/ProductCard';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
+import { LumaSpin } from '@/components/ui/luma-spin';
 
 export default function WishlistPage() {
   const { wishlist, loading } = useWishlistStore();
@@ -29,7 +30,7 @@ export default function WishlistPage() {
   if (loading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black"></div>
+        <LumaSpin />
       </div>
     );
   }
@@ -67,3 +68,5 @@ export default function WishlistPage() {
     </main>
   );
 }
+
+

@@ -322,7 +322,7 @@ export default function CategoryClient({ slug = [] }) {
   if (loading) {
     return (
       <div className="w-full min-h-[60vh] flex flex-col items-center justify-center gap-4">
-        <Loader2 className="w-6 h-6 animate-spin text-black" />
+        <LumaSpin />
         <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-black/60">Curating Collection</span>
       </div>
     );
@@ -537,3 +537,4 @@ export default function CategoryClient({ slug = [] }) {
     </div>
   );
 }
+

@@ -59,7 +59,7 @@ export default function ProductList({ onEdit }) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-32">
-        <Loader2 className="w-8 h-8 animate-spin text-[#0071e3] mb-4" />
+        <LumaSpin />
         <p className="text-sm font-medium text-[#86868b]">Loading products...</p>
       </div>
     );
@@ -171,3 +171,4 @@ export default function ProductList({ onEdit }) {
     </div>
   );
 }
+

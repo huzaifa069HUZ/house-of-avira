@@ -54,7 +54,7 @@ export default function OrderManager({ onAddOrder }) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-24 bg-white rounded-2xl border border-[#d2d2d7]/50 shadow-sm">
-        <Loader2 className="w-8 h-8 animate-spin text-[#0071e3] mb-4" />
+        <LumaSpin />
         <p className="text-[#86868b] font-dm-sans text-sm tracking-wide">Loading orders...</p>
       </div>
     );
@@ -299,3 +299,4 @@ export default function OrderManager({ onAddOrder }) {
     </div>
   );
 }
+

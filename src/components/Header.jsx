@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Search, ShoppingBag, User, Menu, ChevronRight, Heart, X } from 'lucide-react';
+import { LumaSpin } from '@/components/ui/luma-spin';
 import { useAuthStore } from '@/store/authStore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useCurrencyStore } from '@/store/currencyStore';
@@ -452,7 +453,7 @@ export default function Header() {
 
                     {isSearching ? (
                       <div className="flex justify-center items-center py-8">
-                        <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <LumaSpin />
                       </div>
                     ) : searchQuery && filteredProducts.length === 0 ? (
                       <div className="text-center py-8 text-neutral-500 text-xs uppercase tracking-widest">
@@ -697,5 +698,6 @@ export default function Header() {
     </header>
   );
 }
+
 
 

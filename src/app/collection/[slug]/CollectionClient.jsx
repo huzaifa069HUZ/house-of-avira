@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { Loader2 } from 'lucide-react';
+import { LumaSpin } from '@/components/ui/luma-spin';
 import { notFound } from 'next/navigation';
 
 export default function CollectionClient({ slug }) {
@@ -49,7 +50,7 @@ export default function CollectionClient({ slug }) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
         <main className="flex-grow flex items-center justify-center">
-          <Loader2 className="w-8 h-8 animate-spin text-[#8A001A]" />
+          <LumaSpin />
         </main>
       </div>
     );
@@ -89,3 +90,4 @@ export default function CollectionClient({ slug }) {
     </div>
   );
 }
+
