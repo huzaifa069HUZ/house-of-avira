@@ -411,6 +411,17 @@ export default function ProductClient({ params: paramsPromise }) {
                         className="flex-1 bg-white border border-neutral-200 text-black uppercase tracking-widest font-bold text-xs py-4 rounded-xl hover:bg-neutral-50 hover:border-neutral-300 transition-all min-h-[56px] shadow-sm" style={{ fontFamily: '"Mona Sans", sans-serif' }}>
                         ADD TO CART
                       </button>
+                        
+                        {/* Animated Batch Badge */}
+                        <div className="w-full mt-2 flex items-center justify-center gap-3 bg-[#E8F5E9]/50 border border-[#10B981]/20 px-4 py-3 rounded-xl col-span-full shadow-sm relative overflow-hidden">
+                          <div className="relative flex items-center justify-center w-3 h-3 shrink-0">
+                            <div className="absolute w-full h-full bg-[#10B981] rounded-full animate-ping opacity-75"></div>
+                            <div className="relative w-2 h-2 bg-[#10B981] rounded-full"></div>
+                          </div>
+                          <span className="text-[10px] md:text-[11px] font-bold tracking-widest uppercase text-[#1B5E20] font-dm-sans text-center">
+                            Batch is Live — Order now to be included
+                          </span>
+                        </div>
                       <button 
                         onClick={handleWishlist}
                         className="w-[56px] shrink-0 border border-neutral-200 bg-white rounded-xl flex items-center justify-center hover:border-black transition-all group shadow-sm hover:shadow-md"
@@ -442,7 +453,9 @@ export default function ProductClient({ params: paramsPromise }) {
 
               <div className="lg:hidden">
               {/* Accordion Details */}
-              <div className="border-t border-neutral-200 pt-8 mt-6">
+              <OrderJourneyTimeline />
+                
+                <div className="border-t border-neutral-200 pt-8 mt-6">
                 <h3 className="text-xs uppercase tracking-widest font-bold text-black mb-4" style={{ fontFamily: '"Mona Sans", sans-serif' }}>Product Details</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed whitespace-pre-wrap font-light">
                   {product.description || "No description available for this item."}
