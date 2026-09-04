@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -95,6 +96,20 @@ export default function Footer() {
           AVIRA
         </h1>
       </div>
+
+      {/* Developer Credit - Bottom Left */}
+      <a 
+        href="https://wa.me/917488100344" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="absolute bottom-4 left-4 md:bottom-6 md:left-8 z-20 flex items-center gap-1.5 text-white hover:opacity-70 transition-all duration-300 group mix-blend-difference"
+        aria-label="Contact Developer on WhatsApp"
+      >
+        <span className="font-perandory text-[9px] md:text-[11px] uppercase tracking-[0.25em] font-bold scale-y-125 scale-x-105 inline-block origin-bottom-left">
+          Designed and developed by HUZAIFA
+        </span>
+        <ArrowUpRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform stroke-[2.5] ml-1" />
+      </a>
     </footer>
   );
 }
