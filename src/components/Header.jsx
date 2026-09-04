@@ -304,19 +304,15 @@ export default function Header() {
               </Link>
 
               {/* Desktop Logo Image - Increased */}
-              <Link href="/" className="hidden lg:block">
-                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[160px] w-auto object-contain scale-125 origin-left" />
+              <Link href="/" className="hidden lg:block relative z-10">
+                <img src="/LOGO.png" alt="House of Avira Logo" className="h-[220px] w-auto object-contain scale-125 origin-left" />
               </Link>
             </div>
 
             {/* Center Area (Desktop: Text Title, Mobile: Logo Image) */}
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
-              {/* Desktop Title */}
-              <Link href="/" className={`hidden lg:flex items-center gap-2 text-2xl md:text-4xl tracking-widest transition-colors ${logoClass}`}>
-                <span className="font-perandory uppercase">House of</span> <span className="font-aston-script capitalize text-3xl md:text-5xl translate-y-1">Avira</span>
-              </Link>
+            <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
               {/* Mobile Logo Image - Increased by 80% */}
-              <Link href="/" className="lg:hidden block mt-1">
+              <Link href="/" className="lg:hidden block mt-1 pointer-events-auto">
                 <img src="/LOGO.png" alt="House of Avira Logo" className="h-[162px] w-auto object-contain" />
               </Link>
             </div>
